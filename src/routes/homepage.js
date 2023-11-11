@@ -1,10 +1,9 @@
-import express from "express";
-import homepageController from "../resources/app/controllers/homepageController.js";
+import express from 'express';
+import homepageController from '../resources/app/controllers/homepageController.js';
 
 const router = express.Router();
 
-router.use('/:slug', homepageController.show);
-router.use('/', homepageController.index);
+router.get('/:slug', homepageController.show);
+router.get('/homepage', homepageController.index);
 
 export default router;
-
