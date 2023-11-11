@@ -1,7 +1,15 @@
+import Video from '../models/Video.js';
+
 class UserController {
     index(req, res) {
-        res.render('user')
+        Video.find({})
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((err) => {
+                res.status(400).json({ err: 'ERROR!' });
+            });
     }
 }
 
-export default new UserController;
+export default new UserController();
