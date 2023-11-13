@@ -1,11 +1,24 @@
 @import 'variables';
-h1 {
-    color: $red-color;
+.admin_heading{
+    background-image: url('/img/bg_heading.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
-h2 {
-    color: #000000;
+.logo_admin{
+    width: 30px;
+    height: 32px;
 }
+.hpm{
+    font-size: 20px;
+    font-weight: 700;
+}
+.admin_header>li{
+    font-weight: 700;
+    border-color: rgba(253, 0, 84, 1) ;
+}
+.logout{
+    color: white;
+    background-color: rgba(253, 0, 84, 1);
+    font-weight: 700;
 
-h3 {
-    color: yellow;
 }
