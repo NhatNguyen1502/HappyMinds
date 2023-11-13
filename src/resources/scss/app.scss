@@ -1,11 +1,10 @@
 @import 'variables';
-h1 {
-    color: $red-color;
+.footer{
+    background-color: rgba(43, 32, 36, 1);
 }
-h2 {
-    color: #000000;
+.heading_footer{
+    color: rgba(253, 0, 84, 1);
 }
-
-h3 {
-    color: yellow;
+.service, .contact{
+    line-height: 30px;
 }
