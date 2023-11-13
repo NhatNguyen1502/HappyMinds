@@ -5,7 +5,7 @@ let pass = 'SKLJcsydeV5PbPJ0';
 async function connect() {
     try {
         await mongoose.connect(
-            `mongodb+srv://happymindspnv:${pass}@happyminds.ctjhbue.mongodb.net/?retryWrites=true&w=majorit`,
+            `mongodb+srv://happymindspnv:${pass}@happyminds.ctjhbue.mongodb.net/?retryWrites=true&w=majority`,
             {
                 useNewUrlParser: true,
             },
