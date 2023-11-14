@@ -3,7 +3,9 @@ import homepageController from '../resources/app/controllers/homepageController.
 
 const router = express.Router();
 
-router.get('/:slug', homepageController.show);
+router.get('/video', homepageController.showVideo);
 router.get('/', homepageController.index);
+
+
 
 export default router;

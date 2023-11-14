@@ -1,11 +1,28 @@
 @import 'variables';
-h1 {
-    color: $red-color;
+.page{
+    background-color: rgba(210, 210, 210, 1);
 }
-h2 {
-    color: #000000;
+.level,.more{
+    color:rgba(253, 0, 84, 1);
+    font-weight: 600;
+    font-size: 15px;
 }
-
-h3 {
-    color: yellow;
+.level{
+    font-size: 18px;
+    border: 2px solid rgba(253, 0, 84, 1);
 }
+.more{
+    font-size: 15px;
+}
+.duration, .description{
+    font-size: 12px;
+    margin: 0;
+}
+.description{
+    white-space: nowrap;
+}
+// .col-md-4{
+//     width: 32%;
+//     margin-bottom: 10px; 
+//     margin-right: 5px;
+// }
