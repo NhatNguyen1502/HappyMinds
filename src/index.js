@@ -6,11 +6,13 @@ import morgan from 'morgan';
 import { engine } from 'express-handlebars';
 import { route } from './routes/index.js';
 import { connect } from './config/db/index.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 8000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('combined'));
