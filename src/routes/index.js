@@ -1,6 +1,8 @@
 import homepageRouter from './homepage.js';
 import userRouter from './user.js';
 import adminRouter from './admin.js';
+import videoRouter from './video.js';
+
 
 
 export function route(app) {

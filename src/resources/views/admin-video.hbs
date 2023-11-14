@@ -9,6 +9,18 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+            {{#each videos}}
+            <tr>
+                <th>{{this.videoId}}</th>
+                <th>{{this.title}}</th>
+                <th>{{this.caloriesAmount}}</th>
+                <th>{{this.level}}</th>
+                <th>
+                    <button></button>
+                </th>
+            </tr>
+            {{/each}}
+        </tbody>
     </table>
 </div>
