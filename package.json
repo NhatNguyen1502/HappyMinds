@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky install",
     "beautiful": "lint-staged",
-    "watch": "node-sass --watch src/resources/scss/ -o src/public/css/ ",
+    "watch": "node-sass --watch src/resources/scss/ -o src/public/css/",
     "start": "nodemon --inspect src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "node server.js"
@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2",
     "handlebars": "^4.7.8",
