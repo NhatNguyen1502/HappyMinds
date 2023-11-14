@@ -1,0 +1,36 @@
+<style>
+    ul, #khoo{
+        gap: 100px;
+    }
+</style>
+<div
+    style="background: linear-gradient(270deg, #4B1B2B 0%, #94103C 100%); width: 100%; height: 198px; display: flex; justify-content: center; align-items: center;">
+    <span style="font-size: 50px; font-weight: 650; color: white;">ADMIN</span>
+</div>
+
+<nav class='navbar navbar-expand-lg bg-light'>
+    <div class='container-fluid'>
+        <img src="../../views/partials/LOGO.png" alt="" style="width: 60px; height: 55px; margin-right: 10px">
+        <a class='navbar-brand' href='#' id="khoo">HappyMinds</a>
+        <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+            <ul class='navbar-nav me-auto mb-2 mb-lg-0'>
+                <li class='nav-item'>
+                    <a class='nav-link active' aria-current='page' href='/admin/admin-video'>VIDEOS</a>
+                </li>
+                <li class='nav-item'>
+                    <a class='nav-link' href='/admin/admin-user'>USERS</a>
+                </li>
+                <li class='nav-item'>
+                    <a class='nav-link' href="/admin/admin-food">FOODS</a>
+                </li>
+                <li class='nav-item'>
+                    <a class='nav-link' href="/admin/admin-blog">BLOGS</a>
+                </li>
+            </ul>
+            <button class='btn btn-success' type='submit' id="logout" style="width: 200px">LOGOUT</button>
+        </div>
+    </div>
+</nav>
+<div style="display: flex; justify-content: end; margin: 12px 0">
+    <button class='btn btn-success' type='submit' id="add" style="margin-right: 12px">ADD</button>
+</div>
