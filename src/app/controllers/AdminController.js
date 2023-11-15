@@ -5,8 +5,20 @@ class AdminController {
         res.render('admin');
     }
 
-    create(req, res) {
+    createVideo(req, res) {
         AdminService.createVideo(req, res);
+    }
+
+    createUser(req, res) {
+        AdminService.createUser(req, res);
+    }
+
+    createFood(req, res) {
+        AdminService.createFood(req, res);
+    }
+
+    createBlog(req, res) {
+        AdminService.createBlog(req, res);
     }
 }
 

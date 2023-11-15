@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/', userController.index);
 
-router.post('/create', userController.createVideo);
+router.post('/', userController.createVideo);
 
 export default router;

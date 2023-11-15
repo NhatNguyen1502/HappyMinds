@@ -1,5 +1,6 @@
 import Video from '../models/Video.js';
 import { multipleMongooesToOject } from '../../util/mongoose.js';
+// import * as cheerio from 'cheerio';
 
 class UserService {
     index(req, res) {
@@ -12,6 +13,7 @@ class UserService {
             .catch((err) => {
                 res.status(400).json({ err: 'ERROR!' });
             });
+        // start();
     }
 
     createVideo = async (payload) => {
@@ -24,5 +26,15 @@ class UserService {
         }
     };
 }
+
+// function start() {
+//     const $ = cheerio.load(html);
+//     let editBtn = $('#editBtn');
+//     editBtn.addEventListener('click', handleEditBtnClick(editBtn));
+// }
+
+// function handleEditBtnClick(btn) {
+//     console.log(btn.getAttribute('data-bs-whatever'));
+// }
 
 export default new UserService();
