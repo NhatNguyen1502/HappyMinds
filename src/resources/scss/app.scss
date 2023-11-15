@@ -1,11 +1,26 @@
 @import 'variables';
-h1 {
-    color: $red-color;
+.inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory{
+    background-color: rgba(210, 210, 210, 1);
 }
-h2 {
-    color: #000000;
+.card-content{
+    border-radius: 20px;
+    
+}
+.rounded-image{
+    border-radius: 20px;
+    max-width: 85%;
+    max-height: 85%;
+}
+.card-body-text{
+    padding: auto;
 }
 
-h3 {
-    color: yellow;
+.btn-custom {
+    border-radius: 20px;
+    background-color: rgba(253, 0, 84, 1);
+
+}
+.button{
+    color: white;
+    background-color: rgba(253, 0, 84, 1);
 }

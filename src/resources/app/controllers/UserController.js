@@ -10,6 +10,9 @@ class UserController {
                 res.status(400).json({ err: 'ERROR!' });
             });
     }
+    show(req, res) {
+        res.render('user');
+    }
 }
 
 export default new UserController();
