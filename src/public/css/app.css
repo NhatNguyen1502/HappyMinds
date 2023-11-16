@@ -1,3 +1,54 @@
+body {
+  background-color: #d2d2d2; }
+
+.form-custom {
+  position: relative; }
+
+.form .bi-search {
+  position: absolute;
+  font-size: 1.5rem;
+  top: 9px;
+  left: 15px;
+  color: #9ca3af; }
+
+.form span .bi-x-circle-fill {
+  position: absolute;
+  font-size: 1.5rem;
+  right: 15px;
+  top: 9px;
+  padding: 2px;
+  color: #9ca3af; }
+
+.left-pan {
+  padding: 7px; }
+
+.left-pan i {
+  padding-left: 10px; }
+
+.form-input {
+  height: 55px;
+  text-indent: 33px;
+  border-radius: 15px;
+  background-color: white; }
+
+.form-input :focus {
+  box-shadow: none;
+  border: none; }
+
+.card-content {
+  border-radius: 20px; }
+
+.rounded-image {
+  border-radius: 20px;
+  max-width: 85%;
+  max-height: 85%; }
+
+.card-body-text {
+  padding: auto; }
+
+.btn-custom {
+  border-radius: 20px; }
+=======
 .admin_heading {
   background-image: url("/img/bg_heading.png");
   background-size: cover;
