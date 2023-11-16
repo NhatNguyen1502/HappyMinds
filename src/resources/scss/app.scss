@@ -49,14 +49,15 @@
 .user_icon{
     width: 40px;
 }
-.heading > h2{
-    color: rgba(253, 0, 84, 1);
-    font-weight: 700;
+.inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory{
+    background-color: rgba(210, 210, 210, 1);
 }
-
-h4 {
-    color: aliceblue;
+.card-content{
+    border-radius: 20px;
+    
 }
-.service, .contact{
-    line-height: 30px;
+.rounded-image{
+    border-radius: 20px;
+    max-width: 85%;
+    max-height: 85%;
 }
