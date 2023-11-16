@@ -1,4 +1,54 @@
 @import 'variables';
+.admin_heading{
+    background-image: url('/img/bg_heading.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.logo_admin{
+    width: 30px;
+    height: 32px;
+}
+.hpm{
+    font-size: 20px;
+    font-weight: 700;
+}
+.admin_header>li{
+    font-weight: 700;
+    border-color: rgba(253, 0, 84, 1) ;
+}
+.logout{
+    color: white;
+    background-color: rgba(253, 0, 84, 1);
+    font-weight: 700;
+}
+.footer{
+    background-color: rgba(43, 32, 36, 1);
+}
+.heading_footer{
+    color: rgba(253, 0, 84, 1);
+}
+.header{
+    background-image: url('/img/bg.png');
+    height: 500px;
+    color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    opacity: 1 ;
+}
+.nav-item{
+    font-size: 20px;
+    font-weight: 700;
+}
+.button_header{
+    background-color: rgba(253, 0, 84, 1);
+    color: white;
+    font-weight: 500;
+    border-radius: 20px;
+}
+.user_icon{
+    width: 40px;
+}
 .inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory{
     background-color: rgba(210, 210, 210, 1);
 }
@@ -10,17 +60,4 @@
     border-radius: 20px;
     max-width: 85%;
     max-height: 85%;
-}
-.card-body-text{
-    padding: auto;
-}
-
-.btn-custom {
-    border-radius: 20px;
-    background-color: rgba(253, 0, 84, 1);
-
-}
-.button{
-    color: white;
-    background-color: rgba(253, 0, 84, 1);
 }
