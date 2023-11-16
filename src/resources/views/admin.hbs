@@ -4,10 +4,10 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">New Video</h5>
+        <h5 class="modal-title">New User</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-        <form method="post" action="/admin">
+        <form method="post" action="/admin/video">
       <div class="modal-body">
           <div class="mb-3">
             <label for="title" class="col-form-label">Title:</label>
@@ -77,3 +77,18 @@
     </div>
   </div>
 </div>
+
+
+{{#each videos}}
+<div class="card" style="width: 18rem;">
+  <a href="/video/{{this.videoId}}">
+    <img src="{{this.image}}" class="card-img-top" alt="image">
+  </a>
+  <div class="card-body">
+    <a href="/video/{{this.videoId}}"></a>
+    <p class="card-text">{{this.title}}</p>
+  </div>
+  <button type="button" id="editBtn" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modal"
+    data-bs-whatever="{{this.id}}">Edit</button>
+</div>
+{{/each}}

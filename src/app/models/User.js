@@ -6,6 +6,16 @@ const User = new Schema(
     {
         googleId: { type: String },
         email: { type: String },
+        name: { type: String },
+        age: { type: Number },
+        height: { type: Number },
+        weight: { type: Number },
+        sex: { type: String },
+        category: { type: String },
+        activityRatios: { type: String },
+        userCaloriesAmount: { type: Number },
+        requiredCaloriesAmount: { type: Number },
+        choseFoode: { type: [] },
     },
     {
         timestamps: true,
