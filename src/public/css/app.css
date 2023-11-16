@@ -1,0 +1,59 @@
+.admin_heading {
+  background-image: url("/img/bg_heading.png");
+  background-size: cover;
+  background-repeat: no-repeat; }
+
+.logo_admin {
+  width: 30px;
+  height: 32px; }
+
+.hpm {
+  font-size: 20px;
+  font-weight: 700; }
+
+.admin_header > li {
+  font-weight: 700;
+  border-color: #fd0054; }
+
+.logout {
+  color: white;
+  background-color: #fd0054;
+  font-weight: 700; }
+
+.footer {
+  background-color: #2b2024; }
+
+.heading_footer {
+  color: #fd0054; }
+
+.header {
+  background-image: url("/img/bg.png");
+  height: 500px;
+  color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0;
+  opacity: 1; }
+
+.nav-item {
+  font-size: 20px;
+  font-weight: 700; }
+
+.button_header {
+  background-color: #fd0054;
+  color: white;
+  font-weight: 500;
+  border-radius: 20px; }
+
+.user_icon {
+  width: 40px; }
+
+.heading > h2 {
+  color: #fd0054;
+  font-weight: 700; }
+
+h4 {
+  color: aliceblue; }
+
+.service, .contact {
+  line-height: 30px; }
