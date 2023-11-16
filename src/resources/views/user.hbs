@@ -1,12 +1,42 @@
 <h1>user page</h1>
-{{#each videos}}
-  <div class="card" style="width: 18rem;">
-    <a href="/video/{{this.videoId}}">
-      <img src="{{this.image}}" class="card-img-top" alt="image">
-    </a>
-    <div class="card-body">
-      <a href="/video/{{this.videoId}}"></a>
-      <p class="card-text">{{this.title}}</p>
+<div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New Video</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" action="/admin/user">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="name" class="col-form-label">name:</label>
+            <input type="text" class="form-control" id="name" name="name">
+          </div>
+          <div class="mb-3">
+            <label for="age" class="col-form-label">age:</label>
+            <input type="number" class="form-control" id="age" name="age">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" id="submitBtn" class="btn btn-primary">Create</button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">Create</button>
+
+{{#each videos}}
+<div class="card" style="width: 18rem;">
+  <a href="/video/{{this.videoId}}">
+    <img src="{{this.image}}" class="card-img-top" alt="image">
+  </a>
+  <div class="card-body">
+    <a href="/video/{{this.videoId}}"></a>
+    <p class="card-text">{{this.title}}</p>
+  </div>
+  <button type="button" id="editBtn" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modal"
+    data-bs-whatever="{{this.id}}">Edit</button>
+</div>
 {{/each}}

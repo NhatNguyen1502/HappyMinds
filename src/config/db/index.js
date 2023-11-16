@@ -1,15 +1,10 @@
 import mongoose, { model } from 'mongoose';
 
-let pass = 'SKLJcsydeV5PbPJ0';
-
 async function connect() {
     try {
-        await mongoose.connect(
-            `mongodb+srv://happymindspnv:${pass}@happyminds.ctjhbue.mongodb.net/happyminds?retryWrites=true&w=majority`,
-            {
-                useNewUrlParser: true,
-            },
-        );
+        await mongoose.connect(process.env.MONGO_URL, {
+            useNewUrlParser: true,
+        });
         console.log('connect database successfully!');
     } catch (error) {
         console.log('connect database failure!', error);
