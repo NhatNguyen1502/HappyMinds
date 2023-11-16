@@ -83,5 +83,11 @@ a:hover {
 h2 {
   color: #000000; }
 
+<<<<<<< HEAD
+=======
+h4 {
+  color: aliceblue; }
+
+>>>>>>> develop
 .service, .contact {
   line-height: 30px; }

@@ -1,5 +1,4 @@
 import homepageRouter from './homepage.js';
-import videoRouter from './video.js'
 import userRouter from './user.js';
 import videoRouter from './video.js';
 import adminRouter from './admin.js';
