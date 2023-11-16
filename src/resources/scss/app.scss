@@ -1,4 +1,96 @@
 @import 'variables';
+
+/* =---------------------- Your BMI - BMI CHART -------------------------------------- */
+.text-yourBMI {
+    font-size: 22px;
+    font-family: "Lato";
+    color: rgba(106, 106, 106, 1);
+}
+
+.bmi-content {
+    margin-left: 2px;
+    margin-bottom: 2px;
+    background-color: rgba(253, 0, 84, 1);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.text-content-yourBMI {
+    padding-top: 10px;
+    color: white;
+}
+
+/* =---------------------- Your BMI - BMI CHART END -------------------------------------- */
+
+
+
+/* ---------------------------------SLIDER------------------------------------------------- */
+
+.image-wrapper {
+    max-width: 100%;
+    height: 17em;
+    display: flex;
+    justify-content: center;
+}
+
+.image-slider {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+@media (min-width: 992px) {
+    .carousel-inner {
+        display: flex;
+    }
+
+    .carousel-item {
+        margin-right: 0;
+        flex: 0 0 calc(100%/3);
+        display: block;
+    }
+
+    .image-wrapper {
+        height: 23vw;
+    }
+
+    .card-text-slider {
+        max-height: 50px;
+    }
+}
+
+.carousel-inner {
+    padding: 1em;
+}
+
+.card-slider {
+    margin: 0 .5em;
+    box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+    border: none;
+}
+
+.card-text-slider {
+    max-height: 50px;
+    overflow: hidden;
+}
+
+
+.carousel-control-prev,
+.carousel-control-next {
+    background-color: #e1e1e1;
+    width: 6vh;
+    height: 6vh;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: .5;
+}
+
+.carousel-control-prev :hover,
+.carousel-control-next {
+    opacity: .8;
+}
+
+/* ---------------------------------SLIDER------------------------------------------------- */
 .admin_heading{
     background-image: url('/img/bg_heading.png');
     background-size: cover;
