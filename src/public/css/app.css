@@ -1,0 +1,87 @@
+.page {
+  background-color: #d2d2d2; }
+
+.level, .more {
+  color: #fd0054;
+  font-weight: 600;
+  font-size: 15px; }
+
+.level {
+  font-size: 18px;
+  border: 2px solid #fd0054; }
+
+.more {
+  font-size: 15px; }
+
+.duration, .description {
+  font-size: 12px;
+  margin: 0; }
+
+.description {
+  white-space: nowrap; }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  margin: 0;
+  padding: 0; }
+
+a:hover {
+  color: #fd0054; }
+
+.admin_heading {
+  background-image: url("/img/bg_heading.png");
+  background-size: cover;
+  background-repeat: no-repeat; }
+
+.logo_admin {
+  width: 30px;
+  height: 32px; }
+
+.hpm {
+  font-size: 20px;
+  font-weight: 700; }
+
+.admin_header > li {
+  font-weight: 700;
+  border-color: #fd0054; }
+
+.logout {
+  color: white;
+  background-color: #fd0054;
+  font-weight: 700; }
+
+.footer {
+  background-color: #2b2024; }
+
+.heading_footer {
+  color: #fd0054; }
+
+.header {
+  background-image: url("/img/bg.png");
+  height: 500px;
+  color: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0;
+  opacity: 1; }
+
+.nav-item {
+  font-size: 20px;
+  font-weight: 700; }
+
+.button_header {
+  background-color: #fd0054;
+  color: white;
+  font-weight: 500;
+  border-radius: 20px; }
+
+.user_icon {
+  width: 40px; }
+
+h2 {
+  color: #000000; }
+
+.service, .contact {
+  line-height: 30px; }
