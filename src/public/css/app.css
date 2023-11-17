@@ -1,12 +1,41 @@
-<<<<<<< HEAD
+.page {
+  background-color: #d2d2d2; }
+
+.level, .more {
+  color: #fd0054;
+  font-weight: 600;
+  font-size: 15px; }
+
+.level {
+  font-size: 18px;
+  border: 2px solid #fd0054; }
+
+.more {
+  font-size: 15px; }
+
+.duration, .description {
+  font-size: 12px;
+  margin: 0; }
+
+.description {
+  white-space: nowrap; }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  margin: 0;
+  padding: 0; }
+
+a:hover {
+  color: #fd0054; }
+
 body {
   background-color: #d2d2d2; }
 
 .form-custom {
   position: relative; }
 
-=======
->>>>>>> homepage
 /* =---------------------- Your BMI - BMI CHART -------------------------------------- */
 .text-yourBMI {
   font-size: 22px;
@@ -112,9 +141,21 @@ body {
   margin: 0;
   opacity: 1; }
 
+.nav-item > a {
+  text-decoration: none; }
+
 .nav-item {
   font-size: 20px;
-  font-weight: 700; }
+  font-weight: 700;
+  border-bottom: 3px solid rgba(253, 0, 84, 0); }
+
+.nav-item:hover {
+  border-bottom: 3px solid #fd0054;
+  color: #fd0054; }
+
+.nav-item:focus {
+  border-bottom: 3px solid #fd0054 !important;
+  color: #fd0054; }
 
 .button_header {
   background-color: #fd0054;
@@ -125,24 +166,20 @@ body {
 .user_icon {
   width: 40px; }
 
-.inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory {
-  background-color: #d2d2d2; }
+h2 {
+  color: #000000; }
 
-<<<<<<< HEAD
-.form .bi-search {
-  position: absolute;
-  font-size: 1.5rem;
-  top: 9px;
-  left: 15px;
-  color: #9ca3af; }
+.service, .contact {
+  line-height: 30px; }
 
-.form span .bi-x-circle-fill {
+.form span .bi-search {
   position: absolute;
   font-size: 1.5rem;
   right: 15px;
   top: 9px;
   padding: 2px;
-  color: #9ca3af; }
+  color: #9ca3af;
+  cursor: pointer; }
 
 .left-pan {
   padding: 7px; }
@@ -152,7 +189,7 @@ body {
 
 .form-input {
   height: 55px;
-  text-indent: 33px;
+  text-indent: 20px;
   border-radius: 15px;
   background-color: white; }
 
@@ -183,36 +220,10 @@ body {
 .card-content {
   border-radius: 20px; }
 
-=======
-.card-content {
-  border-radius: 20px; }
-
->>>>>>> homepage
 .rounded-image {
   border-radius: 20px;
   max-width: 85%;
   max-height: 85%; }
-<<<<<<< HEAD
-=======
+
 ::-webkit-scrollbar {
-  display: none;
-}
-
-.card {
-  overflow: hidden;
-  transition: transform 0.6s;
-}
-
-.card:hover {
-  transform: scale(1.05);
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
-a:hover {
-  color: black;
-}
->>>>>>> homepage
+  display: none; }

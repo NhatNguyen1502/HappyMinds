@@ -1,4 +1,5 @@
 import homepageRouter from './homepage.js';
+import blogdetailRouter from './blogdetail.js'
 import userRouter from './user.js';
 import adminRouter from './admin.js';
 import videoRouter from './video.js';
@@ -10,9 +11,14 @@ export function route(app) {
 
     app.use('/video', videoRouter);
 
+    app.use('/food', foodcaloriesRouter);
+
+    app.use('/blog', blogRouter);
+
     app.use('/admin', adminRouter);
 
-    app.use('/food', foodcaloriesRouter);
+    app.use('/blogdetail', blogdetailRouter);
+
 
     app.get('/', (req, res) => {
         res.render('homepage');
