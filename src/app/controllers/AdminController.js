@@ -1,4 +1,4 @@
-import adminService from '../services/AdminService.js';
+import AdminService from '../services/AdminService.js';
 
 class AdminController {
     index(req, res) {
@@ -8,10 +8,25 @@ class AdminController {
         res.render('admin-food', { layout: 'admin.hbs', title: 'ADMIN-FOOD' });
     }
     showVideo(req, res) {
-        adminService.showVideo(req, res);
+        AdminService.showVideo(req, res);
     }
     showBlog(req, res) {
         res.render('admin-blog', { layout: 'admin.hbs', title: 'ADMIN-BLOG' });
+    }
+    createVideo(req, res) {
+        AdminService.createVideo(req, res);
+    }
+
+    createUser(req, res) {
+        AdminService.createUser(req, res);
+    }
+
+    createFood(req, res) {
+        AdminService.createFood(req, res);
+    }
+
+    createBlog(req, res) {
+        AdminService.createBlog(req, res);
     }
 }
 
