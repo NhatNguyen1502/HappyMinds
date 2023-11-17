@@ -2,6 +2,7 @@ import Video from '../models/Video.js';
 import User from '../models/User.js';
 import Food from '../models/Food.js';
 import Blog from '../models/Blog.js';
+import { multipleMongooesToOject } from '../../util/mongoose.js';
 
 class AdminService {
     createVideo = async (req, res) => {
@@ -37,6 +38,15 @@ class AdminService {
             .then(() => res.redirect('/user'))
             .catch((err) => console.log(err));
     };
+    showVideo(req, res) {
+        Video.find({}).then((videos) => {
+            res.render('admin-video', {
+                videos: multipleMongooesToOject(videos),
+                layout: 'admin.hbs',
+                title: 'ADMIN-VIDEO',
+            });
+        });
+    }
 }
 
 export default new AdminService();
