@@ -11,7 +11,7 @@ class AdminService {
         const saveVideo = await Video.create(formData);
         saveVideo
             .save()
-            .then(() => res.redirect("/user"))
+            .then(() => res.redirect("/admin/admin-video"))
             .catch((err) => console.log(err));
     };
     createUser = async (req, res) => {
@@ -19,7 +19,7 @@ class AdminService {
         const saveUser = await User.create(formData);
         saveUser
             .save()
-            .then(() => res.redirect("/user"))
+            .then(() => res.redirect("/admin/admin-user"))
             .catch((err) => console.log(err));
     };
     createFood = async (req, res) => {
@@ -27,7 +27,7 @@ class AdminService {
         const saveFood = await Food.create(formData);
         saveFood
             .save()
-            .then(() => res.redirect("/user"))
+            .then(() => res.redirect("/admin/admin-food"))
             .catch((err) => console.log(err));
     };
     createBlog = async (req, res) => {
@@ -35,7 +35,7 @@ class AdminService {
         const saveBlog = await Blog.create(formData);
         saveBlog
             .save()
-            .then(() => res.redirect("/user"))
+            .then(() => res.redirect("/admin/admin-blog"))
             .catch((err) => console.log(err));
     };
     showVideos(req, res) {
@@ -64,6 +64,20 @@ class AdminService {
                 },
                 { new: true }
             );
+            res.redirect("/admin/admin-video");
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    deleteVideo = async (req, res) => {
+        const id = req.params.id;
+        try {
+            const video = await Video.findById(id);
+            if (!video) {
+                return res.status(404).json({ message: "Video not found" });
+            }
+            await video.deleteOne();
             res.redirect("/admin/admin-video");
         } catch (err) {
             console.log(err);

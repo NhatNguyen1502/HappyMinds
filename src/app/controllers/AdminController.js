@@ -32,6 +32,10 @@ class AdminController {
     updateVideo(req, res){
         AdminService.updateVideo(req, res);
     }
+
+    deleteVideo(req, res){
+        AdminService.deleteVideo(req, res);
+    }
 }
 
 export default new AdminController();

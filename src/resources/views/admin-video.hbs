@@ -115,7 +115,7 @@
                 <th width="150px">
                     {{!-- BUTTON DELETE --}}
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete"
-                        data-bs-whatever="@getbootstrap">
+                        data-bs-whatever="@getbootstrap" id="deleteButton" onclick="deleteVideo('{{this._id}}')">
                         <span class="icon-wrapper">
                             <svg class="icon" width="24px" height="24px" color="white" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -241,7 +241,7 @@
         </div>
     </div>
 </div>
-
+{{!-- DISPLAY DATA & DELETE--}}
 <script>
     function updateForm(id, title, videoId, caloriesAmount, level, category, sex) {
         document.getElementById('updateForm').action = '/admin/update-video/' + id;
@@ -276,5 +276,8 @@
         } else {
             document.getElementById('updateSex3').checked = true;
         }
+    }
+    function deleteVideo(id){
+        document.getElementById('deleteForm').action = '/admin/delete-video/' + id;
     }
 </script>

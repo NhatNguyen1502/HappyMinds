@@ -17,4 +17,6 @@ router.get('/create', (req, res) => res.render('admin'));
 
 router.post('/update-video/:id', adminController.updateVideo);
 
+router.post('/delete-video/:id', adminController.deleteVideo);
+
 export default router;
