@@ -3,10 +3,10 @@ import userRouter from './user.js';
 import adminRouter from './admin.js';
 import videoRouter from './video.js';
 import foodcaloriesRouter from './foodcalories.js';
+import blogRouter from './blog.js';
 
 export function route(app) {
     app.use('/homepage', homepageRouter);
-    // app.get('/homepage', (req, res) => {res.render('homepage');});
 
     app.use('/video', videoRouter);
 
@@ -19,4 +19,5 @@ export function route(app) {
     });
 
     app.use('/user', userRouter);
+    app.use('/blog', blogRouter);
 }
