@@ -1,5 +1,4 @@
 @import 'variables';
-<<<<<<< HEAD
 .page{
     background-color: rgba(210, 210, 210, 1);
 }
@@ -38,7 +37,6 @@ a:hover{
     color:rgba(253, 0, 84, 1)
 }
 
-=======
 
 // --------------------------------------------FOOD---------------------------------------------------------//
 body {
@@ -140,7 +138,6 @@ body {
 }
 
 /* ---------------------------------SLIDER------------------------------------------------- */
->>>>>>> develop
 .admin_heading{
     background-image: url('/img/bg_heading.png');
     background-size: cover;
@@ -178,9 +175,21 @@ body {
     margin: 0;
     opacity: 1 ;
 }
+.nav-item>a{
+    text-decoration: none;
+}
 .nav-item{
     font-size: 20px;
     font-weight: 700;
+    border-bottom: 3px solid rgba(253, 0, 84, 0);
+}
+.nav-item:hover {
+    border-bottom: 3px solid rgba(253, 0, 84, 1);
+    color: rgba(253, 0, 84, 1); 
+}
+.nav-item:focus {
+    border-bottom: 3px solid rgba(253, 0, 84, 1) !important;
+    color: rgba(253, 0, 84, 1); 
 }
 .button_header{
     background-color: rgba(253, 0, 84, 1);
@@ -195,28 +204,26 @@ h2 {
     color: #000000;
 }
 
-<<<<<<< HEAD
 .service, .contact{
     line-height: 30px;
 }
 
-=======
-.form .bi-search {
-    position: absolute;
-    font-size: 1.5rem;
-    top: 9px;
-    left: 15px;
-    color: #9ca3af;
-}
+// .form .bi-search {
+//     position: absolute;
+//     font-size: 1.5rem;
+//     top: 9px;
+//     left: 15px;
+//     color: #9ca3af;
+// }
 
-.form span .bi-x-circle-fill {
+.form span .bi-search {
     position: absolute;
     font-size: 1.5rem;
     right: 15px;
     top: 9px;
     padding: 2px;
     color: #9ca3af;
-    ;
+    cursor: pointer;
 }
 
 .left-pan {
@@ -229,7 +236,7 @@ h2 {
 
 .form-input {
     height: 55px;
-    text-indent: 33px;
+    text-indent: 20px;
     border-radius: 15px;
     background-color: white;
 }
@@ -276,4 +283,3 @@ h2 {
 ::-webkit-scrollbar {
     display: none;
 }
->>>>>>> develop

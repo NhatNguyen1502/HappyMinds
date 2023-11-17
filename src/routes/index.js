@@ -11,11 +11,14 @@ export function route(app) {
 
     app.use('/video', videoRouter);
 
+    app.use('/food', foodcaloriesRouter);
+
+    app.use('/blog', blogRouter);
+
     app.use('/admin', adminRouter);
 
     app.use('/blogdetail', blogdetailRouter);
 
-    app.use('/food', foodcaloriesRouter);
 
     app.get('/', (req, res) => {
         res.render('homepage');
