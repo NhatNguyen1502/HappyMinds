@@ -1,4 +1,5 @@
 import homepageRouter from './homepage.js';
+import blogdetailRouter from './blogdetail.js'
 import userRouter from './user.js';
 import adminRouter from './admin.js';
 import videoRouter from './video.js';
@@ -11,6 +12,8 @@ export function route(app) {
     app.use('/video', videoRouter);
 
     app.use('/admin', adminRouter);
+
+    app.use('/blogdetail', blogdetailRouter);
 
     app.use('/food', foodcaloriesRouter);
 

@@ -3,6 +3,9 @@ class HomepageController {
     index(req, res) {
         res.render('homepage');
     }
+    showVideo(req, res) {
+        res.render('video');
+    }
     // [GET] /homepage/:slug
     show(req, res) {
         res.send('Helo ae');

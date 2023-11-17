@@ -1,4 +1,4 @@
-import VideoService from "../services/VideoService.js";
+import VideoService from '../services/VideoService.js';
 
 class VideoController {
 	show(req, res) {
