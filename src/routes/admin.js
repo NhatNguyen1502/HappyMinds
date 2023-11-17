@@ -13,6 +13,4 @@ const router = express.Router();
 // router.post('/food', adminController.createFood);
 // router.post('/blog', adminController.createBlog);
 
-// router.get('/', adminController.show);
-
 export default router;
