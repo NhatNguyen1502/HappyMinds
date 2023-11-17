@@ -6,5 +6,4 @@ const router = express.Router();
 router.get('/', VideoController.index );
 router.get('/:slug', VideoController.show);
 
-
 export default router;

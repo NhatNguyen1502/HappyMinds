@@ -30,8 +30,6 @@ a {
 a:hover {
   color: #fd0054; }
 
-<<<<<<< HEAD
-=======
 /* =---------------------- Your BMI - BMI CHART -------------------------------------- */
 .text-yourBMI {
   font-size: 22px;
@@ -100,7 +98,6 @@ a:hover {
   opacity: .8; }
 
 /* ---------------------------------SLIDER------------------------------------------------- */
->>>>>>> 6eed831cefda4edafc6d83cd3f9273bbd8cce5ca
 body {
   background-color: #d2d2d2; }
 
@@ -175,8 +172,6 @@ body {
   opacity: .8; }
 
 /* ---------------------------------SLIDER------------------------------------------------- */
-<<<<<<< HEAD
-=======
 .card-content {
   border-radius: 20px; }
 
@@ -190,7 +185,6 @@ body {
 
 .btn-custom {
   border-radius: 20px; }
->>>>>>> 6eed831cefda4edafc6d83cd3f9273bbd8cce5ca
 .admin_heading {
   background-image: url("/img/bg_heading.png");
   background-size: cover;
@@ -253,20 +247,32 @@ body {
 .user_icon {
   width: 40px; }
 
-<<<<<<< HEAD
-h2 {
-  color: #000000; }
-
-.service, .contact {
-  line-height: 30px; }
-=======
 .form .bi-search {
   position: absolute;
   font-size: 1.5rem;
   top: 9px;
   left: 15px;
   color: #9ca3af; }
->>>>>>> 6eed831cefda4edafc6d83cd3f9273bbd8cce5ca
+
+.form span .bi-x-circle-fill {
+  position: absolute;
+  font-size: 1.5rem;
+  right: 15px;
+  top: 9px;
+  padding: 2px;
+  color: #9ca3af; }
+
+.left-pan {
+  padding: 7px; }
+
+.service, .contact {
+  line-height: 30px; }
+.form .bi-search {
+  position: absolute;
+  font-size: 1.5rem;
+  top: 9px;
+  left: 15px;
+  color: #9ca3af; }
 
 .form span .bi-search {
   position: absolute;
@@ -307,8 +313,6 @@ h2 {
 .btn-custom {
   border-radius: 20px; }
 
-<<<<<<< HEAD
-=======
 .inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory {
   background-color: #d2d2d2; }
 
@@ -363,7 +367,7 @@ h2 {
   border-radius: 20px;
   max-width: 85%;
   max-height: 85%; }
->>>>>>> 6eed831cefda4edafc6d83cd3f9273bbd8cce5ca
+
 .service, .contact {
   line-height: 30px; }
 
