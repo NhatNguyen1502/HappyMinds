@@ -3,7 +3,7 @@ function ensureAuth(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     } else {
-        res.redirect('/');
+        res.redirect('/user');
     }
 }
 // if user is authenticated and going to login page then redirected to home page if not authenticated redirected to login page  .
