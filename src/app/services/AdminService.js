@@ -2,6 +2,7 @@ import Video from '../models/Video.js';
 import User from '../models/User.js';
 import Food from '../models/Food.js';
 import Blog from '../models/Blog.js';
+import { multipleMongooesToOject} from '../../util/mongoose.js';
 
 class AdminService {
     createVideo = async (req, res) => {
