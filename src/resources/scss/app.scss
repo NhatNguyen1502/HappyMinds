@@ -1,4 +1,44 @@
 @import 'variables';
+<<<<<<< HEAD
+.page{
+    background-color: rgba(210, 210, 210, 1);
+}
+.level,.more{
+    color:rgba(253, 0, 84, 1);
+    font-weight: 600;
+    font-size: 15px;
+}
+.level{
+    font-size: 18px;
+    border: 2px solid rgba(253, 0, 84, 1);
+}
+.more{
+    font-size: 15px;
+}
+.duration, .description{
+    font-size: 12px;
+    margin: 0;
+}
+.description{
+    white-space: nowrap;
+}
+// .col-md-4{
+//     width: 32%;
+//     margin-bottom: 10px; 
+//     margin-right: 5px;
+// }
+a{
+    text-decoration: none; 
+    color: inherit;
+    cursor: pointer; 
+    margin: 0;
+    padding: 0;
+}
+a:hover{
+    color:rgba(253, 0, 84, 1)
+}
+
+=======
 
 // --------------------------------------------FOOD---------------------------------------------------------//
 body {
@@ -99,6 +139,7 @@ body {
 }
 
 /* ---------------------------------SLIDER------------------------------------------------- */
+>>>>>>> develop
 .admin_heading{
     background-image: url('/img/bg_heading.png');
     background-size: cover;
@@ -149,11 +190,16 @@ body {
 .user_icon{
     width: 40px;
 }
-.heading > h2{
-    color: rgba(253, 0, 84, 1);
-    font-weight: 700;
+h2 {
+    color: #000000;
 }
 
+<<<<<<< HEAD
+.service, .contact{
+    line-height: 30px;
+}
+
+=======
 .form .bi-search {
     position: absolute;
     font-size: 1.5rem;
@@ -226,3 +272,7 @@ body {
     max-width: 85%;
     max-height: 85%;
 }
+::-webkit-scrollbar {
+    display: none;
+}
+>>>>>>> develop
