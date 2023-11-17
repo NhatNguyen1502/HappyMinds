@@ -1,7 +1,7 @@
 import homepageRouter from './homepage.js';
 import userRouter from './user.js';
-import videoRouter from './video.js';
 import adminRouter from './admin.js';
+import videoRouter from './video.js';
 import foodcaloriesRouter from './foodcalories.js';
 
 export function route(app) {

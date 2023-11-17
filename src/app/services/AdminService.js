@@ -37,6 +37,15 @@ class AdminService {
             .then(() => res.redirect('/user'))
             .catch((err) => console.log(err));
     };
+    showVideo(req, res) {
+      Video.find({}).then((videos) => {
+        res.render("admin-video", {
+          videos: multipleMongooesToOject(videos),
+          layout: "admin.hbs",
+          title: "ADMIN-VIDEO",
+        });
+      });
+    }
 }
 
 export default new AdminService();
