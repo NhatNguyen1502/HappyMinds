@@ -3,8 +3,8 @@ import userController from '../app/controllers/userController.js';
 
 const router = express.Router();
 
-router.get('/', userController.show);
+// router.get('/', userController.show);
 
-router.post('/', userController.createVideo);
+// router.post('/', userController.createVideo);
 
 export default router;
