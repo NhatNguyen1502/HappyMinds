@@ -7,7 +7,7 @@ import foodcaloriesRouter from './foodcalories.js';
 
 export function route(app) {
     app.use('/homepage', homepageRouter);
-    // app.get('/homepage', (req, res) => {res.render('homepage');});
+    app.use('/video', videoRouter);
 
     app.use('/video', videoRouter);
 

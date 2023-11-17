@@ -1,3 +1,37 @@
+<<<<<<< HEAD
+.page {
+  background-color: #d2d2d2; }
+
+.level, .more {
+  color: #fd0054;
+  font-weight: 600;
+  font-size: 15px; }
+
+.level {
+  font-size: 18px;
+  border: 2px solid #fd0054; }
+
+.more {
+  font-size: 15px; }
+
+.duration, .description {
+  font-size: 12px;
+  margin: 0; }
+
+.description {
+  white-space: nowrap; }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  margin: 0;
+  padding: 0; }
+
+a:hover {
+  color: #fd0054; }
+
+=======
 /* =---------------------- Your BMI - BMI CHART -------------------------------------- */
 .text-yourBMI {
   font-size: 22px;
@@ -153,6 +187,7 @@ body {
 
 .btn-custom {
   border-radius: 20px; }
+>>>>>>> develop
 .admin_heading {
   background-image: url("/img/bg_heading.png");
   background-size: cover;
@@ -203,6 +238,17 @@ body {
 .user_icon {
   width: 40px; }
 
+<<<<<<< HEAD
+h2 {
+  color: #000000; }
+
+<<<<<<< HEAD
+=======
+h4 {
+  color: aliceblue; }
+
+>>>>>>> develop
+=======
 .inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory {
   background-color: #d2d2d2; }
 
@@ -257,6 +303,7 @@ body {
   border-radius: 20px;
   max-width: 85%;
   max-height: 85%; }
+>>>>>>> develop
 .service, .contact {
   line-height: 30px; }
 
