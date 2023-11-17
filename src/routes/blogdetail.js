@@ -1,9 +1,8 @@
 import express from 'express';
-import BlogDetailCotroller from '../app/controllers/BlogDetailCotroller.js';
+import BlogDetailController from '../app/controllers/BlogDetailController.js';
 const router = express.Router();
 
-// router.get('/', blogDetailController);
-router.get('/', BlogDetailCotroller.show);
+router.get('/', BlogDetailController.show);
 
 
 export default router;
