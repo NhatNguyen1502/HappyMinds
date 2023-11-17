@@ -1,16 +1,19 @@
 import homepageRouter from './homepage.js';
+import blogdetailRouter from './blogdetail.js'
 import userRouter from './user.js';
 import adminRouter from './admin.js';
 import videoRouter from './video.js';
 import foodcaloriesRouter from './foodcalories.js';
+import blogRouter from './blog.js';
 
 export function route(app) {
     app.use('/homepage', homepageRouter);
-    // app.get('/homepage', (req, res) => {res.render('homepage');});
 
     app.use('/video', videoRouter);
 
     app.use('/admin', adminRouter);
+
+    app.use('/blogdetail', blogdetailRouter);
 
     app.use('/food', foodcaloriesRouter);
 
@@ -19,4 +22,5 @@ export function route(app) {
     });
 
     app.use('/user', userRouter);
+    app.use('/blog', blogRouter);
 }

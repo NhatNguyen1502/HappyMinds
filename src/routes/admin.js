@@ -13,6 +13,6 @@ router.post('/user', adminController.createUser);
 router.post('/food', adminController.createFood);
 router.post('/blog', adminController.createBlog);
 
-router.get('/', adminController.show);
+router.get('/create', (req, res) => res.render('admin'));
 
 export default router;
