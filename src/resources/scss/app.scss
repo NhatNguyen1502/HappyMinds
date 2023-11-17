@@ -1,5 +1,4 @@
 @import 'variables';
-<<<<<<< HEAD
 .page{
     background-color: rgba(210, 210, 210, 1);
 }
@@ -38,7 +37,6 @@ a:hover{
     color:rgba(253, 0, 84, 1)
 }
 
-=======
 
 // --------------------------------------------FOOD---------------------------------------------------------//
 body {
@@ -139,7 +137,7 @@ body {
 }
 
 /* ---------------------------------SLIDER------------------------------------------------- */
->>>>>>> develop
+
 .admin_heading{
     background-image: url('/img/bg_heading.png');
     background-size: cover;
@@ -194,12 +192,10 @@ h2 {
     color: #000000;
 }
 
-<<<<<<< HEAD
 .service, .contact{
     line-height: 30px;
 }
 
-=======
 .form .bi-search {
     position: absolute;
     font-size: 1.5rem;
@@ -275,4 +271,13 @@ h2 {
 ::-webkit-scrollbar {
     display: none;
 }
->>>>>>> develop
+
+/* ---------------------------------CARD_BLOG------------------------------------------------- */
+.card-blog{
+    max-height: 40px;
+    overflow: hidden;
+}
+.content-text-blog{
+    height: 50px;
+    overflow: hidden;
+}
