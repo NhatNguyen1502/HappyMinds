@@ -1,11 +1,9 @@
 import adminService from '../services/AdminService.js';
 
 class AdminController {
-    // [GET] /homepage
     index(req, res) {
         res.render('admin-user', { layout: 'admin.hbs', title: 'ADMIN-USER' });
     }
-    // [GET] /homepage/:slug
     showFood(req, res) {
         res.render('admin-food', { layout: 'admin.hbs', title: 'ADMIN-FOOD' });
     }
