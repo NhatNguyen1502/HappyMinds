@@ -11,7 +11,7 @@
                     <h5 class="modal-title">New Video</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post" action="/admin">
+                <form method="post" action="/admin/video">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="title" class="col-form-label">Title:</label>
@@ -93,6 +93,7 @@
         </div>
     </div>
 </div>
+
 <div class="table-videos">
     <table class="table table-bordered table-striped table-hover" style="text-align: center;">
         <thead class="table-secondary">
@@ -112,8 +113,9 @@
                 <th>{{this.caloriesAmount}}</th>
                 <th>{{this.level}}</th>
                 <th width="150px">
+                    {{!-- BUTTON DELETE --}}
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete"
-        data-bs-whatever="@getbootstrap">
+                        data-bs-whatever="@getbootstrap">
                         <span class="icon-wrapper">
                             <svg class="icon" width="24px" height="24px" color="white" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -124,11 +126,13 @@
                             </svg>
                         </span>
                     </button>
-                    
-                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modifyModal"
-        data-bs-whatever="@getbootstrap">
+                    {{!-- BUTTON UPDATE --}}
+                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateModal"
+                        data-bs-whatever="@getbootstrap"
+                        onclick="updateForm('{{this._id}}', '{{this.title}}', '{{this.videoId}}', '{{this.caloriesAmount}}', '{{this.level}}', '{{this.category}}', '{{this.sex}}')">
                         <span class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24px" height="24px" color="white" viewBox="0 0 35 35" fill="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24px" height="24px"
+                                color="white" viewBox="0 0 35 35" fill="none">
                                 <path
                                     d="M32.4431 4.12285C32.6416 4.32201 32.7531 4.59176 32.7531 4.87297C32.7531 5.15419 32.6416 5.42394 32.4431 5.6231L30.2267 7.8416L25.9767 3.5916L28.1931 1.3731C28.3923 1.17391 28.6625 1.06201 28.9443 1.06201C29.226 1.06201 29.4962 1.17391 29.6955 1.3731L32.4431 4.12072V4.12285ZM28.7243 9.34185L24.4743 5.09185L9.99672 19.5716C9.87977 19.6885 9.79172 19.8311 9.7396 19.9881L8.02897 25.1178C7.99795 25.2114 7.99355 25.3117 8.01625 25.4075C8.03896 25.5034 8.08788 25.5911 8.15755 25.6608C8.22722 25.7304 8.3149 25.7794 8.41078 25.8021C8.50665 25.8248 8.60696 25.8204 8.70047 25.7893L13.8302 24.0787C13.987 24.0272 14.1296 23.9399 14.2467 23.8237L28.7243 9.34185Z"
                                     fill="white" />
@@ -144,3 +148,133 @@
         </tbody>
     </table>
 </div>
+
+{{!-- UPDATE MODAL --}}
+<div style="display: flex; justify-content: end; margin: 0 0">
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Video</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <form method="post" id="updateForm" action="">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label">Title:</label>
+                            <input type="text" class="form-control" id="updateTitle" name="title" value="{{this._id}}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="caloriesAmount" class="col-form-label">Calories amount:</label>
+                            <input type="number" class="form-control" id="updateCaloriesAmount" name="caloriesAmount">
+                        </div>
+                        <div class="mb-3">
+                            <label for="videoId" class="col-form-label">Video ID:</label>
+                            <input type="text" class="form-control" id="updateVideoId" name="videoId"></input>
+                        </div>
+                        <div class="mb-3">
+                            Level:
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="level" id="updateLevel1" value="beginner"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="level1">Beginner</label>
+
+                                <input type="radio" class="btn-check" name="level" id="updateLevel2" value="medium"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="level2">Medium</label>
+
+                                <input type="radio" class="btn-check" name="level" id="updateLevel3" value="advance"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="level3">Advance</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+
+                            Category:
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="category" id="updateLegs" value="legs"
+                                    autocomplete="off" checked>
+                                <label class="btn btn-outline-primary" for="legs">Legs</label>
+
+                                <input type="radio" class="btn-check" name="category" id="updateAbs" value="abs"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="abs">Abs</label>
+
+                                <input type="radio" class="btn-check" name="category" id="updateChest" value="chest"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="chest">Chest</label>
+
+                                <input type="radio" class="btn-check" name="category" id="updateArms" value="arms"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="arms">Arms</label>
+
+                                <input type="radio" class="btn-check" name="category" id="updateShoulder"
+                                    value="shoulder" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="shoulder">Shoulder</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+
+                            Sex:
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check" name="sex" id="updateMale" value="male"
+                                    autocomplete="off" checked>
+                                <label class="btn btn-outline-primary" for="male">Male</label>
+
+                                <input type="radio" class="btn-check" name="sex" id="updateFemale" value="female"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="female">Female</label>
+
+                                <input type="radio" class="btn-check" name="sex" id="updateSex3" value="both"
+                                    autocomplete="off">
+                                <label class="btn btn-outline-primary" for="sex3">Both</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateForm(id, title, videoId, caloriesAmount, level, category, sex) {
+        document.getElementById('updateForm').action = '/admin/update-video/' + id;
+        document.getElementById('updateTitle').value = title;
+        document.getElementById('updateVideoId').value = videoId;
+        document.getElementById('updateCaloriesAmount').value = caloriesAmount;
+
+        if (level == 'beginner') {
+            document.getElementById('updateLevel1').checked = true;
+        } else if (level == 'medium') {
+            document.getElementById('updateLevel2').checked = true;
+        } else {
+            document.getElementById('updateLevel3').checked = true;
+        }
+
+        if (category == 'arms') {
+            document.getElementById('updateArms').checked = true;
+        } else if (category == 'legs') {
+            document.getElementById('updateLegs').checked = true;
+        } else if (category == 'shoulder') {
+            document.getElementById('updateShoulder').checked = true;
+        } else if (category == 'abs') {
+            document.getElementById('updateAbs').checked = true;
+        } else {
+            document.getElementById('updateChest').checked = true;
+        }
+
+        if (sex == 'male') {
+            document.getElementById('updateMale').checked = true;
+        } else if (sex == 'female') {
+            document.getElementById('updateFemale').checked = true;
+        } else {
+            document.getElementById('updateSex3').checked = true;
+        }
+    }
+</script>
