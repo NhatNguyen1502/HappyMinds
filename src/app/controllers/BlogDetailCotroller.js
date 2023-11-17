@@ -1,6 +1,6 @@
 class BlogDetailController {
-    index(req, res) {
-        res.render('blogDetail');
+    show(req, res) {
+        res.render('blogdetail');
     }
 }
 
