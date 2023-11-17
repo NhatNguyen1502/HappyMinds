@@ -1,7 +1,6 @@
 class BlogDetailController {
-    // [GET] /homepage/:slug
-    show(req, res) {
-        res.render('blogdetail');
+    index(req, res) {
+        res.render('blogDetail');
     }
 }
 
