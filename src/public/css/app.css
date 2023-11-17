@@ -1,9 +1,12 @@
+<<<<<<< HEAD
 body {
   background-color: #d2d2d2; }
 
 .form-custom {
   position: relative; }
 
+=======
+>>>>>>> homepage
 /* =---------------------- Your BMI - BMI CHART -------------------------------------- */
 .text-yourBMI {
   font-size: 22px;
@@ -122,10 +125,10 @@ body {
 .user_icon {
   width: 40px; }
 
-.heading > h2 {
-  color: #fd0054;
-  font-weight: 700; }
+.inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory {
+  background-color: #d2d2d2; }
 
+<<<<<<< HEAD
 .form .bi-search {
   position: absolute;
   font-size: 1.5rem;
@@ -180,7 +183,36 @@ body {
 .card-content {
   border-radius: 20px; }
 
+=======
+.card-content {
+  border-radius: 20px; }
+
+>>>>>>> homepage
 .rounded-image {
   border-radius: 20px;
   max-width: 85%;
   max-height: 85%; }
+<<<<<<< HEAD
+=======
+::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  overflow: hidden;
+  transition: transform 0.6s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  color: black;
+}
+>>>>>>> homepage
