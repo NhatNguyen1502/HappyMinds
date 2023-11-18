@@ -1,14 +1,12 @@
+import homepageService from '../services/HomepageService.js';
+
 class HomepageController {
     // [GET] /homepage
     index(req, res) {
-        res.render('homepage');
+        homepageService.index(req, res);
     }
     showVideo(req, res) {
         res.render('video');
-    }
-    // [GET] /homepage/:slug
-    show(req, res) {
-        res.send('Helo ae');
     }
 }
 

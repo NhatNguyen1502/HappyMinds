@@ -1,4 +1,3 @@
-
 .page {
   background-color: #d2d2d2; }
 
@@ -149,9 +148,11 @@ body {
   transform: translateY(-50%);
   opacity: .5; }
 
-.btn-custom {
-  border-radius: 20px; }
+.carousel-control-prev :hover,
+.carousel-control-next {
+  opacity: .8; }
 
+/* ---------------------------------SLIDER------------------------------------------------- */
 .admin_heading {
   background-image: url("/img/bg_heading.png");
   background-size: cover;
@@ -189,9 +190,21 @@ body {
   margin: 0;
   opacity: 1; }
 
+.nav-item > a {
+  text-decoration: none; }
+
 .nav-item {
   font-size: 20px;
-  font-weight: 700; }
+  font-weight: 700;
+  border-bottom: 3px solid rgba(253, 0, 84, 0); }
+
+.nav-item:hover {
+  border-bottom: 3px solid #fd0054;
+  color: #fd0054; }
+
+.nav-item:focus {
+  border-bottom: 3px solid #fd0054 !important;
+  color: #fd0054; }
 
 .button_header {
   background-color: #fd0054;
@@ -225,7 +238,8 @@ h4 {
   right: 15px;
   top: 9px;
   padding: 2px;
-  color: #9ca3af; }
+  color: #9ca3af;
+  cursor: pointer; }
 
 .left-pan {
   padding: 7px; }
@@ -235,7 +249,7 @@ h4 {
 
 .form-input {
   height: 55px;
-  text-indent: 33px;
+  text-indent: 20px;
   border-radius: 15px;
   background-color: white; }
 
@@ -255,8 +269,6 @@ h4 {
   padding: auto; }
 
 .btn-custom {
-  border-radius: 20px; }
-.card-content {
   border-radius: 20px; }
 
 .rounded-image {
