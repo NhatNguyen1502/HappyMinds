@@ -1,4 +1,4 @@
-import HomepageService from '../services/HomepageService.js';
+import homepageService from '../services/HomepageService.js';
 
 class HomepageController {
     // [GET] /homepage
