@@ -101,76 +101,25 @@
     </div>
 
     <div class="row row-cols-1 pt-3 row-cols-lg-3 g-5">
+        {{#each videos}}
         <div class="col">
             <div class="card">
-                <img src="https://cdn.tgdd.vn/Files/2022/04/28/1428938/yoga-la-gi-nguon-goc-lich-su-va-loi-ich-voi-nguoi-tap-yoga-202204290819081992.jpg"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">The Beginner’s Guide to Weight Lifting</h5>
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">FEB 12, 2020</p>
-                        <p class="card-text ">
-                            <a href="" class="text-danger fw-medium fw-semibold" style="text-decoration: none">MORE INFO</a> 
-                            <img class="pb-1" src="goRight.png" alt="">
-
-                        </p>
+                <a href="/video/{{this.videoId}}">
+                    <img src="{{this.image}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <div class="d-flex justify-content-between">
+                            <p class="card-text">FEB 12, 2020</p>
+                            <p class="card-text ">
+                                <a href="" class="text-danger fw-medium fw-semibold" style="text-decoration: none">MORE INFO</a> 
+                                <img class="pb-1" src="goRight.png" alt="">
+                            </p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://cdn.tgdd.vn/Files/2022/04/28/1428938/yoga-la-gi-nguon-goc-lich-su-va-loi-ich-voi-nguoi-tap-yoga-202204290819081992.jpg"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">The Beginner’s Guide to Weight Lifting</h5>
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">FEB 12, 2020</p>
-                        <p class="card-text ">
-                            <a href="" class="text-danger fw-medium fw-semibold" style="text-decoration: none">MORE INFO</a> 
-                            <img class="pb-1" src="goRight.png" alt="">
-
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://cdn.tgdd.vn/Files/2022/04/28/1428938/yoga-la-gi-nguon-goc-lich-su-va-loi-ich-voi-nguoi-tap-yoga-202204290819081992.jpg"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">The Beginner’s Guide to Weight Lifting</h5>
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">FEB 12, 2020</p>
-                        <p class="card-text ">
-                            <a href="" class="text-danger fw-medium fw-semibold" style="text-decoration: none">MORE INFO</a> 
-                            <img class="pb-1" src="goRight.png" alt="">
-
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://cdn.tgdd.vn/Files/2022/04/28/1428938/yoga-la-gi-nguon-goc-lich-su-va-loi-ich-voi-nguoi-tap-yoga-202204290819081992.jpg"
-                    class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">The Beginner’s Guide to Weight Lifting</h5>
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text">FEB 12, 2020</p>
-                        <p class="card-text ">
-                            <a href="" class="text-danger fw-medium fw-semibold" style="text-decoration: none">MORE INFO</a> 
-                            <img class="pb-1" src="goRight.png" alt="">
-
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+        {{/each}}
     </div>
 
     <div class="row pt-5">

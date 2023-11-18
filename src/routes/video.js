@@ -1,9 +1,9 @@
 import express from 'express';
-import VideoController from '../app/controllers/VideoController';
+import videoController from '../app/controllers/VideoController.js';
 
 const router = express.Router();
 
-router.get('/', videoController.show);
+router.get('/', videoController.index);
 router.get('/:id', videoController.show);
 
 export default router;
