@@ -8,6 +8,9 @@ class HomepageController {
     showVideo(req, res) {
         res.render('video');
     }
+    checkBMI(req, res) {
+        homepageService.checkBMI(req, res);
+    }
 }
 
 export default new HomepageController();
