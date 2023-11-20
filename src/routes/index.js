@@ -10,6 +10,7 @@ export function route(app) {
     app.use('/', homepageRouter);
 
     app.use('/homepage', homepageRouter);
+
     app.use('/video', videoRouter);
 
     app.use('/food', foodcaloriesRouter);
