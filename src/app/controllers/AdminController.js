@@ -7,8 +7,8 @@ class AdminController {
     showFood(req, res) {
         res.render('admin-food', { layout: 'admin.hbs', title: 'ADMIN-FOOD' });
     }
-    showVideo(req, res) {
-        AdminService.showVideo(req, res);
+    showVideos(req, res) {
+        AdminService.showVideos(req, res);
     }
     showBlog(req, res) {
         res.render('admin-blog', { layout: 'admin.hbs', title: 'ADMIN-BLOG' });
@@ -27,6 +27,14 @@ class AdminController {
 
     createBlog(req, res) {
         AdminService.createBlog(req, res);
+    }
+
+    updateVideo(req, res){
+        AdminService.updateVideo(req, res);
+    }
+
+    deleteVideo(req, res){
+        AdminService.deleteVideo(req, res);
     }
 }
 
