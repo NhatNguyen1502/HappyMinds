@@ -1,8 +1,8 @@
-import Video from '../models/Video.js';
-import User from '../models/User.js';
-import Food from '../models/Food.js';
-import Blog from '../models/Blog.js';
-import { multipleMongooesToOject } from '../../util/mongoose.js';
+import Video from "../models/Video.js";
+import User from "../models/User.js";
+import Food from "../models/Food.js";
+import Blog from "../models/Blog.js";
+import { multipleMongooesToOject } from "../../util/mongoose.js";
 
 class AdminService {
     createVideo = async (req, res) => {
@@ -11,7 +11,7 @@ class AdminService {
         const saveVideo = await Video.create(formData);
         saveVideo
             .save()
-            .then(() => res.redirect('/user'))
+            .then(() => res.redirect("/admin/admin-video"))
             .catch((err) => console.log(err));
     };
     createUser = async (req, res) => {
@@ -19,7 +19,7 @@ class AdminService {
         const saveUser = await User.create(formData);
         saveUser
             .save()
-            .then(() => res.redirect('/user'))
+            .then(() => res.redirect("/admin/admin-user"))
             .catch((err) => console.log(err));
     };
     createFood = async (req, res) => {
@@ -27,7 +27,7 @@ class AdminService {
         const saveFood = await Food.create(formData);
         saveFood
             .save()
-            .then(() => res.redirect('/user'))
+            .then(() => res.redirect("/admin/admin-food"))
             .catch((err) => console.log(err));
     };
     createBlog = async (req, res) => {
@@ -35,18 +35,54 @@ class AdminService {
         const saveBlog = await Blog.create(formData);
         saveBlog
             .save()
-            .then(() => res.redirect('/user'))
+            .then(() => res.redirect("/admin/admin-blog"))
             .catch((err) => console.log(err));
     };
-    showVideo(req, res) {
+    showVideos(req, res) {
         Video.find({}).then((videos) => {
-            res.render('admin-video', {
+            res.render("admin-video", {
                 videos: multipleMongooesToOject(videos),
-                layout: 'admin.hbs',
-                title: 'ADMIN-VIDEO',
+                layout: "admin.hbs",
+                title: "ADMIN-VIDEO",
             });
         });
     }
+
+    updateVideo = async (req, res) => {
+        try {
+            const { title, videoId, caloriesAmount, level, category, sex } = req.body;
+            const updatedVideo = await Video.findByIdAndUpdate(
+                req.params.id,
+                {
+                    videoId: videoId,
+                    title: title,
+                    caloriesAmount: caloriesAmount,
+                    level: level,
+                    category: category,
+                    sex: sex,
+                    image: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLA3BDVGf8B0taC4h-qjJm4wYxbnsw`,
+                },
+                { new: true }
+            );
+            res.redirect("/admin/admin-video");
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    deleteVideo = async (req, res) => {
+        const id = req.params.id;
+        try {
+            const video = await Video.findById(id);
+            if (!video) {
+                return res.status(404).json({ message: "Video not found" });
+            }
+            await video.deleteOne();
+            res.redirect("/admin/admin-video");
+        } catch (err) {
+            console.log(err);
+        }
+    };
 }
 
 export default new AdminService();
