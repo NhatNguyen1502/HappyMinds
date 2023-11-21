@@ -50,7 +50,7 @@ class AdminService {
 
     updateVideo = async (req, res) => {
         try {
-            const { title, videoId, caloriesAmount, level, category, sex } =
+            const { title, videoId, caloriesAmount, level, category, sex, BMItype } =
                 req.body;
             const updatedVideo = await Video.findByIdAndUpdate(
                 req.params.id,
@@ -61,6 +61,8 @@ class AdminService {
                     level: level,
                     category: category,
                     sex: sex,
+                    BMItype: BMItype,
+                    duration: duration,
                     image: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLA3BDVGf8B0taC4h-qjJm4wYxbnsw`,
                 },
                 { new: true },
