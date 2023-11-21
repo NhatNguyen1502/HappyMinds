@@ -26,6 +26,14 @@
                             <input type="text" class="form-control" id="videoId" name="videoId"></input>
                         </div>
                         <div class="mb-3">
+                            <label for="BMItype" class="col-form-label">BMI type:</label>
+                            <input type="text" class="form-control" id="BMItype" name="BMItype"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="duration" class="col-form-label">Duration:</label>
+                            <input type="number" class="form-control" id="duration" name="duration"></input>
+                        </div>
+                        <div class="mb-3">
                             Level:
                             <div class="btn-group" role="group">
                                 <input type="radio" class="btn-check" name="level" id="level1" value="beginner"
@@ -102,6 +110,7 @@
                 <th>Title</th>
                 <th>Calories amount</th>
                 <th>Level</th>
+                <th>BMI type</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -130,7 +139,7 @@
                     {{!-- BUTTON UPDATE --}}
                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateModal"
                         data-bs-whatever="@getbootstrap"
-                        onclick="updateForm('{{this._id}}', '{{this.title}}', '{{this.videoId}}', '{{this.caloriesAmount}}', '{{this.level}}', '{{this.category}}', '{{this.sex}}')">
+                        onclick="updateForm('{{this._id}}', '{{this.title}}', '{{this.videoId}}', '{{this.caloriesAmount}}', '{{this.level}}', '{{this.category}}', '{{this.sex}}', '{{this.BMItype}}', '{{this.duration}}')">
                         <span class="icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24px" height="24px"
                                 color="white" viewBox="0 0 35 35" fill="none">
@@ -173,6 +182,14 @@
                         <div class="mb-3">
                             <label for="videoId" class="col-form-label">Video ID:</label>
                             <input type="text" class="form-control" id="updateVideoId" name="videoId"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="BMItype" class="col-form-label">BMI type:</label>
+                            <input type="text" class="form-control" id="updateBMItype" name="BMItype"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="duration" class="col-form-label">Duration:</label>
+                            <input type="number" class="form-control" id="updateDuration" name="duration"></input>
                         </div>
                         <div class="mb-3">
                             Level:
@@ -244,10 +261,12 @@
 </div>
 {{!-- DISPLAY DATA & DELETE--}}
 <script>
-    function updateForm(id, title, videoId, caloriesAmount, level, category, sex) {
+    function updateForm(id, title, videoId, caloriesAmount, level, category, sex, BMItype, duration) {
         document.getElementById('updateForm').action = '/admin/update-video/' + id;
         document.getElementById('updateTitle').value = title;
         document.getElementById('updateVideoId').value = videoId;
+        document.getElementById('updateBMItype').value = BMItype;
+        document.getElementById('updateDuration').value = duration;
         document.getElementById('updateCaloriesAmount').value = caloriesAmount;
 
         if (level == 'beginner') {
