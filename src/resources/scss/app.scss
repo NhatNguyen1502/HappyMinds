@@ -1,5 +1,51 @@
 @import 'variables';
+.page{
+    background-color: rgba(210, 210, 210, 1);
+}
+.level,.more{
+    color:rgba(253, 0, 84, 1);
+    font-weight: 600;
+    font-size: 15px;
+}
+.level{
+    font-size: 18px;
+    border: 2px solid rgba(253, 0, 84, 1);
+}
+.more{
+    font-size: 15px;
+}
+.duration, .description{
+    font-size: 12px;
+    margin: 0;
+}
+.description{
+    white-space: nowrap;
+}
+// .col-md-4{
+//     width: 32%;
+//     margin-bottom: 10px; 
+//     margin-right: 5px;
+// }
+a{
+    text-decoration: none; 
+    color: inherit;
+    cursor: pointer; 
+    margin: 0;
+    padding: 0;
+}
+a:hover{
+    color:rgba(253, 0, 84, 1)
+}
 
+
+// --------------------------------------------FOOD---------------------------------------------------------//
+body {
+    background-color: rgba(210, 210, 210, 1);
+}
+
+.form-custom {
+    position: relative;
+}
 /* =---------------------- Your BMI - BMI CHART -------------------------------------- */
 .text-yourBMI {
     font-size: 22px;
@@ -59,6 +105,7 @@
 }
 
 .carousel-inner {
+    
     padding: 1em;
 }
 
@@ -128,9 +175,21 @@
     margin: 0;
     opacity: 1 ;
 }
+.nav-item>a{
+    text-decoration: none;
+}
 .nav-item{
     font-size: 20px;
     font-weight: 700;
+    border-bottom: 3px solid rgba(253, 0, 84, 0);
+}
+.nav-item:hover {
+    border-bottom: 3px solid rgba(253, 0, 84, 1);
+    color: rgba(253, 0, 84, 1); 
+}
+.nav-item:focus {
+    border-bottom: 3px solid rgba(253, 0, 84, 1) !important;
+    color: rgba(253, 0, 84, 1); 
 }
 .button_header{
     background-color: rgba(253, 0, 84, 1);
@@ -140,6 +199,74 @@
 }
 .user_icon{
     width: 40px;
+}
+h2 {
+    color: #000000;
+}
+
+.service, .contact{
+    line-height: 30px;
+}
+
+// .form .bi-search {
+//     position: absolute;
+//     font-size: 1.5rem;
+//     top: 9px;
+//     left: 15px;
+//     color: #9ca3af;
+// }
+
+.form span .bi-search {
+    position: absolute;
+    font-size: 1.5rem;
+    right: 15px;
+    top: 9px;
+    padding: 2px;
+    color: #9ca3af;
+    cursor: pointer;
+}
+
+.left-pan {
+    padding: 7px;
+}
+
+.left-pan i {
+    padding-left: 10px;
+}
+
+.form-input {
+    height: 55px;
+    text-indent: 20px;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.form-input :focus {
+    box-shadow: none;
+    border: none;
+}
+
+
+.card-content {
+    border-radius: 20px;
+
+}
+
+.rounded-image {
+    border-radius: 20px;
+    max-width: 85%;
+    max-height: 85%;
+}
+
+.card-body-text {
+    padding: auto;
+}
+
+.btn-custom {
+    border-radius: 20px;
+}
+.service, .contact{
+    line-height: 30px;
 }
 .inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory{
     background-color: rgba(210, 210, 210, 1);
@@ -153,3 +280,6 @@
     max-width: 85%;
     max-height: 85%;
 }
+::-webkit-scrollbar {
+    display: none;
+} 

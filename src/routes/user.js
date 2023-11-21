@@ -1,9 +1,9 @@
 import express from 'express';
-import userController from '../app/controllers/userController.js';
+import userController from '../app/controllers/UserController.js';
 
 const router = express.Router();
 
-// router.get('/', userController.show);
+router.get('/', userController.index);
 
 // router.post('/', userController.createVideo);
 
