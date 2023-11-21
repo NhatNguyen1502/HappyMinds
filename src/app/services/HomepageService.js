@@ -14,10 +14,10 @@ class HomepageService {
             });
     }
     checkBMI(req, res) {
-        let height = req.body.height / 100; 
+        let height = req.body.height / 100;
         let weight = req.body.weight;
         let BMI = weight / (height * height);
-    
+
         res.send(`BMI: ${BMI}`);
     }
 }
