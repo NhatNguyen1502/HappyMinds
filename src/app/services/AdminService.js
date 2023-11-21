@@ -174,6 +174,30 @@ class AdminService {
             console.log(err);
         }
     };
+
+    showUsers(req, res) {
+        User.find({}).then((users) => {
+            res.render('admin-user', {
+                users: multipleMongooesToOject(users),
+                layout: 'admin.hbs',
+                title: 'ADMIN-USER',
+            });
+        });
+    }
+
+    deleteUser = async (req, res) => {
+        const id = req.params.id;
+        try {
+            const user = await User.findById(id);
+            if (!user) {
+                return res.status(404).json({ message: 'user not found' });
+            }
+            await user.deleteOne();
+            res.redirect('/admin/admin-user');
+        } catch (err) {
+            console.log(err);
+        }
+    };
 }
 
 export default new AdminService();

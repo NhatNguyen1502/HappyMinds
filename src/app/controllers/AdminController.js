@@ -13,6 +13,9 @@ class AdminController {
     showBlog(req, res) {
         AdminService.showBlog(req, res);
     }
+    showUsers(req, res) {
+        AdminService.showUsers(req, res);
+    }
     createVideo(req, res) {
         AdminService.createVideo(req, res);
     }
@@ -51,6 +54,10 @@ class AdminController {
 
     deleteBlog(req, res) {
         AdminService.deleteBlog(req, res);
+    }
+
+    deleteUser(req, res) {
+        AdminService.deleteUser(req, res);
     }
 }
 
