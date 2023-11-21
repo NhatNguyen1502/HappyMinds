@@ -86,6 +86,118 @@ class AdminService {
             console.log(err);
         }
     };
+    
+    showFoods(req, res) {
+        Food.find({}).then((foods) => {
+            res.render('admin-food', {
+                foods: multipleMongooesToOject(foods),
+                layout: 'admin.hbs',
+                title: 'ADMIN-FOOD',
+            });
+        });
+    }
+
+    updateFood = async (req, res) => {
+        try {
+            const { name, description, calo, img } =
+                req.body;
+            const updatedFood = await Food.findByIdAndUpdate(
+                req.params.id,
+                {
+                    name: name,
+                    description: description,
+                    calo: calo,
+                    img: img,
+                },
+                { new: true },
+            );
+            res.redirect('/admin/admin-food');
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    deleteFood = async (req, res) => {
+        const id = req.params.id;
+        try {
+            const food = await Food.findById(id);
+            if (!food) {
+                return res.status(404).json({ message: 'Food not found' });
+            }
+            await food.deleteOne();
+            res.redirect('/admin/admin-food');
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    showBlog(req, res) {
+        Blog.find({}).then((blog) => {
+            res.render('admin-blog', {
+                blog: multipleMongooesToOject(blog),
+                layout: 'admin.hbs',
+                title: 'ADMIN-BLOG',
+            });
+        });
+    }
+
+    updateBlog = async (req, res) => {
+        try {
+            const { content, image, title, slug } =
+                req.body;
+            const updatedBlog = await Blog.findByIdAndUpdate(
+                req.params.id,
+                {
+                    content: content,
+                    image: image,
+                    title: title,
+                    slug: slug,
+                },
+                { new: true },
+            );
+            res.redirect('/admin/admin-blog');
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    deleteBlog = async (req, res) => {
+        const id = req.params.id;
+        try {
+            const blog = await Blog.findById(id);
+            if (!blog) {
+                return res.status(404).json({ message: 'Blog not found' });
+            }
+            await blog.deleteOne();
+            res.redirect('/admin/admin-blog');
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    showUsers(req, res) {
+        User.find({}).then((users) => {
+            res.render('admin-user', {
+                users: multipleMongooesToOject(users),
+                layout: 'admin.hbs',
+                title: 'ADMIN-USER',
+            });
+        });
+    }
+
+    deleteUser = async (req, res) => {
+        const id = req.params.id;
+        try {
+            const user = await User.findById(id);
+            if (!user) {
+                return res.status(404).json({ message: 'user not found' });
+            }
+            await user.deleteOne();
+            res.redirect('/admin/admin-user');
+        } catch (err) {
+            console.log(err);
+        }
+    };
 }
 
 export default new AdminService();
