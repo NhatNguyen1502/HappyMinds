@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 const Food = new Schema(
     {
         name: { type: String },
-        caloriesAmount: { type: Number },
+        img: { type: String},
+        description: { type: String},
+        calo: { type: Number },
     },
     {
         timestamps: true,

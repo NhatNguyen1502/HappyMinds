@@ -86,6 +86,50 @@ class AdminService {
             console.log(err);
         }
     };
+    
+    showFoods(req, res) {
+        Food.find({}).then((foods) => {
+            res.render('admin-food', {
+                foods: multipleMongooesToOject(foods),
+                layout: 'admin.hbs',
+                title: 'ADMIN-FOOD',
+            });
+        });
+    }
+
+    updateFood = async (req, res) => {
+        try {
+            const { name, description, calo, img } =
+                req.body;
+            const updatedFood = await Food.findByIdAndUpdate(
+                req.params.id,
+                {
+                    name: name,
+                    description: description,
+                    calo: calo,
+                    img: img,
+                },
+                { new: true },
+            );
+            res.redirect('/admin/admin-food');
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    deleteFood = async (req, res) => {
+        const id = req.params.id;
+        try {
+            const food = await Food.findById(id);
+            if (!food) {
+                return res.status(404).json({ message: 'Food not found' });
+            }
+            await food.deleteOne();
+            res.redirect('/admin/admin-food');
+        } catch (err) {
+            console.log(err);
+        }
+    };
 }
 
 export default new AdminService();
