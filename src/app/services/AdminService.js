@@ -130,6 +130,50 @@ class AdminService {
             console.log(err);
         }
     };
+
+    showBlog(req, res) {
+        Blog.find({}).then((blog) => {
+            res.render('admin-blog', {
+                blog: multipleMongooesToOject(blog),
+                layout: 'admin.hbs',
+                title: 'ADMIN-BLOG',
+            });
+        });
+    }
+
+    updateBlog = async (req, res) => {
+        try {
+            const { content, image, title, slug } =
+                req.body;
+            const updatedBlog = await Blog.findByIdAndUpdate(
+                req.params.id,
+                {
+                    content: content,
+                    image: image,
+                    title: title,
+                    slug: slug,
+                },
+                { new: true },
+            );
+            res.redirect('/admin/admin-blog');
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    deleteBlog = async (req, res) => {
+        const id = req.params.id;
+        try {
+            const blog = await Blog.findById(id);
+            if (!blog) {
+                return res.status(404).json({ message: 'Blog not found' });
+            }
+            await blog.deleteOne();
+            res.redirect('/admin/admin-blog');
+        } catch (err) {
+            console.log(err);
+        }
+    };
 }
 
 export default new AdminService();

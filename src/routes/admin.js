@@ -23,4 +23,8 @@ router.post('/update-food/:id', adminController.updateFood);
 
 router.post('/delete-food/:id', adminController.deleteFood);
 
+router.post('/update-blog/:id', adminController.updateBlog);
+
+router.post('/delete-blog/:id', adminController.deleteBlog);
+
 export default router;

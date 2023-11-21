@@ -11,7 +11,7 @@ class AdminController {
         AdminService.showVideos(req, res);
     }
     showBlog(req, res) {
-        res.render('admin-blog', { layout: 'admin.hbs', title: 'ADMIN-BLOG' });
+        AdminService.showBlog(req, res);
     }
     createVideo(req, res) {
         AdminService.createVideo(req, res);
@@ -43,6 +43,14 @@ class AdminController {
 
     deleteFood(req, res) {
         AdminService.deleteFood(req, res);
+    }
+
+    updateBlog(req, res) {
+        AdminService.updateBlog(req, res);
+    }
+
+    deleteBlog(req, res) {
+        AdminService.deleteBlog(req, res);
     }
 }
 
