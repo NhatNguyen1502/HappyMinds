@@ -3,9 +3,7 @@ import homepageController from '../app/controllers/HomepageController.js';
 
 const router = express.Router();
 
-router.get('/video', homepageController.showVideo);
 router.get('/', homepageController.index);
-
-
+router.post('/checkBMI', homepageController.checkBMI);
 
 export default router;

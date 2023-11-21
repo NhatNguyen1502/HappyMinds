@@ -105,6 +105,7 @@ body {
 }
 
 .carousel-inner {
+    
     padding: 1em;
 }
 
@@ -175,9 +176,21 @@ body {
     margin: 0;
     opacity: 1 ;
 }
+.nav-item>a{
+    text-decoration: none;
+}
 .nav-item{
     font-size: 20px;
     font-weight: 700;
+    border-bottom: 3px solid rgba(253, 0, 84, 0);
+}
+.nav-item:hover {
+    border-bottom: 3px solid rgba(253, 0, 84, 1);
+    color: rgba(253, 0, 84, 1); 
+}
+.nav-item:focus {
+    border-bottom: 3px solid rgba(253, 0, 84, 1) !important;
+    color: rgba(253, 0, 84, 1); 
 }
 .button_header{
     background-color: rgba(253, 0, 84, 1);
@@ -204,14 +217,14 @@ h2 {
     color: #9ca3af;
 }
 
-.form span .bi-x-circle-fill {
+.form span .bi-search {
     position: absolute;
     font-size: 1.5rem;
     right: 15px;
     top: 9px;
     padding: 2px;
     color: #9ca3af;
-    ;
+    cursor: pointer;
 }
 
 .left-pan {
@@ -224,7 +237,7 @@ h2 {
 
 .form-input {
     height: 55px;
-    text-indent: 33px;
+    text-indent: 20px;
     border-radius: 15px;
     background-color: white;
 }

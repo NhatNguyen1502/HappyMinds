@@ -1,8 +1,12 @@
 import express from 'express';
-import BLogController from '../app/controllers/BLogController.js';
+import BlogController from '../app/controllers/BlogController.js';
+import BlogDetailController from '../app/controllers/BlogDetailController.js';
 
 const router = express.Router();
 
-router.get('/', BLogController.show);
+router.get('/', BlogController.index);
+router.get('/:slug',BlogDetailController.show);
+
 
 export default router;
+ 
