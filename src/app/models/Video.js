@@ -11,6 +11,7 @@ const Video = new Schema(
         level: { type: String },
         sex: { type: String },
         category: { type: String },
+        BMItype: { type: String },
     },
     {
         timestamps: true,
