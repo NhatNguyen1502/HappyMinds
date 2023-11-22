@@ -1,9 +1,9 @@
+import BlogService from '../services/BlogService.js';
 class BlogController {
-	index(req, res){
-        res.render('blog');
-	}
-    showDetail(req, res){
-        res.render('blog-detail');
+    index = BlogService.index;
+
+    showDetail(req, res) {
+        res.render('blogDetail');
     }
 }
 

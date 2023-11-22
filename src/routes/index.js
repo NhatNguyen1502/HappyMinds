@@ -18,7 +18,9 @@ export function route(app) {
 
     app.use('/admin', adminRouter);
 
-    app.use('/blogdetail', blogdetailRouter);
+    app.use('/blog', blogRouter);
+
+    app.use('/blog/blogdetail', blogdetailRouter);
 
     app.use('/user', userRouter);
 
