@@ -3,7 +3,7 @@ import homepageController from '../app/controllers/HomepageController.js';
 
 const router = express.Router();
 
-router.get('/:slug', homepageController.show);
 router.get('/', homepageController.index);
+router.post('/checkBMI', homepageController.checkBMI);
 
 export default router;

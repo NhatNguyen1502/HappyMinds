@@ -14,7 +14,6 @@ passport.use(
             console.log('profile', profile);
             console.log('accessToken', accessToken);
             const existingUser = await User.findOne({ googleId: profile.id });
-
             if (existingUser) {
                 return done(null, existingUser);
             }
@@ -34,12 +33,24 @@ passport.use(
     ),
 );
 
-passport.serializeUser((user, done) => {
-    done(null, user.id);
+// passport.serializeUser((user, done) => {
+//     done(null, user.id);
+// });
+
+// passport.deserializeUser((id, done) => {
+//     User.findById(id).then((err, user) => {
+//         done(err, user);
+//     });
+// });
+
+passport.serializeUser(function (user, cb) {
+    process.nextTick(function () {
+        cb(null, { id: user.id, username: user.username, name: user.name });
+    });
 });
 
-passport.deserializeUser((id, done) => {
-    User.findById(id).then((user) => {
-        done(null, user);
+passport.deserializeUser(function (user, cb) {
+    process.nextTick(function () {
+        return cb(null, user);
     });
 });
