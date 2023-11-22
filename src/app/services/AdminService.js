@@ -50,8 +50,15 @@ class AdminService {
 
     updateVideo = async (req, res) => {
         try {
-            const { title, videoId, caloriesAmount, level, category, sex, BMItype } =
-                req.body;
+            const {
+                title,
+                videoId,
+                caloriesAmount,
+                level,
+                category,
+                sex,
+                BMItype,
+            } = req.body;
             const updatedVideo = await Video.findByIdAndUpdate(
                 req.params.id,
                 {
@@ -86,7 +93,7 @@ class AdminService {
             console.log(err);
         }
     };
-    
+
     showFoods(req, res) {
         Food.find({}).then((foods) => {
             res.render('admin-food', {
@@ -99,8 +106,7 @@ class AdminService {
 
     updateFood = async (req, res) => {
         try {
-            const { name, description, calo, img } =
-                req.body;
+            const { name, description, calo, img } = req.body;
             const updatedFood = await Food.findByIdAndUpdate(
                 req.params.id,
                 {
@@ -143,8 +149,7 @@ class AdminService {
 
     updateBlog = async (req, res) => {
         try {
-            const { content, image, title, slug } =
-                req.body;
+            const { content, image, title, slug } = req.body;
             const updatedBlog = await Blog.findByIdAndUpdate(
                 req.params.id,
                 {

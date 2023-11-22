@@ -1,14 +1,13 @@
-import BlogService from "../services/BlogDetailService.js";
+import BlogService from '../services/BlogDetailService.js';
 
 class BlogDetailController {
-    async show(req,res){
+    async show(req, res) {
         try {
-            await BlogService.show(req,res)
+            await BlogService.show(req, res);
         } catch (error) {
-            console.log("error");
+            console.log('error');
         }
     }
-
 }
 
 export default new BlogDetailController();

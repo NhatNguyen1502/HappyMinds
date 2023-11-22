@@ -7,4 +7,3 @@ router.get('/', VideoController.index);
 router.get('/:id', VideoController.show);
 
 export default router;
-    

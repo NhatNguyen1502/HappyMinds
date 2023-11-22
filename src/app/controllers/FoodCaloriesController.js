@@ -1,7 +1,8 @@
+import FoodService from '../services/FoodService.js';
+
 class FoodCaloriesController {
-    
     show(req, res) {
-        res.render('food');
+        FoodService.index(req, res);
     }
 }
 

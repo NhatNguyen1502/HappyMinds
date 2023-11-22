@@ -5,8 +5,6 @@ import BlogDetailController from '../app/controllers/BlogDetailController.js';
 const router = express.Router();
 
 router.get('/', BlogController.index);
-router.get('/:slug',BlogDetailController.show);
-
+router.get('/:slug', BlogDetailController.show);
 
 export default router;
- 
