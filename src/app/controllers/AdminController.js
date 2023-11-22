@@ -4,14 +4,17 @@ class AdminController {
     index(req, res) {
         res.render('admin-user', { layout: 'admin.hbs', title: 'ADMIN-USER' });
     }
-    showFood(req, res) {
-        res.render('admin-food', { layout: 'admin.hbs', title: 'ADMIN-FOOD' });
+    showFoods(req, res) {
+        AdminService.showFoods(req, res);
     }
     showVideos(req, res) {
         AdminService.showVideos(req, res);
     }
     showBlog(req, res) {
-        res.render('admin-blog', { layout: 'admin.hbs', title: 'ADMIN-BLOG' });
+        AdminService.showBlog(req, res);
+    }
+    showUsers(req, res) {
+        AdminService.showUsers(req, res);
     }
     createVideo(req, res) {
         AdminService.createVideo(req, res);
@@ -35,6 +38,26 @@ class AdminController {
 
     deleteVideo(req, res) {
         AdminService.deleteVideo(req, res);
+    }
+
+    updateFood(req, res) {
+        AdminService.updateFood(req, res);
+    }
+
+    deleteFood(req, res) {
+        AdminService.deleteFood(req, res);
+    }
+
+    updateBlog(req, res) {
+        AdminService.updateBlog(req, res);
+    }
+
+    deleteBlog(req, res) {
+        AdminService.deleteBlog(req, res);
+    }
+
+    deleteUser(req, res) {
+        AdminService.deleteUser(req, res);
     }
 }
 
