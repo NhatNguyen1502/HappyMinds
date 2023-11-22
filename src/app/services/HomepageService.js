@@ -5,14 +5,14 @@ import { multipleMongooesToOject } from '../../util/mongoose.js';
 class HomepageService {
     index(req, res) {
         Video.find({})
-            .then((videos) => {
+            .then((video) => {
                 let blogs;
                 blog.find({})
                     .then((blogsData) => {
                         blogs = multipleMongooesToOject(blogsData);
                         // res.render('hompage', { blogs });
                         res.render('homepage', {
-                            videos: multipleMongooesToOject(videos).slice(0, 3),
+                            video: multipleMongooesToOject(video).slice(0, 3),
                             blogs,
                         });
                     })
@@ -35,6 +35,16 @@ class HomepageService {
         let BMI = weight / (height * height);
 
         res.send(`BMI: ${BMI}`);
+    }
+
+    showVideos(req, res) {
+        const BMItype = req.params.BMItype;
+        console.log(BMItype);
+        Video.find({ BMItype: BMItype }).then((videos) => {
+            res.render('homepage', {
+                videos: multipleMongooesToOject(videos),
+            });
+        });
     }
 }
 
