@@ -3,10 +3,7 @@
         <div class="col-md-6">
             <h1 class="m-0 mb-2" style="color: $red; font-weight: 700;">YOUR BMI: 20.9</h1>
             <div class="showInput row gap-2">
-                <input class="col-md-5 col-11 rounded-5 border-0 m-1 p-2 mx-2" type="text" placeholder="Height">
-                <input class="col-md-5 col-11 rounded-5 border-0 m-1 p-2 mx-2" type="text" placeholder="Weight">
-                <input class="col-md-5 col-11 rounded-5 border-0 m-1 p-2 mx-2" type="text" placeholder="Calories">
-                <input class="col-md-5 col-11 rounded-5 border-0 m-1 p-2 mx-2" type="text" placeholder="Level">
+                <h2 id="recommendationText"></h2>
             </div>
         </div>
         <div class="col-md-6 p-2">
@@ -16,40 +13,28 @@
         </div>
     </div>
 
-    <div class="formArea row p-0 m-3 justify-content-between">
-        <div class="updateForm form col-md-6 border-end text-center mb-2 rounded-start">
-            <h2 class="mt-2" style="color: $red; font-weight: 700;"> Update</h2>
-            <div for="height" style="font-size: 15px; font-weight: 600;">Height</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="heightForm">
+    <form action="" method="get">
+        <div class="formArea updateForm row p-0 m-3 justify-content-between">
+            <h2 class="mt-2 text-center" style="color: $red; font-weight: 700;"> Update</h2>
+            <div class="form col-md-6 border-end text-center mb-2 rounded-start">
+                <div for="height" style="font-size: 15px; font-weight: 600;">Height</div>
+                <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="heightForm">
 
-            <div for="weight" style="font-size: 15px; font-weight: 600;">Weight</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="weightForm">
+                <div for="weight" style="font-size: 15px; font-weight: 600;">Weight</div>
+                <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="weightForm">
+            </div>
+            <div class="inforForm form col-md-6 text-center mb-2  rounded-end">
+                <div for="height" style="font-size: 15px; font-weight: 600;">Age</div>
+                <input type="number" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="ageForm"><br>
 
-            <div for="height" style="font-size: 15px; font-weight: 600;">Level</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="levelForm"><br>
-
-            <div class="submit m-2">
-                <input type="submit" class="button col-md-3 p-2 m-1 border-0 rounded-5 text-center" value="Update">
+                <div for="height" style="font-size: 15px; font-weight: 600;">Physical Activity Level (PAL).</div>
+                <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="levelForm"><br>
+            </div>
+            <div class="m-2 text-center">
+                <input type="submit" class="button col-md-3 p-2 m-1 border-0 rounded-5" value="Update">
             </div>
         </div>
-        <div class="inforForm form col-md-6 text-center mb-2  rounded-end">
-            <h2 class="mt-2" style="color: $red; font-weight: 700;">Information</h2>
-            <div for="nameForm" style="font-size: 15px; font-weight: 600;">Name</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="nameForm">
-
-            <div for="email" style="font-size: 15px; font-weight: 600;">Email</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="emailForm">
-
-            <div for="password" style="font-size: 15px; font-weight: 600;">Password</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="passwordForm"><br>
-
-            <div for="password" style="font-size: 15px; font-weight: 600;">Re-write Password</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="passwordForm"><br>
-            <div class="submit m-2">
-                <input type="submit" class=" button col-md-3 p-2 m-1 border-0 rounded-5 text-center " value="Change">
-            </div>
-        </div>
-    </div>
+    </form>
     <div class="foodHistory p-3 m-3 rounded-2">
         <h3 class="m-0 mb-2" style="color: $red; font-weight: 700;">Food Menu</h3>
         <div class="card card-content mb-3">
