@@ -4,27 +4,25 @@ import { multipleMongooesToOject } from '../../util/mongoose.js';
 
 class HomepageService {
     index(req, res) {
-        
+        let isLogin = false;
+        if (req.isAuthenticated()) {
+            isLogin = true;
+        }
         Video.find({})
             .then((videos) => {
                 let blogs;
                 blog.find({})
                     .then((blogsData) => {
                         blogs = multipleMongooesToOject(blogsData);
-                        // res.render('hompage', { blogs });
                         res.render('homepage', {
                             videos: multipleMongooesToOject(videos).slice(0, 3),
-                            blogs,                            
+                            blogs,
+                            isLogin,
                         });
                     })
                     .catch((err) => {
                         res.status(400).json({ err: 'ERROR!' });
                     });
-                // console.log(blogs,"11");
-                // res.render('homepage', {
-                //     videos: multipleMongooesToOject(videos).slice(0, 3),
-                //     blogs,
-                // });
             })
             .catch((err) => {
                 res.status(400).json({ err: 'ERROR!' });
@@ -33,7 +31,6 @@ class HomepageService {
 
     showVideos(req, res) {
         const { height, weight } = req.body;
-
         const bmi = weight / ((height / 100) ** 2);
         let bmiType;
 
