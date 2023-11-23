@@ -1,7 +1,7 @@
 @import 'variables';
-.page{
-    background-color: rgba(210, 210, 210, 1);
-}
+// .page{
+//     background-color: rgba(210, 210, 210, 1);
+// } 
 .level,.more{
     color:rgba(253, 0, 84, 1);
     font-weight: 600;
@@ -269,7 +269,7 @@ h2 {
 .service, .contact{
     line-height: 30px;
 }
-.inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory{
+.inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory, .listVideo{
     background-color: rgba(210, 210, 210, 1);
 }
 .card-content{
