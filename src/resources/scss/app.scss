@@ -1,15 +1,12 @@
 @import 'variables';
-.page{
-    background-color: rgba(210, 210, 210, 1);
-}
 .level,.more{
-    color:rgba(253, 0, 84, 1);
+    color:$red;
     font-weight: 600;
     font-size: 15px;
 }
 .level{
     font-size: 18px;
-    border: 2px solid rgba(253, 0, 84, 1);
+    border: 2px solid $red;
 }
 .more{
     font-size: 15px;
@@ -34,13 +31,13 @@ a{
     padding: 0;
 }
 a:hover{
-    color:rgba(253, 0, 84, 1)
+    color:$red
 }
 
 
 // --------------------------------------------FOOD---------------------------------------------------------//
 body {
-    background-color: rgba(210, 210, 210, 1);
+    background-color: $background;
 }
 
 .form-custom {
@@ -56,7 +53,7 @@ body {
 .bmi-content {
     margin-left: 2px;
     margin-bottom: 2px;
-    background-color: rgba(253, 0, 84, 1);
+    background-color: $red;
     text-align: center;
     white-space: nowrap;
 }
@@ -154,18 +151,18 @@ body {
 }
 .admin_header>li{
     font-weight: 700;
-    border-color: rgba(253, 0, 84, 1) ;
+    border-color: $red ;
 }
 .logout{
     color: white;
-    background-color: rgba(253, 0, 84, 1);
+    background-color: $red;
     font-weight: 700;
 }
 .footer{
     background-color: rgba(43, 32, 36, 1);
 }
 .heading_footer{
-    color: rgba(253, 0, 84, 1);
+    color: $red;
 }
 .header{
     background-image: url('/img/bg.png');
@@ -185,15 +182,15 @@ body {
     border-bottom: 3px solid rgba(253, 0, 84, 0);
 }
 .nav-item:hover {
-    border-bottom: 3px solid rgba(253, 0, 84, 1);
-    color: rgba(253, 0, 84, 1); 
+    border-bottom: 3px solid $red;
+    color: $red; 
 }
 .nav-item:focus {
-    border-bottom: 3px solid rgba(253, 0, 84, 1) !important;
-    color: rgba(253, 0, 84, 1); 
+    border-bottom: 3px solid $red !important;
+    color: $red; 
 }
 .button_header{
-    background-color: rgba(253, 0, 84, 1);
+    background-color: $red;
     color: white;
     font-weight: 500;
     border-radius: 20px;
@@ -269,8 +266,8 @@ h2 {
 .service, .contact{
     line-height: 30px;
 }
-.inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory{
-    background-color: rgba(210, 210, 210, 1);
+.inforUser, .updateForm, .inforForm, .foodHistory, .videoHistory, .listVideo, .bg{
+    background-color: $background; 
 }
 .card-content{
     border-radius: 20px;
@@ -293,4 +290,4 @@ h2 {
 .content-text-blog{
     height: 50px;
     overflow: hidden;
-}
+} 
