@@ -12,7 +12,7 @@
                     digitals divided with additionals clickthroughs
                     from line.</p>
             </div>
-            <form action="" id="bmiForm">
+            <form action="/homepage" id="bmiForm" method="post">
                 <div class="row input1 my-3 gap-3">
                     <div class="col-lg-5 col-12">
                         <input class="form-control" type="number" name="height" id="inpHeight"
@@ -175,27 +175,3 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="index.js"></script>
-
-<script>
-    document.getElementById("bmiForm").addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        var height = document.getElementById("inpHeight").value;
-        height = height / 100;
-        var weight = document.getElementById("inpWeight").value;
-        var bmi = weight / (height * height);
-        bmi = bmi.toFixed(1);
-        var BMItype;
-        if (bmi < 18.5) {
-            BMItype = "Underweight";
-        } else if (bmi >= 18.5 && bmi <= 24.9) {
-            BMItype = "Healthy";
-        } else if (bmi >= 25.0 && bmi <= 29.9) {
-            BMItype = "Overweight";
-        } else {
-            BMItype = "Obese";
-        }
-        
-        document.getElementById('bmiForm').action = '/homepage/showVideos/' + BMItype;
-    });
-</script>

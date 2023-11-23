@@ -4,16 +4,17 @@ import { multipleMongooesToOject } from '../../util/mongoose.js';
 
 class HomepageService {
     index(req, res) {
+        
         Video.find({})
-            .then((video) => {
+            .then((videos) => {
                 let blogs;
                 blog.find({})
                     .then((blogsData) => {
                         blogs = multipleMongooesToOject(blogsData);
                         // res.render('hompage', { blogs });
                         res.render('homepage', {
-                            video: multipleMongooesToOject(video).slice(0, 3),
-                            blogs,
+                            videos: multipleMongooesToOject(videos).slice(0, 3),
+                            blogs,                            
                         });
                     })
                     .catch((err) => {
@@ -29,23 +30,41 @@ class HomepageService {
                 res.status(400).json({ err: 'ERROR!' });
             });
     }
-    checkBMI(req, res) {
-        let height = req.body.height / 100;
-        let weight = req.body.weight;
-        let BMI = weight / (height * height);
-
-        res.send(`BMI: ${BMI}`);
-    }
 
     showVideos(req, res) {
-        const BMItype = req.params.BMItype;
-        console.log(BMItype);
-        Video.find({ BMItype: BMItype }).then((videos) => {
-            res.render('homepage', {
-                videos: multipleMongooesToOject(videos),
+        const { height, weight } = req.body;
+
+        const bmi = weight / ((height / 100) ** 2);
+        let bmiType;
+
+        if (bmi < 18.5) {
+            bmiType = 'Underweight';
+        } else if (bmi >= 18.5 && bmi < 25) {
+            bmiType = 'Healthy';
+        } else if (bmi >= 25 && bmi < 30) {
+            bmiType = 'Overweight';
+        } else {
+            bmiType = 'Obese';
+        }
+        Video.find({BMItype: bmiType})
+            .then((videos) => {
+                let blogs;
+                blog.find({})
+                    .then((blogsData) => {
+                        blogs = multipleMongooesToOject(blogsData);
+                        res.render('homepage', {
+                            videos: multipleMongooesToOject(videos).slice(0, 3),
+                            blogs,                            
+                        });
+                    })
+                    .catch((err) => {
+                        res.status(400).json({ err: 'ERROR!' });
+                    });
+            })
+            .catch((err) => {
+                res.status(400).json({ err: 'ERROR!' });
             });
-        });
-    }
+      };
 }
 
 export default new HomepageService();

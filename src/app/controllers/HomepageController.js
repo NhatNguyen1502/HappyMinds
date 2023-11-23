@@ -6,7 +6,7 @@ class HomepageController {
         homepageService.index(req, res);
     }
 
-    showVideos(req, res) {
+    showVideos(req, res){
         homepageService.showVideos(req, res);
     }
 }
