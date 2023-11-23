@@ -8,7 +8,7 @@ router.get('/', homepageController.index);
 
 router.post('/checkBMI', homepageController.checkBMI);
 
-router.get('/login', function (req, res, next) {
+router.get('/login', function (req, res) {
     if (!req.user) {
         res.redirect('/');
     } else {
