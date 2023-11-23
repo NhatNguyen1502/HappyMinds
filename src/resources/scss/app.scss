@@ -138,6 +138,7 @@ body {
 }
 
 /* ---------------------------------SLIDER------------------------------------------------- */
+
 .admin_heading{
     background-image: url('/img/bg_heading.png');
     background-size: cover;
@@ -208,13 +209,13 @@ h2 {
     line-height: 30px;
 }
 
-// .form .bi-search {
-//     position: absolute;
-//     font-size: 1.5rem;
-//     top: 9px;
-//     left: 15px;
-//     color: #9ca3af;
-// }
+.form .bi-search {
+    position: absolute;
+    font-size: 1.5rem;
+    top: 9px;
+    left: 15px;
+    color: #9ca3af;
+}
 
 .form span .bi-search {
     position: absolute;
@@ -282,4 +283,14 @@ h2 {
 }
 ::-webkit-scrollbar {
     display: none;
-} 
+}
+
+/* ---------------------------------CARD_BLOG------------------------------------------------- */
+.card-blog{
+    max-height: 40px;
+    overflow: hidden;
+}
+.content-text-blog{
+    height: 50px;
+    overflow: hidden;
+}

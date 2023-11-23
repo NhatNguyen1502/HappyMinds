@@ -1,17 +1,10 @@
+import BlogService from '../services/BlogService.js';
 class BlogController {
     index(req, res) {
-        let isLogin = false;
-        if (req.isAuthenticated()) {
-            isLogin = true;
-        }
-        res.render('blog', { isLogin });
+        BlogService.index(req, res);
     }
     showDetail(req, res) {
-        let isLogin = false;
-        if (req.isAuthenticated()) {
-            isLogin = true;
-        }
-        res.render('blog-detail', { isLogin });
+        BlogService.showDetail(req, res);
     }
 }
 

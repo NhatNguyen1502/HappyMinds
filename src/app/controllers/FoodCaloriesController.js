@@ -1,3 +1,5 @@
+import FoodService from '../services/FoodService.js';
+
 class FoodCaloriesController {
     show(req, res) {
         let isLogin = false;
@@ -5,6 +7,7 @@ class FoodCaloriesController {
             isLogin = true;
         }
         res.render('food', { isLogin });
+        FoodService.index(req, res);
     }
 }
 
