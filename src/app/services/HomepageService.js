@@ -3,10 +3,15 @@ import { multipleMongooesToOject } from '../../util/mongoose.js';
 
 class HomepageService {
     index(req, res) {
+        let isLogin = false;
+        if (req.isAuthenticated()) {
+            isLogin = true;
+        }
         Video.find({})
             .then((videos) => {
                 res.render('homepage', {
                     videos: multipleMongooesToOject(videos).slice(0, 3),
+                    isLogin,
                 });
             })
             .catch((err) => {

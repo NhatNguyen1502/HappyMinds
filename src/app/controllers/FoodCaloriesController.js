@@ -1,7 +1,10 @@
 class FoodCaloriesController {
-    
     show(req, res) {
-        res.render('food');
+        let isLogin = false;
+        if (req.isAuthenticated()) {
+            isLogin = true;
+        }
+        res.render('food', { isLogin });
     }
 }
 

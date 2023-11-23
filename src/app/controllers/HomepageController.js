@@ -5,9 +5,7 @@ class HomepageController {
     index(req, res) {
         homepageService.index(req, res);
     }
-    showVideo(req, res) {
-        res.render('video');
-    }
+
     checkBMI(req, res) {
         homepageService.checkBMI(req, res);
     }

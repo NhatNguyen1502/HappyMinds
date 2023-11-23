@@ -1,6 +1,10 @@
 class BlogDetailController {
     show(req, res) {
-        res.render('blogdetail');
+        let isLogin = false;
+        if (req.isAuthenticated()) {
+            isLogin = true;
+        }
+        res.render('blogdetail', { isLogin });
     }
 }
 

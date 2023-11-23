@@ -1,27 +1,27 @@
-import homepageRouter from "./homepage.js";
-import blogdetailRouter from "./blogdetail.js";
-import userRouter from "./user.js";
-import adminRouter from "./admin.js";
-import videoRouter from "./video.js";
-import foodcaloriesRouter from "./foodcalories.js";
-import blogRouter from "./blog.js";
-import passport from "passport";
+import homepageRouter from './homepage.js';
+import blogdetailRouter from './blogdetail.js';
+import userRouter from './user.js';
+import adminRouter from './admin.js';
+import videoRouter from './video.js';
+import foodcaloriesRouter from './foodcalories.js';
+import blogRouter from './blog.js';
 
 export function route(app) {
-	app.use("/", homepageRouter);
+    app.use('/', homepageRouter);
 
-	app.use("/homepage", homepageRouter);
-	app.use("/video", videoRouter);
+    app.use('/homepage', homepageRouter);
 
-	app.use("/food", foodcaloriesRouter);
+    app.use('/video', videoRouter);
 
-	app.use("/blog", blogRouter);
+    app.use('/food', foodcaloriesRouter);
 
-	app.use("/admin", adminRouter);
+    app.use('/blog', blogRouter);
 
-	app.use("/blogdetail", blogdetailRouter);
+    app.use('/admin', adminRouter);
 
-	app.use("/user", userRouter);
+    app.use('/blogdetail', blogdetailRouter);
 
-	app.use("/blog", blogRouter);
+    app.use('/user', userRouter);
+
+    app.use('/blog', blogRouter);
 }
