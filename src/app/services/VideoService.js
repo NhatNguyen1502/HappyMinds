@@ -73,6 +73,10 @@ class VideoService {
                 res.status(400).json({ err: 'ERROR!' });
             });
     }
+
+    showBMIList(req, res){
+        
+    }
 }
 
 export default new VideoService();
