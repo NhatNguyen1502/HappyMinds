@@ -8,6 +8,10 @@ class VideoService {
     index(req, res) {
         Video.find({})
             .then((videos) => {
+                let isLogin = false;
+                if (req.isAuthenticated()) {
+                    isLogin = true;
+                }
                 videos = multipleMongooesToOject(videos);
                 let level_1 = videos.filter(
                     (video) => video.level == 'beginner',
@@ -44,6 +48,7 @@ class VideoService {
                 let legsLevel_2 = level_2.filter(
                     (video) => video.category == 'legs',
                 );
+                console.log(req.user);
                 res.render('video', {
                     armsLevel_1,
                     absLevel_1,
@@ -55,6 +60,7 @@ class VideoService {
                     shoulderLevel_2,
                     chestLevel_2,
                     legsLevel_2,
+                    isLogin,
                 });
             })
             .catch((err) => {
@@ -65,8 +71,13 @@ class VideoService {
     show(req, res) {
         Video.findOne({ videoId: req.params.id })
             .then((video) => {
+                let isLogin = false;
+                if (req.isAuthenticated()) {
+                    isLogin = true;
+                }
                 res.render('./videos/show', {
                     video: mongooesToOject(video),
+                    isLogin,
                 });
             })
             .catch((err) => {
