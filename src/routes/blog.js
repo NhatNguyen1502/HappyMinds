@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.get('/', BlogController.index);
 
+router.get('/blogDetail/:slug', BlogController.showDetail);
+
 export default router;

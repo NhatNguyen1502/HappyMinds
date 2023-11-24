@@ -1,13 +1,28 @@
 import Video from '../models/Video.js';
+import blog from '../models/Blog.js';
 import { multipleMongooesToOject } from '../../util/mongoose.js';
 
 class HomepageService {
     index(req, res) {
+        let isLogin = false;
+        if (req.isAuthenticated()) {
+            isLogin = true;
+        }
         Video.find({})
             .then((videos) => {
-                res.render('homepage', {
-                    videos: multipleMongooesToOject(videos).slice(0, 3),
-                });
+                let blogs;
+                blog.find({})
+                    .then((blogsData) => {
+                        blogs = multipleMongooesToOject(blogsData);
+                        res.render('homepage', {
+                            videos: multipleMongooesToOject(videos).slice(0, 3),
+                            blogs,
+                            isLogin,
+                        });
+                    })
+                    .catch((err) => {
+                        res.status(400).json({ err: 'ERROR!' });
+                    });
             })
             .catch((err) => {
                 res.status(400).json({ err: 'ERROR!' });
