@@ -31,9 +31,10 @@ class HomepageService {
 
     showVideos(req, res) {
         const { height, weight } = req.body;
-        const bmi = weight / ((height / 100) ** 2);
+        const BMI = weight / ((height / 100) ** 2);
+        const bmi = BMI.toFixed(2);
         let bmiType;
-
+        
         if (bmi < 18.5) {
             bmiType = 'Underweight';
         } else if (bmi >= 18.5 && bmi < 25) {
@@ -50,8 +51,10 @@ class HomepageService {
                     .then((blogsData) => {
                         blogs = multipleMongooesToOject(blogsData);
                         res.render('homepage', {
-                            videos: multipleMongooesToOject(videos).slice(0, 3),
-                            blogs,                            
+                            videos: multipleMongooesToOject(videos),
+                            blogs,
+                            bmiType,   
+                            bmi,                         
                         });
                     })
                     .catch((err) => {
@@ -62,6 +65,34 @@ class HomepageService {
                 res.status(400).json({ err: 'ERROR!' });
             });
       };
+
+      showAllVideos(req, res) {
+        const arrayParam = req.body.array;
+        const videos = JSON.parse(arrayParam);
+        res.render('homepage',{videos})
+
+        // Video.find({BMItype: bmiType})
+        //     .then((videos) => {
+        //         let blogs;
+        //         blog.find({})
+        //             .then((blogsData) => {
+        //                 blogs = multipleMongooesToOject(blogsData);
+        //                 res.render('homepage', {
+        //                     videos: multipleMongooesToOject(videos),
+        //                     blogs,
+        //                     bmiType,  
+        //                     bmi,                       
+        //                 });
+        //             })
+        //             .catch((err) => {
+        //                 res.status(400).json({ err: 'ERROR!' });
+        //             });
+        //     })
+        //     .catch((err) => {
+        //         res.status(400).json({ err: 'ERROR!' });
+        //     });
+      };
+    
 }
 
 export default new HomepageService();
