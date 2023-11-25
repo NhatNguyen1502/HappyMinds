@@ -10,7 +10,6 @@ class FoodService {
         Food.find({})
             .then((foods) => {
                 foods = multipleMongooesToOject(foods);
-                console.log(foods);
                 res.render('food', { foods, isLogin });
             })
             .catch((err) => {

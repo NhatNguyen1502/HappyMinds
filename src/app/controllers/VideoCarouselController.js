@@ -11,7 +11,6 @@
 
 // export default new VideoCarouselController();
 
-
 import VideoCarouselService from '../services/VideoCarouselService.js';
 
 class VideoCarouselController {
