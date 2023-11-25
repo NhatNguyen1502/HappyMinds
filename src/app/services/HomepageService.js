@@ -50,11 +50,17 @@ class HomepageService {
                 blog.find({})
                     .then((blogsData) => {
                         blogs = multipleMongooesToOject(blogsData);
+                        const videoArray = [];
+                        videos.forEach((video) => {
+                        videoArray.push(video);
+                        });
+                        const videoArrayJSON = JSON.stringify(videoArray);
                         res.render('homepage', {
                             videos: multipleMongooesToOject(videos),
                             blogs,
                             bmiType,   
-                            bmi,                         
+                            bmi,
+                            videoArrayJSON,                        
                         });
                     })
                     .catch((err) => {
@@ -67,30 +73,20 @@ class HomepageService {
       };
 
       showAllVideos(req, res) {
-        const arrayParam = req.body.array;
-        const videos = JSON.parse(arrayParam);
-        res.render('homepage',{videos})
+        const videoArrayJSON = req.body.array;
+        const videos = JSON.parse(videoArrayJSON);
 
-        // Video.find({BMItype: bmiType})
-        //     .then((videos) => {
-        //         let blogs;
-        //         blog.find({})
-        //             .then((blogsData) => {
-        //                 blogs = multipleMongooesToOject(blogsData);
-        //                 res.render('homepage', {
-        //                     videos: multipleMongooesToOject(videos),
-        //                     blogs,
-        //                     bmiType,  
-        //                     bmi,                       
-        //                 });
-        //             })
-        //             .catch((err) => {
-        //                 res.status(400).json({ err: 'ERROR!' });
-        //             });
-        //     })
-        //     .catch((err) => {
-        //         res.status(400).json({ err: 'ERROR!' });
-        //     });
+        blog.find({})
+            .then((blogs) => {
+                blogs = multipleMongooesToOject(blogs);
+                res.render('homepage', {
+                    videos,
+                    blogs,
+                });
+            })
+            .catch((err) => {
+                res.status(400).json({ err: 'ERROR!' });
+            });
       };
     
 }

@@ -104,8 +104,8 @@
             <p class="ms-5 ps-5 fw-medium">BUILD YOUR BODY WITH <br> OUR EXECISES</p>
         </div>
         <div class="col-lg-1 col-md-2 col-3 d-flex align-items-end justify-content-end pe-4">
-            <form action="/homepage/showAllVideos/" method="post">
-            <input type="hidden" name="array" value='{{videos}}'>
+            <form action="/homepage/showAllVideos" method="post">
+            <input type="hidden" name="array" value='{{videoArrayJSON}}'>
             <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
                 style="border-width:2px ;">MORE</button>
             </form>
