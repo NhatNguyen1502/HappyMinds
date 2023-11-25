@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const countRestElement = document.getElementById('rest');
     let minutes = 0;
     let seconds = 0;
-    let secondRest = 3;
+    let secondRest = 10;
     function updateCountup() {
         seconds++;
         const minutesDisplay = minutes < 10 ? `0${minutes}` : minutes;
