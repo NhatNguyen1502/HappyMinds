@@ -58,9 +58,13 @@
             </div>
         </div>
     </form>
-    <div class="listVideo p-3 mb-3 rounded-2">
+    <div class="mt-2 text-center text-center fs-2 fw-bold text-red">Recommended exercises for you</div>
+
+    <div class="listVideo p-3 m-3 rounded-2">
         <div class="row justify-content-between mx-5 ">
-            <p class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Arms</p>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">First suggestion</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Time: {{time1}} minutes</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Calories: {{calo1}} calo</span>
         </div>
         <div class="justify-content-start mx-5 row gap-4">
             {{#each videos1}}
@@ -75,9 +79,11 @@
             {{/each}}
         </div>
     </div>
-    <div class="listVideo p-3 mb-3 rounded-2">
+    <div class="listVideo p-3 m-3 rounded-2">
         <div class="row justify-content-between mx-5 ">
-            <p class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Arms</p>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Second suggestion</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Time: {{time2}} minutes</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Calories: {{calo2}} calo</span>
         </div>
         <div class="justify-content-start mx-5 row gap-4">
             {{#each videos2}}
@@ -92,9 +98,11 @@
             {{/each}}
         </div>
     </div>
-    <div class="listVideo p-3 mb-3 rounded-2">
+    <div class="listVideo p-3 m-3 rounded-2">
         <div class="row justify-content-between mx-5 ">
-            <p class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Arms</p>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Third suggestion</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Time: {{time3}} minutes</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Calories: {{calo3}} calo</span>
         </div>
         <div class="justify-content-start mx-5 row gap-4">
             {{#each videos3}}
@@ -109,6 +117,7 @@
             {{/each}}
         </div>
     </div>
+
     <div class="time"></div>
     <div class="calo"></div>
     <div class="foodHistory p-3 m-3 rounded-2">
