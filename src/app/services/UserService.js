@@ -107,7 +107,7 @@ class UserService {
             let height = user.height / 100;
             let weight = user.weight;
             let BMI = (weight / (height * height)).toFixed(2);
-            res.render('user', { user, BMI, isLogin });
+            this.index(req, res);
         });
     }
 }

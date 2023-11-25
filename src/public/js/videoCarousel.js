@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const countRestElement = document.getElementById('rest');
     let minutes = 0;
     let seconds = 0;
-    let secondRest = 3;
+    let secondRest = 10;
     function updateCountup() {
         seconds++;
         const minutesDisplay = minutes < 10 ? `0${minutes}` : minutes;
@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function nextVideo() {
     $('#carouselExampleControls').carousel('next');
+    secondRest = 10;
     index++;
     if (index == 9) {
         document.getElementById('next').setAttribute('disabled', 'true');
@@ -71,6 +72,7 @@ function nextVideo() {
 
 function skipVideo() {
     $('#carouselExampleControls').carousel('next');
+    secondRest = 10;
     index++;
     if (index == 9) {
         document.getElementById('next').setAttribute('disabled', 'true');
