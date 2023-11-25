@@ -14,9 +14,15 @@ class HomepageService {
                 blog.find({})
                     .then((blogsData) => {
                         blogs = multipleMongooesToOject(blogsData);
+                        const videoArray = [];
+                        videos.forEach((video) => {
+                        videoArray.push(video);
+                        });
+                        const videoArrayJSON = JSON.stringify(videoArray);
                         res.render('homepage', {
                             videos: multipleMongooesToOject(videos).slice(0, 3),
                             blogs,
+                            videoArrayJSON,                        
                             isLogin,
                         });
                     })
@@ -56,9 +62,8 @@ class HomepageService {
                         });
                         const videoArrayJSON = JSON.stringify(videoArray);
                         res.render('homepage', {
-                            videos: multipleMongooesToOject(videos),
+                            videos: multipleMongooesToOject(videos).slice(0, 3),
                             blogs,
-                            bmiType,   
                             bmi,
                             videoArrayJSON,                        
                         });
@@ -66,23 +71,6 @@ class HomepageService {
                     .catch((err) => {
                         res.status(400).json({ err: 'ERROR!' });
                     });
-            })
-            .catch((err) => {
-                res.status(400).json({ err: 'ERROR!' });
-            });
-      };
-
-      showAllVideos(req, res) {
-        const videoArrayJSON = req.body.array;
-        const videos = JSON.parse(videoArrayJSON);
-
-        blog.find({})
-            .then((blogs) => {
-                blogs = multipleMongooesToOject(blogs);
-                res.render('homepage', {
-                    videos,
-                    blogs,
-                });
             })
             .catch((err) => {
                 res.status(400).json({ err: 'ERROR!' });

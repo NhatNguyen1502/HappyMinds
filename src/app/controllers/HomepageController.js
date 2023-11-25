@@ -9,9 +9,6 @@ class HomepageController {
     showVideos(req, res){
         homepageService.showVideos(req, res);
     }
-    showAllVideos(req, res){
-        homepageService.showAllVideos(req, res);
-    }
 }
 
 export default new HomepageController();

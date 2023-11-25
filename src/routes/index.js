@@ -11,7 +11,7 @@ export function route(app) {
     
     app.use('/', homepageRouter);
 
-    app.use('/bmicourse', videoCarouselRouter);
+    app.use('/videoCarousel', videoCarouselRouter);
 
     app.use('/video', videoRouter);
 
