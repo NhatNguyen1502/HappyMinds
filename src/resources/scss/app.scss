@@ -189,6 +189,11 @@ body {
     border-bottom: 3px solid $red !important;
     color: $red; 
 }
+
+.redColor {
+    background-color: $red !important;  
+}
+
 .button_header{
     background-color: $red;
     color: white;
