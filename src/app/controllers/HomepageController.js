@@ -1,7 +1,6 @@
 import homepageService from '../services/HomepageService.js';
 
 class HomepageController {
-    // [GET] /homepage
     index(req, res) {
         homepageService.index(req, res);
     }

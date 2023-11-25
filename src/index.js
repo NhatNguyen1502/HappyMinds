@@ -12,6 +12,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import './app/services/passport.js';
+import handlebars from 'handlebars';
 
 dotenv.config();
 
@@ -26,6 +27,16 @@ app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
+
+handlebars.registerHelper('isEqual', function (value1, value2, options) {
+    return value1 === value2 ? options.fn(this) : options.inverse(this);
+});
+handlebars.registerHelper(
+    'isSelected',
+    function (currentValue, targetValue, options) {
+        return currentValue === targetValue ? 'selected' : '';
+    },
+);
 
 // Template engine
 app.engine(
@@ -51,7 +62,7 @@ app.use(
 app.use(passport.authenticate('session'));
 passport.serializeUser(function (user, cb) {
     process.nextTick(function () {
-        cb(null, { id: user.id, username: user.username, name: user.name });
+        cb(null, { id: user.id, name: user.name, email: user.email });
     });
 });
 
