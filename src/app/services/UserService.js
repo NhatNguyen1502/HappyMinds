@@ -15,6 +15,10 @@ class UserService {
                     let bmi = (weight / (height * height)).toFixed(2);
                     let bmiType;
                     let bmr;
+                    user.userCaloriesAmount =
+                        user.userCaloriesAmount !== undefined
+                            ? user.userCaloriesAmount
+                            : 0;
                     if (user.pal == 'Sedentary') {
                         bmr = 1.2;
                     } else if (user.pal == 'Lightly Active') {
@@ -50,20 +54,35 @@ class UserService {
                     Video.find({ BMItype: bmiType })
                         .lean()
                         .then((videos) => {
-                            let arr = findBestSubarrays(videos, 250);
-                            console.log(arr.length);
-                            console.log(
-                                arr[0],
-                                calculateTotalDuration(arr[0]),
-                                calculateTotalCaloriesAmount(arr[0]),
-                            );
+                            let arr = findBestSubarrays(videos, 500);
+                            for (let i = 0; i < 20; i++) {
+                                const element = arr[i];
+                                console.log(
+                                    arr[i].length,
+                                    calculateTotalDuration(arr[i]) / 60,
+                                    calculateTotalCaloriesAmount(arr[i]),
+                                );
+                            }
                             res.render('user', {
                                 user,
                                 bmi,
+                                bmiType,
                                 isLogin,
-                                videos1: arr[1],
-                                videos2: arr[2],
-                                videos3: arr[3],
+                                videos1: arr[0],
+                                time1: (
+                                    calculateTotalDuration(arr[0]) / 60
+                                ).toFixed(2),
+                                calo1: calculateTotalCaloriesAmount(arr[0]),
+                                videos2: arr[5],
+                                time2: (
+                                    calculateTotalDuration(arr[5]) / 60
+                                ).toFixed(2),
+                                calo2: calculateTotalCaloriesAmount(arr[5]),
+                                videos3: arr[10],
+                                time3: (
+                                    calculateTotalDuration(arr[10]) / 60
+                                ).toFixed(2),
+                                calo3: calculateTotalCaloriesAmount(arr[10]),
                             });
                         });
                 });
@@ -102,10 +121,11 @@ class UserService {
             let height = user.height / 100;
             let weight = user.weight;
             let BMI = (weight / (height * height)).toFixed(2);
-            res.render('user', { user, BMI, isLogin });
+            this.index(req, res);
         });
     }
 }
+
 function findBestSubarrays(videos, targetCalories) {
     let result = [];
     let seenSubarrays = new Set();
@@ -126,15 +146,18 @@ function findBestSubarrays(videos, targetCalories) {
         currentDifference,
         elementCount,
     ) {
-        if (currentSubarray.length >= 4 && currentDifference < targetCalories) {
+        if (elementCount >= 4) {
             const subarrayHash = hashSubarray(currentSubarray);
-            if (!seenSubarrays.has(subarrayHash)) {
+            if (
+                !seenSubarrays.has(subarrayHash) &&
+                currentDifference < targetCalories
+            ) {
                 seenSubarrays.add(subarrayHash);
                 result.push(currentSubarray.map((video) => deepCopy(video)));
             }
         }
 
-        if (elementCount >= 10 || startIndex >= videos.length) {
+        if (startIndex >= videos.length) {
             return;
         }
 
@@ -144,7 +167,7 @@ function findBestSubarrays(videos, targetCalories) {
         }
 
         for (let i = startIndex; i < videos.length; i++) {
-            currentSubarray.push(deepCopy(videos[i])); // Sử dụng deep copy để sao chép đầy đủ các thuộc tính của video
+            currentSubarray.push(deepCopy(videos[i]));
             const newSum = currentSum + videos[i].caloriesAmount;
             const newDifference = Math.abs(newSum - targetCalories);
 
@@ -164,9 +187,13 @@ function findBestSubarrays(videos, targetCalories) {
 
     backtrack(0, [], 0, Number.MAX_SAFE_INTEGER, 0);
 
-    result = result
-        .filter((item) => item.length > 4 && item.length <= 10)
-        .slice(0, 10);
+    result = result.sort((a, b) => {
+        const sumA = a.reduce((sum, video) => sum + video.caloriesAmount, 0);
+        const sumB = b.reduce((sum, video) => sum + video.caloriesAmount, 0);
+        return (
+            Math.abs(sumA - targetCalories) - Math.abs(sumB - targetCalories)
+        );
+    });
 
     return result;
 }
@@ -175,7 +202,7 @@ function calculateTotalDuration(arr) {
     let totalDuration = 0;
 
     for (let i = 0; i < arr.length; i++) {
-        totalDuration += arr[i].duration; // Giả sử trường duration có thể không tồn tại
+        totalDuration += arr[i].duration;
     }
 
     return totalDuration;
