@@ -1,22 +1,22 @@
 <div class="container">
     <div class="inforUser p-2 m-3 row rounded-2">
         <div class="col-md-6">
-            <h1 class="m-0 mb-2" style="color: $red; font-weight: 700;">YOUR BMI: {{bmi}}</h1>
+            <div class="m-0 mb-2 text-red fs-1 fw-bold">YOUR BMI: {{bmi}}</div>
             <div class="showInput row gap-2">
-                <h2>Calories consumed today: {{user.userCaloriesAmount}}</span></h2>
-                <h2>Daily calorie requirement: {{user.requiredCaloriesAmount}} </span></h2>
+                <div class="fs-2 fw-bold text-red">Weight status: {{bmiType}}</span></div>
+                <div class="fs-2 fw-bold text-red">Burned calories today: {{user.userCaloriesAmount}}</span></div>
             </div>
-        </div>
+        </div> 
         <div class="col-md-6 p-2">
-            <h2 class="d-flex justify-content-end" style="font-weight: 700;" id="userName">{{user.name}}</h2>
-            <h2 class="d-flex justify-content-end" style="font-weight: 700;" id="userAge">{{user.age}}</h2>
-            <h2 class="d-flex justify-content-end" style="font-weight: 700;" id="activityRatios">{{user.pal}}</h2>
+            <div class="d-flex justify-content-end fs-2 fw-bold text-red" id="userName">{{user.name}}</div>
+            <div class="d-flex justify-content-end fs-2 fw-bold text-red" id="userAge">{{user.age}}</div>
+            <div class="d-flex justify-content-end fs-2 fw-bold text-red" id="activityRatios">{{user.pal}}</div>
         </div>
     </div>
 
-    <form action="" method="post">
+    <form action="#" method="post">
         <div class="formArea updateForm row p-0 m-3 justify-content-between rounded-2">
-            <h2 class="mt-2 text-center " style="color: $red; font-weight: 700;">Update</h2>
+            <div class="mt-2 text-center fs-2 fw-bold text-red">Update</div>
             <div class="form col-md-6 border-end text-center mb-2 rounded-start">
                 <div for="height" style="font-size: 15px; font-weight: 600;">Height</div>
                 <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="height"
@@ -112,7 +112,8 @@
     <div class="time"></div>
     <div class="calo"></div>
     <div class="foodHistory p-3 m-3 rounded-2">
-        <h3 class="m-0 mb-2" style="color: $red; font-weight: 700;">Food Menu</h3>
+        <div class="m-0 mb-2 fw-bold" style="font-weight: 700;">Food Menu</div>
+        <div class="fs-1 fw-bold">Daily calorie requirement: {{user.requiredCaloriesAmount}} </span></div>
         <div class="card card-content mb-3">
             <div class="row g-0 justify-content-start">
                 <div

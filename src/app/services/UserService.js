@@ -15,6 +15,10 @@ class UserService {
                     let bmi = (weight / (height * height)).toFixed(2);
                     let bmiType;
                     let bmr;
+                    user.userCaloriesAmount =
+                        user.userCaloriesAmount !== undefined
+                            ? user.userCaloriesAmount
+                            : 0;
                     if (user.pal == 'Sedentary') {
                         bmr = 1.2;
                     } else if (user.pal == 'Lightly Active') {
@@ -60,6 +64,7 @@ class UserService {
                             res.render('user', {
                                 user,
                                 bmi,
+                                bmiType,
                                 isLogin,
                                 videos1: arr[1],
                                 videos2: arr[2],
