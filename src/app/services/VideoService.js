@@ -85,9 +85,7 @@ class VideoService {
             });
     }
 
-    showBMIList(req, res){
-        
-    }
+    showBMIList(req, res) {}
 }
 
 export default new VideoService();
