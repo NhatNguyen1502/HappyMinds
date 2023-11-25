@@ -26,31 +26,20 @@ class UserService {
                     Video.find({ BMItype: bmiType })
                         .lean()
                         .then((videos) => {
-                            const totalTime = videos.reduce((total, video) => {
-                                return total + video.duration;
-                            }, 0);
-                            const totalcalo = videos.reduce((total, video) => {
-                                return total + video.caloriesAmount;
-                            }, 0);
-
-                            console.log(totalTime, '-', totalcalo);
-                            const targetCalories = 250;
-                            const targetTime = 10;
-                            const numSets = 4;
-
-                            const arr = findClosestCaloriesSets(
-                                videos,
-                                targetCalories,
+                            let arr = findBestSubarrays(videos, 250);
+                            console.log(arr.length);
+                            console.log(
+                                arr[0],
+                                calculateTotalDuration(arr[0]),
+                                calculateTotalCaloriesAmount(arr[0]),
                             );
-
-                            console.log(arr);
-                            // console.log("\nCalories Sum of Sets:");
-                            // printCaloriesSumOfSets(arr);
                             res.render('user', {
                                 user,
                                 bmi,
                                 isLogin,
-                                videos: videos.slice(0, 10),
+                                videos1: arr[1],
+                                videos2: arr[2],
+                                videos3: arr[3],
                             });
                         });
                 });
@@ -93,85 +82,89 @@ class UserService {
         });
     }
 }
+function findBestSubarrays(videos, targetCalories) {
+    let result = [];
+    let seenSubarrays = new Set();
+    let memo = new Map();
 
-function findClosestCaloriesSets(videos, targetCalories) {
-    const n = videos.length;
-    const dp = new Array(n + 1)
-        .fill(null)
-        .map(() => new Array(targetCalories + 1).fill(null));
+    function hashSubarray(subarray) {
+        return subarray.map((video) => video._id.toString()).join(',');
+    }
 
-    for (let i = 0; i <= n; i++) {
-        for (let j = 0; j <= targetCalories; j++) {
-            if (i === 0 || j === 0) {
-                dp[i][j] = { subset: [], caloriesSum: 0 };
-            } else if (videos[i - 1].caloriesAmount <= j) {
-                const includeVideo = {
-                    subset: [
-                        ...dp[i - 1][j - videos[i - 1].caloriesAmount].subset,
-                        videos[i - 1],
-                    ],
-                    caloriesSum:
-                        dp[i - 1][j - videos[i - 1].caloriesAmount]
-                            .caloriesSum + videos[i - 1].caloriesAmount,
-                };
-                const excludeVideo = dp[i - 1][j];
+    function deepCopy(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    }
 
-                dp[i][j] =
-                    includeVideo.caloriesSum > excludeVideo.caloriesSum
-                        ? includeVideo
-                        : excludeVideo;
-            } else {
-                dp[i][j] = dp[i - 1][j];
+    function backtrack(
+        startIndex,
+        currentSubarray,
+        currentSum,
+        currentDifference,
+        elementCount,
+    ) {
+        if (currentSubarray.length >= 4 && currentDifference < targetCalories) {
+            const subarrayHash = hashSubarray(currentSubarray);
+            if (!seenSubarrays.has(subarrayHash)) {
+                seenSubarrays.add(subarrayHash);
+                result.push(currentSubarray.map((video) => deepCopy(video)));
             }
         }
-    }
 
-    // Lấy ra 10 mảng con gần bằng targetCalories nhất
-    const closestSets = dp[n][targetCalories].subset.slice(
-        0,
-        Math.min(dp[n][targetCalories].subset.length, 10),
-    );
-
-    return closestSets;
-}
-function printCaloriesSumOfSets(sets) {
-    let caloriesSum;
-    for (let i = 0; i < sets.length; i++) {
-        const subset = sets[i];
-        if (sets[i] == []) {
-            caloriesSum = 0;
-        } else
-            caloriesSum = subset.reduce(
-                (sum, video) => sum + video.caloriesAmount,
-                0,
-            );
-        console.log(`Subset ${i + 1}: Total Calories Amount - ${caloriesSum}`);
-    }
-}
-
-function printSubsetInfo(subsets) {
-    for (let i = 0; i < subsets.length; i++) {
-        let subset = subsets[i];
-        let subsetInfo = `Subset ${i + 1}:\n`;
-
-        let totalCalories = 0;
-        let totalTime = 0;
-
-        for (let j = 0; j < subset.length; j++) {
-            const exercise = subset[j];
-            totalCalories += exercise.caloriesAmount;
-            totalTime += exercise.duration;
-            subsetInfo += `- ${exercise.title}: ${exercise.duration} minutes, ${exercise.caloriesAmount} calories\n`;
+        if (elementCount >= 10 || startIndex >= videos.length) {
+            return;
         }
 
-        // Chuyển đổi thời gian từ giây sang phút
-        const totalTimeInMinutes = totalTime / 60;
+        const memoKey = `${startIndex}_${currentSum}_${elementCount}`;
+        if (memo.has(memoKey)) {
+            return;
+        }
 
-        subsetInfo += `Total Time: ${totalTime} minutes\n`;
-        subsetInfo += `Total Calories: ${totalCalories} calories\n`;
+        for (let i = startIndex; i < videos.length; i++) {
+            currentSubarray.push(deepCopy(videos[i])); // Sử dụng deep copy để sao chép đầy đủ các thuộc tính của video
+            const newSum = currentSum + videos[i].caloriesAmount;
+            const newDifference = Math.abs(newSum - targetCalories);
 
-        console.log(subsetInfo);
+            backtrack(
+                i + 1,
+                currentSubarray,
+                newSum,
+                newDifference,
+                elementCount + 1,
+            );
+
+            currentSubarray.pop();
+        }
+
+        memo.set(memoKey, true);
     }
+
+    backtrack(0, [], 0, Number.MAX_SAFE_INTEGER, 0);
+
+    result = result
+        .filter((item) => item.length > 4 && item.length <= 10)
+        .slice(0, 10);
+
+    return result;
+}
+
+function calculateTotalDuration(arr) {
+    let totalDuration = 0;
+
+    for (let i = 0; i < arr.length; i++) {
+        totalDuration += arr[i].duration; // Giả sử trường duration có thể không tồn tại
+    }
+
+    return totalDuration;
+}
+
+function calculateTotalCaloriesAmount(arr) {
+    let totalCaloriesAmount = 0;
+
+    for (let i = 0; i < arr.length; i++) {
+        totalCaloriesAmount += arr[i].caloriesAmount;
+    }
+
+    return totalCaloriesAmount;
 }
 
 export default new UserService();

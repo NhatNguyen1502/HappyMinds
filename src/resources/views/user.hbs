@@ -63,7 +63,41 @@
             <p class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Arms</p>
         </div>
         <div class="justify-content-start mx-5 row gap-4">
-            {{#each videos}}
+            {{#each videos1}}
+            <div class="card col-3 p-2" style="width: 21rem;">
+                <a href="/video/{{this.videoId}}">
+                    <img src="{{this.image}}" class="card-img-top" alt="image">
+                    <div class="card-body">
+                        <p class="card-text">{{this.title}}</p>
+                    </div>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="listVideo p-3 mb-3 rounded-2">
+        <div class="row justify-content-between mx-5 ">
+            <p class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Arms</p>
+        </div>
+        <div class="justify-content-start mx-5 row gap-4">
+            {{#each videos2}}
+            <div class="card col-3 p-2" style="width: 21rem;">
+                <a href="/video/{{this.videoId}}">
+                    <img src="{{this.image}}" class="card-img-top" alt="image">
+                    <div class="card-body">
+                        <p class="card-text">{{this.title}}</p>
+                    </div>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="listVideo p-3 mb-3 rounded-2">
+        <div class="row justify-content-between mx-5 ">
+            <p class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Arms</p>
+        </div>
+        <div class="justify-content-start mx-5 row gap-4">
+            {{#each videos3}}
             <div class="card col-3 p-2" style="width: 21rem;">
                 <a href="/video/{{this.videoId}}">
                     <img src="{{this.image}}" class="card-img-top" alt="image">
