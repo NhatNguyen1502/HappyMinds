@@ -3,7 +3,6 @@ import VideoCarouselController from '../app/controllers/VideoCarouselController.
 
 const router = express.Router();
 
-router.get('/', VideoCarouselController.index);
-
+router.post('/', VideoCarouselController.index);
 
 export default router;

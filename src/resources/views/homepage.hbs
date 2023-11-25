@@ -11,7 +11,7 @@
                     digitals divided with additionals clickthroughs
                     from line.</p>
             </div>
-            <form action="/homepage" id="bmiForm" method="post">
+            <form action="/homepage/form" id="bmiForm" method="post">
                 <div class="row input1 my-3 gap-3">
                     <div class="col-lg-5 col-12">
                         <input class="form-control" type="number" name="height" id="inpHeight"
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="submit d-flex justify-content-center justify-content-lg-start">
-                    <button class="btn btn-lg text-light submit-bmi" style="width:100px ;font-size: 16px;border-radius: 30px;background-color: red;border: none;
+                    <button class="btn redColor text-white submit-bmi" style="width:100px ;font-size: 16px;border-radius: 30px;background-color: red;border: none;
                     " type="submit">Submit</button>
                 </div>
             </form>
@@ -104,10 +104,10 @@
             <p class="ms-5 ps-5 fw-medium">BUILD YOUR BODY WITH <br> OUR EXECISES</p>
         </div>
         <div class="col-lg-1 col-md-2 col-3 d-flex align-items-end justify-content-end pe-4">
-            <form action="/homepage/showAllVideos" method="post">
+            <form action="/videoCarousel" method="post">
             <input type="hidden" name="array" value='{{videoArrayJSON}}'>
             <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                style="border-width:2px ;">MORE</button>
+                style="border-width:2px ;">Start now</button>
             </form>
         </div>
     </div>
@@ -140,8 +140,10 @@
             <p class="ms-5 ps-5 fw-medium">OUR RECENT ARTICLES</p>
         </div>
         <div class="col-lg-1 col-md-2 col-3 d-flex align-items-end justify-content-end pe-4">
+                <form action="/blog">
                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
                 style="border-width:2px ;" id="moreButton">MORE</button>
+                </form>
         </div>
     </div>
 

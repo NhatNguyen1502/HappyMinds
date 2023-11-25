@@ -14,9 +14,15 @@ class HomepageService {
                 blog.find({})
                     .then((blogsData) => {
                         blogs = multipleMongooesToOject(blogsData);
+                        const videoArray = [];
+                        videos.forEach((video) => {
+                        videoArray.push(video);
+                        });
+                        const videoArrayJSON = JSON.stringify(videoArray);
                         res.render('homepage', {
                             videos: multipleMongooesToOject(videos).slice(0, 3),
                             blogs,
+                            videoArrayJSON,                        
                             isLogin,
                         });
                     })
@@ -31,10 +37,10 @@ class HomepageService {
 
     showVideos(req, res) {
         const { height, weight } = req.body;
-        const BMI = weight / ((height / 100) ** 2);
+        const BMI = weight / (height / 100) ** 2;
         const bmi = BMI.toFixed(2);
         let bmiType;
-        
+
         if (bmi < 18.5) {
             bmiType = 'Underweight';
         } else if (bmi >= 18.5 && bmi < 25) {
@@ -44,7 +50,7 @@ class HomepageService {
         } else {
             bmiType = 'Obese';
         }
-        Video.find({BMItype: bmiType})
+        Video.find({ BMItype: bmiType })
             .then((videos) => {
                 let blogs;
                 blog.find({})
@@ -52,37 +58,19 @@ class HomepageService {
                         blogs = multipleMongooesToOject(blogsData);
                         const videoArray = [];
                         videos.forEach((video) => {
-                        videoArray.push(video);
+                            videoArray.push(video);
                         });
                         const videoArrayJSON = JSON.stringify(videoArray);
                         res.render('homepage', {
-                            videos: multipleMongooesToOject(videos),
+                            videos: multipleMongooesToOject(videos).slice(0, 3),
                             blogs,
-                            bmiType,   
                             bmi,
-                            videoArrayJSON,                        
+                            videoArrayJSON,
                         });
                     })
                     .catch((err) => {
                         res.status(400).json({ err: 'ERROR!' });
                     });
-            })
-            .catch((err) => {
-                res.status(400).json({ err: 'ERROR!' });
-            });
-      };
-
-      showAllVideos(req, res) {
-        const videoArrayJSON = req.body.array;
-        const videos = JSON.parse(videoArrayJSON);
-
-        blog.find({})
-            .then((blogs) => {
-                blogs = multipleMongooesToOject(blogs);
-                res.render('homepage', {
-                    videos,
-                    blogs,
-                });
             })
             .catch((err) => {
                 res.status(400).json({ err: 'ERROR!' });
