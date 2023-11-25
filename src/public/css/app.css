@@ -80,7 +80,9 @@ body {
 .card-slider {
   margin: 0 .5em;
   box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
-  border: none; }
+  border: none; 
+  height: 468px;
+}
 
 .card-text-slider {
   max-height: 50px;
@@ -131,7 +133,7 @@ body {
 
 .header {
   background-image: url("/img/bg.png");
-  height: 500px;
+  height: 450px;
   color: white;
   background-size: cover;
   background-repeat: no-repeat;

@@ -28,13 +28,67 @@ class HomepageService {
                 res.status(400).json({ err: 'ERROR!' });
             });
     }
-    checkBMI(req, res) {
-        let height = req.body.height / 100;
-        let weight = req.body.weight;
-        let BMI = weight / (height * height);
 
-        res.send(`BMI: ${BMI}`);
-    }
+    showVideos(req, res) {
+        const { height, weight } = req.body;
+        const BMI = weight / ((height / 100) ** 2);
+        const bmi = BMI.toFixed(2);
+        let bmiType;
+        
+        if (bmi < 18.5) {
+            bmiType = 'Underweight';
+        } else if (bmi >= 18.5 && bmi < 25) {
+            bmiType = 'Healthy';
+        } else if (bmi >= 25 && bmi < 30) {
+            bmiType = 'Overweight';
+        } else {
+            bmiType = 'Obese';
+        }
+        Video.find({BMItype: bmiType})
+            .then((videos) => {
+                let blogs;
+                blog.find({})
+                    .then((blogsData) => {
+                        blogs = multipleMongooesToOject(blogsData);
+                        const videoArray = [];
+                        videos.forEach((video) => {
+                        videoArray.push(video);
+                        });
+                        const videoArrayJSON = JSON.stringify(videoArray);
+                        res.render('homepage', {
+                            videos: multipleMongooesToOject(videos),
+                            blogs,
+                            bmiType,   
+                            bmi,
+                            videoArrayJSON,                        
+                        });
+                    })
+                    .catch((err) => {
+                        res.status(400).json({ err: 'ERROR!' });
+                    });
+            })
+            .catch((err) => {
+                res.status(400).json({ err: 'ERROR!' });
+            });
+      };
+
+      showAllVideos(req, res) {
+        const videoArrayJSON = req.body.array;
+        const videos = JSON.parse(videoArrayJSON);
+
+        blog.find({})
+            .then((blogs) => {
+                blogs = multipleMongooesToOject(blogs);
+                res.render('homepage', {
+                    videos,
+                    blogs,
+                });
+            })
+            .catch((err) => {
+                res.status(400).json({ err: 'ERROR!' });
+            });
+      };
+    
 }
 
 export default new HomepageService();
