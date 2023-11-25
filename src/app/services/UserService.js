@@ -65,6 +65,9 @@ class UserService {
                         Food.find({ _id: { $in: foodsID } })
                         .then((foods) => {
                             foods = multipleMongooesToOject(foods);
+                            const totalCalories = foods.reduce((total, food) => {
+                                return total + food.calo;
+                            }, 0);
                             res.render('user', { 
                                 foods, 
                                 user,
@@ -73,7 +76,8 @@ class UserService {
                                 isLogin,
                                 videos1: arr[1],
                                 videos2: arr[2],
-                                videos3: arr[3],});
+                                videos3: arr[3],
+                                totalCalories ,});
                         })
                         });
                 });
@@ -109,21 +113,13 @@ class UserService {
         User.findOneAndUpdate({ email: req.user.email }, req.body, {
             new: true,
         }).then((user) => {
-            let height = user.height / 100;
-            let weight = user.weight;
-            let BMI = (weight / (height * height)).toFixed(2);
             res.redirect('/user');
         });
     }
 
     removeFood (req, res) {
-        let isLogin = false;
-        if (req.isAuthenticated()) {
-            isLogin = true;
-        }
         const idFood = req.params.idFood;
         const email = req.body.email;
-        const bmi = req.body.bmi;
         User.findOneAndUpdate(
             { email: email },
             { $pull: { choseFoode: idFood } },
