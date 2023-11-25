@@ -13,38 +13,46 @@ class FoodService {
         Food.find({})
             .then((foods) => {
                 foods = multipleMongooesToOject(foods);
-                res.render('food', { foods, isLogin , email});
+                res.render('food', { foods, isLogin, email });
             })
             .catch((err) => {
                 res.status(400).json({ err: 'ERROR!' });
             });
     }
 
-    addToMenu(req, res){
+    addToMenu(req, res) {
         const email = req.body.emailUser;
         const idFood = req.body.idFood;
-        const isLogin = req.body.isLogin;
-        console.log(email);
-        User.findOneAndUpdate(
-            { email: email },
-            { $push: { choseFoode: idFood } },
-            { new: true }
-          )
-            .then(() => {
-              console.log('Món ăn đã được thêm vào mảng choseFoode.');
-              console.log(email);
-              Food.find({})
-                .then((foods) => {
-                    foods = multipleMongooesToOject(foods);
-                    res.render('food', { foods, isLogin , email});
+
+        let isLogin = false;
+        if (req.isAuthenticated()) {
+            isLogin = true;
+            console.log(email);
+            User.findOneAndUpdate(
+                { email: email },
+                { $push: { choseFoode: idFood } },
+                { new: true }
+            )
+                .then(() => {
+                    console.log('Món ăn đã được thêm vào mảng choseFoode.');
+                    console.log(email);
+                    Food.find({})
+                        .then((foods) => {
+                            foods = multipleMongooesToOject(foods);
+                            res.render('food', { foods, isLogin, email });
+                        })
+                        .catch((err) => {
+                            res.status(400).json({ err: 'ERROR!' });
+                        });
                 })
-                .catch((err) => {
-                    res.status(400).json({ err: 'ERROR!' });
+                .catch((error) => {
+                    console.log('Đã xảy ra lỗi khi thêm món ăn:', error);
                 });
-            })
-            .catch((error) => {
-              console.log('Đã xảy ra lỗi khi thêm món ăn:', error);
-            });
+        }
+        else {
+            console.log('Login fail!!!');
+            res.redirect('/food');
+        }
     }
 }
 

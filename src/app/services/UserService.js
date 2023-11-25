@@ -7,11 +7,10 @@ import { multipleMongooesToOject } from '../../util/mongoose.js';
 class UserService {
     index(req, res) {
         let isLogin = false;
-        let email;
         if (req.isAuthenticated()) {
             console.log('Hello', req.user.name);
             isLogin = true;
-            email = req.user.email;
+            let email = req.user.email;
             User.findOne({ email: req.user.email })
                 .lean()
                 .then((user) => {

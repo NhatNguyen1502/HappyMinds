@@ -39,9 +39,8 @@
         <form action="/food" method="post">
           <input type="hidden" name="idFood" value="{{this._id}}">
           <input type="hidden" name="emailUser" value="{{../email}}">
-          <input type="hidden" name="isLogin" value="{{../isLogin}}">
           <button type="submit"
-            class="btn btn-custom text-light bg-danger w-100 fw-medium rounded-3">Add to Menu</button>
+            class="btn btn-custom text-light bg-danger w-100 fw-medium rounded-3" onclick="checkLoginFood('{{../isLogin}}')">Add to Menu</button>
         </form>
       </div>
     </div>
