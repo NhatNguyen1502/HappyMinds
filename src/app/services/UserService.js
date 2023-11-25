@@ -55,7 +55,11 @@ class UserService {
                         .lean()
                         .then((videos) => {
                             let arr = findBestSubarrays(videos, 250);
-                            console.log(arr.length);
+                            console.log(
+                                arr.length,
+                                ' ',
+                                calculateTotalCaloriesAmount(videos),
+                            );
                             console.log(
                                 arr[0],
                                 calculateTotalDuration(arr[0]),
