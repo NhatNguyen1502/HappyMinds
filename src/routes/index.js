@@ -4,11 +4,14 @@ import adminRouter from './admin.js';
 import videoRouter from './video.js';
 import foodcaloriesRouter from './foodcalories.js';
 import blogRouter from './blog.js';
+import videoCarouselRouter from './videoCarousel.js';
 
 export function route(app) {
+    app.use('/homepage', homepageRouter);
+
     app.use('/', homepageRouter);
 
-    app.use('/homepage', homepageRouter);
+    app.use('/bmicourse', videoCarouselRouter);
 
     app.use('/video', videoRouter);
 

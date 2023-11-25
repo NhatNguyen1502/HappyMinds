@@ -11,7 +11,7 @@
                     digitals divided with additionals clickthroughs
                     from line.</p>
             </div>
-            <form action="" id="bmiForm">
+            <form action="/homepage" id="bmiForm" method="post">
                 <div class="row input1 my-3 gap-3">
                     <div class="col-lg-5 col-12">
                         <input class="form-control" type="number" name="height" id="inpHeight"
@@ -34,8 +34,14 @@
                         </select>
                     </div>
                 </div>
+                <div class="row my-3 gap-3">
+                    <div class="col-12" style="width: 86%;">
+                        <input class="form-control" type="number" name="bmi" id="bmi"
+                            placeholder="Your BMI" value="{{bmi}}">
+                    </div>
+                </div>
                 <div class="submit d-flex justify-content-center justify-content-lg-start">
-                    <button class="btn btn-lg text-light submit-bmi" style="width:100px ;font-size: 16px;border-radius: 30px;background-color: $red;border: none;
+                    <button class="btn redColor text-white submit-bmi" style="width:100px ;font-size: 16px;border-radius: 30px;background-color: red;border: none;
                     " type="submit">Submit</button>
                 </div>
             </form>
@@ -98,24 +104,26 @@
             <p class="ms-5 ps-5 fw-medium">BUILD YOUR BODY WITH <br> OUR EXECISES</p>
         </div>
         <div class="col-lg-1 col-md-2 col-3 d-flex align-items-end justify-content-end pe-4">
-            <button type="button" class="btn btn-outline-danger w-100 fw-medium"
+            <form action="/homepage/showAllVideos" method="post">
+            <input type="hidden" name="array" value='{{videoArrayJSON}}'>
+            <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
                 style="border-width:2px ;">MORE</button>
+            </form>
         </div>
     </div>
 
-    <div class="row row-cols-1 pt-3 row-cols-lg-3 g-5">
+    <div class="row row-cols-1 pt-3 row-cols-lg-3 g-5" id="videoContainer">
         {{#each videos}}
         <div class="col">
             <div class="card">
-                <a href="/video/{{this.videoId}}">
+                <a href="/video/{{this.videoId}}" style="text-decoration: none;">
                     <img src="{{this.image}}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{this.title}}</h5>
                         <div class="d-flex justify-content-between">
                             <p class="card-text">FEB 12, 2020</p>
-                            <p class="card-text ">
-                                <a href="" class="text-danger fw-medium fw-semibold" style="text-decoration: none">MORE
-                                    INFO</a>
+                            <p class="card-text text-danger fw-medium fw-semibold">
+                                MORE INFO
                                 <img class="pb-1" src="goRight.png" alt="">
                             </p>
                         </div>
@@ -132,17 +140,17 @@
             <p class="ms-5 ps-5 fw-medium">OUR RECENT ARTICLES</p>
         </div>
         <div class="col-lg-1 col-md-2 col-3 d-flex align-items-end justify-content-end pe-4">
-            <button type="button" class="btn btn-outline-danger w-100 fw-medium"
-                style="border-width:2px ;">MORE</button>
+                <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
+                style="border-width:2px ;" id="moreButton">MORE</button>
         </div>
     </div>
 
-    <div id="carouselExample" class="carousel">
-        <div class="carousel-inner">
+    <div id="carouselExample" class="carousel" >
+        <div class="carousel-inner" >
 
             {{#each blogs}}
-            <div class="carousel-item">
-                <a href="blog/blogdetail/{{this.slug}}">
+            <div class="carousel-item" style="display: flex; margin-right: 0;">
+                <a href="blog/blogdetail/{{this.slug}}" style="text-decoration: none;">
                     <div class="card-slider">
                         <div class="image-wrapper mb-2 p-2">
                             <img class="image-slider" src="{{this.image}}" alt="...">
@@ -157,11 +165,11 @@
             {{/each}}
         </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" style="position: absolute; top: 50%; left: -100px;">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next" style="position: absolute; top: 50%; right: -100px">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
@@ -174,27 +182,3 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="index.js"></script>
-
-<script>
-    document.getElementById("bmiForm").addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        var height = document.getElementById("inpHeight").value;
-        var weight = document.getElementById("inpWeight").value;
-
-        fetch('/homepage/checkBMI', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ height: height, weight: weight })
-        })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("result").textContent = data;
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
-    });
-</script>

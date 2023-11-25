@@ -16,34 +16,34 @@
 
     <form action="" method="post">
         <div class="formArea updateForm row p-0 m-3 justify-content-between rounded-2">
-            <h2 class="mt-2 text-center" style="color: $red; font-weight: 700;">Update</h2>
+            <h2 class="mt-2 text-center " style="color: $red; font-weight: 700;">Update</h2>
             <div class="form col-md-6 border-end text-center mb-2 rounded-start">
                 <div for="height" style="font-size: 15px; font-weight: 600;">Height</div>
-                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2" name="height"
+                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="height"
                     id="height" value="{{user.height}}">
 
                 <div for="weight" style="font-size: 15px; font-weight: 600;">Weight</div>
-                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2" name="weight"
+                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="weight"
                     id="weight" value="{{user.weight}}">
 
                 <div for="age" style="font-size: 15px; font-weight: 600;">Age</div>
-                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2" name="age" id="age"
+                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="age" id="age"
                     value="{{user.age}}"><br>
             </div>
             <div class="inforForm form col-md-6 text-center mb-2 rounded-end">
 
                 <div for="name" style="font-size: 15px; font-weight: 600;">Name</div>
-                <input type="text" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2" name="name" id="name"
+                <input type="text" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="name" id="name"
                     value="{{user.name}}">
 
                 <div for="sex" style="font-size: 15px; font-weight: 600;">Sex</div>
-                <select class="col-md-8 col-11 p-2 m-1 border-0 rounded-2" name="sex" id="sex">
+                <select class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="sex" id="sex">
                     <option value="Male" {{#isEqual user.sex "Male" }}selected{{/isEqual}}>Male</option>
                     <option value="Female" {{#isEqual user.sex "Female" }}selected{{/isEqual}}>Female</option>
                 </select>
 
                 <div for="pal" style="font-size: 15px; font-weight: 600;">Physical Activity Level (PAL)</div>
-                <select class="col-md-8 col-11 p-2 m-1 border-0 rounded-2" name="pal" id="pal">
+                <select class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="pal" id="pal">
                     <option value="Sedentary" {{isSelected user.pal "Sedentary" }}>Sedentary</option>
                     <option value="Lightly Active" {{isSelected user.pal "Lightly Active" }}>Lightly Active</option>
                     <option value="Moderately Active" {{isSelected user.pal "Moderately Active" }}>Moderately Active
@@ -54,7 +54,7 @@
                 </select>
             </div>
             <div class="m-2 text-center">
-                <input type="submit" class="btn btn-info col-md-3 p-2 m-1 border-0 rounded-5" value="Update">
+                <input type="submit" class="btn text-white col-md-3 p-2 m-1 border-0 rounded-5 redColor" value="Update">
             </div>
         </div>
     </form>

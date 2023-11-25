@@ -154,6 +154,9 @@ body {
   border-bottom: 3px solid #fd0054 !important;
   color: #fd0054; }
 
+.redColor {
+  background-color: #fd0054 !important; }
+
 .button_header {
   background-color: #fd0054;
   color: white;

@@ -14,6 +14,30 @@ class UserService {
                     let weight = user.weight;
                     let bmi = (weight / (height * height)).toFixed(2);
                     let bmiType;
+                    let bmr;
+                    if (user.pal == 'Sedentary') {
+                        bmr = 1.2;
+                    } else if (user.pal == 'Lightly Active') {
+                        bmr = 1.375;
+                    } else if (user.pal == 'Moderately Active') {
+                        bmr = 1.55;
+                    } else if (user.pal == 'Very Active') {
+                        bmr = 1.725;
+                    } else bmr = 1.9;
+                    if (user.sex == 'Male')
+                        user.requiredCaloriesAmount =
+                            (10 * user.weight +
+                                6.25 * user.height -
+                                5 * user.age +
+                                5) *
+                            bmr;
+                    else
+                        user.requiredCaloriesAmount =
+                            (10 * user.weight +
+                                6.25 * user.height -
+                                5 * user.age -
+                                161) *
+                            bmr;
                     if (bmi < 18.5) {
                         bmiType = 'Underweight';
                     } else if (bmi >= 18.5 && bmi < 25) {
