@@ -1,60 +1,122 @@
 <div class="container">
     <div class="inforUser p-2 m-3 row rounded-2">
         <div class="col-md-6">
-            <h1 class="m-0 mb-2" style="color: $red; font-weight: 700;">YOUR BMI: 20.9</h1>
+            <h1 class="m-0 mb-2" style="color: $red; font-weight: 700;">YOUR BMI: {{bmi}}</h1>
             <div class="showInput row gap-2">
-                <input class="col-md-5 col-11 rounded-5 border-0 m-1 p-2 mx-2" type="text" placeholder="Height">
-                <input class="col-md-5 col-11 rounded-5 border-0 m-1 p-2 mx-2" type="text" placeholder="Weight">
-                <input class="col-md-5 col-11 rounded-5 border-0 m-1 p-2 mx-2" type="text" placeholder="Calories">
-                <input class="col-md-5 col-11 rounded-5 border-0 m-1 p-2 mx-2" type="text" placeholder="Level">
+                <h2>Calories consumed today: {{user.userCaloriesAmount}}</span></h2>
+                <h2>Daily calorie requirement: {{user.requiredCaloriesAmount}} </span></h2>
             </div>
         </div>
         <div class="col-md-6 p-2">
-            <h2 class="d-flex justify-content-end" style="font-weight: 700;" id="userName">NGUYỄN ĐỨC QUYỀN</h2>
-            <h2 class="d-flex justify-content-end" style="font-weight: 700;" id="userAge">19</h2>
-            <h2 class="d-flex justify-content-end" style="font-weight: 700;" id="activityRatios">VERY ACTIVE</h2>
+            <h2 class="d-flex justify-content-end" style="font-weight: 700;" id="userName">{{user.name}}</h2>
+            <h2 class="d-flex justify-content-end" style="font-weight: 700;" id="userAge">{{user.age}}</h2>
+            <h2 class="d-flex justify-content-end" style="font-weight: 700;" id="activityRatios">{{user.pal}}</h2>
         </div>
     </div>
 
-    <div class="formArea row p-0 m-3 justify-content-between">
-        <div class="updateForm form col-md-6 border-end text-center mb-2 rounded-start">
-            <h2 class="mt-2" style="color: $red; font-weight: 700;"> Update</h2>
-            <div for="height" style="font-size: 15px; font-weight: 600;">Height</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="heightForm">
+    <form action="" method="post">
+        <div class="formArea updateForm row p-0 m-3 justify-content-between rounded-2">
+            <h2 class="mt-2 text-center " style="color: $red; font-weight: 700;">Update</h2>
+            <div class="form col-md-6 border-end text-center mb-2 rounded-start">
+                <div for="height" style="font-size: 15px; font-weight: 600;">Height</div>
+                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="height"
+                    id="height" value="{{user.height}}">
 
-            <div for="weight" style="font-size: 15px; font-weight: 600;">Weight</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="weightForm">
+                <div for="weight" style="font-size: 15px; font-weight: 600;">Weight</div>
+                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="weight"
+                    id="weight" value="{{user.weight}}">
 
-            <div for="height" style="font-size: 15px; font-weight: 600;">Level</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="levelForm"><br>
+                <div for="age" style="font-size: 15px; font-weight: 600;">Age</div>
+                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="age" id="age"
+                    value="{{user.age}}"><br>
+            </div>
+            <div class="inforForm form col-md-6 text-center mb-2 rounded-end">
 
-            <div class="submit m-2">
-                <input type="submit" class="button col-md-3 p-2 m-1 border-0 rounded-5 text-center" value="Update">
+                <div for="name" style="font-size: 15px; font-weight: 600;">Name</div>
+                <input type="text" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="name" id="name"
+                    value="{{user.name}}">
+
+                <div for="sex" style="font-size: 15px; font-weight: 600;">Sex</div>
+                <select class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="sex" id="sex">
+                    <option value="Male" {{#isEqual user.sex "Male" }}selected{{/isEqual}}>Male</option>
+                    <option value="Female" {{#isEqual user.sex "Female" }}selected{{/isEqual}}>Female</option>
+                </select>
+
+                <div for="pal" style="font-size: 15px; font-weight: 600;">Physical Activity Level (PAL)</div>
+                <select class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="pal" id="pal">
+                    <option value="Sedentary" {{isSelected user.pal "Sedentary" }}>Sedentary</option>
+                    <option value="Lightly Active" {{isSelected user.pal "Lightly Active" }}>Lightly Active</option>
+                    <option value="Moderately Active" {{isSelected user.pal "Moderately Active" }}>Moderately Active
+                    </option>
+                    <option value="Very Active" {{isSelected user.pal "Very Active" }}>Very Active</option>
+                    <option value="Extremely Active" {{isSelected user.pal "Extremely Active" }}>Extremely Active
+                    </option>
+                </select>
+            </div>
+            <div class="m-2 text-center">
+                <input type="submit" class="btn text-white col-md-3 p-2 m-1 border-0 rounded-5 redColor" value="Update">
             </div>
         </div>
-        <div class="inforForm form col-md-6 text-center mb-2  rounded-end">
-            <h2 class="mt-2" style="color: $red; font-weight: 700;">Information</h2>
-            <div for="nameForm" style="font-size: 15px; font-weight: 600;">Name</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="nameForm">
-
-            <div for="email" style="font-size: 15px; font-weight: 600;">Email</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="emailForm">
-
-            <div for="password" style="font-size: 15px; font-weight: 600;">Password</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="passwordForm"><br>
-
-            <div for="password" style="font-size: 15px; font-weight: 600;">Re-write Password</div>
-            <input type="text" class=" col-md-8 col-11 p-2 m-1 border-0 rounded-2" id="passwordForm"><br>
-            <div class="submit m-2">
-                <input type="submit" class=" button col-md-3 p-2 m-1 border-0 rounded-5 text-center " value="Change">
+    </form>
+    <div class="listVideo p-3 mb-3 rounded-2">
+        <div class="row justify-content-between mx-5 ">
+            <p class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Arms</p>
+        </div>
+        <div class="justify-content-start mx-5 row gap-4">
+            {{#each videos1}}
+            <div class="card col-3 p-2" style="width: 21rem;">
+                <a href="/video/{{this.videoId}}">
+                    <img src="{{this.image}}" class="card-img-top" alt="image">
+                    <div class="card-body">
+                        <p class="card-text">{{this.title}}</p>
+                    </div>
+                </a>
             </div>
+            {{/each}}
         </div>
     </div>
+    <div class="listVideo p-3 mb-3 rounded-2">
+        <div class="row justify-content-between mx-5 ">
+            <p class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Arms</p>
+        </div>
+        <div class="justify-content-start mx-5 row gap-4">
+            {{#each videos2}}
+            <div class="card col-3 p-2" style="width: 21rem;">
+                <a href="/video/{{this.videoId}}">
+                    <img src="{{this.image}}" class="card-img-top" alt="image">
+                    <div class="card-body">
+                        <p class="card-text">{{this.title}}</p>
+                    </div>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="listVideo p-3 mb-3 rounded-2">
+        <div class="row justify-content-between mx-5 ">
+            <p class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Arms</p>
+        </div>
+        <div class="justify-content-start mx-5 row gap-4">
+            {{#each videos3}}
+            <div class="card col-3 p-2" style="width: 21rem;">
+                <a href="/video/{{this.videoId}}">
+                    <img src="{{this.image}}" class="card-img-top" alt="image">
+                    <div class="card-body">
+                        <p class="card-text">{{this.title}}</p>
+                    </div>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="time"></div>
+    <div class="calo"></div>
     <div class="foodHistory p-3 m-3 rounded-2">
         <h3 class="m-0 mb-2" style="color: $red; font-weight: 700;">Food Menu</h3>
         <div class="card card-content mb-3">
             <div class="row g-0 justify-content-start">
-                <div class="col-lg-2 d-flex justify-content-center justify-content-lg-start align-items-center text-center">
+                <div
+                    class="col-lg-2 d-flex justify-content-center justify-content-lg-start align-items-center text-center">
                     <img src="https://anestisxasapotaverna.gr/wp-content/uploads/2021/12/ARTICLE-1.jpg"
                         class="img-fluid rounded-image mx-3 w-100" alt="error">
                 </div>
@@ -66,34 +128,13 @@
                     </div>
                 </div>
                 <div class="col-lg-4 d-flex justify-content-center align-items-center  pb-lg-0 pb-3">
-                    <button type="button" class="border-0 py-2 btn-custom text-light w-50 rounded-2">Remove</button>
+                    <button type="button"
+                        class="btn btn-danger border-0 py-2 btn-custom text-light w-50 rounded-2">Remove</button>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="videoHistory p-3 m-3 rounded-1">
-        <h3 class="m-0 mb-2" style="color: $red; font-weight: 700;">Watched History</h3>
-        <div class="card card-content mb-3">
-            <div class="row g-0 justify-content-start">
-                <div class="col-lg-3 p-3 d-flex justify-content-center justify-content-lg-start align-items-center text-center">
-                    <img src="https://anestisxasapotaverna.gr/wp-content/uploads/2021/12/ARTICLE-1.jpg"
-                        class="mx-1 w-100" alt="error">
-                </div>
-                <div class="col-lg-4">
-                    <div class="card-body card-body-text px-0 text-center text-lg-start">
-                        <h5 class="card-title">France's Pizza</h5>
-                        <p class="card-text">Pizza are very good for your health</p>
-                        <p class="card-text"><small class="text-body-secondary">350 calo</small></p>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 d-flex justify-content-lg-end justify-content-center align-items-center  pb-lg-0 pb-3">
-                    <button type="button" class="border-0 py-2 btn-custom text-light w-50 rounded-2">Watch</button>
-                </div>
-
             </div>
         </div>
     </div>
 </div>
+<script>
 
-
+</script>

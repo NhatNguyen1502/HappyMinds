@@ -5,5 +5,4 @@ const router = express.Router();
 
 router.post('/', VideoCarouselController.index);
 
-
 export default router;

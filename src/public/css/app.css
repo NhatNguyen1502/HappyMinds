@@ -80,9 +80,7 @@ body {
 .card-slider {
   margin: 0 .5em;
   box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
-  border: none; 
-  height: 468px;
-}
+  border: none; }
 
 .card-text-slider {
   max-height: 50px;
@@ -155,6 +153,9 @@ body {
 .nav-item:focus {
   border-bottom: 3px solid #fd0054 !important;
   color: #fd0054; }
+
+.redColor {
+  background-color: #fd0054 !important; }
 
 .button_header {
   background-color: #fd0054;

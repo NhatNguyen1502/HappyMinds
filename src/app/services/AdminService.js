@@ -58,6 +58,7 @@ class AdminService {
                 category,
                 sex,
                 BMItype,
+                duration,
             } = req.body;
             const updatedVideo = await Video.findByIdAndUpdate(
                 req.params.id,
