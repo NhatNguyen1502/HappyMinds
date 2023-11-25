@@ -1,15 +1,21 @@
 import User from '../models/User.js';
 import Video from '../models/Video.js';
+import Food from '../models/Food.js';
+import { multipleMongooesToOject } from '../../util/mongoose.js';
+
 
 class UserService {
     index(req, res) {
         let isLogin = false;
+        let email;
         if (req.isAuthenticated()) {
             console.log('Hello', req.user.name);
             isLogin = true;
+            email = req.user.email;
             User.findOne({ email: req.user.email })
                 .lean()
                 .then((user) => {
+                    let foodsID = user.choseFoode;
                     let height = user.height / 100;
                     let weight = user.weight;
                     let bmi = (weight / (height * height)).toFixed(2);
@@ -57,14 +63,19 @@ class UserService {
                                 calculateTotalDuration(arr[0]),
                                 calculateTotalCaloriesAmount(arr[0]),
                             );
-                            res.render('user', {
+                        Food.find({ _id: { $in: foodsID } })
+                        .then((foods) => {
+                            foods = multipleMongooesToOject(foods);
+                            res.render('user', { 
+                                foods, 
                                 user,
                                 bmi,
+                                email,
                                 isLogin,
                                 videos1: arr[1],
                                 videos2: arr[2],
-                                videos3: arr[3],
-                            });
+                                videos3: arr[3],});
+                        })
                         });
                 });
         } else {
@@ -102,8 +113,28 @@ class UserService {
             let height = user.height / 100;
             let weight = user.weight;
             let BMI = (weight / (height * height)).toFixed(2);
-            res.render('user', { user, BMI, isLogin });
+            res.redirect('/user');
         });
+    }
+
+    removeFood (req, res) {
+        let isLogin = false;
+        if (req.isAuthenticated()) {
+            isLogin = true;
+        }
+        const idFood = req.params.idFood;
+        const email = req.body.email;
+        const bmi = req.body.bmi;
+        User.findOneAndUpdate(
+            { email: email },
+            { $pull: { choseFoode: idFood } },
+            { new: true }
+        ).then(user => {
+            res.redirect('/user');
+          })
+          .catch(error => {
+            console.log("loi roi");
+          });
     }
 }
 function findBestSubarrays(videos, targetCalories) {

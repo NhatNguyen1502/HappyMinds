@@ -113,26 +113,33 @@
     <div class="calo"></div>
     <div class="foodHistory p-3 m-3 rounded-2">
         <h3 class="m-0 mb-2" style="color: $red; font-weight: 700;">Food Menu</h3>
-        <div class="card card-content mb-3">
-            <div class="row g-0 justify-content-start">
-                <div
-                    class="col-lg-2 d-flex justify-content-center justify-content-lg-start align-items-center text-center">
-                    <img src="https://anestisxasapotaverna.gr/wp-content/uploads/2021/12/ARTICLE-1.jpg"
-                        class="img-fluid rounded-image mx-3 w-100" alt="error">
-                </div>
-                <div class="col-lg-6">
-                    <div class="card-body card-body-text px-0 text-center text-lg-start">
-                        <h5 class="card-title">France's Pizza</h5>
-                        <p class="card-text">Pizza are very good for your health</p>
-                        <p class="card-text"><small class="text-body-secondary">350 calo</small></p>
+        {{#each foods}}
+            <div class="card card-content mb-3">
+                <div class="row g-0 justify-content-start">
+                    <div
+                        class="col-lg-2 d-flex justify-content-center justify-content-lg-start align-items-center text-center">
+                        <img src="{{this.img}}"
+                            class="img-fluid rounded-image mx-3 w-100" alt="error">
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card-body card-body-text px-0 text-center text-lg-start">
+                            <h5 class="card-title">{{this.name}}</h5>
+                            <p class="card-text">{{this.description}}</p>
+                            <p class="card-text"><small class="text-body-secondary">{{this.calo}} calo</small></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 d-flex justify-content-center align-items-center  pb-lg-0 pb-3">
+                        <form action="/user/{{this._id}}" method="post">
+                            <input type="hidden" name="user" value="{{../user}}">
+                            <input type="hidden" name="email" value="{{../email}}">
+                            <input type="hidden" name="bmi" value="{{../bmi}}">
+                            <button type="submit"
+                            class="btn btn-danger border-0 py-2 btn-custom text-light w-100 rounded-2">Remove</button>
+                        </form>
                     </div>
                 </div>
-                <div class="col-lg-4 d-flex justify-content-center align-items-center  pb-lg-0 pb-3">
-                    <button type="button"
-                        class="btn btn-danger border-0 py-2 btn-custom text-light w-50 rounded-2">Remove</button>
-                </div>
             </div>
-        </div>
+        {{/each}}
     </div>
 </div>
 <script>
