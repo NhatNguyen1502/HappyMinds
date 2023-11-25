@@ -5,8 +5,8 @@ import passport from 'passport';
 const router = express.Router();
 
 router.get('/', homepageController.index);
-router.post('/showAllVideos', homepageController.showAllVideos);
-router.post('/:slug', homepageController.showVideos);
+// router.post('/showAllVideos', homepageController.showAllVideos);
+router.post('/form', homepageController.showVideos);
 
 router.get('/login', function (req, res) {
     if (!req.user) {
