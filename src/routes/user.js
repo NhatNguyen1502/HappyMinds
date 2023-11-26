@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get('/', userController.index);
 router.post('/', userController.updateUser);
+router.post('/:idFood', userController.removeFood);
 
 export default router;
