@@ -6,7 +6,7 @@
                 <div class="fs-2 fw-bold">Weight status: {{bmiType}}</span></div>
                 <div class="fs-2 fw-bold">Burned calories today: {{user.userCaloriesAmount}}</span></div>
             </div>
-        </div> 
+        </div>
         <div class="col-md-6 p-2">
             <div class="d-flex justify-content-end fs-2 fw-bold" id="userName">{{user.name}}</div>
             <div class="d-flex justify-content-end fs-2 fw-bold" id="userAge">{{user.age}}</div>
@@ -19,16 +19,16 @@
             <div class="mt-2 text-center fs-2 fw-bold text-red">Update</div>
             <div class="form col-md-6 border-end text-center mb-2 rounded-start">
                 <div for="height" style="font-size: 15px; font-weight: 600;">Height</div>
-                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="height"
-                    id="height" value="{{user.height}}">
+                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center"
+                    name="height" id="height" value="{{user.height}}">
 
                 <div for="weight" style="font-size: 15px; font-weight: 600;">Weight</div>
-                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="weight"
-                    id="weight" value="{{user.weight}}">
+                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center"
+                    name="weight" id="weight" value="{{user.weight}}">
 
                 <div for="age" style="font-size: 15px; font-weight: 600;">Age</div>
-                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="age" id="age"
-                    value="{{user.age}}"><br>
+                <input type="number" min="0" class="col-md-8 col-11 p-2 m-1 border-0 rounded-2 text-center" name="age"
+                    id="age" value="{{user.age}}"><br>
             </div>
             <div class="inforForm form col-md-6 text-center mb-2 rounded-end">
 
@@ -62,9 +62,12 @@
 
     <div class="listVideo p-3 m-3 rounded-2">
         <div class="row justify-content-between mx-5 ">
-            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">First suggestion</span>
-            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Time: {{time1}} minutes</span>
-            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Calories: {{calo1}} calo</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">First
+                suggestion</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Time:
+                {{time1}} minutes</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Calories:
+                {{calo1}} calo</span>
         </div>
         <div class="justify-content-start mx-5 row gap-4">
             {{#each videos1}}
@@ -81,9 +84,12 @@
     </div>
     <div class="listVideo p-3 m-3 rounded-2">
         <div class="row justify-content-between mx-5 ">
-            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Second suggestion</span>
-            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Time: {{time2}} minutes</span>
-            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Calories: {{calo2}} calo</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Second
+                suggestion</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Time:
+                {{time2}} minutes</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Calories:
+                {{calo2}} calo</span>
         </div>
         <div class="justify-content-start mx-5 row gap-4">
             {{#each videos2}}
@@ -100,9 +106,12 @@
     </div>
     <div class="listVideo p-3 m-3 rounded-2">
         <div class="row justify-content-between mx-5 ">
-            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Third suggestion</span>
-            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Time: {{time3}} minutes</span>
-            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Calories: {{calo3}} calo</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Third
+                suggestion</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Time:
+                {{time3}} minutes</span>
+            <span class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0">Calories:
+                {{calo3}} calo</span>
         </div>
         <div class="justify-content-start mx-5 row gap-4">
             {{#each videos3}}
@@ -117,34 +126,33 @@
             {{/each}}
         </div>
     </div>
-
-    <div class="time"></div>
-    <div class="calo"></div>
     <div class="foodHistory p-3 m-3 rounded-2">
-        <div class="m-0 mb-2 fs-2 fw-bold" style="font-weight: 700;">Food Menu</div>
-        <div class="fs-1 fw-bold">Daily calorie requirement: {{user.requiredCaloriesAmount}} </span></div>
+        <h3 class="m-0 mb-2" style="color: $red; font-weight: 700;">Food Menu</h3>
+        <div class="fs-1 fw-bold">Daily calorie requirement: {{user.requiredCaloriesAmount}}</div>
+        <h4 class="m-0 mb-2" style="font-weight: 500;">Total food calories: {{totalCalories}}</h4>
+        {{#each foods}}
         <div class="card card-content mb-3">
             <div class="row g-0 justify-content-start">
                 <div
                     class="col-lg-2 d-flex justify-content-center justify-content-lg-start align-items-center text-center">
-                    <img src="https://anestisxasapotaverna.gr/wp-content/uploads/2021/12/ARTICLE-1.jpg"
-                        class="img-fluid rounded-image mx-3 w-100" alt="error">
+                    <img src="{{this.img}}" class="img-fluid rounded-image mx-3 w-100" alt="error">
                 </div>
                 <div class="col-lg-6">
                     <div class="card-body card-body-text px-0 text-center text-lg-start">
-                        <h5 class="card-title">France's Pizza</h5>
-                        <p class="card-text">Pizza are very good for your health</p>
-                        <p class="card-text"><small class="text-body-secondary">350 calo</small></p>
+                        <h5 class="card-title">{{this.name}}</h5>
+                        {{!-- <p class="card-text">{{this.description}}</p> --}}
+                        <p class="card-text text-body-secondary">{{this.calo}} calo/100g </p>
                     </div>
                 </div>
                 <div class="col-lg-4 d-flex justify-content-center align-items-center  pb-lg-0 pb-3">
-                    <button type="button"
-                        class="btn btn-danger border-0 py-2 btn-custom text-light w-50 rounded-2">Remove</button>
+                    <form action="/user/{{this._id}}" method="post">
+                        <input type="hidden" name="email" value="{{../email}}">
+                        <button type="submit"
+                            class="btn btn-danger border-0 py-2 btn-custom text-light w-100 rounded-2">Remove</button>
+                    </form>
                 </div>
             </div>
         </div>
+        {{/each}}
     </div>
 </div>
-<script>
-
-</script>

@@ -1,5 +1,7 @@
 import User from '../models/User.js';
 import Video from '../models/Video.js';
+import Food from '../models/Food.js';
+import { multipleMongooesToOject } from '../../util/mongoose.js';
 
 class UserService {
     index(req, res) {
@@ -7,9 +9,11 @@ class UserService {
         if (req.isAuthenticated()) {
             console.log('Hello', req.user.name);
             isLogin = true;
+            let email = req.user.email;
             User.findOne({ email: req.user.email })
                 .lean()
                 .then((user) => {
+                    let foodsID = user.choseFoode;
                     let height = user.height / 100;
                     let weight = user.weight;
                     let bmi = (weight / (height * height)).toFixed(2);
@@ -54,36 +58,47 @@ class UserService {
                     Video.find({ BMItype: bmiType })
                         .lean()
                         .then((videos) => {
-                            let arr = findBestSubarrays(videos, 500);
-                            for (let i = 0; i < 20; i++) {
-                                const element = arr[i];
-                                console.log(
-                                    arr[i].length,
-                                    calculateTotalDuration(arr[i]) / 60,
-                                    calculateTotalCaloriesAmount(arr[i]),
-                                );
-                            }
-                            res.render('user', {
-                                user,
-                                bmi,
-                                bmiType,
-                                isLogin,
-                                videos1: arr[0],
-                                time1: (
-                                    calculateTotalDuration(arr[0]) / 60
-                                ).toFixed(2),
-                                calo1: calculateTotalCaloriesAmount(arr[0]),
-                                videos2: arr[5],
-                                time2: (
-                                    calculateTotalDuration(arr[5]) / 60
-                                ).toFixed(2),
-                                calo2: calculateTotalCaloriesAmount(arr[5]),
-                                videos3: arr[10],
-                                time3: (
-                                    calculateTotalDuration(arr[10]) / 60
-                                ).toFixed(2),
-                                calo3: calculateTotalCaloriesAmount(arr[10]),
-                            });
+                            let arr = findBestSubarrays(videos, 250);
+                            Food.find({ _id: { $in: foodsID } }).then(
+                                (foods) => {
+                                    foods = multipleMongooesToOject(foods);
+                                    const totalCalories = foods.reduce(
+                                        (total, food) => {
+                                            return total + food.calo;
+                                        },
+                                        0,
+                                    );
+                                    res.render('user', {
+                                        totalCalories: totalCalories.toFixed(2),
+                                        foods,
+                                        user,
+                                        bmi,
+                                        bmiType,
+                                        isLogin,
+                                        videos1: arr[0],
+                                        time1: (
+                                            calculateTotalDuration(arr[0]) / 60
+                                        ).toFixed(2),
+                                        calo1: calculateTotalCaloriesAmount(
+                                            arr[0],
+                                        ),
+                                        videos2: arr[5],
+                                        time2: (
+                                            calculateTotalDuration(arr[5]) / 60
+                                        ).toFixed(2),
+                                        calo2: calculateTotalCaloriesAmount(
+                                            arr[5],
+                                        ),
+                                        videos3: arr[10],
+                                        time3: (
+                                            calculateTotalDuration(arr[10]) / 60
+                                        ).toFixed(2),
+                                        calo3: calculateTotalCaloriesAmount(
+                                            arr[10],
+                                        ),
+                                    });
+                                },
+                            );
                         });
                 });
         } else {
@@ -123,6 +138,22 @@ class UserService {
             let BMI = (weight / (height * height)).toFixed(2);
             this.index(req, res);
         });
+    }
+
+    removeFood(req, res) {
+        const idFood = req.params.idFood;
+        const email = req.body.email;
+        User.findOneAndUpdate(
+            { email: email },
+            { $pull: { choseFoode: idFood } },
+            { new: true },
+        )
+            .then((user) => {
+                res.redirect('/user');
+            })
+            .catch((error) => {
+                console.log('loi roi');
+            });
     }
 }
 
