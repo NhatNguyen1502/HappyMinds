@@ -1,0 +1,38 @@
+<div class="container bg">
+    <div class="row pt-5">
+        <div class="content col-lg-11 col-md-10 col-9 text-center">
+            <h3 class="ms-5 ps-5 fw-bold" style="color: #fd0054;">BLOGS & ARTICLES</h3>
+            <p class="ms-5 ps-5 fw-medium">OUR RECENT ARTICLES</p>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 pt-4">
+        {{#each blogs}}
+        <div class="col pb-3">
+            <div class="card">
+                <a href="blog/blogDetail/{{this.slug}}">
+                    <img src="{{this.image}}" class="card-img-top" style="height: 300px;" alt="...">
+                </a>
+                <div class="card-body pb-0">
+                    <h5 class="card-title">{{this.title}}</h5>
+                    <div class=" col-lg-8 d-flex justify-content-start">
+                        <img class="col-lg-4 col-1 my-2" style="width: 30px; height: 30px" src="/img/Image.png" alt>
+                        <p class="m-0 d-flex align-items-center mx-2" style="font-size:medium;">Benjamin Gray</p>
+                    </div>
+                    <p class="content-text-blog">{{this.content}}</p>
+                    <div class="d-flex justify-content-between">
+                        <p class="card-text" style="font-size:14px;">FEB 12, 2020</p>
+                        <p class="card-text ">
+                            <a href="/blog/blogDetail/{{this.slug}}" class="text-danger fw-medium fw-semibold"
+                                style="text-decoration: none">MORE
+                                INFO</a>
+                            <img class="pb-1" src="/img/goRight.png" alt="">
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+</div>

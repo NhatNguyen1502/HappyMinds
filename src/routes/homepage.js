@@ -1,9 +1,41 @@
 import express from 'express';
-import homepageController from '../resources/app/controllers/homepageController.js';
+import homepageController from '../app/controllers/HomepageController.js';
+import passport from 'passport';
 
 const router = express.Router();
 
-router.get('/:slug', homepageController.show);
-router.get('/homepage', homepageController.index);
+router.get('/', homepageController.index);
+// router.post('/showAllVideos', homepageController.showAllVideos);
+router.post('/form', homepageController.showVideos);
+
+router.get('/login', function (req, res) {
+    if (!req.user) {
+        res.redirect('/');
+    } else {
+        res.redirect('/user');
+    }
+});
+
+router.get('/login/federated/google', passport.authenticate('google'));
+
+router.get(
+    '/auth/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/',
+    }),
+    function (req, res) {
+        req.session.user = req.user;
+        res.redirect('/user');
+    },
+);
+
+router.get('/logout', function (req, res) {
+    req.logout(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
+});
 
 export default router;

@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose, { model } from 'mongoose';
 
 async function connect() {
     try {
-        await mongoose.connect('mongodb://localhost:27017/happyminds_dev', {
+        await mongoose.connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
         });
         console.log('connect database successfully!');

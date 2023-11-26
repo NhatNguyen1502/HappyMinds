@@ -1,0 +1,128 @@
+{{!-- CREATE MODEL --}}
+<div style="display: flex; justify-content: end; margin: 12px 0">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"
+        data-bs-whatever="@getbootstrap">Create</button>
+
+    <div style="display: flex; justify-content: end; margin: 0 0">
+        <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form method="post" action="/admin/user">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" value="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="age" class="col-form-label">Age:</label>
+                                <input type="text" class="form-control" id="age" name="age">
+                            </div>
+                            <div class="mb-3">
+                                <label for="height" class="col-form-label">Height:</label>
+                                <input type="number" class="form-control" id="height" name="height"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="weight" class="col-form-label">Weight:</label>
+                                <input type="number" class="form-control" id="weight" name="weight"></input>
+                            </div>
+                            <div class="mb-3">
+                                Sex:
+                                <div class="btn-group" role="group">
+                                    <input type="radio" class="btn-check" name="sex" id="male" value="male"
+                                        autocomplete="off" checked>
+                                    <label class="btn btn-outline-primary" for="male">Male</label>
+
+                                    <input type="radio" class="btn-check" name="sex" id="female" value="female"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="female">Female</label>
+
+                                    <input type="radio" class="btn-check" name="sex" id="sex3" value="both"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="sex3">Both</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="category" class="col-form-label">Category:</label>
+                                <input type="text" class="form-control" id="category" name="category"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="activityRatios" class="col-form-label">Activity ratios:</label>
+                                <input type="text" class="form-control" id="activityRatios" name="activityRatios"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="userCaloriesAmount" class="col-form-label">User calories amount:</label>
+                                <input type="Number" class="form-control" id="userCaloriesAmount" name="userCaloriesAmount"></input>
+                            </div>
+                            <div class="mb-3">
+                                <label for="requiredCaloriesAmount" class="col-form-label">Required calories amount:</label>
+                                <input type="Number" class="form-control" id="requiredCaloriesAmount" name="requiredCaloriesAmount"></input>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-users">
+    <table class="table table-bordered table-striped table-hover align-middle" style="text-align: center;">
+        <thead class="table-secondary">
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Height & Weight</th>
+                <th>Sex</th>
+                <th>Category</th>
+                <th>Activity ratios</th>
+                <th>User calories amount</th>
+                <th>Required calories amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each users}} 
+            <tr>
+                <th>{{this.name}}</th>
+                <th>{{this.age}}</th>
+                <th>{{this.height}}cm <br>{{this.weight}}kg</th>
+                <th>{{this.sex}}</th>
+                <th>{{this.category}}</th>
+                <th>{{this.activityRatios}}</th>
+                <th>{{this.userCaloriesAmount}}</th>
+                <th>{{this.requiredCaloriesAmount}}</th>
+                <th width="150px">
+                    {{!-- BUTTON DELETE --}}
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete"
+                        data-bs-whatever="@getbootstrap" id="deleteButton" onclick="deleteUser('{{this._id}}')">
+                        <span class="icon-wrapper">
+                            <svg class="icon" width="24px" height="24px" color="white" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 7V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V7M6 7H5M6 7H8M18 7H19M18 7H16M10 11V16M14 11V16M8 7V5C8 3.89543 8.89543 3 10 3H14C15.1046 3 16 3.89543 16 5V7M8 7H16"
+                                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                </path>
+                            </svg>
+                        </span>
+                    </button>
+                </th>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!--DELETE--}}
+<script>
+    function deleteUser(id) {
+        document.getElementById('deleteForm').action = '/admin/delete-user/' + id;
+    }
+</script>
