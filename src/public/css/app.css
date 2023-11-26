@@ -157,6 +157,9 @@ body {
 .redColor {
   background-color: #fd0054 !important; }
 
+.text-red {
+  color: #fd0054; }
+
 .button_header {
   background-color: #fd0054;
   color: white;
