@@ -22,7 +22,7 @@
                             placeholder="Weight / kg">
                     </div>
                 </div>
-                <div class="row input2 my-3 gap-3">
+                {{!-- <div class="row input2 my-3 gap-3">
                     <div class="col-lg-5 col-12">
                         <input class="form-control" type="number" name="age" id="inpAge" placeholder="Age">
                     </div>
@@ -33,11 +33,11 @@
                             <option value="sex">Sex</option>
                         </select>
                     </div>
-                </div>
+                </div> --}}
                 <div class="row my-3 gap-3">
                     <div class="col-12" style="width: 86%;">
                         <input class="form-control" type="number" name="bmi" id="bmi"
-                            placeholder="Your BMI" value="{{bmi}}">
+                            placeholder="Your BMI" value="{{bmi}}" readonly>
                     </div>
                 </div>
                 <div class="submit d-flex justify-content-center justify-content-lg-start">
@@ -100,7 +100,7 @@
 
     <div class="row">
         <div class="content col-lg-11 col-md-10 col-9 text-center mt-5">
-            <h3 class="ms-5 ps-5 fw-bold" style="color: #fd0054;">COACHES</h3>
+            <h3 class="ms-5 ps-5 fw-bold" style="color: #fd0054;">RECOMMENDED EXERCISES FOR YOU</h3>
             <p class="ms-5 ps-5 fw-medium">BUILD YOUR BODY WITH <br> OUR EXECISES</p>
         </div>
         <div class="col-lg-1 col-md-2 col-3 d-flex align-items-end justify-content-end pe-4">
@@ -116,7 +116,7 @@
         {{#each videos}}
         <div class="col">
             <div class="card">
-                <a href="/video/{{this.videoId}}" style="text-decoration: none;">
+                <a href="/video/{{this.videoId}}" style="color: black; text-decoration: none;">
                     <img src="{{this.image}}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{this.title}}</h5>
@@ -152,7 +152,7 @@
 
             {{#each blogs}}
             <div class="carousel-item" style="display: flex; margin-right: 0;">
-                <a href="blog/blogdetail/{{this.slug}}" style="text-decoration: none;">
+                <a href="blog/blogdetail/{{this.slug}}" style="color: black; text-decoration: none;">
                     <div class="card-slider">
                         <div class="image-wrapper mb-2 p-2">
                             <img class="image-slider" src="{{this.image}}" alt="...">

@@ -29,15 +29,19 @@
       <div class="col-lg-6">
         <div class="card-body card-body-text px-0 text-center text-lg-start ">
           <h5 class="card-title">{{this.name}}</h5>
-          {{!-- <p class="card-text">{{this.description}}</p> --}}
+          {{!-- <p class="card-text">{{this.description}}</p> --}}  
           <p class="card-text"><medium class="text-body-secondary">{{this.calo}}
-              calo</medium></p>
+              calo/ 100g</medium></p>
         </div>
       </div>
       <div
         class="col-lg-4 d-flex justify-content-center align-items-center pb-lg-0 pb-3">
-        <button type="button"
-          class="btn btn-custom text-light bg-danger w-50 fw-medium rounded-3">Add to Menu</button>
+        <form action="/food" method="post">
+          <input type="hidden" name="idFood" value="{{this._id}}">
+          <input type="hidden" name="emailUser" value="{{../email}}">
+          <button type="submit"
+            class="btn btn-custom text-light bg-danger w-100 fw-medium rounded-3" onclick="checkLoginFood('{{../isLogin}}')">Add to Menu</button>
+        </form>
       </div>
     </div>
   </div>
