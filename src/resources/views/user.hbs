@@ -128,8 +128,8 @@
     </div>
     <div class="foodHistory p-3 m-3 rounded-2">
         <h3 class="m-0 mb-2" style="color: $red; font-weight: 700;">Food Menu</h3>
-        <div class="fs-1 fw-bold">Daily calorie requirement: {{user.requiredCaloriesAmount}}</div>
-        <h4 class="m-0 mb-2" style="font-weight: 500;">Total food calories: {{totalCalories}}</h4>
+        <div class="fs-1 fw-bold">Daily calorie requirement: {{user.requiredCaloriesAmount}}calo</div>
+        <h4 class="m-0 mb-2" style="font-weight: 500;">Total food calories: {{totalCalories}}calo</h4>
         {{#each foods}}
         <div class="card card-content mb-3">
             <div class="row g-0 justify-content-start">
@@ -140,13 +140,12 @@
                 <div class="col-lg-6">
                     <div class="card-body card-body-text px-0 text-center text-lg-start">
                         <h5 class="card-title">{{this.name}}</h5>
-                        {{!-- <p class="card-text">{{this.description}}</p> --}}
-                        <p class="card-text text-body-secondary">{{this.calo}} calo/100g </p>
+                        <p class="card-text">{{this.description}}</p>
+                        <p class="card-text text-body-secondary">{{this.calo}}calo/100g</p>
                     </div>
                 </div>
                 <div class="col-lg-4 d-flex justify-content-center align-items-center  pb-lg-0 pb-3">
                     <form action="/user/{{this._id}}" method="post">
-                        <input type="hidden" name="email" value="{{../email}}">
                         <button type="submit"
                             class="btn btn-danger border-0 py-2 btn-custom text-light w-100 rounded-2">Remove</button>
                     </form>
