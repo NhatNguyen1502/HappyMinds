@@ -37,7 +37,7 @@
                 <div class="row my-3 gap-3">
                     <div class="col-12" style="width: 86%;">
                         <input class="form-control" type="number" name="bmi" id="bmi"
-                            placeholder="Your BMI" value="{{bmi}}">
+                            placeholder="Your BMI" value="{{bmi}}" readonly>
                     </div>
                 </div>
                 <div class="submit d-flex justify-content-center justify-content-lg-start">
@@ -116,7 +116,7 @@
         {{#each videos}}
         <div class="col">
             <div class="card">
-                <a href="/video/{{this.videoId}}" style="text-decoration: none;">
+                <a href="/video/{{this.videoId}}" style="color: black; text-decoration: none;">
                     <img src="{{this.image}}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{this.title}}</h5>
@@ -152,7 +152,7 @@
 
             {{#each blogs}}
             <div class="carousel-item" style="display: flex; margin-right: 0;">
-                <a href="blog/blogdetail/{{this.slug}}" style="text-decoration: none;">
+                <a href="blog/blogdetail/{{this.slug}}" style="color: black; text-decoration: none;">
                     <div class="card-slider">
                         <div class="image-wrapper mb-2 p-2">
                             <img class="image-slider" src="{{this.image}}" alt="...">
