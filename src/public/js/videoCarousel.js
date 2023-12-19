@@ -30,8 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
             secondRest--;
             const secondsDisplay = secondRest < 10 ? `0${secondRest}` : secondRest;
             rest_time.textContent = `00 : ${secondsDisplay}`;
-            
-            // Check if the rest timer has reached 0
             if (secondRest === 0) {
                 clearInterval(timer2);
                 isRestTimerRunning = false;
