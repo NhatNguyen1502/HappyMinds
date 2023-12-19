@@ -54,6 +54,19 @@ class FoodService {
             res.redirect('/food');
         }
     }
-}
 
+    searchFood(req, res) {
+        const name = req.body.search;
+
+        Food.find({ name: { $regex: name, $options: 'i' } })
+            .then((foods) => {
+                foods = multipleMongooesToOject(foods);
+                res.render('food', { foods });
+            })
+            .catch((error) => {
+                console.error(error);
+                res.status(500).json({ error: 'An error' });
+            });
+    }
+}
 export default new FoodService();
