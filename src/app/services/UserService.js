@@ -142,7 +142,7 @@ class UserService {
 
     removeFood(req, res) {
         const idFood = req.params.idFood;
-        const email = req.body.email;
+        const email = req.user.email;
         User.findOneAndUpdate(
             { email: email },
             { $pull: { choseFoode: idFood } },
