@@ -56,34 +56,17 @@ class FoodService {
     }
 
     searchFood(req, res) {
-        const search = req.body.search;
+        const name = req.body.search;
 
-        // const query = search ? { title: { $regex: new RegExp(search, 'i') } } : {};
-
-        Food.find(query)
+        Food.find({ name: { $regex: name, $options: 'i' } })
             .then((foods) => {
-                // const foods = multipleMongooseToOject(foods);
-                try {
-                    const foodNames = foods.map((food) => food.name);
-                
-                    // Tìm kiếm món ăn gần giống với tên món ăn trong mảng
-                    Food.find({
-                      name: { $in: foodNames },
-                    })
-                    .then(
-                        
-                    )
-                
-                    return similarFoods;
-                  } catch (error) {
-                    throw new Error('Error occurred while finding similar foods');
-                  }
-                res.render('food', {formattedFoods, isLogin }); 
+                foods = multipleMongooesToOject(foods);
+                res.render('food', { foods });
             })
-            .catch((err) => {
-                res.status(400).json({ err: 'error!' });
+            .catch((error) => {
+                console.error(error);
+                res.status(500).json({ error: 'An error' });
             });
     }
 }
-
 export default new FoodService();
