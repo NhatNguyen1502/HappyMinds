@@ -13,7 +13,6 @@ import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import './app/services/passport.js';
 import handlebars from 'handlebars';
-
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,7 +26,6 @@ app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
-
 handlebars.registerHelper('isEqual', function (value1, value2, options) {
     return value1 === value2 ? options.fn(this) : options.inverse(this);
 });
