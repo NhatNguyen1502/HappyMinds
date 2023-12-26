@@ -6,6 +6,7 @@ class FoodService {
     index(req, res) {
         let isLogin = false;
         let email;
+
         if (req.isAuthenticated()) {
             isLogin = true;
             email = req.user.email;
@@ -13,6 +14,7 @@ class FoodService {
         Food.find({})
             .then((foods) => {
                 foods = multipleMongooesToOject(foods);
+                console.log(foods);
                 res.render('food', { foods, isLogin, email });
             })
             .catch((err) => {
@@ -23,7 +25,6 @@ class FoodService {
     addToMenu(req, res) {
         const email = req.body.emailUser;
         const idFood = req.body.idFood;
-
         let isLogin = false;
         if (req.isAuthenticated()) {
             isLogin = true;
@@ -31,7 +32,7 @@ class FoodService {
             User.findOneAndUpdate(
                 { email: email },
                 { $push: { choseFoode: idFood } },
-                { new: true }
+                { new: true },
             )
                 .then(() => {
                     console.log('Món ăn đã được thêm vào mảng choseFoode.');
@@ -48,8 +49,7 @@ class FoodService {
                 .catch((error) => {
                     console.log('Đã xảy ra lỗi khi thêm món ăn:', error);
                 });
-        }
-        else {
+        } else {
             console.log('Login fail!!!');
             res.redirect('/food');
         }
@@ -57,7 +57,6 @@ class FoodService {
 
     searchFood(req, res) {
         const name = req.body.search;
-
         Food.find({ name: { $regex: name, $options: 'i' } })
             .then((foods) => {
                 foods = multipleMongooesToOject(foods);
@@ -66,6 +65,25 @@ class FoodService {
             .catch((error) => {
                 console.error(error);
                 res.status(500).json({ error: 'An error' });
+            });
+    }
+
+    sort(req, res) {
+        let isLogin = false;
+        let email;
+        if (req.isAuthenticated()) {
+            isLogin = true;
+            email = req.user.email;
+        }
+        const sortValue = req.params.slug == 'up' ? 1 : -1;
+        Food.find({})
+            .sort({ calo: sortValue })
+            .then((foods) => {
+                foods = multipleMongooesToOject(foods);
+                res.render('food', { foods, isLogin, email });
+            })
+            .catch((err) => {
+                res.status(400).json({ err: 'ERROR!' });
             });
     }
 }
