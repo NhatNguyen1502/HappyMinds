@@ -3,6 +3,7 @@ let index = 0
 let secondRest = 5;
 let timer2;
 let isRestTimerRunning = true;
+var buttonClicked = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     let video = document.getElementById('video');
@@ -48,19 +49,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('next').addEventListener('click', () => {
         nextVideo();
+        timer2 = setInterval(updateCountdown, 1000);    });
+    document.getElementById('skip').addEventListener('click', () => {
+        skipVideo();
         timer2 = setInterval(updateCountdown, 1000);
-
     });
-    // document.getElementById('start').addEventListener('click', () => {
-    //     runTimer();
-    // });
-    
-    
-
     
 });
 
 function nextVideo() {
+    buttonClicked = true;
     secondRest = 5;
     document.getElementById('rest').textContent = `00 : 0${secondRest}`;
     document.getElementById('start').classList.remove('shake');
@@ -68,9 +66,9 @@ function nextVideo() {
     $('#carouselExampleControls').carousel('next');
     index++;
     if (index == 10) {
-        document.getElementById('next').setAttribute('disabled', 'true');
+        document.getElementById('next').setAttribute('disabled', 'true'); 
         document.getElementById('skip').setAttribute('disabled', 'true');
-        document.getElementById('start').textContent = 'FINISH!!!';
+        // document.getElementById('start').textContent = 'FINISH!!!';
     } else {
         let newVideo = document.querySelector(`.video[data-index="${index}"]`);
         if (!newVideo) {
@@ -80,7 +78,41 @@ function nextVideo() {
         let calories =
             parseInt(document.getElementById('calories').innerHTML) +
             parseInt(newVideo.getAttribute('data-calo'));
-        document.getElementById('calories').innerHTML = calories;
+            document.getElementById('calories').innerHTML = calories;
+            document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
+            document.getElementById('rep').textContent = parseInt(
+                newVideo.getAttribute('data-rep'),
+            );
+            document.getElementById('start').setAttribute('disabled', 'true');
+            document.getElementById('next').setAttribute('disabled', 'true');
+            time_enable = 5000;
+            setTimeout(enableNextButton, time_enable);
+            setTimeout(enableStartButton, time_enable);
+            setTimeout(() => {
+                document.getElementById('start').classList.add('shake');
+            }, time_enable);
+
+        }
+}
+
+function skipVideo() {
+    buttonClicked = true;
+    secondRest = 5;
+    document.getElementById('rest').textContent = `00 : 0${secondRest}`;
+    document.getElementById('start').classList.remove('shake');
+    isRestTimerRunning = true;
+    $('#carouselExampleControls').carousel('next');
+    index++;
+    if (index == 10) {
+        document.getElementById('next').setAttribute('disabled', 'true');
+        document.getElementById('skip').setAttribute('disabled', 'true');
+        // document.getElementById('start').textContent = 'FINISH!!!';
+    } else {
+        let newVideo = document.querySelector(`.video[data-index="${index}"]`);
+        if (!newVideo) {
+            index = 0;
+            newVideo = document.querySelector('.carousel-item[data-index="0"]');
+        }
         document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
         document.getElementById('rep').textContent = parseInt(
             newVideo.getAttribute('data-rep'),
@@ -93,40 +125,8 @@ function nextVideo() {
         setTimeout(() => {
             document.getElementById('start').classList.add('shake');
         }, time_enable);
-        
-    }
-}
 
-function skipVideo() {
-    document.getElementById('start').classList.remove('shake');
-    
-    $('#carouselExampleControls').carousel('next');
-    index++;
-    if (index == 10) {
-        document.getElementById('next').setAttribute('disabled', 'true');
-        document.getElementById('skip').setAttribute('disabled', 'true');
-        document.getElementById('start').textContent = 'FINISH!!!';
-    } else {
-        let newVideo = document.querySelector(`.video[data-index="${index}"]`);
-        if (!newVideo) {
-            index = 0;
-            newVideo = document.querySelector('.carousel-item[data-index="0"]');
         }
-        // let calories = parseInt(document.getElementById('calories').innerHTML) + parseInt(newVideo.getAttribute('data-calo'));
-        // document.getElementById('calories').innerHTML = calories;
-        document.getElementById(
-            'timer',
-        ).textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
-        document.getElementById('rep').textContent = parseInt(
-            newVideo.getAttribute('data-rep'),
-        );
-        document.getElementById('next').setAttribute('disabled', 'true');
-        time_enable = 5000;
-        setTimeout(enableNextButton, time_enable);
-        setTimeout(() => {
-            document.getElementById('start').classList.add('shake');
-        }, time_enable);
-    }
 }
 
 function enableNextButton() {
@@ -155,4 +155,43 @@ function runTimer() {
     document.getElementById('next').addEventListener('click', () => {
         clearInterval(timer3);
     });
+    document.getElementById('skip').addEventListener('click', () => {
+        clearInterval(timer3);
+    });
 }
+
+function runProgressBar() {
+    var elem = document.getElementById("myBar");
+    let videoDuration = document.querySelector(`.video[data-index="${index}"]`);
+    console.log(videoDuration.getAttribute('data-index'));
+    let second = videoDuration.getAttribute('data-duration');
+    console.log(second);
+    var totalDuration = second * 1000;
+    console.log(totalDuration);
+    var steps = 50
+    var width = 0;
+    var intervalDuration = totalDuration / steps;
+    console.log(intervalDuration);
+    function frame() {
+        if (buttonClicked && width <= 1000) {
+            console.log("ngu")
+            width = 0;
+            clearInterval(interval);
+            buttonClicked = false; 
+        }
+        else{
+            width += 100 / steps;
+            elem.style.width = width + "%";
+        }
+        
+        
+    }
+
+    var interval = setInterval(frame, intervalDuration);
+}
+
+
+
+
+
+
