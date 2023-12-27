@@ -246,3 +246,31 @@ h2 {
 .content-text-blog {
   height: 50px;
   overflow: hidden; }
+
+/* ---------------------------------UPGREADE USER UI------------------------------------------------- */
+.profile_picture {
+  position: relative;
+  top: -40px; }
+
+.editIcon {
+  color: #fd0054; }
+
+#username {
+  position: relative;
+  top: -20px; }
+
+.firstitem {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px; }
+
+.item_inforBar {
+  background-color: #e1e1e1;
+  border-right: 1px solid black; }
+
+.lastitem {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-right: none; }
+
+.heading_user {
+  color: #fd0054; }

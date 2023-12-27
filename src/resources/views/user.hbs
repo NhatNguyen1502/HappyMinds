@@ -1,4 +1,4 @@
-<div class="container">
+{{!-- <div class="container">
     <div class="inforUser p-2 m-3 row rounded-2">
         <div class="col-md-6">
             <div class="m-0 mb-2 fs-1 fw-bold">YOUR BMI: {{bmi}}</div>
@@ -154,4 +154,130 @@
         </div>
         {{/each}}
     </div>
+</div> --}}
+<div class="heading">
+    <h2 class="text-danger fw-bold text-center pt-3 pb-3">PROFILE</h2>
+</div>
+<div class="inforBlock bg-light m-5 rounded-3">
+    <div class="avatar row justify-content-center align-items-center">
+        <div class="col-lg-1 d-flex flex-row align-items-top"></div>
+        <div class="col-lg-10 d-flex justify-content-center">
+            <img class="profile_picture" style="width: 200px; height: 200px" src="./img/Ellipse 1.png" alt="profile_picture">
+        </div>
+        <div class="col-lg-1 mh-100 d-flex flex-row align-items-top justify-content-end" style="height: 200px;">
+            <i class="bi bi-pencil-square editIcon fs-3 p-2 pt-0" id="editUser"></i>
+        </div>
+    </div>
+    <div class="name">
+        <h2 class="text-center m-0 p-0" id="username">{{user.name}}</h2>
+    </div>
+    <div class="inforBar row p-2 pb-4 mx-2 mb-2 justify-content-center">
+        <div class="firstitem item_inforBar col-lg-2 p-2 d-flex flex-row justify-content-center ">
+            <img src="./img/bmi_logo.png" alt="">
+            <div class="userInfor d-flex flex-column justify-content-center mx-1 fs-1">
+                <h4 class="fs-3 " id="bmi_calculated">{{bmi}}</h4>
+                <h4 class="fs-3 ">BMI</h4>
+            </div>
+        </div>
+        <div class="item_inforBar col-lg-2 p-2  d-flex flex-row justify-content-center">
+            <img src="./img/height_logo.png" alt="">
+            <div class="userInfor d-flex flex-column justify-content-center mx-1 fs-1">
+                <h4 class="fs-3 " id="height">{{user.height}}</h4>
+                <h4 class="fs-3 ">CM</h4>
+            </div>
+        </div>
+        <div class="item_inforBar col-lg-2 p-2  d-flex flex-row justify-content-center">
+            <img src="./img/weight_logo.png" alt="">
+            <div class="userInfor d-flex flex-column justify-content-center mx-1 fs-1">
+                <h4 class="fs-3 " id="weight">{{user.weight}}</h4>
+                <h4 class="fs-3 ">KG</h4>
+            </div>
+        </div>
+        <div class="item_inforBar col-lg-2 p-2  d-flex flex-row justify-content-center">
+            <img src="./img/age_logo.png" alt="">
+            <div class="userInfor d-flex flex-column justify-content-center mx-1 fs-1">
+                <h4 class="fs-3 " id="age">{{user.age}}</h4>
+                <h4 class="fs-3 ">AGE</h4>
+            </div>
+        </div>
+        <div class="lastitem item_inforBar col-lg-2 p-2 px-3 d-flex flex-row justify-content-center ">
+            <img src="./img/calo_logo.png" alt="">
+            <div class="userInfor d-flex flex-column justify-content-center mx-1 fs-1">
+                <h4 class="fs-3 " id="calo">{{user.requiredCaloriesAmount}}</h4>
+                <h4 class="fs-3 ">CALO</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="courseBMI m-5">
+    <div class="heading_user p-0">
+        <h4 class="fw-bold p-0">KHOÁ HỌC</h4>
+    </div>
+    <div class="courses pt-2">
+        <div class="row gap-3">
+            {{#each videos1}}
+            <div class="card col-3 p-2 mx-2 " style="width: 25rem;">
+                <a href="/video/{{this.videoId}}" style="color: black; text-decoration: none;">
+                    <img src="{{this.image}}" class="card-img-top" alt="image">
+                    <div class="card-body">
+                        <p class="card-text">{{this.title}}</p>
+                    </div>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+<div class="menu m-5">
+    <div class="heading_user p-0">
+        <h4 class="fw-bold p-0">THỰC ĐƠN</h4>
+    </div>
+    <div class="menu_table row">
+        <table class="row">
+            <thead >
+                <tr class="row rounded-top" style="background-color: rgba(253, 0, 84, 1) ; ">
+                    <td class="fw-bold col-lg-11 d-flex align-items-center " style="color: white; ">HÔM NAY</td>
+                    <td class="fw-bold col-lg-1 d-flex justify-content-end  align-items-center p-2"><i class="bi bi-pencil-square fs-3  pt-0" id="editUser" style="color: white;"></i></td>
+                </tr>
+                <tr class="row bg-light p-2 border-bottom border-1 border-dark">
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Tên</td>
+                    <td class="col-lg-3 text-center fw-bold fs-5 p-0">Hình ảnh</td>
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Calo/100g</td>
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Khối lượng</td>
+                    <td class="col-lg-3 text-center fw-bold fs-5 p-0">Phân loại</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="row bg-light p-2">
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">Gạo</td>
+                    <td class="col-lg-3  fs-5 p-0 d-flex align-items-center justify-content-center">
+                        <img src="./img/rice.png" alt="">
+                    </td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">190</td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">200g</td>
+                    <td class="col-lg-3  fs-5 p-0 d-flex align-items-center justify-content-center">Tinh bột</td>
+                </tr>
+                <tr class="row bg-light p-2">
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">Gạo</td>
+                    <td class="col-lg-3  fs-5 p-0 d-flex align-items-center justify-content-center">
+                        <img src="./img/rice.png" alt="">
+                    </td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">190</td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">200g</td>
+                    <td class="col-lg-3  fs-5 p-0 d-flex align-items-center justify-content-center">Tinh bột</td>
+                </tr>
+                <tr class="row bg-light p-2">
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">Gạo</td>
+                    <td class="col-lg-3  fs-5 p-0 d-flex align-items-center justify-content-center">
+                        <img src="./img/rice.png" alt="">
+                    </td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">190</td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">200g</td>
+                    <td class="col-lg-3  fs-5 p-0 d-flex align-items-center justify-content-center">Tinh bột</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
 </div>
