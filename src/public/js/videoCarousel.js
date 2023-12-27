@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
         skipVideo();
         timer2 = setInterval(updateCountdown, 1000);
     });
-    
 });
 
 function nextVideo() {
@@ -121,12 +120,11 @@ function skipVideo() {
         document.getElementById('next').setAttribute('disabled', 'true');
         time_enable = 5000;
         setTimeout(enableNextButton, time_enable);
-        setTimeout(enableStartButton, time_enable);
         setTimeout(() => {
             document.getElementById('start').classList.add('shake');
         }, time_enable);
+    }
 
-        }
 }
 
 function enableNextButton() {

@@ -13,7 +13,6 @@ import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import './app/services/passport.js';
 import handlebars from 'handlebars';
-
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -28,15 +27,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-handlebars.registerHelper('isEqual', function (value1, value2, options) {
-    return value1 === value2 ? options.fn(this) : options.inverse(this);
+handlebars.registerHelper({
+    isEqual: (value1, value2, options) =>
+        value1 === value2 ? options.fn(this) : options.inverse(this),
+    isSelected: (currentValue, targetValue) =>
+        currentValue === targetValue ? 'selected' : '',
+    json: (context) => JSON.stringify(context),
 });
-handlebars.registerHelper(
-    'isSelected',
-    function (currentValue, targetValue, options) {
-        return currentValue === targetValue ? 'selected' : '';
-    },
-);
 
 // Template engine
 app.engine(
@@ -65,7 +62,6 @@ passport.serializeUser(function (user, cb) {
         cb(null, { id: user.id, name: user.name, email: user.email });
     });
 });
-
 passport.deserializeUser(function (user, cb) {
     process.nextTick(function () {
         return cb(null, user);
