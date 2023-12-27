@@ -38,15 +38,20 @@ class AdminService {
             .then(() => res.redirect('/admin/admin-blog'))
             .catch((err) => console.log(err));
     };
-    showVideos(req, res) {
-        Video.find({}).then((videos) => {
-            res.render('admin-video', {
-                videos: multipleMongooesToOject(videos),
-                layout: 'admin.hbs',
-                title: 'ADMIN-VIDEO',
+    showVideos = async (req, res) => {
+        const page = parseInt(req.query.page) || 1;
+        const perPage = 10;
+        Video.find({})
+            .skip((page - 1) * perPage)
+            .limit(perPage)
+            .then((videos) => {
+                res.render('admin-video', {
+                    videos: multipleMongooesToOject(videos),
+                    layout: 'admin.hbs',
+                    title: 'ADMIN-VIDEO',
+                });
             });
-        });
-    }
+    };
 
     updateVideo = async (req, res) => {
         try {
@@ -95,15 +100,22 @@ class AdminService {
         }
     };
 
-    showFoods(req, res) {
-        Food.find({}).then((foods) => {
-            res.render('admin-food', {
-                foods: multipleMongooesToOject(foods),
-                layout: 'admin.hbs',
-                title: 'ADMIN-FOOD',
+    showFoods = async (req, res) => {
+        const totalItems = await Food.countDocuments();
+        const page = parseInt(req.query.page) || 1;
+        const perPage = 5;
+        Food.find({})
+            .skip((page - 1) * perPage)
+            .limit(perPage)
+            .then((foods) => {
+                res.render('admin-food', {
+                    foods: multipleMongooesToOject(foods),
+                    layout: 'admin.hbs',
+                    title: 'ADMIN-FOOD',
+                    totalPages: Math.ceil(totalItems / perPage),
+                });
             });
-        });
-    }
+    };
 
     updateFood = async (req, res) => {
         try {
