@@ -1,49 +1,75 @@
-let time_enable = 10000;
-let index = 0;
+let time_enable = 5000;
+let index = 0
+let secondRest = 5;
+let timer2;
+let isRestTimerRunning = true;
+
 document.addEventListener('DOMContentLoaded', () => {
     let video = document.getElementById('video');
-    document.getElementById('timer').textContent = `00 : ${video.getAttribute(
+    let timer = document.getElementById('timer').textContent = `00 : ${video.getAttribute(
         'data-duration',
     )}`;
     document.getElementById('rep').textContent = video.getAttribute('data-rep');
 
-    const countupElement = document.getElementById('time_start');
-    const countRestElement = document.getElementById('rest');
+    let total_time = document.getElementById('time_start');
+    let rest_time = document.getElementById('rest');
     let minutes = 0;
     let seconds = 0;
-    let secondRest = 10;
     function updateCountup() {
         seconds++;
         const minutesDisplay = minutes < 10 ? `0${minutes}` : minutes;
         const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds;
-        countupElement.textContent = `${minutesDisplay} : ${secondsDisplay}`;
+        total_time.textContent = `${minutesDisplay} : ${secondsDisplay}`;
         if (seconds == 59) {
             seconds = -1;
             minutes++;
         }
     }
     function updateCountdown() {
-        secondRest--;
-        const minutesDisplay = minutes < 10 ? `0${minutes}` : minutes;
-        const secondsDisplay = secondRest < 10 ? `0${secondRest}` : secondRest;
-        countRestElement.textContent = `${minutesDisplay} : ${secondsDisplay}`;
-        if (secondRest == 0) {
-            clearInterval(timer2);
-            let button = document.getElementById('start');
-            button.removeAttribute('disabled');
-            button.classList.add('shake');
+        if (isRestTimerRunning) {
+            secondRest--;
+            const secondsDisplay = secondRest < 10 ? `0${secondRest}` : secondRest;
+            rest_time.textContent = `00 : ${secondsDisplay}`;
+            
+            // Check if the rest timer has reached 0
+            if (secondRest === 0) {
+                clearInterval(timer2);
+                isRestTimerRunning = false;
+                let button = document.getElementById('start');
+                button.removeAttribute('disabled');
+                button.classList.add('shake');
+            }
         }
     }
     const timer1 = setInterval(updateCountup, 1000);
-    const timer2 = setInterval(updateCountdown, 1000);
-
+    timer2 = setInterval(updateCountdown, 1000);
     setTimeout(enableNextButton, time_enable);
+
+    document.getElementById('start').addEventListener('click', () => {
+        runTimer();
+    });
+    document.getElementById('next').addEventListener('click', () => {
+        nextVideo();
+        timer2 = setInterval(updateCountdown, 1000);
+
+    });
+    // document.getElementById('start').addEventListener('click', () => {
+    //     runTimer();
+    // });
+    
+    
+
+    
 });
 
 function nextVideo() {
+    secondRest = 5;
+    document.getElementById('rest').textContent = `00 : 0${secondRest}`;
+    document.getElementById('start').classList.remove('shake');
+    isRestTimerRunning = true;
     $('#carouselExampleControls').carousel('next');
     index++;
-    if (index == 9) {
+    if (index == 10) {
         document.getElementById('next').setAttribute('disabled', 'true');
         document.getElementById('skip').setAttribute('disabled', 'true');
         document.getElementById('start').textContent = 'FINISH!!!';
@@ -57,22 +83,28 @@ function nextVideo() {
             parseInt(document.getElementById('calories').innerHTML) +
             parseInt(newVideo.getAttribute('data-calo'));
         document.getElementById('calories').innerHTML = calories;
-        document.getElementById(
-            'timer',
-        ).textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
+        document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
         document.getElementById('rep').textContent = parseInt(
             newVideo.getAttribute('data-rep'),
         );
+        document.getElementById('start').setAttribute('disabled', 'true');
         document.getElementById('next').setAttribute('disabled', 'true');
-        time_enable = 10000;
+        time_enable = 5000;
         setTimeout(enableNextButton, time_enable);
+        setTimeout(enableStartButton, time_enable);
+        setTimeout(() => {
+            document.getElementById('start').classList.add('shake');
+        }, time_enable);
+        
     }
 }
 
 function skipVideo() {
+    document.getElementById('start').classList.remove('shake');
+    
     $('#carouselExampleControls').carousel('next');
     index++;
-    if (index == 9) {
+    if (index == 10) {
         document.getElementById('next').setAttribute('disabled', 'true');
         document.getElementById('skip').setAttribute('disabled', 'true');
         document.getElementById('start').textContent = 'FINISH!!!';
@@ -91,17 +123,24 @@ function skipVideo() {
             newVideo.getAttribute('data-rep'),
         );
         document.getElementById('next').setAttribute('disabled', 'true');
-        time_enable = 10000;
+        time_enable = 5000;
         setTimeout(enableNextButton, time_enable);
+        setTimeout(() => {
+            document.getElementById('start').classList.add('shake');
+        }, time_enable);
     }
 }
 
 function enableNextButton() {
     document.getElementById('next').removeAttribute('disabled');
 }
+function enableStartButton() {
+    document.getElementById('start').removeAttribute('disabled');
+}
 
 function runTimer() {
-    const countTimerElement = document.getElementById('timer');
+    document.getElementById('start').setAttribute('disabled', 'true');
+    let countTimerElement = document.getElementById('timer');
     let seconds = parseInt(countTimerElement.textContent.slice(5, 7));
     console.log(seconds);
     function updateCountdown() {
@@ -114,5 +153,8 @@ function runTimer() {
             document.getElementById('next').classList.add('shake');
         }
     }
-    const timer3 = setInterval(updateCountdown, 1000);
+    let timer3 = setInterval(updateCountdown, 1000);
+    document.getElementById('next').addEventListener('click', () => {
+        clearInterval(timer3);
+    });
 }
