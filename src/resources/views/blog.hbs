@@ -5,6 +5,11 @@
             <p class="ms-5 ps-5 fw-medium">OUR RECENT ARTICLES</p>
         </div>
     </div>
+    <div class="row row-cols-1">
+        <div class="col d-flex justify-content-end">
+            <button type="button" class="btn fs-5" style="background-color: #fd0054; color: white;">New Post</button>
+        </div>
+    </div>
     <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 pt-4">
         {{#each blogs}}
         <div class="col pb-3">
@@ -33,6 +38,42 @@
             </div>
         </div>
         {{/each}}
+    </div>
+{{!-- in ra tất cả các phân trang --}}
+    {{!-- <div class="pagination">
+        {{#each pages}}
+        <a href="/blog?page={{this}}" class="{{#ifCond this '==' ../currentPage}}active{{/ifCond}}">{{this}}</a>
+        {{/each}}
+    </div> --}}
+{{!-- script phân đăng ký Helper để phân trang --}}
+    {{!-- <script>
+        Handlebars.registerHelper("ifCond", function (v1, v2, options) {
+            if (v1 === v2) {
+                console.log(v1, v2);
+                return options.fn(this);
+            }
+            return options.inverse(this);
+        });
 
+        Handlebars.registerHelper('paginate', function (totalPages, currentPage) {
+            console.log('totalPages:', totalPages);
+            console.log('currentPage:', currentPage);
+
+            const pages = [];
+            for (let i = 1; i <= totalPages; i++) {
+                pages.push(i);
+            }
+            return pages;
+        });
+    </script> --}}
+
+    <div class="row row-cols-1">
+        <div class="col d-flex justify-content-end mb-0 me-5" style=" position: fixed; bottom: 27%; right: 1%;">
+            <a href="#">
+                <button class="btn btn-danger fs-4 rounded-3">
+                    <i class="bi bi-arrow-up text-light fs-4"></i>
+                </button>
+            </a>
+        </div>
     </div>
 </div>
