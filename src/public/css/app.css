@@ -274,3 +274,33 @@ h2 {
 
 .heading_user {
   color: #fd0054; }
+
+.editMenu {
+  background-color: #fd0054; }
+
+.closeModal {
+  background-color: white;
+  border: none; }
+
+.iconClose::before {
+  color: #fd0054; }
+
+#changePhoto {
+  position: relative;
+  top: -35px;
+  left: 40px; }
+
+.buttonModal {
+  background-color: #fd0054;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px; }
+
+.formInput {
+  background-color: #cacbcb;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none; }
