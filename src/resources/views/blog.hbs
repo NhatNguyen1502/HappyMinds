@@ -39,33 +39,25 @@
         </div>
         {{/each}}
     </div>
-{{!-- in ra tất cả các phân trang --}}
-    {{!-- <div class="pagination">
-        {{#each pages}}
-        <a href="/blog?page={{this}}" class="{{#ifCond this '==' ../currentPage}}active{{/ifCond}}">{{this}}</a>
-        {{/each}}
-    </div> --}}
-{{!-- script phân đăng ký Helper để phân trang --}}
-    {{!-- <script>
-        Handlebars.registerHelper("ifCond", function (v1, v2, options) {
-            if (v1 === v2) {
-                console.log(v1, v2);
-                return options.fn(this);
-            }
-            return options.inverse(this);
-        });
 
-        Handlebars.registerHelper('paginate', function (totalPages, currentPage) {
-            console.log('totalPages:', totalPages);
-            console.log('currentPage:', currentPage);
+    <div class="row row-cols-1 ms-5 pb-5 pt-3">
+        <div class="col-5 d-flex justify-content-end pe-0 m-0">
+            <button type="button" class="btn btn-danger"><a href="/blog?page={{subtract currentPage 1}}"
+                    class="p-1"><i class="bi bi-caret-left-fill"></i></a></button>
+        </div>
 
-            const pages = [];
-            for (let i = 1; i <= totalPages; i++) {
-                pages.push(i);
-            }
-            return pages;
-        });
-    </script> --}}
+        <div class="col-1 d-flex justify-content-center">
+            <span
+                class="input-group-text d-flex align-items-center justify-content-center w-100 fs-5">{{currentPage}}/{{totalPages}}</span>
+        </div>
+
+        <div class="col-6 d-flex justify-content-between ps-0">
+            <button type="button" class="btn btn-success"><a href="/blog?page={{sum currentPage 1}}" class="p-1"><i
+                        class="bi bi-caret-right-fill"></i></a></button>
+        </div>
+
+    </div>
+
 
     <div class="row row-cols-1">
         <div class="col d-flex justify-content-end mb-0 me-5" style=" position: fixed; bottom: 27%; right: 1%;">
