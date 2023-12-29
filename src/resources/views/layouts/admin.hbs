@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="../../../public/css/app.css">
     <link rel="stylesheet" href="../../scss/headerAdmin.scss">
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    {{!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" /> --}}
+    <link href="https://cdn.datatables.net/v/bs4/dt-1.13.8/datatables.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -33,10 +34,11 @@
       charset="utf8"
       src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"
     ></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    {{!-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script> --}}
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.13.8/datatables.min.js"></script>
     <script>
       $(document).ready(function () {
-        $("#table_foods").DataTable({
+        $("#table_admin").DataTable({
           language: {
             search: "_INPUT_",
             searchPlaceholder: "Search records",
@@ -44,8 +46,8 @@
           reponsive: true,
           pagingType: "full_numbers",
           lengthMenu: [
-            [10, 25, 50, -1],
-            [10, 25, 50, "All"],
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, "All"],
           ],
         });
       });
