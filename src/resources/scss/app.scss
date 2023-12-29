@@ -300,3 +300,62 @@ h2 {
     height: 50px;
     overflow: hidden;
 } 
+/* ---------------------------------UPGREADE USER UI------------------------------------------------- */
+.profile_picture{
+    position: relative;
+    top: -40px;
+}
+.editIcon{
+    color: rgba(253, 0, 84, 1);
+}
+#username{
+    position: relative;
+    top: -20px;
+}
+.firstitem{
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.item_inforBar{
+    background-color: #e1e1e1;
+    border-right: 1px solid black;
+}
+.lastitem{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-right: none;
+}
+.heading_user{
+    color: rgba(253, 0, 84, 1);
+}
+.editMenu{
+    background-color: rgba(253, 0, 84, 1);
+}
+.closeModal{
+    background-color: white;
+    border: none;
+    
+}
+.iconClose::before{
+    color: rgba(253, 0, 84, 1);
+}
+#changePhoto{
+    position: relative;
+    top: -35px;
+    left: 40px;
+}
+.buttonModal{
+    background-color: rgba(253, 0, 84, 1);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+.formInput{
+    background-color: #cacbcb;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    outline: none;
+}
