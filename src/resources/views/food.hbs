@@ -17,6 +17,16 @@
       </div>
     </div>
   </form>
+  <a href="/food/up">
+    <button class="btn btn-primary" id="sortUpBtn" onclick="">
+      <i class="bi bi-sort-up"></i>
+    </button>
+  </a>
+  <a href="/food/down">
+    <button class="btn btn-primary" id="sortDownBtn">
+      <i class="bi bi-sort-down"></i>
+    </button>
+  </a>
   {{#each foods}}
   <div class="card card-content mb-3 rounded-4">
     <div class="row g-0 justify-content-start">
@@ -49,3 +59,8 @@
   </div>
   {{/each}}
 </div>
+
+<script>
+  var foods = {{{ json foods }}};
+  console.log(foods);
+</script>

@@ -50,6 +50,18 @@
             animation: shake 1s;
         }
 
+       
+
+        .progress-bar {
+            width: 0;
+            height: 16px;
+            background-color: #fd0054;
+            text-align: center;
+            line-height: 30px;
+            transition: width 0.5s ease-in-out;
+            border-radius: 2px;
+        }
+
         
     </style>
 </head>
@@ -64,40 +76,43 @@
                 {{/each}}
             </div>
         </div>
-        <div class="operation col-lg-2 col-12 my-lg-3 p-2 bg-light rounded-2">
-            <div class="total_time rounded-2 m-2 mt-3 p-2 d-flex justify-content-between align-items-center">
+        <div class="operation col-lg-2 col-12 my-lg-3 p-1 bg-light rounded-2">
+            <div class="total_time rounded-2 m-2 mt-1 p-2 d-flex justify-content-between align-items-center">
                 <h3 class="m-0">Time: </h3>
                 <h4 class="m-0" id="time_start">00:00</h4>
             </div>
-            <div class="energy rounded-2 m-2 mt-3 p-2 d-flex justify-content-between align-items-center">
+            <div class="energy rounded-2 m-2 mt-1 p-2 d-flex justify-content-between align-items-center">
                 <h3 class="m-0">Energy: </h3>
                 <h4 class="m-0" id="calories">0</h4>
             </div>
-            <div class="rep rounded-2 m-2 mt-3 p-2 d-flex justify-content-between align-items-center">
+            <div class="rep rounded-2 m-2 mt-1 mb-1 p-2 d-flex justify-content-between align-items-center">
                 <h3 class="m-0">Rep: </h3>
                 <h4 class="m-0" id="rep">15</h4>
             </div>
-            <div class="timer rounded-2 m-2 mt-3 p-2 ">
-                <p class="m-0 text-center pt-4 pb-0" style="font-size: 30px; font-weight: 600;">Timer </p>
-                <p class="m-0 text-center pb-4 " id="timer" style="font-size: 50px; font-weight: 600;">00 : 35</p>
+            <div class="timer rounded-2 m-2 mt-0 p-2 ">
+                <p class="m-0 text-center pb-0 mb-1" style="font-size: 30px; font-weight: 600;">Timer </p>
+                <p class="m-0 text-center pt-5 pb-5 " id="timer" style="font-size: 45px; font-weight: 600">00 : 35</p>
             </div>
-            <div class="rest rounded-2 m-2 mt-3 p-2 d-flex justify-content-between align-items-center">
+            <div class="progress rounded-2 m-2 mt-1 p-0">
+                <div class="progress-bar bg-danger p-0" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="myBar"></div>
+            </div>
+            <div class="rest rounded-2 m-2 mt-1 p-2 d-flex justify-content-between align-items-center">
                 <h3 class="m-0">Rest:  </h3>
                 <h4 class="m-0" id="rest">00 : 00</h4>
             </div>
             <div class="start_button rounded-2 p-2 d-flex justify-content-between align-items-center">
-                <button class="start bg-danger text-light border-0 rounded-2 py-2 py-1" onclick="runTimer()" disabled id="start">Start</button>
+                <button class="start bg-danger text-light border-0 rounded-2 py-2 py-1" onclick="runProgressBar()" disabled id="start">Start</button>
             </div>
             <div class="buttons p-2 d-flex flex-row justify-content-between">
-                <button class=" nextVideo bg-danger text-light border-0 rounded-2 px-2 py-1" id="skip" onclick="skipVideo()"  data-slide="next">Skip </button>
-                <button class=" nextVideo bg-danger text-light border-0 rounded-2 px-2 py-1" disabled id="next"  onclick="nextVideo()"  data-slide="next">Next </button>
+                <button class=" nextVideo bg-danger text-light border-0 rounded-2 px-2 py-1" id="skip" onclick="skipVideo()"   data-slide="next">Skip </button>
+                <button class=" nextVideo bg-danger text-light border-0 rounded-2 px-2 py-1" disabled id="next"  onclick=""  data-slide="next">Next </button>
             </div>
 
         </div>
     </div>
 
   <script>
-    
-  </script>
+        
+    </script>
 </body>
 </html>
