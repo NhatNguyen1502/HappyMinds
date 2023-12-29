@@ -94,6 +94,7 @@
             {{/each}}
         </tbody>
     </table>
+    <div class="text-center" id="pagination-buttons"></div>
 </div>
 
 {{!-- UPDATE MODEL --}}
@@ -146,4 +147,35 @@
     function deleteFood(id) {
         document.getElementById('deleteForm').action = '/admin/delete-food/' + id;
     }
+
+    function updateUrlAndReloadPage(page) {
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set('page', page);
+
+        // Thay đổi URL và tải lại trang
+        window.location.href = newUrl.href;
+    }
+
+    function renderPaginationButtons(totalPages) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = parseInt(urlParams.get('page')) || 1;
+        const paginationButtons = document.getElementById('pagination-buttons');
+        paginationButtons.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.classList.add('btn');
+            button.classList.add('btn-secondary');
+
+            button.addEventListener('click', () => updateUrlAndReloadPage(i));
+            if (i === page) {
+                button.classList.add('active');
+            }
+            paginationButtons.appendChild(button);
+        }
+    }
+
+    renderPaginationButtons({{{json totalPages}}});
+
 </script>
