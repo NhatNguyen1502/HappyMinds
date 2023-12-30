@@ -52,27 +52,15 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {{#each foods}}
                   <tr class="text-center fw-bold justify-content-center">
-                    <td class="menuRow">Gạo</td>
-                    <td class="menuRow">100</td>
+                    <td class="menuRow">{{this.name}}</td>
+                    <td class="menuRow">{{this.calo}}</td>
                     <td class="menuRow">200</td>
-                    <td class="menuRow">200</td>
+                    <td class="menuRow">{{this.calo}}</td>
                     <td class="menuRow" style="width: 100px; height: 40px;"><i class="bi bi-trash3-fill p-1 px-2 rounded-2" style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i></td>
                   </tr>
-                  <tr class="text-center fw-bold justify-content-center">
-                    <td class="menuRow">Gạo</td>
-                    <td class="menuRow">100</td>
-                    <td class="menuRow">200</td>
-                    <td class="menuRow">200</td>
-                    <td class="menuRow" style="width: 100px; height: 40px;"><i class="bi bi-trash3-fill p-1 px-2 rounded-2" style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i></td>
-                  </tr>
-                  <tr class="text-center fw-bold justify-content-center">
-                    <td class="menuRow">Gạo</td>
-                    <td class="menuRow">100</td>
-                    <td class="menuRow">200</td>
-                    <td class="menuRow">200</td>
-                    <td class="menuRow" style="width: 100px; height: 40px;"><i class="bi bi-trash3-fill p-1 px-2 rounded-2" style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i></td>
-                  </tr>        
+                  {{/each}}       
                 </tbody>
               </table>
               <div class="line mt-4 my-2" style="height: 2px; background-color: rgb(211, 211, 211);"></div>
