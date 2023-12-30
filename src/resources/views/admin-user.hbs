@@ -74,16 +74,16 @@
     </div>
 </div>
 <div class="table-users">
-    <table class="table table-bordered table-striped table-hover align-middle" style="text-align: center;">
+    <table class="table table-bordered table-striped table-hover align-middle" style="text-align: center;" id="table_admin">
         <thead class="table-secondary">
             <tr>
+                <th>Email</th>
                 <th>Name</th>
                 <th>Age</th>
                 <th>Height & Weight</th>
                 <th>Sex</th>
-                <th>Category</th>
-                <th>Activity ratios</th>
-                <th>User calories amount</th>
+                {{!-- <th>Activity ratios</th>
+                <th>User calories amount</th> --}}
                 <th>Required calories amount</th>
                 <th>Action</th>
             </tr>
@@ -91,14 +91,14 @@
         <tbody>
             {{#each users}} 
             <tr>
+                <th>{{this.email}}</th>
                 <th>{{this.name}}</th>
                 <th>{{this.age}}</th>
                 <th>{{this.height}}cm <br>{{this.weight}}kg</th>
                 <th>{{this.sex}}</th>
-                <th>{{this.category}}</th>
-                <th>{{this.activityRatios}}</th>
-                <th>{{this.userCaloriesAmount}}</th>
-                <th>{{this.requiredCaloriesAmount}}</th>
+                <th>{{this.pal}}</th>
+                {{!-- <th>{{this.userCaloriesAmount}}</th>
+                <th>{{this.requiredCaloriesAmount}}</th> --}}
                 <th width="150px">
                     {{!-- BUTTON DELETE --}}
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete"
