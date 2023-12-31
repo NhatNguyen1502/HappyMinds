@@ -24,20 +24,12 @@
                 </div>
                 <div class="row input2 my-3 gap-3">
                     <div class="col-lg-5 col-12">
-                        <input class="form-control" type="number" name="age" id="inpAge" placeholder="Age">
+                        <input class="form-control" type="number" name="bmi" id="bmi" placeholder="Your BMI"
+                            value="{{bmi}}" readonly>
                     </div>
                     <div class="col-lg-5 col-12 m-lg-0">
-                        <select class="form-select" style="color:gray" name="sex" id="inpSex">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="sex">Sex</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row my-3 gap-3">
-                    <div class="col-12" style="width: 86%;">
-                        <input class="form-control" type="number" name="bmi" id="bmi"
-                            placeholder="Your BMI" value="{{bmi}}" readonly>
+                        <input class="form-control" type="text" name="weight_status" id="weight_status"
+                            placeholder="Your weight status" value="{{bmi}}" readonly>
                     </div>
                 </div>
                 <div class="submit d-flex justify-content-center justify-content-lg-start">
@@ -99,32 +91,27 @@
     </div>
 
     <div class="row">
-        <div class="content col-lg-11 col-md-10 col-9 text-center mt-5">
+        <div class="content col-lg-11 col-md-10 col-9 text-center mt-5 mb-4">
             <h3 class="ms-5 ps-5 fw-bold" style="color: #fd0054;">RECOMMENDED EXERCISES FOR YOU</h3>
-            <p class="ms-5 ps-5 fw-medium">BUILD YOUR BODY WITH <br> OUR EXECISES</p>
-        </div>
-        <div class="col-lg-1 col-md-2 col-3 d-flex align-items-end justify-content-end pe-4">
-            <form action="/videoCarousel" method="post">
-            <input type="hidden" name="array" value='{{videoArrayJSON}}'>
-            <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                style="border-width:2px ;">Start now</button>
-            </form>
         </div>
     </div>
 
     <div class="row row-cols-1 pt-3 row-cols-lg-3 g-5" id="videoContainer">
         {{#each videos}}
         <div class="col">
-            <div class="card">
+            <div class="card position-relative">
                 <a href="/video/{{this.videoId}}" style="color: black; text-decoration: none;">
                     <img src="{{this.image}}" class="card-img-top" alt="...">
+                    <button type="button" class="btn btn-danger position-absolute top-0 end-0 m-0 rounded-0">Your Button</button>
                     <div class="card-body">
                         <h5 class="card-title">{{this.title}}</h5>
+                        <p class="card-text mb-0">Duration: Time/Fitnees</p>
+                        <p class="card-text">Calo:</p>
                         <div class="d-flex justify-content-between">
                             <p class="card-text">FEB 12, 2020</p>
                             <p class="card-text text-danger fw-medium fw-semibold">
                                 MORE INFO
-                                <img class="pb-1" src="goRight.png" alt="">
+                                <img class="pb-1" src="./img/goRight.png" alt="">
                             </p>
                         </div>
                     </div>
@@ -140,15 +127,15 @@
             <p class="ms-5 ps-5 fw-medium">OUR RECENT ARTICLES</p>
         </div>
         <div class="col-lg-1 col-md-2 col-3 d-flex align-items-end justify-content-end pe-4">
-                <form action="/blog">
-                <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                style="border-width:2px ;" id="moreButton">MORE</button>
-                </form>
+            <form action="/blog">
+                <button type="submit" class="btn btn-outline-danger w-100 fw-medium" style="border-width:2px ;"
+                    id="moreButton">MORE</button>
+            </form>
         </div>
     </div>
 
-    <div id="carouselExample" class="carousel" >
-        <div class="carousel-inner" >
+    <div id="carouselExample" class="carousel">
+        <div class="carousel-inner">
 
             {{#each blogs}}
             <div class="carousel-item" style="display: flex; margin-right: 0;">
@@ -167,11 +154,13 @@
             {{/each}}
         </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev" style="position: absolute; top: 50%; left: -100px;">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"
+            style="position: absolute; top: 50%; left: -100px;">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next" style="position: absolute; top: 50%; right: -100px">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next"
+            style="position: absolute; top: 50%; right: -100px">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
