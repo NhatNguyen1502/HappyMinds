@@ -31,8 +31,7 @@
                         <p class="card-text ">
                             <a href="/blog/blogDetail/{{this.slug}}" class="text-danger fw-medium fw-semibold"
                                 style="text-decoration: none">MORE
-                                INFO</a>
-                            <img class="pb-1" src="/img/goRight.png" alt="">
+                                INFO<img class="pb-1" src="/img/goRight.png" alt=""></a>
                         </p>
                     </div>
 
@@ -48,13 +47,11 @@
                     style="border-radius: 20px 20px 20px 20px;">
                     <div
                         class="modal-header d-flex justify-content-center"
-                        style="background-color: rgba(193, 200, 206, 1)!important; border-radius: 20px 20px 0 0;">
-                        <h5 class="modal-title"
+                        style="background-color:rgba(253, 0, 84, 1); border-radius: 20px 20px 0 0;">
+                        <h5 class="modal-title text-white"
                             id="exampleModalLabel">What's your mind
                             ?</h5>
-                        <button type="button" class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                        
                     </div>
                     <div class="modal-body ">
                         <label for="name"><b>Your Name</b></label>
@@ -94,20 +91,32 @@
                     <div
                         class="modal-footer d-flex justify-content-center border"
                         style="border-radius: 0 0 20px 20px;">
-                        <button type="button" class="btn btn-danger"
+                        <button type="button" class="btn btn-secondary"
                             style="width: 200px;"
                             data-bs-dismiss="modal"
                             aria-label="Close">Cancel</button>
-                        <button type="button" class="btn btn-primary "
+                        <button type="button" class="btn btn-danger "
                             style="width: 200px;">Post</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+        <button onclick="topFunction()"id="goToTopButton"class=""style="position:fixed;bottom:220px;right:40px;border-radius:10px;border:none;background-color:white;cursor:pointer;">
+            <i class="btn bi bi-arrow-up-circle"></i></button>
 </div>
 <script>
-    const fileInput = document.getElementById('fileInput');
+
+// Button scroll top
+function topFunction() {
+    document.documentElement.scrollTop = 0;
+}
+
+    function topFunction(){
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+const fileInput = document.getElementById('fileInput');
 
 const cloud_name = "duas1juqs";
 const upload_preset = "pnvimage";

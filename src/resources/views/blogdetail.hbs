@@ -1,36 +1,50 @@
-<div class="container ">
-    <div class="d-flex flex-row gap-5 d-flex align-items-center mt-5 mt-md-5">
-        <h3 class="fs-4 text-primary col-lg-3 col-md-3 mb-0">March 22,
-            2023</h3>
+<div class="container bg-white">
+    <div class="d-flex flex-row gap-5 d-flex align-items-center md-5">
+        <h4 class="fs-4 text-primary col-lg-3 col-md-3 mb-0">March 22,
+            2023</h4>
         <div class=" col-lg-8 col-md-8 d-flex justify-content-end">
-            <img class="col-lg-4 col-1 my-2" style="width: 48px; height: 45px" src="/img/Image.png" alt>
-            <p class="fs-5 m-0 d-flex align-items-center mx-2">Benjamin
+            <img class="col-lg-4 col-1 mt-4 my-2"
+                style="width: 48px; height: 45px" src="/img/Image.png" alt>
+            <p class="fs-5 m-0 d-flex align-items-center mt-4 mx-2">Benjamin
                 Gray</p>
         </div>
     </div>
 
-
     <div class="row">
         <div class=" col-lg-8 col-8 mb-2">
-            <h1 class="text-lg-start fw-bold">{{blog.title}}</h1>
+            <h2 class="text-lg-start fw-bold">{{blog.title}}</h2>
         </div>
     </div>
     <img class="col-lg-12m col-12 mb-lg-12 " src="{{blog.image}}" alt>
+
     <!-- body -->
-    <h1 class="mt-lg-5 text-lg-center fw-bold mt-5 mb-lg-5 ">{{blog.title}}</h1>
-    <p class="col-lg-12 col-md-12">{{blog.content}}</p>
+    <center>
+        <p class="col-lg-10 col-md-12">{{blog.content}}</p>
+        <hr style="height: 10px;width:70%" class="mt-5 ">
+    </center>
+    <div class="d-flex justify-content-between align-items-around">
+        <div></div>
+        <div></div>
+        <a href="" onclick="">
+        <div class="d-flex justify-content-between border "
+            style="width: 80px;border-radius:15px; background-color:rgba(217, 217, 217, 1)">
+            <i class="bi bi-heart ms-3 mt-2 " ></i>
+            <p class="me-3 ms-1 mb-2 mt-2"><b>Like</b></p>
+        </div></a>
+        <a href="" onclick="">
+        <div class="d-flex justify-content-between border "
+            style="width: 140px;border-radius:15px; background-color:rgba(217, 217, 217, 1)">
+            <i class="bi bi-chat-dots ms-4 mt-2"></i>
+            <p class="me-4 ms-1 mb-2 mt-2"><b>Comment</b></p>
+        </div></a>
+        <a href="" onclick="">
+        <div class="d-flex justify-content-between border "
+            style="width: 100px;border-radius:15px; background-color:rgba(217, 217, 217, 1)">
+            <i class="bi bi-share ms-3 mt-2"></i>
+            <p class="me-3 ms-1 mb-2 mt-2"><b>Share</b></p>
+        </div></a>
+        <div></div>
+        <div></div>
+    </div>
 
-
-    <div class="text-lg-center text-md-center text-sm-center text-xs-center mt-lg-5 ">
-        <img src="/img/123.png" alt>
-    </div>
-    <div class="text-lg-center text-md-center mt-lg-0 ">
-        <h3 class="fw-bold">Benjamin Gray</h3>
-    </div>
-    <div class="text-lg-center text-md-center mb-2 ">
-        <p>Professional Trainer</p>
-    </div>
-    <p class="text-center fst-italic text-black mb-5">When an unknown
-        printegalley of type and scrambled it to make a type specimen
-        book. It has but also leap into electronic typesetting.</p>
 </div>
