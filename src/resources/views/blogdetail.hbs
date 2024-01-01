@@ -3,8 +3,7 @@
         <h4 class="fs-4 text-primary col-lg-3 col-md-3 mb-0">March 22,
             2023</h4>
         <div class=" col-lg-8 col-md-8 d-flex justify-content-end">
-            <img class="col-lg-4 col-1 mt-4 my-2"
-                style="width: 48px; height: 45px" src="/img/Image.png" alt>
+            <img class="col-lg-4 col-1 mt-4 my-2" style="width: 48px; height: 45px" src="/img/Image.png" alt>
             <p class="fs-5 m-0 d-flex align-items-center mt-4 mx-2">Benjamin
                 Gray</p>
         </div>
@@ -15,36 +14,177 @@
             <h2 class="text-lg-start fw-bold">{{blog.title}}</h2>
         </div>
     </div>
-    <img class="col-lg-12m col-12 mb-lg-12 " src="{{blog.image}}" alt>
+    <img class="col-lg-12m col-12 mb-lg-12 rounded-2 " src="{{blog.image}}" alt>
 
     <!-- body -->
     <center>
-        <p class="col-lg-10 col-md-12">{{blog.content}}</p>
+        <p class="col-lg-10 col-md-12 mt-3">{{blog.content}}</p>
         <hr style="height: 10px;width:70%" class="mt-5 ">
     </center>
+
     <div class="d-flex justify-content-between align-items-around">
         <div></div>
         <div></div>
-        <a href="" onclick="">
-        <div class="d-flex justify-content-between border "
-            style="width: 80px;border-radius:15px; background-color:rgba(217, 217, 217, 1)">
-            <i class="bi bi-heart ms-3 mt-2 " ></i>
-            <p class="me-3 ms-1 mb-2 mt-2"><b>Like</b></p>
-        </div></a>
-        <a href="" onclick="">
-        <div class="d-flex justify-content-between border "
-            style="width: 140px;border-radius:15px; background-color:rgba(217, 217, 217, 1)">
-            <i class="bi bi-chat-dots ms-4 mt-2"></i>
-            <p class="me-4 ms-1 mb-2 mt-2"><b>Comment</b></p>
-        </div></a>
-        <a href="" onclick="">
-        <div class="d-flex justify-content-between border "
-            style="width: 100px;border-radius:15px; background-color:rgba(217, 217, 217, 1)">
-            <i class="bi bi-share ms-3 mt-2"></i>
-            <p class="me-3 ms-1 mb-2 mt-2"><b>Share</b></p>
-        </div></a>
+        <button class="btn btn-outline-danger d-flex align-items-center">
+            <i class="bi bi-heart "></i>
+            <p class="m-0 ms-1"><b>Like</b></p>
+        </button>
+        <button class="btn btn-outline-secondary d-flex align-items-center ">
+            <i class="bi bi-chat-dots"></i>
+            <p class="ms-1 m-0" for="comment"><b>Comment</b></p>
+        </button>
+        <button class="btn btn-outline-primary d-flex align-items-center">
+            <i class="bi bi-share me-1"></i>
+            <p class="m-0"><b>Share</b>
+        </button>
         <div></div>
         <div></div>
     </div>
+    <div class="row d-flex justify-content-center">
+        {{!-- Comment --}}
+        <div class="card mt-4 col-9 pb-1 mb-4">
+            <div class="card-body ">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <img class="rounded-circle"
+                            src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
+                            alt="Profile Picture" style="width: 30px; height: 30px;">
+                    </div>
+                    <div class="col p-0">
+                        <h6 class="mb-0 p-0">You</h6>
+                    </div>
+                    <div class="col-10"></div>
+                    <div class="col-auto pe-2">
+                        <button class="btn btn-outline-danger">
+                            <i class="bi bi-x-circle-fill"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-10 pe-2" onclick="cancelComment()">
+                        <input type="text" class="form-control" name="comment" id="commentInput"
+                            placeholder="Type your comment . . .">
+                    </div>
 
+                    <label class="col btn btn-outline-secondary" onclick="cancelComment()">
+                        <i class="bi bi-upload"></i>
+                        <input type="file" class="custom-file-input" name="upload" id="fileInput"
+                            style="display: none;">
+                    </label>
+                    <button class="col btn btn-primary ms-2 me-2" onclick="replyCmt()">
+                        <i class="bi bi-send"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {{!-- Fist comment --}}
+        <div class="card mt-4 col-9 pb-1 mb-4">
+            <div class="card-body ">
+                <div class="row justify-content-start">
+                    <div class="col-auto">
+                        <img class="rounded-circle"
+                            src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
+                            alt="Profile Picture" style="width: 30px; height: 30px;">
+                    </div>
+                    <div class="col p-0">
+                        <h6 class="mb-0 p-0" id="name">Nhật</h6>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-10 pe-2">
+                        <input type="text" class="form-control" name="comment" id="commentInput"
+                            placeholder="The article gives me a lot of motivation" readonly>
+                    </div>
+
+                    <label class="col btn btn-outline-danger">
+                        <i class="bi bi-heart "></i>
+                    </label>
+                    <button class="col btn btn-primary ms-2 me-2" onclick="replyCmt()">
+                        <i class="bi bi-arrow-return-left" ></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {{!-- Reply comemt --}}
+        <div class="row" id="replyCmt" style="display: none;">
+            <div class="col-2" id="replyCmt1"></div>
+            <div class="col-10">
+                <div class="d-flex justify-content-start card mt-4 col-10 pb-1 mb-4">
+                    <div class="card-body ">
+                        <div class="row justify-content-start">
+                            <div class="col-auto">
+                                <img class="rounded-circle"
+                                    src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
+                                    alt="Profile Picture" style="width: 30px; height: 30px;">
+                            </div>
+                            <div class="col p-0">
+                                <h6 class="mb-0 p-0" id="name">You</h6>
+                            </div>
+                            <div class="col-auto pe-2" onclick="cancelComment()">
+                                <button class="btn btn-outline-danger">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-10 pe-2">
+                                <input type="text" class="form-control" name="comment" id="commentInput3"
+                                    placeholder="Type your review comment . . .">
+                            </div>
+
+                            <label class="col btn btn-outline-secondary pe-2">
+                                <i class="bi bi-upload"></i>
+                                <input type="file" class="custom-file-input" name="upload" id="fileInput"
+                                    style="display: none;">
+                            </label>
+                            <button class="col btn btn-primary ms-2 me-2">
+                                <i class="bi bi-arrow-return-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{!-- Second comment --}}
+
+        <div class="d-flex justify-content-start card mt-4 col-9 pb-1 mb-4">
+            <div class="card-body ">
+                <div class="row justify-content-start">
+                    <div class="col-auto">
+                        <img class="rounded-circle"
+                            src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
+                            alt="Profile Picture" style="width: 30px; height: 30px;">
+                    </div>
+                    <div class="col p-0">
+                        <h6 class="mb-0 p-0" id="name">Huyền</h6>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-10 pe-2">
+                        <input type="text" class="form-control" name="comment" id="commentInput3"
+                            placeholder="Very nice and useful for me" readonly>
+                    </div>
+
+                    <label class="col btn btn-outline-danger">
+                        <i class="bi bi-heart-fill"></i>
+                    </label>
+                    <button class="col btn btn-primary ms-2 me-2">
+                        <i class="bi bi-arrow-return-left"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    function replyCmt() {
+        document.getElementById('replyCmt').style.display = 'block';
+        document.getElementById('replyCmt1').style.display = 'block';
+    }
+
+    function cancelComment() {
+        document.getElementById('replyCmt').style.display = 'none';
+        document.getElementById('replyCmt').style.display = 'none';
+    }
+</script>
