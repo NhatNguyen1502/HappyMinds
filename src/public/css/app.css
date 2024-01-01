@@ -102,9 +102,24 @@ body {
 
 /* ---------------------------------SLIDER------------------------------------------------- */
 .admin_heading {
-  background-image: url("/img/bg_heading.png");
+  /* background-image: url("/img/bg_heading.png");
   background-size: cover;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(270deg, #4B1B22 0%, #94103C 100%);
+  height: 198px;
+}
+
+.admin_heading h4{
+  font-size: 50px;
+  font-weight: 700;
+}
+
+.admin_navbar{
+  background-color: #FFF7EF;
+}
 
 .logo_admin {
   width: 30px;
@@ -122,6 +137,33 @@ body {
   color: white;
   background-color: #fd0054;
   font-weight: 700; }
+
+.create_button{
+  margin-right: 12px;
+  width: 160px;
+}
+
+#table_admin_filter label input{
+  width: 240px;
+  height: 35px;
+  background-color: #ffdbdb;
+  font-size: 16px;
+}
+
+.Alltable table thead{
+  background-color: #f878a3;
+
+}
+
+#content_cell{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 25px;
+  -webkit-line-clamp: 3;
+  height: 75px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
 
 .footer {
   background-color: #2b2024; }
