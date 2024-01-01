@@ -4,13 +4,14 @@
             <h3 class="ms-5 ps-5 fw-bold" style="color: #fd0054;">BLOGS & ARTICLES</h3>
             <p class="ms-5 ps-5 fw-medium">OUR RECENT ARTICLES</p>
         </div>
-        <button type="button"
-            class="btn btn-danger mt-1 border rounded-pill "
+        
+    </div>
+    <div class="row row-cols-1">
+        <div class="col d-flex justify-content-end">
+            <button type="button" class="btn fs-5 "
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            style="width: 100px;height:50px;">
-            New Post
-        </button>
+            data-bs-target="#exampleModal" style="background-color: #fd0054; color: white;">New Post</button>
+        </div>
     </div>
     <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 pt-4">
         {{#each blogs}}
@@ -64,7 +65,7 @@
                             style="border-radius:10px">
 
                         <label for="content"><b>Content</b></label>
-                        <textarea class="col-12" name="content"
+                        <textarea class="col-12 form-control text-start" name="content"
                             id="content"
                             rows="8"
                             style="border-radius:10px;"
@@ -81,12 +82,6 @@
                             </label>
                         </div>
                         <center><p id="uploading_text"></p></center>
-                        <!-- <center>
-                                <img class="col-5 mt-2 mb-3 ms-3" src
-                                    alt="Selected Image"
-                                    id="selectedImage"
-                                    style="max-width: 250px;display: none;max-height:100%;">
-                            </center> -->
                     </div>
                     <div
                         class="modal-footer d-flex justify-content-center border"
@@ -100,6 +95,34 @@
                     </div>
                 </div>
             </div>
+        </div>    </div>
+
+    <div class="row row-cols-1 ms-5 pb-5 pt-3">
+        <div class="col-5 d-flex justify-content-end pe-0 m-0">
+            <button type="button" class="btn btn-danger"><a href="/blog?page={{subtract currentPage 1}}"
+                    class="p-1"><i class="bi bi-caret-left-fill"></i></a></button>
+        </div>
+
+        <div class="col-1 d-flex justify-content-center">
+            <span
+                class="input-group-text d-flex align-items-center justify-content-center w-100 fs-5">{{currentPage}}/{{totalPages}}</span>
+        </div>
+
+        <div class="col-6 d-flex justify-content-between ps-0">
+            <button type="button" class="btn btn-success"><a href="/blog?page={{sum currentPage 1}}" class="p-1"><i
+                        class="bi bi-caret-right-fill"></i></a></button>
+        </div>
+
+    </div>
+
+
+    <div class="row row-cols-1">
+        <div class="col d-flex justify-content-end mb-0 me-5" style=" position: fixed; bottom: 27%; right: 1%;">
+            <a href="#">
+                <button class="btn btn-danger fs-4 rounded-3">
+                    <i class="bi bi-arrow-up text-light fs-4"></i>
+                </button>
+            </a>
         </div>
     </div>
         <button onclick="topFunction()"id="goToTopButton"class=""style="position:fixed;bottom:220px;right:40px;border-radius:10px;border:none;background-color:white;cursor:pointer;">
