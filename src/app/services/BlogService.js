@@ -10,14 +10,32 @@ class BlogService {
         if (req.isAuthenticated()) {
             isLogin = true;
         }
-        blog.find({})
-            .then((blogs) => {
-                blogs = multipleMongooesToOject(blogs);
-                res.render('blog', { blogs, isLogin });
-            })
-            .catch((err) => {
-                res.status(400).json({ err: 'ERROR!' });
-            });
+
+        let currentPage = parseInt(req.query.page) || 1;
+        const itemsPerPage = 3;
+
+        blog.countDocuments().then((count) => {
+            const totalPages = Math.ceil(count / itemsPerPage);
+
+            if (currentPage <= 0) {
+                currentPage = 1;
+            }
+            else if (currentPage > totalPages) {
+                currentPage = totalPages;
+            }
+
+            blog.find({})
+                .skip((currentPage - 1) * itemsPerPage)
+                .limit(itemsPerPage)
+                .then((blogs) => {
+                    blogs = multipleMongooesToOject(blogs);
+
+                    res.render('blog', { blogs, isLogin, currentPage, totalPages });
+                })
+                .catch((err) => {
+                    res.status(400).json({ err: 'ERROR!' });
+                });
+        });
     }
 
     showDetail(req, res) {
