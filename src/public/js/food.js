@@ -14,38 +14,34 @@ function renderFoodList(food) {
     food.forEach(
         (element) =>
             (content += `
-      <div class="card card-content mb-3 rounded-4">
-          <div class="row g-0 justify-content-start">
-            <div class="col-lg-2 d-flex justify-content-center justify-content-lg-start align-items-center text-center">
-              <div class="custom-image " style="width: 200px;height: 150px; overflow: hidden;">
-                <img src="${element.img}" class="img-fluid rounded-image mx-3 mt-2" alt="error"
-                  style="width: 200px;height: 150px; overflow: hidden;">
-              </div>
+            <div class="rowTbl d-flex justify-content-start p-0 mb-1 text-center">
+            <div class="iconHeart d-flex align-items-center justify-content-center p-0" id="iconHeart" style="width: 45px; background-color: rgb(178, 178, 178); border-radius: 10px 0px 0px 10px;">
+              <i class="bi bi-suit-heart fs-4 p-0 px-2" id="emptyHeart"></i>
             </div>
-
-            <div class="col-lg-6">
-              <div class="card-body card-body-text px-0 text-center text-lg-start ">
-                <h5 class="card-title">${element.name}</h5>
-                <p class="card-text">${element.description}</p>
-                <p class="card-text">
-                  <medium class="text-body-secondary">${element.calo}
-                    calo</medium>
-                </p>
-              </div>
+            <div class="cellTbl d-flex align-items-center justify-content-center p-2">${element.name}</div>
+            <div class="cellTbl d-flex align-items-center justify-content-center">
+              <img src="${element.img}" class="" alt="image food"
+                  style="width: 90px; height: 90px; overflow: hidden;">
             </div>
-            <div class="col-lg-4 d-flex justify-content-center align-items-center pb-lg-0 pb-3">
+            <div class="cellTbl d-flex align-items-center justify-content-center">${element.calo}</div>
+            <div class="cellTbl d-flex align-items-center justify-content-center">${element.category}</div>
+            <div class="cellTbl d-flex align-items-center justify-content-start ps-3 ipWeight">
+              <input class="rounded-3" placeholder="Nhập số" type="text" style="width: 100px; border: none; outline: none; background-color:  #e7e7e7; "> <span>gam</span> 
+            </div>
+            <div class="cellTbl lastCell d-flex align-items-center justify-content-center">
               <form action="/food" method="post">
                 <input type="hidden" name="idFood" value="${element._id}">
                 <input type="hidden" name="emailUser" value="{{email}}">
-                <button type="submit" class="btn btn-custom text-light bg-danger w-100 fw-medium rounded-3"
-                  onclick="checkLoginFood('{{isLogin}}')">Add to Menu</button>
+                <button class="border-0" type="submit" style="background-color: white;" onclick="checkLoginFood('{{isLogin}}')">
+                  <i class="bi bi-plus-square-fill fs-4" style="color: rgba(253, 0, 84, 1);"></i>
+                </button>
               </form>
+              
             </div>
           </div>
-        </div>
     `),
     );
-    document.querySelector('#foodlist').innerHTML = content;
+    document.querySelector('#foodList').innerHTML = content;
 }
 async function renderResultSearch() {
     keyword = document.querySelector('#search').value;
