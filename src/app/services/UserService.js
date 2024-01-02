@@ -7,7 +7,7 @@ class UserService {
     index(req, res) {
         let isLogin = false;
         if (req.isAuthenticated()) {
-            console.log('Hello', req.user.name);
+            console.log('Hello', req.user);
             isLogin = true;
             let email = req.user.email;
             User.findOne({ email: req.user.email })
@@ -126,18 +126,17 @@ class UserService {
     };
 
     updateUser(req, res) {
-        let isLogin = false;
-        if (req.isAuthenticated()) {
-            isLogin = true;
-        }
-        User.findOneAndUpdate({ email: req.user.email }, req.body, {
+        const updatedUserData = req.body;
+        console.log(req.user.email);
+        console.log(updatedUserData);
+        User.findOneAndUpdate({ email: req.user.email }, updatedUserData, {
             new: true,
-        }).then((user) => {
-            let height = user.height / 100;
-            let weight = user.weight;
-            let BMI = (weight / (height * height)).toFixed(2);
-            this.index(req, res);
-        });
+        })
+            .then((updateUser) => res.json(updateUser))
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            });
     }
 
     removeFood(req, res) {
