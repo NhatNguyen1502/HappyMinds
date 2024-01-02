@@ -4,6 +4,11 @@ document.getElementById('categoryFood').addEventListener('click', () => {
     select.size = (select.size === 1) ? select.options.length : 1;
     select.focus();
 })
+
+
+
+
+
 function renderFoodList(food) {
     let content = '';
     food.forEach(
