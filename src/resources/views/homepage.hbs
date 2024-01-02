@@ -15,11 +15,11 @@
                 <div class="row input1 my-3 gap-3">
                     <div class="col-lg-5 col-12">
                         <input class="form-control" type="number" name="height" id="inpHeight"
-                            placeholder="Height / cm">
+                            placeholder="Height / cm" oninput="calculateAndShowBMI()">
                     </div>
                     <div class="col-lg-5 col-12 m-lg-0 ">
                         <input class="form-control" type="number" name="weight" id="inpWeight"
-                            placeholder="Weight / kg">
+                            placeholder="Weight / kg" oninput="calculateAndShowBMI()">
                     </div>
                 </div>
                 <div class="row input2 my-3 gap-3">
@@ -32,10 +32,10 @@
                             placeholder="Your weight status" value="{{bmi}}" readonly>
                     </div>
                 </div>
-                <div class="submit d-flex justify-content-center justify-content-lg-start">
+                {{!-- <div class="submit d-flex justify-content-center justify-content-lg-start">
                     <button class="btn redColor text-white submit-bmi" style="width:100px ;font-size: 16px;border-radius: 30px;background-color: red;border: none;
                     " type="submit">Submit</button>
-                </div>
+                </div> --}}
             </form>
         </div>
         <div class="col-1"></div>

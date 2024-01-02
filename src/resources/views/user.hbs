@@ -154,7 +154,7 @@
         </div>
         {{/each}}
     </div>
-</div> --}}
+</div>  --}}
 <div class="heading">
     <h2 class="text-danger fw-bold text-center pt-3 pb-3">PROFILE</h2>
 </div>
@@ -229,7 +229,7 @@
                     </div>
                 </div>
                 <div class="modal-footer border-0 d-flex justify-content-center">
-                    <input class="buttonModal" type="submit" >Lưu thông tin</input>
+                    <input class="buttonModal" type="submit" value="Lưu thông tin"></input>
                 </div>
             </div>
         </div>
@@ -277,7 +277,7 @@
         <h4 class="fw-bold p-0">KHOÁ HỌC</h4>
     </div>
     <div class="courses pt-2">
-        <div class="row gap-3">
+        <div class="row gap-2">
             {{#each videos1}}
             <div class="card col-3 p-2 mx-2 " style="width: 25rem;">
                 <a href="/video/{{this.videoId}}" style="color: black; text-decoration: none;">
@@ -301,9 +301,10 @@
                 <tr class="row rounded-top" style="background-color: rgba(253, 0, 84, 1) ; ">
                     <td class="fw-bold col-lg-11 d-flex align-items-center " style="color: white; ">HÔM NAY</td>
                     <td class="fw-bold col-lg-1 d-flex justify-content-end  align-items-center p-2">
-                        <button class="border-0 editMenu">
-                            <i class="bi bi-pencil-square fs-3  pt-0" id="editUser" style="color: white;"></i></td>
+                        <button class="border-0 editMenu" data-bs-toggle="modal" data-bs-target="#menuModal">
+                            <i class="bi bi-pencil-square fs-3  pt-0" id="editUser" style="color: white;"></i>
                         </button>
+                    </td>
                 </tr>
                 <tr class="row bg-light p-2 border-bottom border-1 border-dark">
                     <td class="col-lg-2 text-center fw-bold fs-5 p-0">Tên</td>
@@ -331,3 +332,56 @@
     </div>
 
 </div>
+      <div class="modal fade" data-bs-backdrop="static"  id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" >
+          <div class="modal-content">
+            <div class="modal-header text-light" style="background-color: rgba(253, 0, 84, 1);">
+              <h5 class="modal-title" id="menuModalLabel">MY MENU</h5>
+              <button class="border-0" data-bs-dismiss="modal" aria-label="Close" style="background-color: rgba(253, 0, 84, 1); color: white"><i class="bi bi-x-circle-fill fs-4"></i></button>
+            </div>
+            <div class="modal-body pb-0">
+              <table class=" border border-2 ">
+                <thead>
+                  <tr class="text-center fw-bold justify-content-center " style="background-color:rgb(216, 214, 214);">
+                    <td style="width: 200px; height: 40px;">Tên</td>
+                    <td style="width: 150px; height: 40px;">Calo/100g(calo)</td>
+                    <td style="width: 150px; height: 40px;">Khối lượng(g)</td>
+                    <td style="width: 150px; height: 40px;">Tổng calo</td>
+                    <td style="width: 100px; height: 40px;">Xoá</td>
+                  </tr>
+                </thead>
+                <tbody>
+                {{#each foods}}
+                  <tr class="text-center fw-bold justify-content-center">
+                    <td class="menuRow">{{this.name}}</td>
+                    <td class="menuRow">{{this.calo}}</td>
+                    <td class="menuRow">200</td>
+                    <td class="menuRow">{{this.calo}}</td>
+                    <td class="menuRow" style="width: 100px; height: 40px;"><i class="bi bi-trash3-fill p-1 px-2 rounded-2" style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i></td>
+                  </tr>
+                  {{/each}}      
+                </tbody>
+              </table>
+              <div class="line mt-4 my-2" style="height: 2px; background-color: rgb(211, 211, 211);"></div>
+              <div class="totalMenu">
+                  <div class="row justify-content-between pb-1">
+                    <div class="col-lg-3 fw-semibold" style="font-size: 18px;">Items </div>
+                    <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;">6</div>
+                  </div>
+                  <div class="row justify-content-between pb-1">
+                    <div class="col-lg-4 fw-semibold" style="font-size: 18px;">Your required calories </div>
+                    <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;">2000 calo</div>
+                  </div>
+                  <div class="row justify-content-between pb-1">
+                    <div class="col-lg-3 fw-semibold" style="font-size: 18px;">Total calories </div>
+                    <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;">2200 calo</div>
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer border-0 pt-1">
+              <button type="button" class="btn border-0 fw-semibold" data-bs-dismiss="modal" style="background-color:rgba(253, 0, 84, 1); color: white;">CLOSE</button>
+              <button type="button" class="btn border-0 fw-semibold" style="background-color:rgba(253, 0, 84, 1); color: white;">ADD TO MENU</button>
+            </div>
+          </div>
+        </div>
+      </div>
