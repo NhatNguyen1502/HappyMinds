@@ -25,22 +25,24 @@
     <div class="d-flex justify-content-between align-items-around">
         <div></div>
         <div></div>
-        <button class="btn btn-outline-danger d-flex align-items-center">
-            <i class="bi bi-heart "></i>
+        <button class="btn btn-outline-danger d-flex align-items-center" onclick="likeFunction()">
+            <i class="bi bi-heart" id="like"></i>
+            <i class="bi bi-heart-fill" id="liked" style="display: none;"></i>
             <p class="m-0 ms-1"><b>Like</b></p>
         </button>
         <button class="btn btn-outline-secondary d-flex align-items-center ">
             <i class="bi bi-chat-dots"></i>
-            <p class="ms-1 m-0" for="comment"><b>Comment</b></p>
+            <label class="ms-1 m-0" for="comment"><b>Comment</b></label>
         </button>
-        <button class="btn btn-outline-primary d-flex align-items-center">
+        <button class="btn btn-outline-primary d-flex align-items-center" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
             <i class="bi bi-share me-1"></i>
             <p class="m-0"><b>Share</b>
         </button>
         <div></div>
         <div></div>
     </div>
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center pb-4">
         {{!-- Comment --}}
         <div class="card mt-4 col-9 pb-1 mb-4">
             <div class="card-body ">
@@ -54,7 +56,7 @@
                         <h6 class="mb-0 p-0">You</h6>
                     </div>
                     <div class="col-10"></div>
-                    <div class="col-auto pe-2">
+                    <div class="col-auto pe-2" onclick="cancelComment()">
                         <button class="btn btn-outline-danger">
                             <i class="bi bi-x-circle-fill"></i>
                         </button>
@@ -62,7 +64,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-10 pe-2" onclick="cancelComment()">
-                        <input type="text" class="form-control" name="comment" id="commentInput"
+                        <input type="text" class="form-control" name="comment" id="comment"
                             placeholder="Type your comment . . .">
                     </div>
 
@@ -71,14 +73,14 @@
                         <input type="file" class="custom-file-input" name="upload" id="fileInput"
                             style="display: none;">
                     </label>
-                    <button class="col btn btn-primary ms-2 me-2" onclick="replyCmt()">
+                    <button class="col btn btn-primary ms-2 me-2" onclick="">
                         <i class="bi bi-send"></i>
                     </button>
                 </div>
             </div>
         </div>
         {{!-- Fist comment --}}
-        <div class="card mt-4 col-9 pb-1 mb-4">
+        <div class="card mt-4 col-9 pb-1 mb-4 " style="position: relative;">
             <div class="card-body ">
                 <div class="row justify-content-start">
                     <div class="col-auto">
@@ -92,85 +94,77 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col-10 pe-2">
-                        <input type="text" class="form-control" name="comment" id="commentInput"
+                        <input type="text" class="form-control" name="" id="commentInput"
                             placeholder="The article gives me a lot of motivation" readonly>
                     </div>
 
-                    <label class="col btn btn-outline-danger">
-                        <i class="bi bi-heart "></i>
+                    <label class="col btn btn-outline-danger" id="iconHeart" onclick="changeHeart()">
+                        <i class="bi bi-heart"></i>
                     </label>
                     <button class="col btn btn-primary ms-2 me-2" onclick="replyCmt()">
-                        <i class="bi bi-arrow-return-left" ></i>
+                        <i class="bi bi-arrow-return-left"></i>
                     </button>
                 </div>
             </div>
-        </div>
-        {{!-- Reply comemt --}}
-        <div class="row" id="replyCmt" style="display: none;">
-            <div class="col-2" id="replyCmt1"></div>
-            <div class="col-10">
-                <div class="d-flex justify-content-start card mt-4 col-10 pb-1 mb-4">
-                    <div class="card-body ">
-                        <div class="row justify-content-start">
-                            <div class="col-auto">
-                                <img class="rounded-circle"
-                                    src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
-                                    alt="Profile Picture" style="width: 30px; height: 30px;">
+            {{!-- Reply comemt --}}
+            <div class="col-12" id="replyCmt" style="position:relative;display: none;left:40px;">
+                    <div class="d-flex justify-content-start card mt-4 col-11 pb-1 mb-4">
+                        <div class="card-body ">
+                            <div class="row justify-content-start">
+                                <div class="col-auto">
+                                    <img class="rounded-circle"
+                                        src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
+                                        alt="Profile Picture" style="width: 30px; height: 30px;">
+                                </div>
+                                <div class="col p-0">
+                                    <h6 class="mb-0 p-0" id="name">You</h6>
+                                </div>
+                                <div class="col-auto pe-2" onclick="cancelComment()">
+                                    <button class="btn btn-outline-danger">
+                                        <i class="bi bi-x-circle-fill"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col p-0">
-                                <h6 class="mb-0 p-0" id="name">You</h6>
-                            </div>
-                            <div class="col-auto pe-2" onclick="cancelComment()">
-                                <button class="btn btn-outline-danger">
-                                    <i class="bi bi-x-circle-fill"></i>
+                            <div class="row mt-3">
+                                <div class="col-10 pe-2">
+                                    <input type="text" class="form-control" name="reviewComment" id="commentInput"
+                                        placeholder="Type your review comment . . .">
+                                </div>
+
+                                <label class="col btn btn-outline-secondary pe-2">
+                                    <i class="bi bi-upload"></i>
+                                    <input type="file" class="custom-file-input" name="upload" id="fileInput"
+                                        style="display: none;">
+                                </label>
+                                <button class="col btn btn-primary ms-2 me-2">
+                                    <i class="bi bi-send"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-10 pe-2">
-                                <input type="text" class="form-control" name="comment" id="commentInput3"
-                                    placeholder="Type your review comment . . .">
-                            </div>
-
-                            <label class="col btn btn-outline-secondary pe-2">
-                                <i class="bi bi-upload"></i>
-                                <input type="file" class="custom-file-input" name="upload" id="fileInput"
-                                    style="display: none;">
-                            </label>
-                            <button class="col btn btn-primary ms-2 me-2">
-                                <i class="bi bi-arrow-return-left"></i>
-                            </button>
-                        </div>
                     </div>
-                </div>
             </div>
         </div>
-        {{!-- Second comment --}}
 
-        <div class="d-flex justify-content-start card mt-4 col-9 pb-1 mb-4">
-            <div class="card-body ">
-                <div class="row justify-content-start">
-                    <div class="col-auto">
-                        <img class="rounded-circle"
-                            src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
-                            alt="Profile Picture" style="width: 30px; height: 30px;">
-                    </div>
-                    <div class="col p-0">
-                        <h6 class="mb-0 p-0" id="name">Huyền</h6>
-                    </div>
+    </div>
+
+    {{!-- Model Share post --}}
+    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content col-md-10" style="border-radius: 20px 20px 20px 20px;">
+                <div class="modal-header d-flex justify-content-center"
+                    style="background-color:rgba(253, 0, 84, 1); border-radius: 20px 20px 0 0;">
+                    <h5 class="modal-title text-white" id="exampleModalLabel">Click To Copy</h5>
+
                 </div>
-                <div class="row mt-3">
-                    <div class="col-10 pe-2">
-                        <input type="text" class="form-control" name="comment" id="commentInput3"
-                            placeholder="Very nice and useful for me" readonly>
-                    </div>
-
-                    <label class="col btn btn-outline-danger">
-                        <i class="bi bi-heart-fill"></i>
-                    </label>
-                    <button class="col btn btn-primary ms-2 me-2">
-                        <i class="bi bi-arrow-return-left"></i>
-                    </button>
+                <div class="modal-body ">
+                    <input class="form-control" name="" id="linkPost" style="border-radius:10px;text-align: center;"
+                        readonly placeholder="" onclick="sharePost()">
+                </div>
+                <div class="modal-footer d-flex justify-content-center border" style="border-radius: 0 0 20px 20px;">
+                    <button type="button" class="btn btn-secondary" style="width: 200px;" data-bs-dismiss="modal"
+                        aria-label="Close">Cancel</button>
+                    <button type="button" class="btn btn-danger " style="width: 200px;"
+                        onclick="sharePost()">Copy</button>
                 </div>
             </div>
         </div>
@@ -178,13 +172,52 @@
 </div>
 
 <script>
+    function likeFunction() {
+        if (document.getElementById('like').style.display == 'none') {
+            document.getElementById('liked').style.display = 'block';
+        } else {
+            document.getElementById('like').style.display = 'block';
+        }
+    }
+    setTimeout(function () {
+        var link = window.location.href;
+        document.getElementById('linkPost').value = link; // Set value of 'linkPost' to the current URL
+    }, 200);
+
+    function sharePost() {
+        document.getElementById('linkPost').value = "Copied!"; // Set value of 'linkPost' to the current URL
+        var linkToCopy = window.location.href; // Link to share with the user
+        var textarea = document.createElement("textarea");
+        textarea.value = linkToCopy;
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        try {
+            navigator.clipboard.writeText(textarea.value);
+        } catch (err) {
+            console.error("Unable to copy", err);
+        }
+        document.body.removeChild(textarea);
+    }
+
     function replyCmt() {
         document.getElementById('replyCmt').style.display = 'block';
-        document.getElementById('replyCmt1').style.display = 'block';
     }
 
     function cancelComment() {
+        document.getElementById('commentInput').value = '';
+        document.getElementById('comment').value = '';
         document.getElementById('replyCmt').style.display = 'none';
-        document.getElementById('replyCmt').style.display = 'none';
+    }
+
+    function changeHeart() {
+        var iconHeart = document.getElementById('iconHeart');
+        var checkIcon = "<label class='col btn btn-outline-danger' id='iconHeart' onclick='changeHeart()''><i class='bi bi-heart'></i></label>"
+        if (iconHeart.style.display == checkIcon) {
+            iconHeart.innerHTML = "<label class='col btn-outline-danger'><i class='bi bi-heart-fill'></i></label>";
+        } else {
+            iconHeart.innerHTML = "<label class='col btn-outline-danger'><i class='bi bi-heart'></i></label>";
+        }
+
     }
 </script>
