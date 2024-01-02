@@ -14,7 +14,6 @@ class FoodService {
         Food.find({})
             .then((foods) => {
                 foods = multipleMongooesToOject(foods);
-                console.log(foods);
                 res.render('food', { foods, isLogin, email });
             })
             .catch((err) => {
@@ -36,7 +35,6 @@ class FoodService {
             )
                 .then(() => {
                     console.log('Món ăn đã được thêm vào mảng choseFoode.');
-                    console.log(email);
                     Food.find({})
                         .then((foods) => {
                             foods = multipleMongooesToOject(foods);
@@ -55,12 +53,12 @@ class FoodService {
         }
     }
 
-    searchFood(req, res) {
-        const name = req.body.search;
+    search(req, res) {
+        const name = req.query.keyword;
         Food.find({ name: { $regex: name, $options: 'i' } })
             .then((foods) => {
                 foods = multipleMongooesToOject(foods);
-                res.render('food', { foods });
+                res.json({ foods });
             })
             .catch((error) => {
                 console.error(error);
