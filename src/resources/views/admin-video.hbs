@@ -1,7 +1,7 @@
 {{!-- CREATE MODAL --}}
 
 <div style="display: flex; justify-content: end; margin: 12px 0">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"
+    <button type="button" class="btn btn-primary create_button" data-bs-toggle="modal" data-bs-target="#createModal"
         data-bs-whatever="@getbootstrap">Create</button>
 
     <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
@@ -102,9 +102,9 @@
     </div>
 </div>
 
-<div class="table-videos">
+<div class="Alltable table-videos">
     <table class="table table-bordered table-striped table-hover align-middle" style="text-align: center;" id="table_admin">
-        <thead class="table-secondary">
+        <thead>
             <tr>
                 <th>Video ID</th>
                 <th>Title</th>
@@ -173,7 +173,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="title" class="col-form-label">Title:</label>
-                            <input type="text" class="form-control" id="updateTitle" name="title" value="">
+                            <input type="text" class="form-control" id="updateTitle" name="title">
                         </div>
                         <div class="mb-3">
                             <label for="caloriesAmount" class="col-form-label">Calories amount:</label>
