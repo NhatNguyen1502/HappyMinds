@@ -4,29 +4,31 @@
         <p style="font-size: 16px; font-weight: 500;">BUILD YOUR BODY<br>OUR EXERCISE</p>
     </div>
     <div class="row">
-        <nav id="menu-video"
-            class="col-lg-1 navbar navbar-light bg-light d-none d-lg-flex flex-column align-items-stretch h-100 rounded-2 sticky-top">
-            <a class="nav-link btn btn-danger" href="#level_1">Level 1</a>
-            <a class="nav-link ms-3" href="#level1Arms">Arms</a>
-            <a class="nav-link ms-3" href="#level1Abs">Abs</a>
-            <a class="nav-link ms-3" href="#level1Shoulder">Shoulder</a>
-            <a class="nav-link ms-3" href="#level1Chest">Chest</a>
-            <a class="nav-link ms-3" href="#level1Legs">Legs</a>
+        <div id="menu-video"
+            class="col-lg-1 navbar navbar-light bg-light d-none d-lg-flex flex-column align-items-stretch h-100 rounded-2 p-2 list-group list-group-flush" style="position: sticky; top:0; left: 10px;">
+            <a href="#" class="text-center fw-bold">MENU</a>
+            <hr class="border border-dark border-2">
+            <a class="list-group-item bg-danger rounded rounded-top" href="#level_1">Level 1</a>
+            <a class="list-group-item list-group-item-action" href="#level1Arms">Arms</a>
+            <a class="list-group-item list-group-item-action" href="#level1Abs">Abs</a>
+            <a class="list-group-item list-group-item-action" href="#level1Shoulder">Shoulder</a>
+            <a class="list-group-item list-group-item-action" href="#level1Chest">Chest</a>
+            <a class="list-group-item list-group-item-action" href="#level1Legs">Legs</a>
 
-            <a class="nav-link btn btn-danger" href="#level_2">Level 2</a>
-            <a class="nav-link ms-3" href="#level2Arms">Arms</a>
-            <a class="nav-link ms-3" href="#level2Abs">Abs</a>
-            <a class="nav-link ms-3" href="#level2Shoulder">Shoulder</a>
-            <a class="nav-link ms-3" href="#level2Chest">Chest</a>
-            <a class="nav-link ms-3" href="#level2Legs">Legs</a>
+            <a class="list-group-item bg-danger rounded rounded-top" href="#level_2">Level 2</a>
+            <a class="list-group-item list-group-item-action" href="#level2Arms">Arms</a>
+            <a class="list-group-item list-group-item-action" href="#level2Abs">Abs</a>
+            <a class="list-group-item list-group-item-action" href="#level2Shoulder">Shoulder</a>
+            <a class="list-group-item list-group-item-action" href="#level2Chest">Chest</a>
+            <a class="list-group-item list-group-item-action" href="#level2Legs">Legs</a>
 
-            <a class="nav-link btn btn-danger" href="#level_3">Level 3</a>
-            <a class="nav-link ms-3" href="#level3Arms">Arms</a>
-            <a class="nav-link ms-3" href="#level3Abs">Abs</a>
-            <a class="nav-link ms-3" href="#level3Shoulder">Shoulder</a>
-            <a class="nav-link ms-3" href="#level3Chest">Chest</a>
-            <a class="nav-link ms-3" href="#level3Legs">Legs</a>
-        </nav>
+            <a class="list-group-item bg-danger rounded rounded-top" href="#level_3">Level 3</a>
+            <a class="list-group-item list-group-item-action" href="#level3Arms">Arms</a>
+            <a class="list-group-item list-group-item-action" href="#level3Abs">Abs</a>
+            <a class="list-group-item list-group-item-action" href="#level3Shoulder">Shoulder</a>
+            <a class="list-group-item list-group-item-action" href="#level3Chest">Chest</a>
+            <a class="list-group-item list-group-item-action" href="#level3Legs">Legs</a>
+        </div>
 
         <div class="col-lg-11 col-12 p-0" data-bs-spy="scroll" data-bs-target="#menu-video" data-bs-offset="0" tabindex="0">
             <div class="level_block mx-md-5 mx-3 my-md-3 my-2 w-100">
@@ -43,7 +45,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{arms1}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -70,7 +72,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{abs1}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -100,7 +102,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{shoulder1}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -130,7 +132,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{chest1}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -160,7 +162,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{legs1}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -200,7 +202,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{arms2}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -230,7 +232,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{abs2}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -260,7 +262,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{shoulder2}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -290,7 +292,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{chest2}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -320,7 +322,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{legs2}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -360,7 +362,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{arms2}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -390,7 +392,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{abs2}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -414,13 +416,13 @@
                 <div class="listVideo p-3 mb-3 rounded-2">
                     <div class="row justify-content-between mx-5 ">
                         <p class="level col-md-2 col-5 d-flex justify-content-center align-items-center my-2 px-0"
-                            id="level3Should">
+                            id="level3Shoulder">
                             Shoulder</p>
                         <div class="col-lg-2 col-md-2 col-3 d-flex align-items-end justify-content-end my-2 px-0">
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{shoulder2}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -450,7 +452,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{chest2}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>
@@ -480,7 +482,7 @@
                             <form action="/videoCarousel" method="post">
                                 <input type="hidden" name="array" value='{{legs2}}'>
                                 <button type="submit" class="btn btn-outline-danger w-100 fw-medium"
-                                    style="border-width:2px ;">Start now</button>
+                                    style="border-width:2px ;">View coach</button>
                             </form>
                         </div>
                     </div>

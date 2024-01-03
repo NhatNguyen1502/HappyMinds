@@ -359,3 +359,10 @@ h2 {
     padding: 10px;
     outline: none;
 }
+
+.list-group-item-action.active{
+    background-color:  rgba(253, 0, 84, 1);
+    color: #ffffff;
+    border-radius: 0.2rem;
+    border: none;
+}
