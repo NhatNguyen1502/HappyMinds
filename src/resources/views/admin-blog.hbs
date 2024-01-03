@@ -1,6 +1,6 @@
 {{!-- CREATE MODEL --}}
 <div style="display: flex; justify-content: end; margin: 12px 0">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal"
+    <button type="button" class="btn btn-primary create_button" data-bs-toggle="modal" data-bs-target="#createModal"
         data-bs-whatever="@getbootstrap">Create</button>
 
     <div style="display: flex; justify-content: end; margin: 0 0">
@@ -16,7 +16,7 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="content" class="col-form-label">Content:</label>
-                                <input type="text" class="form-control" id="content" name="content">
+                                <textarea class="form-control" name="content" id="content" cols="30" rows="5"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="image" class="col-form-label">Image:</label>
@@ -41,9 +41,9 @@
         </div>
     </div>
 </div>
-<div class="table-blog">
+<div class="Alltable table-blog">
     <table class="table table-bordered table-striped table-hover align-middle" style="text-align: center;" id="table_admin">
-        <thead class="table-secondary">
+        <thead>
             <tr>
                 <th>Content</th>
                 <th>Image</th>
@@ -55,7 +55,7 @@
         <tbody>
             {{#each blog}}
             <tr>
-                <th style="width: 40%;">{{this.content}}</th>
+                <th style="width: 40%;"><p id="content_cell">{{this.content}}</p></th>
                 <th style="width: 20%;"><img src="{{this.image}}" alt="" style="width: 70%"></th>
                 <th>{{this.title}}</th>
                 <th>{{this.slug}}</th>
@@ -76,7 +76,7 @@
                     {{!-- BUTTON UPDATE --}}
                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateModal"
                         data-bs-whatever="@getbootstrap"
-                        onclick="updateForm('{{this._id}}', '{{this.content}}', '{{this.image}}', '{{this.title}}', '{{this.slug}}')">
+                        onclick="updateForm('{{this._id}}', `{{this.content}}`, '{{this.image}}', '{{this.title}}', '{{this.slug}}')">
                         <span class="icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24px" height="24px"
                                 color="white" viewBox="0 0 35 35" fill="none">
@@ -110,7 +110,7 @@
                     <div class="modal-body">
                             <div class="mb-3">
                                 <label for="content" class="col-form-label">Content:</label>
-                                <input type="text" class="form-control" id="updateContent" name="content">
+                                <textarea class="form-control" name="content" id="updateContent" cols="30" rows="5"></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="image" class="col-form-label">Image:</label>
@@ -137,8 +137,9 @@
 {{!-- DISPLAY DATA & DELETE--}}
 <script>
     function updateForm(id, content, image, title, slug) {
+        console.log("vào function");
         document.getElementById('updateForm').action = '/admin/update-blog/' + id;
-        document.getElementById('updateContent').value = content;
+        document.getElementById('updateContent').innerHTML = content;
         document.getElementById('updateImage').value = image;
         document.getElementById('updateTitle').value = title;
         document.getElementById('updateSlug').value = slug;

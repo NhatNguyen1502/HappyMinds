@@ -102,9 +102,24 @@ body {
 
 /* ---------------------------------SLIDER------------------------------------------------- */
 .admin_heading {
-  background-image: url("/img/bg_heading.png");
+  /* background-image: url("/img/bg_heading.png");
   background-size: cover;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;  */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(270deg, #4B1B22 0%, #94103C 100%);
+  height: 198px;
+}
+
+.admin_heading h4{
+  font-size: 50px;
+  font-weight: 700;
+}
+
+.admin_navbar{
+  background-color: #FFF7EF;
+}
 
 .logo_admin {
   width: 30px;
@@ -122,6 +137,33 @@ body {
   color: white;
   background-color: #fd0054;
   font-weight: 700; }
+
+.create_button{
+  margin-right: 12px;
+  width: 160px;
+}
+
+#table_admin_filter label input{
+  width: 240px;
+  height: 35px;
+  background-color: #ffdbdb;
+  font-size: 16px;
+}
+
+.Alltable table thead{
+  background-color: #f878a3;
+
+}
+
+#content_cell{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 25px;
+  -webkit-line-clamp: 3;
+  height: 75px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
 
 .footer {
   background-color: #2b2024; }
@@ -235,9 +277,6 @@ h2 {
   max-width: 85%;
   max-height: 85%; }
 
-::-webkit-scrollbar {
-  display: none; }
-
 /* ---------------------------------CARD_BLOG------------------------------------------------- */
 .card-blog {
   max-height: 40px;
@@ -246,6 +285,100 @@ h2 {
 .content-text-blog {
   height: 50px;
   overflow: hidden; }
+
+.nhatngu {
+  color: rgba(22, 22, 26, 0.18); }
+
+/* ---------------------------------FOOD_UPGRADE UI------------------------------------------------- */
+.searchIcon {
+  padding: 20px 0px; }
+
+.clearIcon {
+  padding: 10px 0px; }
+
+.searchInput {
+  padding: 0px 290px 0px 0px;
+  color: #9ca3af; }
+
+.searchBtn, .clearBtn {
+  border: none;
+  outline: none;
+  background-color: white;
+  color: #9ca3af; }
+
+.foodBtn {
+  border: 2px solid #fd0054;
+  outline: none;
+  padding: 3px 15px;
+  background-color: white;
+  color: #fd0054;
+  font-weight: 600;
+  border-radius: 25px; }
+
+.sortBtn {
+  border: none; }
+
+.bi-arrow-down-up {
+  font-weight: bold !important; }
+
+.menuBtn {
+  border: none;
+  outline: none;
+  background-color: #fd0054;
+  color: white;
+  padding: 0px 15px;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: 500; }
+
+.thead {
+  height: 45px;
+  width: 800px;
+  background-color: #e7e7e7;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 17px;
+  position: relative;
+  left: 22px; }
+
+.cellHead {
+  width: 150px;
+  height: 45px;
+  border-right: 1px solid #b2b2b2; }
+
+.cellTbl {
+  width: 150px;
+  height: 100px;
+  border-right: 1px solid #b2b2b2; }
+
+.nameFood {
+  width: 150px; }
+
+.ipWeight {
+  width: 180px; }
+
+.lastCell {
+  border-right: none;
+  width: 60px; }
+
+.rowTbl {
+  background-color: white;
+  width: 845px;
+  border-radius: 10px;
+  height: 100px;
+  font-weight: 500; }
+
+.iconHeart {
+  padding-left: 5px;
+  border-right: 1px solid #b2b2b2;
+  cursor: pointer; }
+
+#add2Menu {
+  cursor: pointer; }
+
+.menuRow {
+  width: 200px;
+  height: 40px; }
 
 /* ---------------------------------UPGREADE USER UI------------------------------------------------- */
 .profile_picture {
