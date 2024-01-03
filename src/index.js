@@ -6,20 +6,19 @@ import morgan from 'morgan';
 import { engine } from 'express-handlebars';
 import { route } from './routes/index.js';
 import { connect } from './config/db/index.js';
-import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import './app/services/passport.js';
 import handlebars from 'handlebars';
+import dotenv from 'dotenv';
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
 const port = process.env.PORT || 8000;
-console.log(port);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('combined'));
@@ -33,19 +32,12 @@ handlebars.registerHelper({
     isSelected: (currentValue, targetValue) =>
         currentValue === targetValue ? 'selected' : '',
     json: (context) => JSON.stringify(context),
+    sum: (a, b) => a + b,
+    subtract: (a, b) => a - b,
 });
 
 // Template engine
-app.engine(
-    'hbs',
-    engine({
-        extname: '.hbs',
-        helpers: {
-            sum: (a, b) => a + b,
-            subtract: (a,b) => a - b,
-        },
-    }),
-);
+app.engine('hbs', engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
 app.use(
@@ -60,7 +52,12 @@ app.use(
 app.use(passport.authenticate('session'));
 passport.serializeUser(function (user, cb) {
     process.nextTick(function () {
-        cb(null, { id: user.id, name: user.name, email: user.email });
+        cb(null, {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            picture: user.picture,
+        });
     });
 });
 passport.deserializeUser(function (user, cb) {
