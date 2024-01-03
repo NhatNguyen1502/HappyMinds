@@ -16,7 +16,7 @@ router.get('/login', function (req, res) {
     }
 });
 
-router.get('/login/federated/google', passport.authenticate('google'));
+router.get('/login/google', passport.authenticate('google'));
 
 router.get(
     '/auth/google/callback',

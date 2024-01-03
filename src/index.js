@@ -6,19 +6,20 @@ import morgan from 'morgan';
 import { engine } from 'express-handlebars';
 import { route } from './routes/index.js';
 import { connect } from './config/db/index.js';
+import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import './app/services/passport.js';
 import handlebars from 'handlebars';
-import dotenv from 'dotenv';
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const app = express();
 const port = process.env.PORT || 8000;
+console.log(port);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('combined'));
@@ -40,6 +41,7 @@ handlebars.registerHelper({
 app.engine('hbs', engine({ extname: '.hbs' }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
+
 app.use(
     session({
         resave: false,
@@ -52,12 +54,7 @@ app.use(
 app.use(passport.authenticate('session'));
 passport.serializeUser(function (user, cb) {
     process.nextTick(function () {
-        cb(null, {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            picture: user.picture,
-        });
+        cb(null, { id: user.id, name: user.name, email: user.email });
     });
 });
 passport.deserializeUser(function (user, cb) {
