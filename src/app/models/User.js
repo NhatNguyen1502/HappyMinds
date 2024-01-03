@@ -14,6 +14,7 @@ const User = new Schema(
         userCaloriesAmount: { type: Number },
         requiredCaloriesAmount: { type: Number },
         choseFoode: { type: [] },
+        photoUrl: { type: String },
     },
     {
         timestamps: true,

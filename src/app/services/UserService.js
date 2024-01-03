@@ -13,6 +13,7 @@ class UserService {
             User.findOne({ email: req.user.email })
                 .lean()
                 .then((user) => {
+                    console.log(user.photoUrl);
                     let foodsID = user.choseFoode;
                     let height = user.height / 100;
                     let weight = user.weight;
