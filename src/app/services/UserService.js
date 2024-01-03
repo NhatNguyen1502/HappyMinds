@@ -7,13 +7,11 @@ class UserService {
     index(req, res) {
         let isLogin = false;
         if (req.isAuthenticated()) {
-            console.log('Hello', req.user);
             isLogin = true;
             let email = req.user.email;
             User.findOne({ email: req.user.email })
                 .lean()
                 .then((user) => {
-                    console.log(user.photoUrl);
                     let foodsID = user.choseFoode;
                     let height = user.height / 100;
                     let weight = user.weight;
