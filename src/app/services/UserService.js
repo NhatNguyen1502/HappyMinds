@@ -1,4 +1,4 @@
-import User from '../models/User.js';
+import User, {BMR, ActivityStatus} from '../models/User.js';
 import Video from '../models/Video.js';
 import Food from '../models/Food.js';
 import { multipleMongooesToOject } from '../../util/mongoose.js';
@@ -16,36 +16,28 @@ class UserService {
                     let foodsID = user.choseFoode;
                     let height = user.height / 100;
                     let weight = user.weight;
-                    let bmi = (weight / (height * height)).toFixed(2);
+                    let bmi = 0;
                     let bmiType;
-                    let bmr;
-                    user.userCaloriesAmount =
-                        user.userCaloriesAmount !== undefined
-                            ? user.userCaloriesAmount
-                            : 0;
-                    if (user.pal == 'Sedentary') {
-                        bmr = 1.2;
-                    } else if (user.pal == 'Lightly Active') {
-                        bmr = 1.375;
-                    } else if (user.pal == 'Moderately Active') {
-                        bmr = 1.55;
-                    } else if (user.pal == 'Very Active') {
-                        bmr = 1.725;
-                    } else bmr = 1.9;
-                    if (user.sex == 'Male')
-                        user.requiredCaloriesAmount =
-                            (10 * user.weight +
-                                6.25 * user.height -
-                                5 * user.age +
-                                5) *
-                            bmr;
-                    else
-                        user.requiredCaloriesAmount =
-                            (10 * user.weight +
-                                6.25 * user.height -
-                                5 * user.age -
-                                161) *
-                            bmr;
+
+                    if (height != 0 && weight != 0) {
+                        bmi  = (weight / (height * height)).toFixed(2);
+                        if (user.sex == 'Male')
+                            user.requiredCaloriesAmount =
+                                (10 * user.weight +
+                                    6.25 * user.height -
+                                    5 * user.age +
+                                    5) *
+                                    BMR[user.pal];
+                        else
+                            user.requiredCaloriesAmount =
+                                (10 * user.weight +
+                                    6.25 * user.height -
+                                    5 * user.age -
+                                    161) *
+                                    BMR[user.pal];
+                    }
+                    console.log('Pal: ' + user.pal);
+                    console.log('BMR: ' + BMR[user.pal]);
                     if (bmi < 18.5) {
                         bmiType = 'Underweight';
                     } else if (bmi >= 18.5 && bmi < 25) {
@@ -72,6 +64,7 @@ class UserService {
                                         totalCalories: totalCalories.toFixed(2),
                                         foods,
                                         user,
+                                        ActivityStatus,
                                         bmi,
                                         bmiType,
                                         isLogin,
@@ -130,8 +123,10 @@ class UserService {
         if (req.isAuthenticated()) {
             isLogin = true;
         }
-        User.findOneAndUpdate({ email: req.user.email }, req.body, {
-            new: true,
+        User.findOneAndUpdate(
+            { email: req.user.email }, 
+            req.body,
+            {new: true,
         }).then((user) => {
             let height = user.height / 100;
             let weight = user.weight;
