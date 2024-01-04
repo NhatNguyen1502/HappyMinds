@@ -7,6 +7,9 @@ class VideoController {
     show(req, res) {
         VideoService.show(req, res);
     }
+    viewcoach(req, res){
+        res.render("viewCoach")
+    }
 }
 
 export default new VideoController();
