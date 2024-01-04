@@ -10,16 +10,22 @@ passport.use(
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             callbackURL: 'http://localhost:3000/auth/google/callback',
-            scope: ['email', 'profile'],
+            scope: ['email', 'profile', 'openid'],
         },
         async function verify(issuer, profile, cb) {
             try {
-                console.log(profile);
+                console.log('Profile:', profile);
+                console.log(profile._json);
+                // Kiểm tra xem có ảnh hay không trong id_token
+                if (profile._json && profile._json.picture) {
+                    console.log('Avatar URL:', profile._json.picture);
+                } else {
+                    console.log('Không có ảnh đại diện.');
+                }
                 const photoUrl =
                     profile.photos && profile.photos.length > 0
                         ? profile.photos[0].value
                         : null;
-                console.log(photoUrl);
                 const email = profile.emails[0].value;
                 let existingUser = await UserService.getUser(email);
                 if (existingUser) {
