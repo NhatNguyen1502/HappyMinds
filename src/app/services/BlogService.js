@@ -1,4 +1,5 @@
 import blog from '../models/Blog.js';
+import Comment from '../models/Comment.js';
 import {
     multipleMongooesToOject,
     mongooesToOject,
@@ -27,6 +28,7 @@ class BlogService {
             blog.find({})
                 .skip((currentPage - 1) * itemsPerPage)
                 .limit(itemsPerPage)
+                
                 .then((blogs) => {
                     blogs = multipleMongooesToOject(blogs);
 
@@ -45,13 +47,19 @@ class BlogService {
         }
         blog.findOne({ slug: req.params.slug })
             .then((blog) => {
-                res.render('blogDetail', {
-                    blog: mongooesToOject(blog),
-                    isLogin,
-                });
+                console.log("id = ",blog._id);
+                Comment.findOne({ idBlog: blog._id})
+                    .then(comment => {
+                        console.log("comment = ",comment);
+                        res.render('blogDetail', {
+                            blog: mongooesToOject(blog),
+                            isLogin,
+                            comment: mongooesToOject(comment),
+                        });
+                    })
             })
             .catch((err) => {
-                res.status(400).json({ err: 'ERROR!' });
+                res.status(400).json({ err: 'ERROR!' }); 
             });
     }
 }
