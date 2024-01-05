@@ -46,7 +46,6 @@ function renderFoodList(food) {
 async function renderResultSearch() {
     keyword = document.querySelector('#search').value;
     await axios.get(`food/search?keyword=${keyword}`).then((res) => {
-        console.log(res.data);
         renderFoodList(res.data.foods);
     });
 }

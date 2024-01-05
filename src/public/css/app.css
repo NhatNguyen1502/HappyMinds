@@ -395,3 +395,9 @@ h2 {
   border-radius: 5px;
   padding: 10px;
   outline: none; }
+
+.list-group-item-action.active {
+  background-color: #fd0054;
+  color: #ffffff;
+  border-radius: 0.2rem;
+  border: none; }
