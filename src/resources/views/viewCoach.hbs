@@ -7,117 +7,36 @@
     <div>
         <div class="row pb-lg-3">
             <div class="col-lg-6 d-flex justify-content-lg-start">
-                <span class="btn btn-outline-danger px-4 fw-bold" style="border-width: 2px;"type="button">Arms</span>
+                <span class="btn btn-outline-danger px-4 fw-bold" style="border-width: 2px;"
+                    type="button">{{type}}</span>
             </div>
             <div class="col-lg-6 d-flex justify-content-lg-end" style="padding-right: 14%;">
-                <button class="btn btn-outline-danger px-4 fw-bold" style="border-width: 2px;" type="button">Watch</button>
+                <form action="/videoCarousel" method="post">
+                    <input type="hidden" name="array" value='{{videosReturn}}'>
+                    <button type="submit" class="btn btn-outline-danger w-100 fw-medium" style="border-width:2px ;">Watch</button>
+                </form>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-8">
+                {{#each videosReturn}}
                 <div class="card mb-3 w-100">
                     <div class="row g-0">
                         <div class="col-lg-5">
-                            <img src="https://bold.vn/wp-content/uploads/2019/05/bold-academy-5.jpg"
-                                class="img-fluid rounded-2 m-3" alt="error">
+                            <img src="{{this.image}}" class="img-fluid rounded-2 m-3" alt="error">
                         </div>
                         <div class="col-lg-7">
                             <div class="card-body ms-2 mt-3 ms-3">
                                 <h5 class="card-title fs-4">HOW TO DO : FLOOR TRICEP DIPS</h5>
-                                <p class="card-text fs-5 ps-3">Level: Beginner</p>
-                                <p class="card-text fs-5 ps-3">Duration: 10 minute</p>
-                                <p class="card-text fs-5 ps-3">Rep : 12</p>
-                                <p class="card-text fs-5 ps-3">Total calories:20 calo</p>
+                                <p class="card-text fs-5 ps-3">Level:{{this.level}}</p>
+                                <p class="card-text fs-5 ps-3">Duration:{{this.duration}}</p>
+                                <p class="card-text fs-5 ps-3">Rep : {{this.rep}}</p>
+                                <p class="card-text fs-5 ps-3">Total calories: {{this.caloriesAmount}} calo</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card mb-3 w-100">
-                    <div class="row g-0">
-                        <div class="col-lg-5">
-                            <img src="https://bold.vn/wp-content/uploads/2019/05/bold-academy-5.jpg"
-                                class="img-fluid rounded-2 m-3" alt="error">
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="card-body ms-2 mt-3 ms-3">
-                                <h5 class="card-title fs-4">HOW TO DO : FLOOR TRICEP DIPS</h5>
-                                <p class="card-text fs-5 ps-3">Level: Beginner</p>
-                                <p class="card-text fs-5 ps-3">Duration: 10 minute</p>
-                                <p class="card-text fs-5 ps-3">Rep : 12</p>
-                                <p class="card-text fs-5 ps-3">Total calories:20 calo</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-3 w-100">
-                    <div class="row g-0">
-                        <div class="col-lg-5">
-                            <img src="https://bold.vn/wp-content/uploads/2019/05/bold-academy-5.jpg"
-                                class="img-fluid rounded-2 m-3" alt="error">
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="card-body ms-2 mt-3 ms-3">
-                                <h5 class="card-title fs-4">HOW TO DO : FLOOR TRICEP DIPS</h5>
-                                <p class="card-text fs-5 ps-3">Level: Beginner</p>
-                                <p class="card-text fs-5 ps-3">Duration: 10 minute</p>
-                                <p class="card-text fs-5 ps-3">Rep : 12</p>
-                                <p class="card-text fs-5 ps-3">Total calories:20 calo</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-3 w-100">
-                    <div class="row g-0">
-                        <div class="col-lg-5">
-                            <img src="https://bold.vn/wp-content/uploads/2019/05/bold-academy-5.jpg"
-                                class="img-fluid rounded-2 m-3" alt="error">
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="card-body ms-2 mt-3 ms-3">
-                                <h5 class="card-title fs-4">HOW TO DO : FLOOR TRICEP DIPS</h5>
-                                <p class="card-text fs-5 ps-3">Level: Beginner</p>
-                                <p class="card-text fs-5 ps-3">Duration: 10 minute</p>
-                                <p class="card-text fs-5 ps-3">Rep : 12</p>
-                                <p class="card-text fs-5 ps-3">Total calories:20 calo</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-3 w-100">
-                    <div class="row g-0">
-                        <div class="col-lg-5">
-                            <img src="https://bold.vn/wp-content/uploads/2019/05/bold-academy-5.jpg"
-                                class="img-fluid rounded-2 m-3" alt="error">
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="card-body ms-2 mt-3 ms-3">
-                                <h5 class="card-title fs-4">HOW TO DO : FLOOR TRICEP DIPS</h5>
-                                <p class="card-text fs-5 ps-3">Level: Beginner</p>
-                                <p class="card-text fs-5 ps-3">Duration: 10 minute</p>
-                                <p class="card-text fs-5 ps-3">Rep : 12</p>
-                                <p class="card-text fs-5 ps-3">Total calories:20 calo</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-3 w-100">
-                    <div class="row g-0">
-                        <div class="col-lg-5">
-                            <img src="https://bold.vn/wp-content/uploads/2019/05/bold-academy-5.jpg"
-                                class="img-fluid rounded-2 m-3" alt="error">
-                        </div>
-                        <div class="col-lg-7">
-                            <div class="card-body ms-2 mt-3 ms-3">
-                                <h5 class="card-title fs-4">HOW TO DO : FLOOR TRICEP DIPS</h5>
-                                <p class="card-text fs-5 ps-3">Level: Beginner</p>
-                                <p class="card-text fs-5 ps-3">Duration: 10 minute</p>
-                                <p class="card-text fs-5 ps-3">Rep : 12</p>
-                                <p class="card-text fs-5 ps-3">Total calories:20 calo</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                {{/each}}
             </div>
             <div class="col-lg-4">
                 <div class="sticky-top pt-5">
@@ -150,8 +69,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
