@@ -6,7 +6,6 @@ class CommentService {
         comment.imgUrl = req.file?.path || '';
         console.log('comment = ', comment);
         Comment.create(comment)
-            .save()
             .then((comment) => res.json('Send comment successfully!'))
             .catch((err) => res.json(err));
     }
@@ -14,6 +13,7 @@ class CommentService {
     getBlogComments(req, res) {
         const blogId = req.query.blogId;
         Comment.find({ blogId })
+            .sort({ createdAt: -1 })
             .then((comments) => res.json(comments))
             .catch((err) => res.json(err));
     }
