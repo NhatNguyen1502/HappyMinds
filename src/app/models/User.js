@@ -55,20 +55,20 @@ const User = new Schema(
             type: Number,
             default: 0
         },
-        choseFoode: [
-            { 
-                idFood: {type: String},
-                gram: { type: Number },
-            }
-        ],
-        photoUrl: { type: String },
-        favoritefood: { type: [] },
         BMIchange: [
             { 
                 date: { type: Date},
                 value: { type: Number},
             } 
         ],
+        choseFoode: [
+            {
+                idFood: { type: String },
+                grams: { type: Number },
+            },
+        ],
+        photoUrl: { type: String },
+        foodLike: { type: [] },
     },
     {
         timestamps: true,
