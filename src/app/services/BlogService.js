@@ -32,9 +32,9 @@ class BlogService {
             const totalPages = Math.ceil(count / itemsPerPage);
 
             Blog.find({})
+                .lean()
                 .skip((currentPage - 1) * itemsPerPage)
                 .limit(itemsPerPage)
-                .lean()
                 .then((blogs) => {
                     res.json({ blogs, totalPages });
                 })
@@ -45,27 +45,12 @@ class BlogService {
     }
 
     async showDetail(req, res) {
-        let isLogin = false;
-        if (req.isAuthenticated()) {
-            isLogin = true;
-        }
-
-        Blog = await blog.findOne({ slug: req.params.slug });
-        console.log('content = ', blog.content);
-        Comments = Blog.findOne({ slug: req.params.slug })
-            .then((blog) => {
-                Comment.findOne({ idBlog: blog._id }).then((comment) => {
-                    console.log('comment = ', comment);
-                    res.render('blogDetail', {
-                        blog: mongooesToOject(blog),
-                        isLogin,
-                        comment: mongooesToOject(comment),
-                    });
-                });
-            })
-            .catch((err) => {
-                res.status(400).json({ err: 'ERROR!' });
-            });
+        let isLogin = req.isAuthenticated() || false;
+        let blog = await Blog.findOne({ slug: req.params.slug }).lean();
+        res.render('blogDetail', {
+            blog,
+            isLogin,
+        });
     }
 }
 
