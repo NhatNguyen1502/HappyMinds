@@ -7,12 +7,11 @@
     <div>
         <div class="row pb-lg-3">
             <div class="col-lg-6 d-flex justify-content-lg-start">
-                <span class="btn btn-outline-danger px-4 fw-bold" style="border-width: 2px;"
-                    type="button">{{type}}</span>
+                <span class="border border-3 border-danger px-4 fw-bold rounded-0">{{type}}</span>
             </div>
             <div class="col-lg-6 d-flex justify-content-lg-end" style="padding-right: 14%;">
                 <form action="/videoCarousel" method="post">
-                    <input type="hidden" name="array" value='{{videosReturn}}'>
+                    <input type="hidden" name="array" value='{{videoArrayJSON}}'>
                     <button type="submit" class="btn btn-outline-danger w-100 fw-medium" style="border-width:2px ;">Watch</button>
                 </form>
             </div>
@@ -27,9 +26,9 @@
                         </div>
                         <div class="col-lg-7">
                             <div class="card-body ms-2 mt-3 ms-3">
-                                <h5 class="card-title fs-4">HOW TO DO : FLOOR TRICEP DIPS</h5>
-                                <p class="card-text fs-5 ps-3">Level:{{this.level}}</p>
-                                <p class="card-text fs-5 ps-3">Duration:{{this.duration}}</p>
+                                <h5 class="card-title fs-4">{{this.title}}</h5>
+                                <p class="card-text fs-5 ps-3">Level: {{this.level}}</p>
+                                <p class="card-text fs-5 ps-3">Duration: {{this.duration}}</p>
                                 <p class="card-text fs-5 ps-3">Rep : {{this.rep}}</p>
                                 <p class="card-text fs-5 ps-3">Total calories: {{this.caloriesAmount}} calo</p>
                             </div>

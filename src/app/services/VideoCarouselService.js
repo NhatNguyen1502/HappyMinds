@@ -5,7 +5,6 @@ class VideoCarouselService {
     index(req, res) {
         const videosJSON = req.body.array;
         const videos = JSON.parse(videosJSON);
-        console.log(videos);
         res.render('videoCarousel', { videos });
     }
 }

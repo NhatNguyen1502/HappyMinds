@@ -164,9 +164,11 @@ class VideoService {
             if (req.isAuthenticated()) {
                 isLogin = true;
             }
-            console.log(videos.length);
+            let videosReturn = multipleMongooesToOject(videos);
+            let videoArrayJSON = JSON.stringify(videos);
             res.render('viewcoach', {
-                videosReturn: multipleMongooesToOject(videos),
+                videoArrayJSON,
+                videosReturn,
                 isLogin,
                 type,
             });
@@ -180,7 +182,7 @@ class VideoService {
         const videoArrayJSON = req.body.array;
         const type = req.query.type;
         const videosReturn = JSON.parse(videoArrayJSON);
-        res.render('viewcoach', {videosReturn,type});
+        res.render('viewcoach', {videosReturn,type,videoArrayJSON});
     }
 }
 
