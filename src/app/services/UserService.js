@@ -1,4 +1,4 @@
-import User, {BMR, ActivityStatus} from '../models/User.js';
+import User, {BMR, ActivityStatus, BMIStatus} from '../models/User.js';
 import Video from '../models/Video.js';
 import Food from '../models/Food.js';
 import { multipleMongooesToOject } from '../../util/mongoose.js';
@@ -7,45 +7,23 @@ class UserService {
     index(req, res) {
         let isLogin = false;
         if (req.isAuthenticated()) {
-            console.log('Hello', req.user.name);
             isLogin = true;
             let email = req.user.email;
             User.findOne({ email: req.user.email })
                 .lean()
                 .then((user) => {
                     let foodsID = user.choseFoode;
-                    let height = user.height / 100;
-                    let weight = user.weight;
-                    let bmi = 0;
+                    let bmi = user.BMIchange[user.BMIchange.length - 1]?.value || 0;
                     let bmiType;
-
-                    if (height != 0 && weight != 0) {
-                        bmi  = (weight / (height * height)).toFixed(2);
-                        if (user.sex == 'Male')
-                            user.requiredCaloriesAmount =
-                                (10 * user.weight +
-                                    6.25 * user.height -
-                                    5 * user.age +
-                                    5) *
-                                    BMR[user.pal];
-                        else
-                            user.requiredCaloriesAmount =
-                                (10 * user.weight +
-                                    6.25 * user.height -
-                                    5 * user.age -
-                                    161) *
-                                    BMR[user.pal];
-                    }
-                    console.log('Pal: ' + user.pal);
-                    console.log('BMR: ' + BMR[user.pal]);
+                    console.log(bmi + ' bmi');
                     if (bmi < 18.5) {
-                        bmiType = 'Underweight';
+                        bmiType = BMIStatus.UNDERWEIGHT;
                     } else if (bmi >= 18.5 && bmi < 25) {
-                        bmiType = 'Healthy';
+                        bmiType = BMIStatus.HEALTHY;
                     } else if (bmi >= 25 && bmi < 30) {
-                        bmiType = 'Overweight';
+                        bmiType = BMIStatus.OVERWEIGHT;
                     } else {
-                        bmiType = 'Obese';
+                        bmiType = BMIStatus.OBESE;
                     }
                     Video.find({ BMItype: bmiType })
                         .lean()
@@ -65,30 +43,8 @@ class UserService {
                                         foods,
                                         user,
                                         ActivityStatus,
-                                        bmi,
-                                        bmiType,
                                         isLogin,
-                                        videos1: arr[0],
-                                        time1: (
-                                            calculateTotalDuration(arr[0]) / 60
-                                        ).toFixed(2),
-                                        calo1: calculateTotalCaloriesAmount(
-                                            arr[0],
-                                        ),
-                                        videos2: arr[5],
-                                        time2: (
-                                            calculateTotalDuration(arr[5]) / 60
-                                        ).toFixed(2),
-                                        calo2: calculateTotalCaloriesAmount(
-                                            arr[5],
-                                        ),
-                                        videos3: arr[10],
-                                        time3: (
-                                            calculateTotalDuration(arr[10]) / 60
-                                        ).toFixed(2),
-                                        calo3: calculateTotalCaloriesAmount(
-                                            arr[10],
-                                        ),
+                                        videos1: arr[0]
                                     });
                                 },
                             );
@@ -119,20 +75,46 @@ class UserService {
     };
 
     updateUser(req, res) {
-        let isLogin = false;
-        if (req.isAuthenticated()) {
-            isLogin = true;
+        const { name, pal, sex, height, weight, age } = req.body;
+    
+        let requiredCaloriesAmount = 0;
+        if (sex == 'Male') {
+            requiredCaloriesAmount = (10 * weight + 6.25 * height - 5 * age + 5) * BMR[pal];
+        } else {
+            requiredCaloriesAmount = (10 * weight + 6.25 * height - 5 * age - 161) * BMR[pal];
         }
+    
+        const bmi = (weight / (height / 100) ** 2).toFixed(2);
+    
+        const currentDate = new Date();
+
         User.findOneAndUpdate(
-            { email: req.user.email }, 
-            req.body,
-            {new: true,
-        }).then((user) => {
-            let height = user.height / 100;
-            let weight = user.weight;
-            let BMI = (weight / (height * height)).toFixed(2);
-            this.index(req, res);
-        });
+            { 
+                email: req.user.email,
+            },
+            {
+                name: name,
+                pal: pal,
+                sex: sex,
+                height: height,
+                weight: weight,
+                age: age,
+                requiredCaloriesAmount: requiredCaloriesAmount,
+                $set: {
+                    BMIchange: [
+                        { date: currentDate, value: parseFloat(bmi) }
+                    ],
+                },
+            },
+            {
+                new: true,
+            }
+        )
+        .then((updateUser) => res.json(updateUser))
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }); 
     }
 
     removeFood(req, res) {

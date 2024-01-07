@@ -18,6 +18,13 @@ export const BMR = {
     [ActivityStatus.EXTREMELY_ACTIVE]: 1.9,
 };
 
+export const BMIStatus = {
+    UNDERWEIGHT: 'Underweight',
+    HEALTHY: 'Healthy',
+    OVERWEIGHT: 'Overweight',
+    OBESE: 'Obese',
+};
+
 const User = new Schema(
     {
         name: { type: String },
@@ -48,7 +55,20 @@ const User = new Schema(
             type: Number,
             default: 0
         },
-        choseFoode: { type: [] },
+        choseFoode: [
+            { 
+                idFood: {type: String},
+                gram: { type: Number },
+            }
+        ],
+        photoUrl: { type: String },
+        favoritefood: { type: [] },
+        BMIchange: [
+            { 
+                date: { type: Date},
+                value: { type: Number},
+            } 
+        ],
     },
     {
         timestamps: true,
