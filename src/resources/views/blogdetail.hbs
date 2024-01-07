@@ -1,8 +1,10 @@
 {{!-- Title Tag SEO --}}
+
 <head>
     <title>https://happyminds.onrender.com/</title>
 </head>
 {{!-- Title Meta description Tag--}}
+
 <head>
     <meta name="description" content="
     {{!-- Content of desciption --}}
@@ -48,9 +50,9 @@
         </button>
         <button class="btn btn-outline-secondary d-flex align-items-center " id="commentBtn">
             <i class="bi bi-chat-dots"></i>
-            <label class="ms-1 m-0" for="comment"><b>Comment</b></label>
+            <label class="ms-1 m-0" for="commentInp"><b>Comment</b></label>
         </button>
-        
+
         <button class="btn btn-outline-primary d-flex align-items-center" data-bs-toggle="modal"
             data-bs-target="#exampleModal">
             <i class="bi bi-share me-1"></i>
@@ -59,9 +61,8 @@
         <div></div>
         <div></div>
     </div>
-    <div class="row d-flex justify-content-center pb-4" id="commentList">
-        {{!-- Comment --}}
-
+    {{!-- Comment --}}
+    <div class="row d-flex justify-content-center pb-4">
         <div class="card mt-4 col-9 pb-1 mb-4">
             <div class="card-body ">
                 <div class="row align-items-center">
@@ -82,7 +83,7 @@
                 </div>
                 <form id="commentForm" class="row mt-3">
                     <div class="col-10 pe-2">
-                        <input type="text" class="form-control" name="content" id="comment"
+                        <input type="text" class="form-control" name="content" id="commentInp"
                             placeholder="Nhập bình luận của bạn . . .">
                         <input type="hidden" id="hiddenInput" name="blogId" value="{{blog._id}}">
                     </div>
@@ -97,13 +98,14 @@
                             <button class="col px-4 btn btn-primary ms-2" onclick=submitComment({{isLogin}},)>
                                 <i class="bi bi-send"></i>
                             </button>
-                        </div>    
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
-        {{!-- Fist comment --}}
     </div>
+    {{!-- commet list --}}
+    <div class="row d-flex justify-content-center pb-4" id="commentList"></div>
     {{!-- Model Share post --}}
     <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -130,16 +132,19 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 <script>
+    var blogId = {{{ json blog._id }}};
+    renderComments(`${blogId}`);
 
-    document.addEventListener('click', function(event) {
-    // Kiểm tra xem phần tử đã click có class là 'replycommentParent' không
-    if (event.target.closest('.replyCommentParent')) {
-        var replyCommentParent = event.target.closest('.replyCommentParent');
-        var commentId = replyCommentParent.querySelector('.replyComment').id;
-        var replyComments = document.querySelectorAll('.replyComment');
-        replyComments.forEach( e => {
-            if(e.id != commentId) e.innerHTML = ''});
-    }
+    document.addEventListener('click', function (event) {
+        // Kiểm tra xem phần tử đã click có class là 'replycommentParent' không
+        if (event.target.closest('.replyCommentParent')) {
+            var replyCommentParent = event.target.closest('.replyCommentParent');
+            var commentId = replyCommentParent.querySelector('.replyComment').id;
+            var replyComments = document.querySelectorAll('.replyComment');
+            replyComments.forEach(e => {
+                if (e.id != commentId) e.innerHTML = ''
+            });
+        }
     });
 
     async function submitComment(isLogin) {
@@ -151,18 +156,19 @@
             var formData = new FormData(form);
             var user = await axios.get('http://localhost:3000/user/getId');
             formData.append('userId', user.data._id)
-            await axios.post('http://localhost:3000/comment/', formData, )
+            await axios.post('http://localhost:3000/comment/', formData,)
+            $('#commentInp')[0].value = '';
+            renderComments(`${blogId}`);
         }
     }
 
-    renderComments(`{{blog._id}}`);
     async function renderComments(blogId) {
-        var data = await axios.get(`http://localhost:3000/comment/getBlogComment?blogId=${blogId}`); 
-        var comments = data.data;
-        let content= "";
-        await comments.forEach( async comment => {
-            let user = await axios.get(`http://localhost:3000/user/getById?id=${comment.userId}`);
-            $("#commentList")[0].innerHTML += `
+        try {
+            var data = await axios.get(`http://localhost:3000/comment/getBlogComment?blogId=${blogId}`);
+            var comments = data.data;
+            var promises = comments.map(async (comment) => {
+                var user = await axios.get(`http://localhost:3000/user/getById?id=${comment.userId}`);
+                return `
                 <div class="card mt-4 col-9 pb-1 mb-4 replyCommentParent" style="position: relative;">
                     <div class="card-body ">
                         <div class="row justify-content-start">
@@ -191,16 +197,20 @@
                             </div>
                         </div>
                     </div>
-                    {{!-- Reply comemt --}}
                     <div class="col-12 replyComment" id="${comment._id}" style="position:relative;left:40px;"></div>
-                    
                 </div>
             `;
-        });
+            });
+            var contents = await Promise.all(promises);
+            var content = contents.join('');
+            $("#commentList")[0].innerHTML = content;
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     function showReplyComment(idComment) {
-        let id=idComment;
+        let id = idComment;
         document.getElementById(id).innerHTML = `
                 <div class="d-flex justify-content-start card mt-4 col-11 pb-1 mb-4">
                     <div class="card-body ">
@@ -221,7 +231,7 @@
                         </div>
                         <div class="row mt-3">
                             <div class="col-10 pe-2">
-                                <input type="text" class="form-control" name="reviewComment" id="inpReply"
+                                <input type="text" class="form-control" name="content" id="commentInp"
                                     placeholder="Type your review comment . . .">
                             </div>
                             <label class="col btn btn-outline-secondary pe-2">
@@ -237,7 +247,7 @@
                 </div>
         `;
     }
-    
+
     setTimeout(function () {
         var link = window.location.href;
         document.getElementById('linkPost').value = link; // Set value of 'linkPost' to the current URL
@@ -260,8 +270,6 @@
 
     function cancelComment() {
         document.getElementById('comment').value = '';
-        document.getElementById('inpReply').value = '';
-        document.getElementById('replyCmt').style.display = 'none';
     }
 
     function changeHeart() {
