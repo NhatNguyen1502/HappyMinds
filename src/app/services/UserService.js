@@ -115,6 +115,31 @@ class UserService {
         }
     };
 
+    getUserById(req, res) {
+        let id = req.query.id;
+        User.findOne({ _id: id })
+            .lean()
+            .then((user) => {
+                res.json(user);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    getId(req, res) {
+        let email = req.user.email;
+        User.findOne({ email })
+            .then((user) => {
+                console.log(user);
+                res.json(user);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.send(err);
+            });
+    }
+
     createUser = async (payload) => {
         try {
             const newUser = await User.create(payload);
@@ -126,7 +151,6 @@ class UserService {
 
     updateUser(req, res) {
         const updatedUserData = req.body;
-        console.log(req.user.email);
         console.log(updatedUserData);
         User.findOneAndUpdate({ email: req.user.email }, updatedUserData, {
             new: true,

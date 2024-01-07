@@ -1,3 +1,20 @@
+{{!-- Title Tag SEO --}}
+<head>
+    <title>https://happyminds.onrender.com/</title>
+</head>
+{{!-- Title Meta description Tag--}}
+<head>
+    <meta name="description" content="
+    {{!-- Content of desciption --}}
+    Trang Web tập thể dục chất lượng cao, 
+    nơi bạn có thể truy cập miễn phí và tận hưởng những buổi tập đa dạng, 
+    giúp nâng cao sức khỏe và tinh thần của bạn!.
+">
+</head>
+<header>
+    <a href="https://happyminds.onrender.com/" style="display: none;">BLOGS & ARTICLES</a>
+</header>
+<link rel="canonical" href="https://happyminds.onrender.com/">
 <div class="container bg">
     <div class="row pt-5">
         <div class="content col-lg-11 col-md-10 col-9 text-center">
@@ -11,34 +28,7 @@
                 style="background-color: #fd0054; color: white;">New Post</button>
         </div>
     </div>
-    <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 pt-4">
-        {{#each blogs}}
-        <div class="col pb-3">
-            <div class="card">
-                <a href="blog/blogDetail/{{this.slug}}">
-                    <img src="{{this.image}}" class="card-img-top" style="height: 300px;" alt="...">
-                </a>
-                <div class="card-body pb-0">
-                    <h5 class="card-title">{{this.title}}</h5>
-                    <div class=" col-lg-8 d-flex justify-content-start">
-                        <img class="col-lg-4 col-1 my-2" style="width: 30px; height: 30px" src="/img/Image.png" alt>
-                        <p class="m-0 d-flex align-items-center mx-2" style="font-size:medium;">Benjamin Gray</p>
-                    </div>
-                    <p class="content-text-blog">{{this.content}}</p>
-                    <div class="d-flex justify-content-between">
-                        <p class="card-text" style="font-size:14px;">FEB 12, 2020</p>
-                        <p class="card-text ">
-                            <a href="/blog/blogDetail/{{this.slug}}" class="text-danger fw-medium fw-semibold"
-                                style="text-decoration: none">MORE
-                                INFO<img class="pb-1" src="/img/goRight.png" alt=""></a>
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        {{/each}}
-    </div>
+    <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 pt-4" id="blogPanigation"></div>
     <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content col-md-10" style="border-radius: 20px 20px 20px 20px;">
@@ -78,23 +68,18 @@
         </div>
     </div>
 </div>
-<center>
-<div class="row mb-3">
-    <div class="col d-flex justify-content-end pe-0 m-0">
-        <a href="/blog?page={{subtract currentPage 1}}" class="">
-            <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i></button>
-        </a>
+<center id="btn_controller">
+    <div class="row mb-3">
+        <div class="col d-flex justify-content-end pe-0 m-0">
+            <button type="button" class="btn btn-success" id="currentPage_btn_left"><i class="bi bi-caret-left-fill"></i></button>
+        </div>
+        <div class="col-1 d-flex justify-content-center">
+            <span class="input-group-text d-flex align-items-center justify-content-center w-100 p-0 fs-5" id="panigation">1/{{totalPages}}</span>
+        </div>
+        <div class="col d-flex justify-content-between ps-0">
+            <button class="btn btn-success" id="currentPage_btn_right"><i class="bi bi-caret-right-fill"></i></button>
+        </div>
     </div>
-    <div class="col-1 d-flex justify-content-center">
-        <span
-            class="input-group-text d-flex align-items-center justify-content-center w-100 p-0 fs-5">{{currentPage}}/{{totalPages}}</span>
-    </div>
-    <div class="col d-flex justify-content-between ps-0">
-        <a href="/blog?page={{sum currentPage 1}}" class="">
-            <button class="btn btn-success"><i class="bi bi-caret-right-fill"></i></button>
-        </a>
-    </div>
-</div>
 </center>
 
 <div class="">
@@ -143,4 +128,10 @@
             })
             .catch((err) => console.log(err));
     });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+<script src="/js/blog.js"></script>
+<script>
+    let allBlogs = {{{ json blogs }}};
+    renderBlogs(allBlogs);
 </script>

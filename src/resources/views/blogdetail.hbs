@@ -1,11 +1,27 @@
+{{!-- Title Tag SEO --}}
+<head>
+    <title>https://happyminds.onrender.com/</title>
+</head>
+{{!-- Title Meta description Tag--}}
+<head>
+    <meta name="description" content="
+    {{!-- Content of desciption --}}
+    Trang Web tập thể dục chất lượng cao, 
+    nơi bạn có thể truy cập miễn phí và tận hưởng những buổi tập đa dạng, 
+    giúp nâng cao sức khỏe và tinh thần của bạn!.
+">
+</head>
+<header>
+    <a href="https://happyminds.onrender.com/" style="display: none;"></a>
+</header>
+<link rel="canonical" href="https://happyminds.onrender.com/">
 <div class="container bg-white">
     <div class="d-flex flex-row gap-5 d-flex align-items-center md-5">
         <h4 class="fs-4 text-primary col-lg-3 col-md-3 mb-0">March 22,
             2023</h4>
         <div class=" col-lg-8 col-md-8 d-flex justify-content-end">
             <img class="col-lg-4 col-1 mt-4 my-2" style="width: 48px; height: 45px" src="/img/Image.png" alt>
-            <p class="fs-5 m-0 d-flex align-items-center mt-4 mx-2">Benjamin
-                Gray</p>
+            <p class="fs-5 m-0 d-flex align-items-center mt-4 mx-2">Benjamin Gray</p>
         </div>
     </div>
 
@@ -25,15 +41,16 @@
     <div class="d-flex justify-content-between align-items-around">
         <div></div>
         <div></div>
-        <button class="btn btn-outline-danger d-flex align-items-center" onclick="likeFunction()">
+        <button class="btn btn-outline-danger d-flex align-items-center">
             <i class="bi bi-heart" id="like"></i>
             <i class="bi bi-heart-fill" id="liked" style="display: none;"></i>
             <p class="m-0 ms-1"><b>Like</b></p>
         </button>
-        <button class="btn btn-outline-secondary d-flex align-items-center ">
+        <button class="btn btn-outline-secondary d-flex align-items-center " id="commentBtn">
             <i class="bi bi-chat-dots"></i>
             <label class="ms-1 m-0" for="comment"><b>Comment</b></label>
         </button>
+        
         <button class="btn btn-outline-primary d-flex align-items-center" data-bs-toggle="modal"
             data-bs-target="#exampleModal">
             <i class="bi bi-share me-1"></i>
@@ -42,8 +59,9 @@
         <div></div>
         <div></div>
     </div>
-    <div class="row d-flex justify-content-center pb-4">
+    <div class="row d-flex justify-content-center pb-4" id="commentList">
         {{!-- Comment --}}
+
         <div class="card mt-4 col-9 pb-1 mb-4">
             <div class="card-body ">
                 <div class="row align-items-center">
@@ -62,91 +80,30 @@
                         </button>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-10 pe-2" onclick="cancelComment()">
-                        <input type="text" class="form-control" name="comment" id="comment"
-                            placeholder="Type your comment . . .">
+                <form id="commentForm" class="row mt-3">
+                    <div class="col-10 pe-2">
+                        <input type="text" class="form-control" name="content" id="comment"
+                            placeholder="Nhập bình luận của bạn . . .">
+                        <input type="hidden" id="hiddenInput" name="blogId" value="{{blog._id}}">
                     </div>
 
-                    <label class="col btn btn-outline-secondary" onclick="cancelComment()">
-                        <i class="bi bi-upload"></i>
-                        <input type="file" class="custom-file-input" name="upload" id="fileInput"
-                            style="display: none;">
-                    </label>
-                    <button class="col btn btn-primary ms-2 me-2" onclick="">
-                        <i class="bi bi-send"></i>
-                    </button>
-                </div>
+                    <div class="col d-flex align-items-center">
+                        <div class="row justify-content-between">
+                            <label class="col px-4 btn btn-outline-secondary">
+                                <i class="bi bi-upload"></i>
+                                <input type="file" class="custom-file-input" name="imgUrl" id="fileInput"
+                                    style="display: none;">
+                            </label>
+                            <button class="col px-4 btn btn-primary ms-2" onclick=submitComment({{isLogin}},)>
+                                <i class="bi bi-send"></i>
+                            </button>
+                        </div>    
+                    </div>
+                </form>
             </div>
         </div>
         {{!-- Fist comment --}}
-        <div class="card mt-4 col-9 pb-1 mb-4 " style="position: relative;">
-            <div class="card-body ">
-                <div class="row justify-content-start">
-                    <div class="col-auto">
-                        <img class="rounded-circle"
-                            src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
-                            alt="Profile Picture" style="width: 30px; height: 30px;">
-                    </div>
-                    <div class="col p-0">
-                        <h6 class="mb-0 p-0" id="name">Nhật</h6>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-10 pe-2">
-                        <input type="text" class="form-control" name="" id="commentInput"
-                            placeholder="The article gives me a lot of motivation" readonly>
-                    </div>
-
-                    <label class="col btn btn-outline-danger" id="iconHeart" onclick="changeHeart()">
-                        <i class="bi bi-heart"></i>
-                    </label>
-                    <button class="col btn btn-primary ms-2 me-2" onclick="replyCmt()">
-                        <i class="bi bi-arrow-return-left"></i>
-                    </button>
-                </div>
-            </div>
-            {{!-- Reply comemt --}}
-            <div class="col-12" id="replyCmt" style="position:relative;display: none;left:40px;">
-                    <div class="d-flex justify-content-start card mt-4 col-11 pb-1 mb-4">
-                        <div class="card-body ">
-                            <div class="row justify-content-start">
-                                <div class="col-auto">
-                                    <img class="rounded-circle"
-                                        src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
-                                        alt="Profile Picture" style="width: 30px; height: 30px;">
-                                </div>
-                                <div class="col p-0">
-                                    <h6 class="mb-0 p-0" id="name">You</h6>
-                                </div>
-                                <div class="col-auto pe-2" onclick="cancelComment()">
-                                    <button class="btn btn-outline-danger">
-                                        <i class="bi bi-x-circle-fill"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-10 pe-2">
-                                    <input type="text" class="form-control" name="reviewComment" id="commentInput"
-                                        placeholder="Type your review comment . . .">
-                                </div>
-
-                                <label class="col btn btn-outline-secondary pe-2">
-                                    <i class="bi bi-upload"></i>
-                                    <input type="file" class="custom-file-input" name="upload" id="fileInput"
-                                        style="display: none;">
-                                </label>
-                                <button class="col btn btn-primary ms-2 me-2">
-                                    <i class="bi bi-send"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-        </div>
-
     </div>
-
     {{!-- Model Share post --}}
     <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -171,27 +128,128 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 <script>
-    function likeFunction() {
-        if (document.getElementById('like').style.display == 'none') {
-            document.getElementById('liked').style.display = 'block';
+
+    document.addEventListener('click', function(event) {
+    // Kiểm tra xem phần tử đã click có class là 'replycommentParent' không
+    if (event.target.closest('.replyCommentParent')) {
+        var replyCommentParent = event.target.closest('.replyCommentParent');
+        var commentId = replyCommentParent.querySelector('.replyComment').id;
+        var replyComments = document.querySelectorAll('.replyComment');
+        replyComments.forEach( e => {
+            if(e.id != commentId) e.innerHTML = ''});
+    }
+    });
+
+    async function submitComment(isLogin) {
+        event.preventDefault();
+        if (!isLogin) {
+            $('#login_form').modal('show');
         } else {
-            document.getElementById('like').style.display = 'block';
+            var form = $('#commentForm')[0];
+            var formData = new FormData(form);
+            var user = await axios.get('http://localhost:3000/user/getId');
+            formData.append('userId', user.data._id)
+            await axios.post('http://localhost:3000/comment/', formData, )
         }
     }
+
+    renderComments(`{{blog._id}}`);
+    async function renderComments(blogId) {
+        var data = await axios.get(`http://localhost:3000/comment/getBlogComment?blogId=${blogId}`); 
+        var comments = data.data;
+        let content= "";
+        await comments.forEach( async comment => {
+            let user = await axios.get(`http://localhost:3000/user/getById?id=${comment.userId}`);
+            $("#commentList")[0].innerHTML += `
+                <div class="card mt-4 col-9 pb-1 mb-4 replyCommentParent" style="position: relative;">
+                    <div class="card-body ">
+                        <div class="row justify-content-start">
+                            <div class="col-auto">
+                                <img class="rounded-circle"
+                                    src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
+                                    alt="Profile Picture" style="width: 30px; height: 30px;">
+                            </div>
+                            <div class="col p-0">
+                                <h6 class="mb-0 p-0" id="name">${user.data.name}</h6>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-10 pe-2">
+                                <div>${comment.content}</div>
+                            </div>
+                            <div class="col d-flex align-items-center justify-content-between"> 
+                                <div class="row justify-content-between">
+                                    <label class="px-4 col btn btn-outline-danger" id="iconHeart">
+                                        <i class="bi bi-heart"></i>
+                                    </label>
+                                    <button class="px-4 ms-2 col btn btn-primary" onclick=showReplyComment("${comment._id}")>
+                                        <i class="bi bi-arrow-return-left"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{!-- Reply comemt --}}
+                    <div class="col-12 replyComment" id="${comment._id}" style="position:relative;left:40px;"></div>
+                    
+                </div>
+            `;
+        });
+    }
+
+    function showReplyComment(idComment) {
+        let id=idComment;
+        document.getElementById(id).innerHTML = `
+                <div class="d-flex justify-content-start card mt-4 col-11 pb-1 mb-4">
+                    <div class="card-body ">
+                        <div class="row justify-content-start">
+                            <div class="col-auto">
+                                <img class="rounded-circle"
+                                    src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
+                                    alt="Profile Picture" style="width: 30px; height: 30px;">
+                            </div>
+                            <div class="col p-0">
+                                <h6 class="mb-0 p-0" id="name">You</h6>
+                            </div>
+                            <div class="col-auto pe-2" onclick="cancelComment()">
+                                <button class="btn btn-outline-danger">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-10 pe-2">
+                                <input type="text" class="form-control" name="reviewComment" id="inpReply"
+                                    placeholder="Type your review comment . . .">
+                            </div>
+                            <label class="col btn btn-outline-secondary pe-2">
+                                <i class="bi bi-upload"></i>
+                                <input type="file" class="custom-file-input" name="upload" id="fileInput"
+                                    style="display: none;">
+                            </label>
+                            <button class="col btn btn-primary ms-2 me-2">
+                                <i class="bi bi-send"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        `;
+    }
+    
     setTimeout(function () {
         var link = window.location.href;
         document.getElementById('linkPost').value = link; // Set value of 'linkPost' to the current URL
     }, 200);
 
     function sharePost() {
-        document.getElementById('linkPost').value = "Copied!"; // Set value of 'linkPost' to the current URL
+        document.getElementById('linkPost').value = "Cop ied!"; // Set value of 'linkPost' to the current URL
         var linkToCopy = window.location.href; // Link to share with the user
         var textarea = document.createElement("textarea");
         textarea.value = linkToCopy;
         document.body.appendChild(textarea);
         textarea.select();
-
         try {
             navigator.clipboard.writeText(textarea.value);
         } catch (err) {
@@ -200,13 +258,9 @@
         document.body.removeChild(textarea);
     }
 
-    function replyCmt() {
-        document.getElementById('replyCmt').style.display = 'block';
-    }
-
     function cancelComment() {
-        document.getElementById('commentInput').value = '';
         document.getElementById('comment').value = '';
+        document.getElementById('inpReply').value = '';
         document.getElementById('replyCmt').style.display = 'none';
     }
 
@@ -220,4 +274,5 @@
         }
 
     }
+
 </script>
