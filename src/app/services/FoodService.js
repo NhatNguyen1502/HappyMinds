@@ -56,8 +56,8 @@ class FoodService {
     search(req, res) {
         const name = req.query.keyword;
         Food.find({ name: { $regex: name, $options: 'i' } })
+            .lean()
             .then((foods) => {
-                foods = multipleMongooesToOject(foods);
                 res.json({ foods });
             })
             .catch((error) => {

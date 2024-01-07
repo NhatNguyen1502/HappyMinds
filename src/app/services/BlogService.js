@@ -1,4 +1,4 @@
-import blog from '../models/Blog.js';
+import Blog from '../models/Blog.js';
 import Comment from '../models/Comment.js';
 import {
     multipleMongooesToOject,
@@ -9,10 +9,10 @@ class BlogService {
     index(req, res) {
         const itemsPerPage = 3;
 
-        blog.countDocuments().then((count) => {
+        Blog.countDocuments().then((count) => {
             const totalPages = Math.ceil(count / itemsPerPage);
 
-            blog.find({})
+            Blog.find({})
                 .limit(itemsPerPage)
                 .then((blogs) => {
                     blogs = multipleMongooesToOject(blogs);
@@ -28,13 +28,13 @@ class BlogService {
         let currentPage = parseInt(req.query.page);
         const itemsPerPage = 3;
 
-        blog.countDocuments().then((count) => {
+        Blog.countDocuments().then((count) => {
             const totalPages = Math.ceil(count / itemsPerPage);
 
-            blog.find({})
+            Blog.find({})
+                .lean()
                 .skip((currentPage - 1) * itemsPerPage)
                 .limit(itemsPerPage)
-                .lean()
                 .then((blogs) => {
                     res.json({ blogs, totalPages });
                 })
@@ -44,27 +44,13 @@ class BlogService {
         });
     }
 
-    showDetail(req, res) {
-        let isLogin = false;
-        if (req.isAuthenticated()) {
-            isLogin = true;
-        }
-        blog.findOne({ slug: req.params.slug })
-            .then((blog) => {
-                console.log("id = ",blog._id);
-                Comment.findOne({ idBlog: blog._id})
-                    .then(comment => {
-                        console.log("comment = ",comment);
-                        res.render('blogDetail', {
-                            blog: mongooesToOject(blog),
-                            isLogin,
-                            comment: mongooesToOject(comment),
-                        });
-                    })
-            })
-            .catch((err) => {
-                res.status(400).json({ err: 'ERROR!' }); 
-            });
+    async showDetail(req, res) {
+        let isLogin = req.isAuthenticated() || false;
+        let blog = await Blog.findOne({ slug: req.params.slug }).lean();
+        res.render('blogDetail', {
+            blog,
+            isLogin,
+        });
     }
 }
 

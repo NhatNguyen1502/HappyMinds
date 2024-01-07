@@ -1,11 +1,7 @@
-import BlogService from '../services/BlogService.js';
+import CommentService from '../services/CommentService.js';
 class CommentController {
-    index(req, res) {
-        BlogService.index(req, res);
-    }
-    showComment(req, res) {
-        BlogService.showComment(req, res);
-    }
+    createComment = CommentService.createComment;
+    getBlogComment = CommentService.getBlogComments;
 }
 
 export default new CommentController();
