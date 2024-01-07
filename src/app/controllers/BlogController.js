@@ -6,6 +6,9 @@ class BlogController {
     showDetail(req, res) {
         BlogService.showDetail(req, res);
     }
+    createBlog(req, res){
+        BlogService.createBlog(req, res);
+    }
 }
 
 export default new BlogController();

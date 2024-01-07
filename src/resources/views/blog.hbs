@@ -1,8 +1,10 @@
 {{!-- Title Tag SEO --}}
+
 <head>
     <title>https://happyminds.onrender.com/</title>
 </head>
 {{!-- Title Meta description Tag--}}
+
 <head>
     <meta name="description" content="
     {{!-- Content of desciption --}}
@@ -56,62 +58,67 @@
         </div>
         {{/each}}
     </div>
-    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content col-md-10" style="border-radius: 20px 20px 20px 20px;">
-                <div class="modal-header d-flex justify-content-center"
-                    style="background-color:rgba(253, 0, 84, 1); border-radius: 20px 20px 0 0;">
-                    <h5 class="modal-title text-white" id="exampleModalLabel">What's your mind
-                        ?</h5>
 
-                </div>
-                <div class="modal-body ">
-                    <label for="name"><b>Your Name</b></label>
-                    <input class="form-control" name="name" id="name" style="border-radius:10px">
-                    <label for="title"><b>Title</b></label>
-                    <input class="form-control" name="title" id="title" style="border-radius:10px">
+    {{!-- New post --}}
+    <form action="blog/create" method="post" class="needs-validation" novalidate> 
+        <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content col-md-10" style="border-radius: 20px 20px 20px 20px;">
+                    <div class="modal-header d-flex justify-content-center"
+                        style="background-color:rgba(253, 0, 84, 1); border-radius: 20px 20px 0 0;">
+                        <h5 class="modal-title text-white" id="exampleModalLabel">What's your mind
+                            ?</h5>
 
-                    <label for="content"><b>Content</b></label>
-                    <textarea class="col-12 form-control text-start" name="content" id="content" rows="8"
-                        style="border-radius:10px;" placeholder="Type what in your mind ..."></textarea>
-                    <div id="uploadImg">
-                        <label class="col-12 btn btn-outline-secondary mt-2">Upload
-                            your image
-                            <i class="bi bi-upload ms-1"></i>
-                            <input type="file" class="custom-file-input" name="upload" id="fileInput"
-                                style="display:none;">
-                        </label>
                     </div>
-                    <center>
-                        <p id="uploading_text"></p>
-                    </center>
-                </div>
-                <div class="modal-footer d-flex justify-content-center border" style="border-radius: 0 0 20px 20px;">
-                    <button type="button" class="btn btn-secondary" style="width: 200px;" data-bs-dismiss="modal"
-                        aria-label="Close">Cancel</button>
-                    <button type="button" class="btn btn-danger " style="width: 200px;">Post</button>
+                    <div class="modal-body ">
+                        <label for="name"><b>Your Name</b></label>
+                        <input class="form-control" name="author" id="name" required style="border-radius:10px">
+                        <label for="title"><b>Title</b></label>
+                        <input class="form-control" name="title" id="title" style="border-radius:10px">
+
+                        <label for="content"><b>Content</b></label>
+                        <textarea class="col-12 form-control text-start" name="content" id="content" rows="8"
+                            style="border-radius:10px;" placeholder="Type what in your mind ..."></textarea>
+                        <div id="uploadImg">
+                            <label class="col-12 btn btn-outline-secondary mt-2">Upload
+                                your image
+                                <i class="bi bi-upload ms-1"></i>
+                                <input type="file" class="custom-file-input" name="upload" id="fileInput"
+                                    style="display:none;">
+                            </label>
+                        </div>
+                        <center>
+                            <p id="uploading_text"></p>
+                        </center>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center border"
+                        style="border-radius: 0 0 20px 20px;">
+                        <button type="button" class="btn btn-secondary" style="width: 200px;" data-bs-dismiss="modal"
+                            aria-label="Close">Cancel</button>
+                        <button type="submit" class="btn btn-danger " style="width: 200px;">Post</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <center>
-<div class="row mb-3">
-    <div class="col d-flex justify-content-end pe-0 m-0">
-        <a href="/blog?page={{subtract currentPage 1}}" class="">
-            <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i></button>
-        </a>
+    <div class="row mb-3">
+        <div class="col d-flex justify-content-end pe-0 m-0">
+            <a href="/blog?page={{subtract currentPage 1}}" class="">
+                <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i></button>
+            </a>
+        </div>
+        <div class="col-1 d-flex justify-content-center">
+            <span
+                class="input-group-text d-flex align-items-center justify-content-center w-100 p-0 fs-5">{{currentPage}}/{{totalPages}}</span>
+        </div>
+        <div class="col d-flex justify-content-between ps-0">
+            <a href="/blog?page={{sum currentPage 1}}" class="">
+                <button class="btn btn-success"><i class="bi bi-caret-right-fill"></i></button>
+            </a>
+        </div>
     </div>
-    <div class="col-1 d-flex justify-content-center">
-        <span
-            class="input-group-text d-flex align-items-center justify-content-center w-100 p-0 fs-5">{{currentPage}}/{{totalPages}}</span>
-    </div>
-    <div class="col d-flex justify-content-between ps-0">
-        <a href="/blog?page={{sum currentPage 1}}" class="">
-            <button class="btn btn-success"><i class="bi bi-caret-right-fill"></i></button>
-        </a>
-    </div>
-</div>
 </center>
 
 <div class="">
@@ -125,10 +132,13 @@
 </div>
 </div>
 <script>
+    /*const name = document.getElementById('name').value;
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+    const img = document.getElementById('linkImg');
 
 
     const fileInput = document.getElementById('fileInput');
-
     const cloud_name = "duas1juqs";
     const upload_preset = "pnvimage";
 
@@ -149,15 +159,19 @@
         )
             .then((res) => res.json())
             .then((data) => {
-                console.log(data.secure_url);
+                // console.log(data.secure_url);
                 document.getElementById('uploadImg').style.display = 'block';
                 uploading_text.innerHTML = `
             <center>
             <br />
-            <img style="max-width:300px" src="${data.secure_url}" alt="">
-            <a href="${data.secure_url}">${data.secure_url}</a>
+            <img style="max-width:300px" src="${data.secure_url}" alt="${data.secure_url}">
             </center>`;
+                img.href = data.secure_url;
+                let linkImg = img.href;
+                console.log(linkImg);
             })
             .catch((err) => console.log(err));
     });
+
+
 </script>
