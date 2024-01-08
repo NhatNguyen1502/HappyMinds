@@ -122,8 +122,9 @@ class UserService {
             .then((user) => {
                 res.json(user);
             })
-            .catch((error) => {
-                console.log(error);
+            .catch((err) => {
+                console.log(err);
+                res.json(err);
             });
     }
 

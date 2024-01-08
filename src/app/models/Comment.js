@@ -10,6 +10,7 @@ const Comment = new Schema(
         userId: { type: String },
         likedList: { type: [] },
         parentId: { type: String },
+        responseTimes: { type: Number, default: 0 },
     },
     {
         timestamps: true,
