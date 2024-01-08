@@ -3,7 +3,7 @@ import adminController from '../app/controllers/AdminController.js';
 
 const router = express.Router();
 
-router.get('/', adminController.index);
+router.get('/', adminController.showUsers);
 router.get('/admin-food', adminController.showFoods);
 router.get('/admin-video', adminController.showVideos);
 router.get('/admin-blog', adminController.showBlog);
