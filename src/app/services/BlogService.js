@@ -65,15 +65,28 @@ class BlogService {
     }
 
     createBlog = async (req, res) => {
-        let formData = req.body;
-        let slug = generateSlug(req.body.slug)
-        // const getUrl = req.body.upload;
-        console.log(slug);
-        const saveBlog = await blog.create(formData);
-        saveBlog
-            .save()
-            .then(() => res.redirect("/blog"))
-            .catch((err) => console.log(err));
+        try {
+            let formData = req.body;
+            let slug = generateSlug(req.body.title);
+            let checkSlug = await blog.countDocuments({ slug: slug });
+
+            if (checkSlug > 0) {
+                let i = 1;
+                while (checkSlug > 0) {
+                    slug = generateSlug(req.body.title) + "-" + i++;
+                    checkSlug = await blog.countDocuments({ slug: slug });
+                }
+            }
+
+            formData.slug = slug;
+            console.log(formData.slug)
+            const saveBlog = await blog.create(formData);
+            await saveBlog.save();
+            res.redirect("/blog");
+        } catch (err) {
+            console.log(err);
+            res.status(500).send("Internal Server Error");
+        };
     };
 }
 export default new BlogService();
