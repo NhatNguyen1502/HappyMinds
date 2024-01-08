@@ -1,4 +1,4 @@
-import User from '../models/User.js';
+import User, {BMR, ActivityStatus, BMIStatus} from '../models/User.js';
 import Video from '../models/Video.js';
 import Food from '../models/Food.js';
 import { multipleMongooesToOject } from '../../util/mongoose.js';
@@ -13,46 +13,17 @@ class UserService {
                 .lean()
                 .then((user) => {
                     let foodsID = user.choseFoode;
-                    let height = user.height / 100;
-                    let weight = user.weight;
-                    let bmi = (weight / (height * height)).toFixed(2);
+                    let bmi = user.BMIchange[user.BMIchange.length - 1]?.value || 0;
                     let bmiType;
-                    let bmr;
-                    user.userCaloriesAmount =
-                        user.userCaloriesAmount !== undefined
-                            ? user.userCaloriesAmount
-                            : 0;
-                    if (user.pal == 'Sedentary') {
-                        bmr = 1.2;
-                    } else if (user.pal == 'Lightly Active') {
-                        bmr = 1.375;
-                    } else if (user.pal == 'Moderately Active') {
-                        bmr = 1.55;
-                    } else if (user.pal == 'Very Active') {
-                        bmr = 1.725;
-                    } else bmr = 1.9;
-                    if (user.sex == 'Male')
-                        user.requiredCaloriesAmount =
-                            (10 * user.weight +
-                                6.25 * user.height -
-                                5 * user.age +
-                                5) *
-                            bmr;
-                    else
-                        user.requiredCaloriesAmount =
-                            (10 * user.weight +
-                                6.25 * user.height -
-                                5 * user.age -
-                                161) *
-                            bmr;
+                    console.log(bmi + ' bmi');
                     if (bmi < 18.5) {
-                        bmiType = 'Underweight';
+                        bmiType = BMIStatus.UNDERWEIGHT;
                     } else if (bmi >= 18.5 && bmi < 25) {
-                        bmiType = 'Healthy';
+                        bmiType = BMIStatus.HEALTHY;
                     } else if (bmi >= 25 && bmi < 30) {
-                        bmiType = 'Overweight';
+                        bmiType = BMIStatus.OVERWEIGHT;
                     } else {
-                        bmiType = 'Obese';
+                        bmiType = BMIStatus.OBESE;
                     }
                     Video.find({ BMItype: bmiType })
                         .lean()
@@ -71,30 +42,9 @@ class UserService {
                                         totalCalories: totalCalories.toFixed(2),
                                         foods,
                                         user,
-                                        bmi,
-                                        bmiType,
+                                        ActivityStatus,
                                         isLogin,
-                                        videos1: arr[0],
-                                        time1: (
-                                            calculateTotalDuration(arr[0]) / 60
-                                        ).toFixed(2),
-                                        calo1: calculateTotalCaloriesAmount(
-                                            arr[0],
-                                        ),
-                                        videos2: arr[5],
-                                        time2: (
-                                            calculateTotalDuration(arr[5]) / 60
-                                        ).toFixed(2),
-                                        calo2: calculateTotalCaloriesAmount(
-                                            arr[5],
-                                        ),
-                                        videos3: arr[10],
-                                        time3: (
-                                            calculateTotalDuration(arr[10]) / 60
-                                        ).toFixed(2),
-                                        calo3: calculateTotalCaloriesAmount(
-                                            arr[10],
-                                        ),
+                                        videos1: arr[0]
                                     });
                                 },
                             );
@@ -150,17 +100,89 @@ class UserService {
     };
 
     updateUser(req, res) {
-        const updatedUserData = req.body;
-        console.log(updatedUserData);
-        User.findOneAndUpdate({ email: req.user.email }, updatedUserData, {
-            new: true,
-        })
-            .then((updateUser) => res.json(updateUser))
-            .catch((err) => {
-                console.log(err);
-                res.status(500).json({ error: 'Internal Server Error' });
-            });
-    }
+        const { name, pal, sex, height, weight, age } = req.body;
+    
+        let requiredCaloriesAmount = 0;
+        if (sex == 'Male') {
+            requiredCaloriesAmount = (10 * weight + 6.25 * height - 5 * age + 5) * BMR[pal];
+        } else {
+            requiredCaloriesAmount = (10 * weight + 6.25 * height - 5 * age - 161) * BMR[pal];
+        }
+    
+        const bmi = (weight / (height / 100) ** 2).toFixed(2);
+    
+        const currentDate = new Date();
+
+        const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+      
+        User.findOne({ email: req.user.email })
+          .lean()
+          .then((user) => {
+            const latestDate = user.BMIchange[user.BMIchange.length - 1]?.date || null;
+      
+            const updateData = {
+                name: name,
+                pal: pal,
+                sex: sex,
+                height: height,
+                weight: weight,
+                age: age,
+                requiredCaloriesAmount: requiredCaloriesAmount,
+            };
+      
+            if (latestDate != null && latestDate === cDate) {
+              // Update existing BMI for the same date
+              console.log('vô if');
+              User.findOneAndUpdate(
+                {
+                  email: req.user.email,
+                  'BMIchange.date': cDate,
+                },
+                {
+                  $set: {
+                    'BMIchange.$.value':  parseFloat(bmi),
+                  },
+                  //Spread
+                  ...updateData,
+                },
+                {
+                  new: true,
+                }
+              )
+                .then((updateUser) => res.json(updateUser))
+                .catch((err) => {
+                  console.log(err);
+                  res.status(500).json({ error: 'Internal Server Error' });
+                });
+            } else {
+              // Add new BMI entry
+              console.log('vô else');
+              User.findOneAndUpdate(
+                {
+                  email: req.user.email,
+                },
+                {
+                  ...updateData,
+                  $push: {
+                    BMIchange: [{ date: cDate, value:  parseFloat(bmi) }],
+                  },
+                },
+                {
+                  new: true,
+                }
+              )
+                .then((updateUser) => res.json(updateUser))
+                .catch((err) => {
+                  console.log(err);
+                  res.status(500).json({ error: 'Internal Server Error' });
+                });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+            res.status(500).json({ error: 'Internal Server Error' });
+          });
+      }      
 
     removeFood(req, res) {
         const idFood = req.params.idFood;

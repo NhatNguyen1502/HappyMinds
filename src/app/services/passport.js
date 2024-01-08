@@ -19,7 +19,7 @@ passport.use(
                     profile.photos && profile.photos.length > 0
                         ? profile.photos[0].value
                         : null;
-                console.log(photoUrl);
+                console.log(photoUrl + ' anh bia');
                 const email = profile.emails[0].value;
                 let existingUser = await UserService.getUser(email);
                 if (existingUser) {
