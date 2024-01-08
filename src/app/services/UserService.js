@@ -113,11 +113,14 @@ class UserService {
     
         const currentDate = new Date();
 
-        User.findOneAndUpdate(
-            { 
-                email: req.user.email,
-            },
-            {
+        const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+      
+        User.findOne({ email: req.user.email })
+          .lean()
+          .then((user) => {
+            const latestDate = user.BMIchange[user.BMIchange.length - 1]?.date || null;
+      
+            const updateData = {
                 name: name,
                 pal: pal,
                 sex: sex,
@@ -125,22 +128,61 @@ class UserService {
                 weight: weight,
                 age: age,
                 requiredCaloriesAmount: requiredCaloriesAmount,
-                $set: {
-                    BMIchange: [
-                        { date: currentDate, value: parseFloat(bmi) }
-                    ],
+            };
+      
+            if (latestDate != null && latestDate === cDate) {
+              // Update existing BMI for the same date
+              console.log('vô if');
+              User.findOneAndUpdate(
+                {
+                  email: req.user.email,
+                  'BMIchange.date': cDate,
                 },
-            },
-            {
-                new: true,
+                {
+                  $set: {
+                    'BMIchange.$.value':  parseFloat(bmi),
+                  },
+                  //Spread
+                  ...updateData,
+                },
+                {
+                  new: true,
+                }
+              )
+                .then((updateUser) => res.json(updateUser))
+                .catch((err) => {
+                  console.log(err);
+                  res.status(500).json({ error: 'Internal Server Error' });
+                });
+            } else {
+              // Add new BMI entry
+              console.log('vô else');
+              User.findOneAndUpdate(
+                {
+                  email: req.user.email,
+                },
+                {
+                  ...updateData,
+                  $push: {
+                    BMIchange: [{ date: cDate, value:  parseFloat(bmi) }],
+                  },
+                },
+                {
+                  new: true,
+                }
+              )
+                .then((updateUser) => res.json(updateUser))
+                .catch((err) => {
+                  console.log(err);
+                  res.status(500).json({ error: 'Internal Server Error' });
+                });
             }
-        )
-        .then((updateUser) => res.json(updateUser))
-        .catch((err) => {
+          })
+          .catch((err) => {
             console.log(err);
             res.status(500).json({ error: 'Internal Server Error' });
-        }); 
-    }
+          });
+      }      
 
     removeFood(req, res) {
         const idFood = req.params.idFood;

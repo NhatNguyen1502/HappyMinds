@@ -57,7 +57,7 @@ const User = new Schema(
         },
         BMIchange: [
             { 
-                date: { type: Date},
+                date: { type: String},
                 value: { type: Number},
             } 
         ],
