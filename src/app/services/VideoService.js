@@ -110,7 +110,6 @@ class VideoService {
                 });
                 const legs2 = JSON.stringify(Legs2);
 
-                console.log(req.user);
                 res.render('video', {
                     armsLevel_1,
                     absLevel_1,
@@ -157,7 +156,34 @@ class VideoService {
             });
     }
 
-    showBMIList(req, res) {}
+    viewcoach_BMI_type(req, res) {
+        let type = req.params.BMItype;
+        Video.find({ BMItype: type })
+        .then((videos) => {
+            let isLogin = false;
+            if (req.isAuthenticated()) {
+                isLogin = true;
+            }
+            let videosReturn = multipleMongooesToOject(videos);
+            let videoArrayJSON = JSON.stringify(videos);
+            res.render('viewcoach', {
+                videoArrayJSON,
+                videosReturn,
+                isLogin,
+                type,
+            });
+        })
+        .catch((err) => {
+            res.status(400).json({ err: 'ERROR!' });
+        });
+    }
+
+    viewcoach_body_parts(req, res) {
+        const videoArrayJSON = req.body.array;
+        const type = req.query.type;
+        const videosReturn = JSON.parse(videoArrayJSON);
+        res.render('viewcoach', {videosReturn,type,videoArrayJSON});
+    }
 }
 
 export default new VideoService();

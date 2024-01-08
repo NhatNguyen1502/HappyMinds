@@ -113,17 +113,15 @@
         </div>
     </div>
 
-    <div class="row row-cols-1 pt-3 row-cols-lg-3 g-5" id="videoContainer">
-        {{#each videos}}
-        <div class="col">
+    <div class="row row-cols-1 row-cols-lg-2 g-4" style="margin: 0 150px 0 150px;" id="videoContainer">
+        {{#each containsTheFirstFourVideos}}
+        <div class="col mx-lg-auto">
             <div class="card position-relative">
-                <a href="/video/{{this.videoId}}" style="color: black; text-decoration: none;">
+                <a href="/video/viewcoach/{{this.BMItype}}" style="color: black; text-decoration: none;">
                     <img src="{{this.image}}" class="card-img-top" alt="...">
-                    <button type="button" class="btn btn-danger position-absolute top-0 end-0 m-0 rounded-0">Your Button</button>
+                    <span type="button" class="btn btn-danger position-absolute top-0 end-0 m-0 rounded-0 px-3 d-inline-block w-50" style="padding-bottom:2.7%;">{{this.BMItype}}</span>
                     <div class="card-body">
                         <h5 class="card-title">{{this.title}}</h5>
-                        <p class="card-text mb-0">Duration: Time/Fitnees</p>
-                        <p class="card-text">Calo:</p>
                         <div class="d-flex justify-content-between">
                             <p class="card-text">FEB 12, 2020</p>
                             <p class="card-text text-danger fw-medium fw-semibold">

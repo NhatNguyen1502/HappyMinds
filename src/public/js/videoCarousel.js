@@ -187,9 +187,3 @@ function runProgressBar() {
 
     var interval = setInterval(frame, intervalDuration);
 }
-
-
-
-
-
-
