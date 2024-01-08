@@ -1,5 +1,6 @@
 import blog from '../models/Blog.js';
 import Comment from '../models/Comment.js';
+import generateSlug from '../../public/js/blog.js';
 import {
     multipleMongooesToOject,
     mongooesToOject,
@@ -64,9 +65,10 @@ class BlogService {
     }
 
     createBlog = async (req, res) => {
-        const formData = req.body;
-        const getUrl = req.body.upload;
-        console.log(req.body.author);
+        let formData = req.body;
+        let slug = generateSlug(req.body.slug)
+        // const getUrl = req.body.upload;
+        console.log(slug);
         const saveBlog = await blog.create(formData);
         saveBlog
             .save()

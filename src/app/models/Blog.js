@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-const slug = require('mongoose-slug-generator');
-mongoose.plugin(slug);
 
 const Blog = new Schema(
     {
