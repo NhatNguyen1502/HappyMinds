@@ -4,11 +4,12 @@ const Schema = mongoose.Schema;
 
 const Comment = new Schema(
     {
-        idBlog: {type: String},
+        blogId: { type: String },
         content: { type: String },
-        userId: { type: String},
-        likedList: { type: []},
-        parentId: { type: String},
+        imgUrl: { type: String },
+        userId: { type: String },
+        likedList: { type: [] },
+        parentId: { type: String },
     },
     {
         timestamps: true,

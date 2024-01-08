@@ -54,12 +54,12 @@
                                     alt="profile_picture">
                                 <div class="changeProfilePicture pt-2" id="changePhoto">
                                     <input type="file" id="changeImg" class="d-none">
-                                    <button
+                                    <label
                                         class="buttonModal p-1 px-1 d-flex justify-content-center align-items-center"
                                         onclick="document.getElementById('changeImg').click();"
                                         style="width: 30px; height: 30px; border-radius: 50%">
                                         <i class="bi bi-camera-fill fs-6 "></i>
-                                    </button>
+                                    </label>
                                 </div>
                             </div>
 
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <div class="modal-footer border-0 d-flex justify-content-center">
-                        <button class="buttonModal" onclick=update()>Lưu thông tin</button>
+                        <button type="submit" class="buttonModal" onclick=update()>Lưu thông tin</button>
                     </div>
                 </form>
             </div>
@@ -274,6 +274,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 
+
 <script>
     let user = {{{ json user }}}
     renderInf();
@@ -301,7 +302,6 @@
         });
         axios.post('/user', dataObject)
             .then(function (response) {
-                console.log(response.data);
                 user = response.data;
                 renderInf();
             })
