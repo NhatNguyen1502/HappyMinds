@@ -34,14 +34,13 @@
         {{#each blogs}}
         <div class="col pb-3">
             <div class="card">
-                <a href="blog/blogDetail/{{this.slug}}">
-                    <img src="{{this.image}}" class="card-img-top" style="height: 300px;" alt="...">
-                </a>
+                <a href="/blogDetail/{{this.slug}}" class="text-decoration-none text-reset">
+                    <img src="{{this.image}}" class="card-img-top" style="height: 300px;" alt="{{this.image}}">
                 <div class="card-body pb-0">
                     <h5 class="card-title">{{this.title}}</h5>
                     <div class=" col-lg-8 d-flex justify-content-start">
                         <img class="col-lg-4 col-1 my-2" style="width: 30px; height: 30px" src="/img/Image.png" alt>
-                        <p class="m-0 d-flex align-items-center mx-2" style="font-size:medium;">Benjamin Gray</p>
+                        <p class="m-0 d-flex align-items-center mx-2" style="font-size:medium;">{{this.author}}</p>
                     </div>
                     <p class="content-text-blog">{{this.content}}</p>
                     <div class="d-flex justify-content-between">
@@ -54,6 +53,7 @@
                     </div>
 
                 </div>
+                </a>
             </div>
         </div>
         {{/each}}
@@ -71,7 +71,7 @@
 
                     </div>
                     <div class="modal-body ">
-                        <label for="name"><b>Your Name</b></label>
+                        <label for="author"><b>Your Name</b></label>
                         <input class="form-control" name="author" id="name" required style="border-radius:10px">
                         <label for="title"><b>Title</b></label>
                         <input class="form-control" name="title" id="title" style="border-radius:10px">
@@ -83,7 +83,7 @@
                             <label class="col-12 btn btn-outline-secondary mt-2">Upload
                                 your image
                                 <i class="bi bi-upload ms-1"></i>
-                                <input type="file" class="custom-file-input" name="upload" id="fileInput"
+                                <input type="file" class="custom-file-input" name="upload" id="upload"
                                     style="display:none;">
                             </label>
                         </div>
@@ -132,16 +132,9 @@
 </div>
 </div>
 <script>
-    /*const name = document.getElementById('name').value;
-    const title = document.getElementById('title').value;
-    const content = document.getElementById('content').value;
-    const img = document.getElementById('linkImg');
-
-
-    const fileInput = document.getElementById('fileInput');
+    const fileInput = document.getElementById('upload');
     const cloud_name = "duas1juqs";
     const upload_preset = "pnvimage";
-
     fileInput.addEventListener("change", (e) => {
         uploading_text.innerText = "Uploading ...";
         document.getElementById('uploadImg').style.display = 'none';
@@ -159,19 +152,14 @@
         )
             .then((res) => res.json())
             .then((data) => {
-                // console.log(data.secure_url);
                 document.getElementById('uploadImg').style.display = 'block';
                 uploading_text.innerHTML = `
             <center>
             <br />
             <img style="max-width:300px" src="${data.secure_url}" alt="${data.secure_url}">
             </center>`;
-                img.href = data.secure_url;
-                let linkImg = img.href;
-                console.log(linkImg);
             })
             .catch((err) => console.log(err));
     });
-
 
 </script>

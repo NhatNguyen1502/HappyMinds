@@ -65,8 +65,8 @@ class BlogService {
 
     createBlog = async (req, res) => {
         const formData = req.body;
-        //const slug = req.body.title;
-        console.log(formData);
+        const getUrl = req.body.upload;
+        console.log(req.body.author);
         const saveBlog = await blog.create(formData);
         saveBlog
             .save()
