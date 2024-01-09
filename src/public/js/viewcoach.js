@@ -1,4 +1,3 @@
-
 function calculateDuration() {
     var elements = document.querySelectorAll('.duration');
     var durations = 0;
@@ -35,4 +34,4 @@ document.addEventListener('DOMContentLoaded', function () {
     calculatteLesson();
     calculateCalo();
     calculateDuration();
-})
+});

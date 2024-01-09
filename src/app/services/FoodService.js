@@ -97,7 +97,7 @@ class FoodService {
         Food.countDocuments().then((count) => {
             const totalPages = Math.ceil(count / itemsPerPage);
 
-            Food.find({name: { $regex: name, $options: 'i' }})
+            Food.find({ name: { $regex: name, $options: 'i' } })
                 .lean()
                 .skip((currentPage - 1) * itemsPerPage)
                 .limit(itemsPerPage)

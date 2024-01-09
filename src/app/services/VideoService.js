@@ -22,7 +22,7 @@ class VideoService {
                 const Chest2 = [];
                 const Legs2 = [];
                 const Shouder2 = [];
-            
+
                 videos = multipleMongooesToOject(videos);
                 let level_1 = videos.filter(
                     (video) => video.level == 'beginner',
@@ -43,7 +43,6 @@ class VideoService {
                     Abs1.push(video);
                 });
                 const abs1 = JSON.stringify(Abs1);
-
 
                 let shoulderLevel_1 = level_1.filter(
                     (video) => video.category == 'shoulder',
@@ -122,14 +121,14 @@ class VideoService {
                     chestLevel_2,
                     legsLevel_2,
                     isLogin,
-                    arms1, 
+                    arms1,
                     arms2,
                     abs1,
                     abs2,
                     chest1,
                     chest2,
                     legs1,
-                    legs2, 
+                    legs2,
                     shoulder1,
                     shoulder2,
                 });
@@ -159,30 +158,30 @@ class VideoService {
     viewcoach_BMI_type(req, res) {
         let type = req.params.BMItype;
         Video.find({ BMItype: type })
-        .then((videos) => {
-            let isLogin = false;
-            if (req.isAuthenticated()) {
-                isLogin = true;
-            }
-            let videosReturn = multipleMongooesToOject(videos);
-            let videoArrayJSON = JSON.stringify(videos);
-            res.render('viewcoach', {
-                videoArrayJSON,
-                videosReturn,
-                isLogin,
-                type,
+            .then((videos) => {
+                let isLogin = false;
+                if (req.isAuthenticated()) {
+                    isLogin = true;
+                }
+                let videosReturn = multipleMongooesToOject(videos);
+                let videoArrayJSON = JSON.stringify(videos);
+                res.render('viewcoach', {
+                    videoArrayJSON,
+                    videosReturn,
+                    isLogin,
+                    type,
+                });
+            })
+            .catch((err) => {
+                res.status(400).json({ err: 'ERROR!' });
             });
-        })
-        .catch((err) => {
-            res.status(400).json({ err: 'ERROR!' });
-        });
     }
 
     viewcoach_body_parts(req, res) {
         const videoArrayJSON = req.body.array;
         const type = req.query.type;
         const videosReturn = JSON.parse(videoArrayJSON);
-        res.render('viewcoach', {videosReturn,type,videoArrayJSON});
+        res.render('viewcoach', { videosReturn, type, videoArrayJSON });
     }
 }
 

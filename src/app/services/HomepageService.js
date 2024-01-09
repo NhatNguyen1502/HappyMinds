@@ -11,11 +11,18 @@ class HomepageService {
             const blogsData = await blog.find({});
             const blogs = multipleMongooesToOject(blogsData);
 
-            const bmiTypeArray = ['Underweight', 'Healthy', 'Overweight', 'Obese'];
+            const bmiTypeArray = [
+                'Underweight',
+                'Healthy',
+                'Overweight',
+                'Obese',
+            ];
             let containsTheFirstFourVideos = [];
 
             for (let type of bmiTypeArray) {
-                const videosOfType = await Video.find({ BMItype: type }).limit(1);
+                const videosOfType = await Video.find({ BMItype: type }).limit(
+                    1,
+                );
                 containsTheFirstFourVideos.push(videosOfType[0].toObject());
             }
 

@@ -1,4 +1,4 @@
-import User, {BMR, ActivityStatus, BMIStatus} from '../models/User.js';
+import User, { BMR, ActivityStatus, BMIStatus } from '../models/User.js';
 import Video from '../models/Video.js';
 import Food from '../models/Food.js';
 import { multipleMongooesToOject } from '../../util/mongoose.js';
@@ -13,7 +13,8 @@ class UserService {
                 .lean()
                 .then((user) => {
                     let foodsID = user.choseFoode;
-                    let bmi = user.BMIchange[user.BMIchange.length - 1]?.value || 0;
+                    let bmi =
+                        user.BMIchange[user.BMIchange.length - 1]?.value || 0;
                     let bmiType;
                     console.log(bmi + ' bmi');
                     if (bmi < 18.5) {
@@ -44,7 +45,7 @@ class UserService {
                                         user,
                                         ActivityStatus,
                                         isLogin,
-                                        videos1: arr[0]
+                                        videos1: arr[0],
                                     });
                                 },
                             );
@@ -72,8 +73,9 @@ class UserService {
             .then((user) => {
                 res.json(user);
             })
-            .catch((error) => {
-                console.log(error);
+            .catch((err) => {
+                console.log(err);
+                res.json(err);
             });
     }
 
@@ -81,7 +83,6 @@ class UserService {
         let email = req.user.email;
         User.findOne({ email })
             .then((user) => {
-                console.log(user);
                 res.json(user);
             })
             .catch((err) => {
@@ -101,88 +102,99 @@ class UserService {
 
     updateUser(req, res) {
         const { name, pal, sex, height, weight, age } = req.body;
-    
+
         let requiredCaloriesAmount = 0;
         if (sex == 'Male') {
-            requiredCaloriesAmount = (10 * weight + 6.25 * height - 5 * age + 5) * BMR[pal];
+            requiredCaloriesAmount =
+                (10 * weight + 6.25 * height - 5 * age + 5) * BMR[pal];
         } else {
-            requiredCaloriesAmount = (10 * weight + 6.25 * height - 5 * age - 161) * BMR[pal];
+            requiredCaloriesAmount =
+                (10 * weight + 6.25 * height - 5 * age - 161) * BMR[pal];
         }
-    
+
         const bmi = (weight / (height / 100) ** 2).toFixed(2);
-    
+
         const currentDate = new Date();
 
-        const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
-      
+        const cDate = `${currentDate.getDate()}/${
+            currentDate.getMonth() + 1
+        }/${currentDate.getFullYear()}`;
+
         User.findOne({ email: req.user.email })
-          .lean()
-          .then((user) => {
-            const latestDate = user.BMIchange[user.BMIchange.length - 1]?.date || null;
-      
-            const updateData = {
-                name: name,
-                pal: pal,
-                sex: sex,
-                height: height,
-                weight: weight,
-                age: age,
-                requiredCaloriesAmount: requiredCaloriesAmount,
-            };
-      
-            if (latestDate != null && latestDate === cDate) {
-              // Update existing BMI for the same date
-              console.log('vô if');
-              User.findOneAndUpdate(
-                {
-                  email: req.user.email,
-                  'BMIchange.date': cDate,
-                },
-                {
-                  $set: {
-                    'BMIchange.$.value':  parseFloat(bmi),
-                  },
-                  //Spread
-                  ...updateData,
-                },
-                {
-                  new: true,
+            .lean()
+            .then((user) => {
+                const latestDate =
+                    user.BMIchange[user.BMIchange.length - 1]?.date || null;
+
+                const updateData = {
+                    name: name,
+                    pal: pal,
+                    sex: sex,
+                    height: height,
+                    weight: weight,
+                    age: age,
+                    requiredCaloriesAmount: requiredCaloriesAmount,
+                };
+
+                if (latestDate != null && latestDate === cDate) {
+                    // Update existing BMI for the same date
+                    console.log('vô if');
+                    User.findOneAndUpdate(
+                        {
+                            email: req.user.email,
+                            'BMIchange.date': cDate,
+                        },
+                        {
+                            $set: {
+                                'BMIchange.$.value': parseFloat(bmi),
+                            },
+                            //Spread
+                            ...updateData,
+                        },
+                        {
+                            new: true,
+                        },
+                    )
+                        .then((updateUser) => res.json(updateUser))
+                        .catch((err) => {
+                            console.log(err);
+                            res.status(500).json({
+                                error: 'Internal Server Error',
+                            });
+                        });
+                } else {
+                    // Add new BMI entry
+                    console.log('vô else');
+                    User.findOneAndUpdate(
+                        {
+                            email: req.user.email,
+                        },
+                        {
+                            ...updateData,
+                            $push: {
+                                BMIchange: [
+                                    { date: cDate, value: parseFloat(bmi) },
+                                ],
+                            },
+                        },
+                        {
+                            new: true,
+                        },
+                    )
+                        .then((updateUser) => res.json(updateUser))
+                        .catch((err) => {
+                            console.log(err);
+                            res.status(500).json({
+                                error: 'Internal Server Error',
+                            });
+                        });
                 }
-              )
-                .then((updateUser) => res.json(updateUser))
-                .catch((err) => {
-                  console.log(err);
-                  res.status(500).json({ error: 'Internal Server Error' });
-                });
-            } else {
-              // Add new BMI entry
-              console.log('vô else');
-              User.findOneAndUpdate(
-                {
-                  email: req.user.email,
-                },
-                {
-                  ...updateData,
-                  $push: {
-                    BMIchange: [{ date: cDate, value:  parseFloat(bmi) }],
-                  },
-                },
-                {
-                  new: true,
-                }
-              )
-                .then((updateUser) => res.json(updateUser))
-                .catch((err) => {
-                  console.log(err);
-                  res.status(500).json({ error: 'Internal Server Error' });
-                });
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            res.status(500).json({ error: 'Internal Server Error' });
-          });
-      }      
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            });
+    }
 
     removeFood(req, res) {
         const idFood = req.params.idFood;
