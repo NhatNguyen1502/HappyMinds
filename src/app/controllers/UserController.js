@@ -11,7 +11,7 @@ class UserController {
 
     getById = UserService.getUserById;
 
-    getId = UserService.getId;
+    getUserByEmail = UserService.getUserByEmail;
 }
 
 export default new UserController();
