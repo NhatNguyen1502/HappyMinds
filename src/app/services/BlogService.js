@@ -1,6 +1,9 @@
 import blog from '../models/Blog.js';
 import Comment from '../models/Comment.js';
-import generateSlug from '../../public/js/blog.js';
+// import generateSlug from '../../public/js/blog.js';
+import { removeVietnameseTones } from '../../public/js/blog.js';
+import { Slug } from '../../public/js/blog.js';
+
 import {
     multipleMongooesToOject,
     mongooesToOject,
@@ -65,20 +68,25 @@ class BlogService {
     }
 
     createBlog = async (req, res) => {
+        // let isLogin = false;
+        // if (req.isAuthenticated()) {
+        //     isLogin = true;
         try {
             let formData = req.body;
-            let slug = generateSlug(req.body.title);
-            let checkSlug = await blog.countDocuments({ slug: slug });
-
+            let oldSlug = removeVietnameseTones(req.body.title);
+            let newSlug = Slug.generateSlug(oldSlug)
+            console.log(newSlug)
+            let checkSlug = await blog.countDocuments({ slug: newSlug });
+            //let linkImg = req.body.image.src;
             if (checkSlug > 0) {
                 let i = 1;
                 while (checkSlug > 0) {
-                    slug = generateSlug(req.body.title) + "-" + i++;
-                    checkSlug = await blog.countDocuments({ slug: slug });
+                    newSlug = oldSlug + "-" + i++;
+                    checkSlug = await blog.countDocuments({ slug: newSlug });
                 }
             }
 
-            formData.slug = slug;
+            formData.slug = newSlug;
             console.log(formData.slug)
             const saveBlog = await blog.create(formData);
             await saveBlog.save();
