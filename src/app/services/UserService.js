@@ -79,7 +79,7 @@ class UserService {
             });
     }
 
-    getId(req, res) {
+    getUserByEmail(req, res) {
         let email = req.user.email;
         User.findOne({ email })
             .then((user) => {

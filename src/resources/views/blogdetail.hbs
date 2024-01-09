@@ -43,7 +43,8 @@
     <div class="d-flex justify-content-between align-items-around">
         <div></div>
         <div></div>
-        <button class="btn btn-outline-danger d-flex align-items-center">
+        <button class="btn-outline-danger btn d-flex align-items-center" id="likeBlogBtn"
+            onclick=handleLikeBtn({{isLogin}},"{{blog._id }}")>
             <i class="bi bi-heart" id="like"></i>
             <i class="bi bi-heart-fill" id="liked" style="display: none;"></i>
             <p class="m-0 ms-1"><b>Like</b></p>
@@ -95,7 +96,8 @@
                                 <input type="file" class="custom-file-input" name="imgUrl" id="fileInput"
                                     style="display: none;">
                             </label>
-                            <button class="col px-4 btn btn-primary ms-2" onclick=submitComment({{isLogin}},"commentForm")>
+                            <button class="col px-4 btn btn-primary ms-2"
+                                onclick=submitComment({{isLogin}},"commentForm")>
                                 <i class="bi bi-send"></i>
                             </button>
                         </div>
@@ -130,10 +132,52 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 <script>
     var blogId = {{{ json blog._id }}};
+    var likedList = {{{ json blog.likedList }}};
+    checkUserLiked({{ isLogin }}, likedList);
+    async function checkUserLiked(isLogin, likedList) {
+        if (isLogin) {
+            try {
+                var response = await axios.get('http://localhost:3000/user/getUserByEmail');
+                var user = response.data;
+                if (likedList.includes(user._id)) {
+                    var likeBtn = document.querySelector('#likeBlogBtn');
+                    likeBtn.classList.toggle('redColor');
+                    likeBtn.classList.toggle('whiteColor');
+                }
+            } catch (error) {
+                console.error('Lỗi khi kiểm tra người dùng đã thích:', error);
+            }
+        }
+    }
     renderComments(`${blogId}`);
+
+    async function handleLikeBtn(isLogin, blogId) {
+        if (!isLogin) {
+            $('#login_form').modal('show');
+        } else {
+            var user = await axios.get(`http://localhost:3000/user/getUserByEmail`);
+            console.log(user);
+            var likeBtn = document.querySelector('#likeBlogBtn');
+            likeBtn.classList.toggle('redColor');
+            likeBtn.classList.toggle('whiteColor');
+            if (likeBtn.classList.contains('redColor')) {
+                try {
+                    data = await axios.patch(`http://localhost:3000/blog/addLike?blogId=${blogId}&userId=${user.data._id}`);
+                } catch (err) {
+                    console.log(err);
+                }
+            } else {
+                try {
+                    data = await axios.patch(`http://localhost:3000/blog/removeLike?blogId=${blogId}&userId=${user.data._id}`);
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        }
+    }
+
 
     document.addEventListener('click', function (event) {
         // Kiểm tra xem phần tử đã click có class là 'replycommentParent' không
@@ -152,9 +196,9 @@
         if (!isLogin) {
             $('#login_form').modal('show');
         } else {
+            var user = await axios.get(`http://localhost:3000/user/getUserByEmail`);
             var form = $(`#${formId}`)[0];
             var formData = new FormData(form);
-            var user = await axios.get('http://localhost:3000/user/getId');
             formData.append('userId', user.data._id)
             await axios.post('http://localhost:3000/comment/', formData,)
             $('#commentInp')[0].value = '';
@@ -211,7 +255,7 @@
             $(`#replyCommentList${parentId}`)[0].innerHTML = content;
             $(`#replyCommentList${parentId}`)[0].innerHTML += `
                 <div class="col-12 replyCommentInp" id="${parentId}" ></div>`;
-        } catch (err) { 
+        } catch (err) {
             console.error(err);
         }
     }
@@ -223,7 +267,7 @@
             var promises = comments.map(async (comment) => {
                 var user = await axios.get(`http://localhost:3000/user/getById?id=${comment.userId}`);
                 var userName = user.data.name == "CastError" ? "Người dùng HappyMinds" : user.data.name;
-                let responseText = comment.responseTimes ? `Hiển thị thêm ${comment.responseTimes} lượt phản hồi`: '';
+                let responseText = comment.responseTimes ? `Hiển thị thêm ${comment.responseTimes} lượt phản hồi` : '';
                 return `
                 <div class="card mt-4 col-9 pb-1 mb-4 replyCommentParent" style="position: relative;">
                     <div class="card-body ">
@@ -333,17 +377,6 @@
 
     function cancelComment(id) {
         document.getElementById(`${id}`).value = '';
-    }
-
-    function changeHeart() {
-        var iconHeart = document.getElementById('iconHeart');
-        var checkIcon = "<label class='col btn btn-outline-danger' id='iconHeart' onclick='changeHeart()''><i class='bi bi-heart'></i></label>"
-        if (iconHeart.style.display == checkIcon) {
-            iconHeart.innerHTML = "<label class='col btn-outline-danger'><i class='bi bi-heart-fill'></i></label>";
-        } else {
-            iconHeart.innerHTML = "<label class='col btn-outline-danger'><i class='bi bi-heart'></i></label>";
-        }
-
     }
 
 </script>
