@@ -14,12 +14,10 @@ passport.use(
         },
         async function verify(issuer, profile, cb) {
             try {
-                console.log(profile);
                 const photoUrl =
                     profile.photos && profile.photos.length > 0
                         ? profile.photos[0].value
                         : null;
-                console.log(photoUrl);
                 const email = profile.emails[0].value;
                 let existingUser = await UserService.getUser(email);
                 if (existingUser) {

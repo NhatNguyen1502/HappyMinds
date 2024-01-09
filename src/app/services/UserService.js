@@ -132,7 +132,6 @@ class UserService {
         let email = req.user.email;
         User.findOne({ email })
             .then((user) => {
-                console.log(user);
                 res.json(user);
             })
             .catch((err) => {
