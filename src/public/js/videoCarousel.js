@@ -1,5 +1,5 @@
 let time_enable = 5000;
-let index = 0
+let index = 0;
 let secondRest = 5;
 let timer2;
 let isRestTimerRunning = true;
@@ -7,9 +7,9 @@ var buttonClicked = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     let video = document.getElementById('video');
-    let timer = document.getElementById('timer').textContent = `00 : ${video.getAttribute(
-        'data-duration',
-    )}`;
+    let timer = (document.getElementById(
+        'timer',
+    ).textContent = `00 : ${video.getAttribute('data-duration')}`);
     document.getElementById('rep').textContent = video.getAttribute('data-rep');
 
     let total_time = document.getElementById('time_start');
@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCountdown() {
         if (isRestTimerRunning) {
             secondRest--;
-            const secondsDisplay = secondRest < 10 ? `0${secondRest}` : secondRest;
+            const secondsDisplay =
+                secondRest < 10 ? `0${secondRest}` : secondRest;
             rest_time.textContent = `00 : ${secondsDisplay}`;
             if (secondRest === 0) {
                 clearInterval(timer2);
@@ -49,7 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('next').addEventListener('click', () => {
         nextVideo();
-        timer2 = setInterval(updateCountdown, 1000);    });
+        timer2 = setInterval(updateCountdown, 1000);
+    });
     document.getElementById('skip').addEventListener('click', () => {
         skipVideo();
         timer2 = setInterval(updateCountdown, 1000);
@@ -65,7 +67,7 @@ function nextVideo() {
     $('#carouselExampleControls').carousel('next');
     index++;
     if (index == 10) {
-        document.getElementById('next').setAttribute('disabled', 'true'); 
+        document.getElementById('next').setAttribute('disabled', 'true');
         document.getElementById('skip').setAttribute('disabled', 'true');
         // document.getElementById('start').textContent = 'FINISH!!!';
     } else {
@@ -77,21 +79,22 @@ function nextVideo() {
         let calories =
             parseInt(document.getElementById('calories').innerHTML) +
             parseInt(newVideo.getAttribute('data-calo'));
-            document.getElementById('calories').innerHTML = calories;
-            document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
-            document.getElementById('rep').textContent = parseInt(
-                newVideo.getAttribute('data-rep'),
-            );
-            document.getElementById('start').setAttribute('disabled', 'true');
-            document.getElementById('next').setAttribute('disabled', 'true');
-            time_enable = 5000;
-            setTimeout(enableNextButton, time_enable);
-            setTimeout(enableStartButton, time_enable);
-            setTimeout(() => {
-                document.getElementById('start').classList.add('shake');
-            }, time_enable);
-
-        }
+        document.getElementById('calories').innerHTML = calories;
+        document.getElementById(
+            'timer',
+        ).textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
+        document.getElementById('rep').textContent = parseInt(
+            newVideo.getAttribute('data-rep'),
+        );
+        document.getElementById('start').setAttribute('disabled', 'true');
+        document.getElementById('next').setAttribute('disabled', 'true');
+        time_enable = 5000;
+        setTimeout(enableNextButton, time_enable);
+        setTimeout(enableStartButton, time_enable);
+        setTimeout(() => {
+            document.getElementById('start').classList.add('shake');
+        }, time_enable);
+    }
 }
 
 function skipVideo() {
@@ -112,7 +115,9 @@ function skipVideo() {
             index = 0;
             newVideo = document.querySelector('.carousel-item[data-index="0"]');
         }
-        document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
+        document.getElementById(
+            'timer',
+        ).textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
         document.getElementById('rep').textContent = parseInt(
             newVideo.getAttribute('data-rep'),
         );
@@ -124,7 +129,6 @@ function skipVideo() {
             document.getElementById('start').classList.add('shake');
         }, time_enable);
     }
-
 }
 
 function enableNextButton() {
@@ -159,30 +163,27 @@ function runTimer() {
 }
 
 function runProgressBar() {
-    var elem = document.getElementById("myBar");
+    var elem = document.getElementById('myBar');
     let videoDuration = document.querySelector(`.video[data-index="${index}"]`);
     console.log(videoDuration.getAttribute('data-index'));
     let second = videoDuration.getAttribute('data-duration');
     console.log(second);
     var totalDuration = second * 1000;
     console.log(totalDuration);
-    var steps = 50
+    var steps = 50;
     var width = 0;
     var intervalDuration = totalDuration / steps;
     console.log(intervalDuration);
     function frame() {
         if (buttonClicked && width <= 1000) {
-            console.log("ngu")
+            console.log('ngu');
             width = 0;
             clearInterval(interval);
-            buttonClicked = false; 
-        }
-        else{
+            buttonClicked = false;
+        } else {
             width += 100 / steps;
-            elem.style.width = width + "%";
+            elem.style.width = width + '%';
         }
-        
-        
     }
 
     var interval = setInterval(frame, intervalDuration);

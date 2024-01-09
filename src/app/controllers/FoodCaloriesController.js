@@ -13,6 +13,8 @@ class FoodCaloriesController {
     sort(req, res) {
         FoodService.sort(req, res);
     }
+
+    showPanigation = FoodService.showPanigation;
 }
 
 export default new FoodCaloriesController();

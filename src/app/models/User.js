@@ -8,10 +8,10 @@ export const ActivityStatus = {
     MODERATELY_ACTIVE: 'Moderately Active',
     VERY_ACTIVE: 'Very Active',
     EXTREMELY_ACTIVE: 'Extremely Active',
-  };
-  
+};
+
 export const BMR = {
-    [ActivityStatus.SEDENTARY]: 1.2 ,
+    [ActivityStatus.SEDENTARY]: 1.2,
     [ActivityStatus.LIGHTLY_ACTIVE]: 1.375,
     [ActivityStatus.MODERATELY_ACTIVE]: 1.55,
     [ActivityStatus.VERY_ACTIVE]: 1.725,
@@ -29,37 +29,37 @@ const User = new Schema(
     {
         name: { type: String },
         email: { type: String },
-        age: { 
+        age: {
             type: Number,
-            default: 0
+            default: 0,
         },
-        height: { 
+        height: {
             type: Number,
-            default: 0
+            default: 0,
         },
-        weight: { 
+        weight: {
             type: Number,
-            default: 0
+            default: 0,
         },
         sex: { type: String },
-        pal: { 
+        pal: {
             type: String,
             enum: Object.values(ActivityStatus),
             default: ActivityStatus.SEDENTARY,
         },
-        userCaloriesAmount: { 
+        userCaloriesAmount: {
             type: Number,
-            default: 0
+            default: 0,
         },
-        requiredCaloriesAmount: { 
+        requiredCaloriesAmount: {
             type: Number,
-            default: 0
+            default: 0,
         },
         BMIchange: [
-            { 
-                date: { type: String},
-                value: { type: Number},
-            } 
+            {
+                date: { type: String },
+                value: { type: Number },
+            },
         ],
         choseFoode: [
             {
@@ -76,4 +76,3 @@ const User = new Schema(
 );
 
 export default mongoose.model('User', User);
-

@@ -4,7 +4,8 @@ import fileUploader from '../middlerwares/cloudinary.js';
 
 const router = express.Router();
 
-router.get('/getBlogComment', CommentController.getBlogComment);
+router.get('/getBlogComments', CommentController.getBlogComments);
+router.get('/getReplyComments', CommentController.getReplyComments);
 router.post(
     '/',
     fileUploader.single('imgUrl'),

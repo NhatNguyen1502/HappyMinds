@@ -11,15 +11,50 @@ class FoodService {
             isLogin = true;
             email = req.user.email;
         }
-        Food.find({})
-            .then((foods) => {
-                foods = multipleMongooesToOject(foods);
-                console.log(foods);
-                res.render('food', { foods, isLogin, email });
-            })
-            .catch((err) => {
-                res.status(400).json({ err: 'ERROR!' });
-            });
+        // Food.find({})
+        //     .then((foods) => {
+        //         foods = multipleMongooesToOject(foods);
+        //         res.render('food', { foods, isLogin, email });
+        //     })
+        //     .catch((err) => {
+        //         res.status(400).json({ err: 'ERROR!' });
+        //     });
+
+        const itemsPerPage = 5;
+
+        Food.countDocuments().then((count) => {
+            const totalPages = Math.ceil(count / itemsPerPage);
+
+            Food.find({})
+                .limit(itemsPerPage)
+                .then((foods) => {
+                    foods = multipleMongooesToOject(foods);
+                    res.render('food', { foods, totalPages });
+                })
+                .catch((err) => {
+                    res.status(500).json({ err: 'ERROR!' });
+                });
+        });
+    }
+
+    showPanigation(req, res) {
+        let currentPage = parseInt(req.query.page);
+        const itemsPerPage = 5;
+
+        Food.countDocuments().then((count) => {
+            const totalPages = Math.ceil(count / itemsPerPage);
+
+            Food.find({})
+                .lean()
+                .skip((currentPage - 1) * itemsPerPage)
+                .limit(itemsPerPage)
+                .then((foods) => {
+                    res.json({ foods, totalPages });
+                })
+                .catch((err) => {
+                    res.status(500).json({ err: 'ERROR!' });
+                });
+        });
     }
 
     addToMenu(req, res) {
@@ -56,15 +91,23 @@ class FoodService {
 
     search(req, res) {
         const name = req.query.keyword;
-        Food.find({ name: { $regex: name, $options: 'i' } })
-            .lean()
-            .then((foods) => {
-                res.json({ foods });
-            })
-            .catch((error) => {
-                console.error(error);
-                res.status(500).json({ error: 'An error' });
-            });
+        let currentPage = parseInt(req.query.page);
+        const itemsPerPage = 5;
+
+        Food.countDocuments().then((count) => {
+            const totalPages = Math.ceil(count / itemsPerPage);
+
+            Food.find({ name: { $regex: name, $options: 'i' } })
+                .lean()
+                .skip((currentPage - 1) * itemsPerPage)
+                .limit(itemsPerPage)
+                .then((foods) => {
+                    res.json({ foods, totalPages });
+                })
+                .catch((err) => {
+                    res.status(500).json({ err: 'ERROR!' });
+                });
+        });
     }
 
     sort(req, res) {
