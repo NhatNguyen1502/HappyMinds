@@ -6,7 +6,6 @@ class FoodService {
     index(req, res) {
         let isLogin = false;
         let email;
-
         if (req.isAuthenticated()) {
             isLogin = true;
             email = req.user.email;
@@ -29,7 +28,7 @@ class FoodService {
                 .limit(itemsPerPage)
                 .then((foods) => {
                     foods = multipleMongooesToOject(foods);
-                    res.render('food', { foods, totalPages });
+                    res.render('food', { foods, isLogin, totalPages });
                 })
                 .catch((err) => {
                     res.status(500).json({ err: 'ERROR!' });

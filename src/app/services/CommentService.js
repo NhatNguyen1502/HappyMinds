@@ -42,6 +42,48 @@ class CommentService {
             .then((comments) => res.json(comments))
             .catch((err) => res.jon(err));
     };
+
+    async addLike(req, res) {
+        const commentId = req.query.commentId;
+        const userId = req.query.userId;
+        const userExists = await Comment.exists({
+            _id: commentId,
+            likedList: userId,
+        });
+        if (userExists) {
+            return res.status(400).json({ error: 'Be liked!' });
+        } else {
+            try {
+                await Comment.findOneAndUpdate(
+                    { _id: commentId },
+                    { $push: { likedList: userId } },
+                    { new: true },
+                );
+                console.log('oke');
+                res.status(200).json('Like successfull!');
+            } catch (error) {
+                console.log(error);
+                res.status(500).json('Like fail!');
+            }
+        }
+    }
+
+    async removeLike(req, res) {
+        const commentId = req.query.commentId;
+        const userId = req.query.userId;
+        try {
+            await Comment.findOneAndUpdate(
+                { _id: commentId },
+                { $pull: { likedList: userId } },
+                { new: true },
+            );
+            console.log('Unlike successfull!');
+            res.status(200).json('Unlike successfull!');
+        } catch (error) {
+            console.log(error);
+            res.status(500).json('Unlike fail!');
+        }
+    }
 }
 
 export default new CommentService();
