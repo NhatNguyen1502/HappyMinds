@@ -68,33 +68,29 @@ class BlogService {
     }
 
     createBlog = async (req, res) => {
-        // let isLogin = false;
-        // if (req.isAuthenticated()) {
-        //     isLogin = true;
         try {
             let formData = req.body;
             let oldSlug = removeVietnameseTones(req.body.title);
-            let newSlug = Slug.generateSlug(oldSlug)
-            console.log(newSlug)
+            let newSlug = Slug.generateSlug(oldSlug);
             let checkSlug = await blog.countDocuments({ slug: newSlug });
-            //let linkImg = req.body.image.src;
             if (checkSlug > 0) {
                 let i = 1;
                 while (checkSlug > 0) {
-                    newSlug = oldSlug + "-" + i++;
+                    oldSlug += "-" + i++;
+                    newSlug = Slug.generateSlug(oldSlug);
                     checkSlug = await blog.countDocuments({ slug: newSlug });
                 }
             }
 
             formData.slug = newSlug;
-            console.log(formData.slug)
+            console.log(formData.slug);
             const saveBlog = await blog.create(formData);
             await saveBlog.save();
             res.redirect("/blog");
         } catch (err) {
             console.log(err);
-            res.status(500).send("Internal Server Error");
-        };
+            res.status(500).send("Internal Server Error: " + err.message);
+        }
     };
 }
 export default new BlogService();
