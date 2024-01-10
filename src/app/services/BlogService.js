@@ -6,6 +6,7 @@ import {
 
 class BlogService {
     index(req, res) {
+        let isLogin = req.isAuthenticated();
         const itemsPerPage = 3;
 
         Blog.countDocuments().then((count) => {
@@ -15,7 +16,7 @@ class BlogService {
                 .limit(itemsPerPage)
                 .then((blogs) => {
                     blogs = multipleMongooesToOject(blogs);
-                    res.render('blog', { blogs, totalPages });
+                    res.render('blog', { blogs, isLogin, totalPages });
                 })
                 .catch((err) => {
                     res.status(500).json({ err: 'ERROR!' });
