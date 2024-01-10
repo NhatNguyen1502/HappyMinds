@@ -13,8 +13,14 @@ const User = new Schema(
         pal: { type: String },
         userCaloriesAmount: { type: Number },
         requiredCaloriesAmount: { type: Number },
-        choseFoode: { type: [] },
+        choseFoode: [
+            {
+                idFood: { type: String },
+                grams: { type: Number },
+            }
+        ],
         photoUrl: { type: String },
+        foodLike: { type: [] },
     },
     {
         timestamps: true,

@@ -36,13 +36,22 @@
     </div>
     <div class=" filterBar d-flex flex-row mb-3 rounded-4 justify-content-between align-items-center" style="height: 50px; width: 610px">
       <div class=" filterBar border-0 bg-light px-0 py-1 rounded-4 d-flex justify-content-between align-items-center"  style="height: 50px; width: 500px"> 
-        <p class="ps-3 m-0 d-flex align-items-center fw-semibold">Filter by</p>
-        <div class="foodBtn" id="favouriteFodd" style="cursor: pointer;">Favourite</div>
-        <div class="foodBtn" id="caloriesFood" style="cursor: pointer;">Calories</div>
-        <div class="foodBtn d-flex align-items-center justify-content-center" id="categoryFood" style="cursor: pointer;">Category <i class="bi bi-caret-down-fill ps-1 fs-6"></i> <br>  
-  
-        </div>  
-        <div class="foodBtn sortBtn pe-3 bg-light" style="cursor: pointer;" id="sortBtn">
+        <p class="ps-3 m-0 d-flex align-items-center fw-semibold">Lọc</p>
+        <div class="foodBtn" id="favouriteFood" data-isDisable="true" style="cursor: pointer;">Yêu thích</div>
+        <div class="foodBtn" id="caloriesFood" data-isDisable="true" style="cursor: pointer;">Năng lượng</div>
+        <div class="foodBtn d-flex justify-content-between" data-keyword="none" id="categoryFood" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer; width: 130px;"><span class="text-center" style="display: block-inline; width: 110px;" id="categorySelection">Phân loại </span> <i class="bi bi-caret-down-fill ps-1 fs-6"></i> <br>
+          <div class="dropdown-menu m-0 py-0 " style="border: 2px solid rgba(253, 0, 84, 1);" aria-labelledby="categorySelection">
+            <div class=""><a class="p-1 " onclick="filterBy('none')" >--Phân loại--</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Thịt')" >Thịt</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Hải sản')" >Hải sản</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Hoa quả')" >Hoa quả</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Rau củ')" >Rau củ</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Hạt')" >Hạt</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Tinh bột')" >Tinh bột</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Sữa')" >Sữa</a></div>
+          </div>
+        </div>    
+        <div class="foodBtn sortBtn pe-3 bg-light" style="cursor: pointer;" id="sortBtn" onclick="sortToggle()">
           <i class="bi bi-arrow-down-up fs-4"></i>
         </div>
       </div>
@@ -70,31 +79,23 @@
                     <td style="width: 100px; height: 40px;">Xoá</td>
                   </tr>
                 </thead>
-                <tbody>
-                  {{#each foods}}
-                  <tr class="text-center fw-bold justify-content-center">
-                    <td class="menuRow">{{this.name}}</td>
-                    <td class="menuRow">{{this.calo}}</td>
-                    <td class="menuRow">200</td>
-                    <td class="menuRow">{{this.calo}}</td>
-                    <td class="menuRow" style="width: 100px; height: 40px;"><i class="bi bi-trash3-fill p-1 px-2 rounded-2" style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i></td>
-                  </tr>
-                  {{/each}}       
+                <tbody id="tblMenuUser">
+                        
                 </tbody>
               </table>
               <div class="line mt-4 my-2" style="height: 2px; background-color: rgb(211, 211, 211);"></div>
-              <div class="totalMenu">
+              <div class="totalMenu" id="totalMenu">
                   <div class="row justify-content-between pb-1">
                     <div class="col-lg-3 fw-semibold" style="font-size: 18px;">Items </div>
-                    <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;">6</div>
+                    <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;" id="menuItem">6</div>
                   </div>
                   <div class="row justify-content-between pb-1">
                     <div class="col-lg-4 fw-semibold" style="font-size: 18px;">Your required calories </div>
-                    <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;">2000 calo</div>
+                    <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;" id="caloriesRequired">2000 calo</div>
                   </div>
                   <div class="row justify-content-between pb-1">
                     <div class="col-lg-3 fw-semibold" style="font-size: 18px;">Total calories </div>
-                    <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;">2200 calo</div>
+                    <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;" id="menuCalories">2200 calo</div>
                   </div>
               </div>
             </div>
@@ -117,14 +118,23 @@
       <div class="cellHead d-flex align-items-center justify-content-center ipWeight">Trọng lượng</div>
       <div class="cellHead lastCell d-flex align-items-center justify-content-center">Thêm</div>
     </div>
-    <div id="foodList"></div>
+    <div id="foodList" data-email="{{email}}" data-isLogin="{{isLogin}}"></div>
   </div>
-  
+  <input class="fvrFoodIDs" type="hidden" data-list="{{foodLikeArray}}" value="[{{foodLikedArray}}]"></input>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 
 <script src="/js/food.js"></script>
+
 <script>
   let food = {{{ json foods }}};
   renderFoodList(food);
+  let userMenu = {{isLogin}} ? JSON.parse('{{{ json userMenu }}}') : [];  
+  if(userMenu != []){
+    renderUserMenu(userMenu)
+  }
+
 </script>
+
+

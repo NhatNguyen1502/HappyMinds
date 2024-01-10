@@ -331,6 +331,12 @@ h2 {
   border-right: 1px solid #b2b2b2;
   cursor: pointer; }
 
+.heart[data-isdisable='false'] {
+  color: #fd0054; }
+
+.heart[data-isdisable='true'] {
+  color: white; }
+
 #add2Menu {
   cursor: pointer; }
 
