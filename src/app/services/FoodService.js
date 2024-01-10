@@ -28,7 +28,6 @@ class FoodService {
                                 let food = { id: item._id, name: item.name, calo: item.calo, grams: gramFoodAray[index], totalGrams:  gramFoodAray[index]/100*item.calo }
                                 return food;
                             });
-                            // console.log(foodLikedArray)
                             let foodLikedArrayString = foodLikedArray.map(String);
                             foods = foods.map((food) => {
                                 if(foodLikedArrayString.includes(String(food._id))){
@@ -40,8 +39,7 @@ class FoodService {
                                     return food
                                 }
                             })
-                            // console.log(userMenu)
-
+                            console.log(foods)
                             res.render('food', { foods, isLogin, email, user, userMenu, foodLikedArray });
                         })
                         .catch((userMenuErr) => {
@@ -60,15 +58,6 @@ class FoodService {
             console.log("loi food");
         });
     
-        // Food.find({})
-        //     .then((foods) => {
-        //         foods = multipleMongooesToOject(foods);
-        //         res.render('food', { foods, isLogin, email });
-        //     })
-        //     .catch((err) => {
-        //         res.status(400).json({ err: 'ERROR!' });
-        //     });
-
         const itemsPerPage = 5;
 
         Food.countDocuments().then((count) => {
@@ -92,12 +81,11 @@ class FoodService {
 
         Food.countDocuments().then((count) => {
             const totalPages = Math.ceil(count / itemsPerPage);
-
             Food.find({})
                 .lean()
                 .skip((currentPage - 1) * itemsPerPage)
                 .limit(itemsPerPage)
-                .then((foods) => {
+                .then((foods) => {  
                     res.json({ foods, totalPages });
                 })
                 .catch((err) => {
@@ -312,7 +300,7 @@ class FoodService {
         });
     }
 
-        filterCategory(req, res) {
+    filterCategory(req, res) {
         let isLogin = false;
         let email;
         let category = req.query.category;
