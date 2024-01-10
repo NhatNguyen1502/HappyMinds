@@ -1,7 +1,14 @@
 import CommentService from '../services/CommentService.js';
 class CommentController {
     createComment = CommentService.createComment;
-    getBlogComment = CommentService.getBlogComments;
+
+    getBlogComments = CommentService.getBlogComments;
+
+    getReplyComments = CommentService.getReplyComments;
+
+    addLike = CommentService.addLike;
+
+    removeLike = CommentService.removeLike;
 }
 
 export default new CommentController();
