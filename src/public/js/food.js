@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function renderFoodList(food) {
     let content = '';
-    food.forEach(
+    foods.forEach(
         (element) =>
             (content += `
             <div class="rowTbl d-flex justify-content-start p-0 mb-1 text-center">
@@ -153,7 +153,7 @@ async function sortToggle() {
 async function renderResultSearch() {
     keyword = document.querySelector('#search').value;
     await axios.get(`food/search?keyword=${keyword}`).then((res) => {
-        renderFoodList(res.data.foods);
+        renderFoods(res.data.foods);
     });
 }
 
@@ -242,3 +242,64 @@ function clearSearch(){
 
 
 
+//Panigation
+document
+    .getElementById('currentPage_btn_right')
+    .addEventListener('click', async function () {
+        const currentValue = parseInt(getBeforeSlashValue());
+        let nextPage;
+
+        if (currentValue >= parseInt(getAfterSlashValue())) {
+            addToValueBeforeSlash(parseInt(getAfterSlashValue()));
+        } else {
+            try {
+                nextPage = currentValue + 1;
+                const response = await axios.get(
+                    `food/showPanigation?page=${nextPage}`,
+                );
+                renderFoods(response.data.foods);
+                addToValueBeforeSlash(nextPage);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+    });
+
+document
+    .getElementById('currentPage_btn_left')
+    .addEventListener('click', async function () {
+        const currentValue = parseInt(getBeforeSlashValue());
+        let prevPage;
+
+        if (currentValue <= 1) {
+            addToValueBeforeSlash(1);
+        } else {
+            try {
+                prevPage = currentValue - 1;
+                const response = await axios.get(
+                    `food/showPanigation?page=${prevPage}`,
+                );
+                renderFoods(response.data.foods);
+                addToValueBeforeSlash(prevPage);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+    });
+
+function addToValueBeforeSlash(newValue) {
+    const mySpan = document.getElementById('panigation');
+    const parts = mySpan.innerText.split('/');
+    parts[0] = newValue;
+    mySpan.innerText = parts.join('/');
+}
+
+function getBeforeSlashValue() {
+    const mySpan = document.getElementById('panigation');
+    return parseInt(mySpan.innerText.split('/')[0]);
+}
+
+function getAfterSlashValue() {
+    const mySpan = document.getElementById('panigation');
+    return parseInt(mySpan.innerText.split('/')[1]);
+}

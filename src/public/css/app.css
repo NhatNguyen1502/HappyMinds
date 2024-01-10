@@ -157,6 +157,9 @@ body {
 .redColor {
   background-color: #fd0054 !important; }
 
+.whiteColor {
+  color: white; }
+
 .text-red {
   color: #fd0054; }
 

@@ -31,6 +31,8 @@ class FoodCaloriesController {
     ultimateFilter(req, res) {
         FoodService.ultimateFilter(req, res);
     }
+
+    showPanigation = FoodService.showPanigation;
 }
 
 export default new FoodCaloriesController();

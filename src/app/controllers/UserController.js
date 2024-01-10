@@ -7,9 +7,11 @@ class UserController {
     updateUser(req, res) {
         UserService.updateUser(req, res);
     }
-    removeFood(req, res) {
-        UserService.removeFood(req, res);
-    }
+    removeFood = UserService.removeFood;
+
+    getById = UserService.getUserById;
+
+    getUserByEmail = UserService.getUserByEmail;
 }
 
 export default new UserController();

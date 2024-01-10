@@ -32,7 +32,7 @@
                     <a href="/blog" class='nav-link'>BLOGS</a>
                 </li>
                 <li class="nav-item p-2">
-                    <a href="/user" class='nav-link'>USER</a>
+                    <a href="/user" class='nav-link' onclick=navUserpage({{isLogin}})>USER</a>
                 </li>
             </ul>
         </div>
@@ -60,20 +60,23 @@
                                 </a>
                             </div>
                         </div>
+                    </form>
                 </div>
-                </form>
             </div>
         </div>
     </div>
 </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 <script>
     if ({{ isLogin }}) {
         document.querySelector("#loginBtn").innerHTML = "Log out";
     }
-    if (window.location.pathname == '/user' && !{{ isLogin }}) {
-        confirm("vui lòng đăng nhập");
-        window.location.href = '/';
+    function navUserpage(isLogin) {
+        event.preventDefault();
+        if( isLogin )  {
+            window.location.href = "/user"
+        } else $('#login_form').modal('show');
     }
     function checkLogin() {
         if (document.querySelector("#loginBtn").innerHTML == "Log out") {
@@ -81,7 +84,7 @@
         }
     }
 
-    function checkLoginFood(isLogin) {
+    function checkLoginFood(isLogin){
         if (isLogin == 'false') {
             alert("vui lòng đăng nhập");
             window.location.href = '/food';

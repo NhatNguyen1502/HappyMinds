@@ -11,7 +11,8 @@ router.post('/unlike', FoodCaloriesController.removeFromFavourite);
 router.post('/add', FoodCaloriesController.addToMenu);
 router.post('/remove', FoodCaloriesController.removeFromMenu);
 router.get('/search', FoodCaloriesController.search);
-router.get('/sort', FoodCaloriesController.sort)
+router.get('/sort', FoodCaloriesController.sort);
+router.get('/showPanigation', FoodCaloriesController.showPanigation);
 router.get('/', FoodCaloriesController.show);
 
 export default router;

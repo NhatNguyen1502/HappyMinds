@@ -1,3 +1,5 @@
+{{!-- Link Chart --}}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 {{!-- Title Tag SEO --}}
 <head>
     <title>https://happyminds.onrender.com/</title>
@@ -54,12 +56,12 @@
                                     alt="profile_picture">
                                 <div class="changeProfilePicture pt-2" id="changePhoto">
                                     <input type="file" id="changeImg" class="d-none">
-                                    <button
+                                    <label
                                         class="buttonModal p-1 px-1 d-flex justify-content-center align-items-center"
                                         onclick="document.getElementById('changeImg').click();"
                                         style="width: 30px; height: 30px; border-radius: 50%">
                                         <i class="bi bi-camera-fill fs-6 "></i>
-                                    </button>
+                                    </label>
                                 </div>
                             </div>
 
@@ -70,18 +72,22 @@
                             <input class="formInput col-lg-12 p-2" type="text" name="name" id="nameInput" class=""
                                 placeholder="">
                         </div>
-                        <div class="changeActivityRatios mb-2">
-                            <p class="m-0 py-2 fs-5 fw-bold">Mức độ hoạt động: </p>
-                            <select class="formInput col-lg-12 p-2" name="pal" id="palSelection">
-                                <option value="Sedentary" {{isSelected user.pal "Sedentary" }}>Sedentary</option>
-                                <option value="Lightly Active" {{isSelected user.pal "Lightly Active" }}>Lightly Active
-                                </option>
-                                <option value="Moderately Active" {{isSelected user.pal "Moderately Active" }}>
-                                    Moderately Active</option>
-                                <option value="Very Active" {{isSelected user.pal "Very Active" }}>Very Active</option>
-                                <option value="Extremely Active" {{isSelected user.pal "Extremely Active" }}>Extremely
-                                    Active</option>
-                            </select>
+                        <div class="row mb-2">
+                            <div class="changeActivityRatios col-lg-6">
+                                <p class="m-0 py-2 fs-5 fw-bold" >Mức độ hoạt động: </p>
+                                <select class="formInput col-lg-12 p-2" name="pal" id="palSelection">
+                                    {{#each ActivityStatus}}
+                                        <option value="{{this}}" {{isSelected ../user.pal this}}> {{this}} </option>
+                                    {{/each}}
+                                </select>       
+                            </div>
+                            <div class="changeSex col-lg-6">
+                                <p class="m-0 py-2 fs-5 fw-bold" >Giới tính: </p>
+                                <select class="formInput col-lg-12 p-2" name="sex" id="sexSelection">
+                                    <option value="Male" {{isSelected user.sex 'Male'}}>Nam</option>
+                                    <option value="Female" {{isSelected user.sex 'Female'}}>Nữ</option>
+                                </select>       
+                            </div>
                         </div>
                         <div class="changeInfor row">
                             <div class="changeHeight col-lg-4">
@@ -102,7 +108,7 @@
                         </div>
                     </div>
                     <div class="modal-footer border-0 d-flex justify-content-center">
-                        <button class="buttonModal" onclick=update()>Lưu thông tin</button>
+                        <button type="submit" class="buttonModal" onclick=update()>Lưu thông tin</button>
                     </div>
                 </form>
             </div>
@@ -144,6 +150,14 @@
                 <h4 class="fs-3 ">CALO</h4>
             </div>
         </div>
+    </div>
+</div>
+<div class="chartBMI m-5">
+    <div class="heading_user p-0">
+        <h4 class="fw-bold p-0">BIỂU ĐỒ BMI</h4>
+    </div>
+    <div class="chart">
+        <canvas id="canvas" style="background-color: white;"></canvas>
     </div>
 </div>
 <div class="courseBMI m-5">
@@ -272,14 +286,12 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-
 <script>
     let user = {{{ json user }}}
     renderInf();
     function renderInf() {
         document.querySelector("#username").textContent = `${user.name}` || '';
-        document.querySelector("#bmi").textContent = `${user.bmi}` || '';
+        document.querySelector("#bmi").textContent = `${user.BMIchange[user.BMIchange.length - 1]?.value || 0}` || '';
         document.querySelector("#height").textContent = `${user.height}`;
         document.querySelector("#weight").textContent = `${user.weight}`;
         document.querySelector("#age").textContent = `${user.age}`;
@@ -301,12 +313,45 @@
         });
         axios.post('/user', dataObject)
             .then(function (response) {
-                console.log(response.data);
                 user = response.data;
+                BMIchart(user);
                 renderInf();
             })
             .catch(function (error) {
                 console.error('Error:', error);
             });
     }
+
+    //CHART
+    const canvas = document.getElementById('canvas');
+    let chart;
+    function BMIchart(user){
+        if (chart) {
+            chart.destroy();
+        }
+        // Trích xuất mảng date và value từ mảng BMIchange
+        const bmiDates = user.BMIchange.map(entry => entry.date);
+        const bmiValues = user.BMIchange.map(entry => entry.value);
+
+        const data = {
+            labels: bmiDates,
+            datasets: [
+                {
+                    label: 'BMI',
+                    backgroundColor: 'pink',
+                    borderColor: 'pink',
+                    data: bmiValues,
+                    tension: 0.4,
+                }
+            ]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+        };
+
+        chart = new Chart(canvas, config);
+    }
+    BMIchart(user);
 </script>

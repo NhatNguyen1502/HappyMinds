@@ -7,8 +7,11 @@ class VideoController {
     show(req, res) {
         VideoService.show(req, res);
     }
-    viewcoach(req, res){
-        res.render("viewCoach")
+    viewcoach(req, res) {
+        VideoService.viewcoach_BMI_type(req, res);
+    }
+    viewcoach_body_parts(req, res) {
+        VideoService.viewcoach_body_parts(req, res);
     }
 }
 
