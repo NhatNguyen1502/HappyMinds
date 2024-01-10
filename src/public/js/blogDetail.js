@@ -1,11 +1,11 @@
-async function checkUserLiked(isLogin, likedList) {
+async function checkUserLiked(isLogin, likedList, id) {
     if (isLogin) {
         try {
             var response = await axios.get(
                 'http://localhost:3000/user/getUserByEmail',
             );
             var user = response.data;
-            var likeBtn = document.getElementById('likeBtn');
+            var likeBtn = document.getElementById(`like_${id}`);
             if (likedList.includes(user._id)) {
                 likeBtn.classList.toggle('redColor');
                 likeBtn.classList.toggle('whiteColor');
@@ -21,7 +21,7 @@ async function handleLikeBtn(isLogin, id, role) {
         $('#login_form').modal('show');
     } else {
         var user = await axios.get(`http://localhost:3000/user/getUserByEmail`);
-        var likeBtn = document.getElementById(`${id}`);
+        var likeBtn = document.getElementById(`like_${id}`);
         likeBtn.classList.toggle('redColor');
         likeBtn.classList.toggle('whiteColor');
         if (likeBtn.classList.contains('redColor')) {
@@ -116,7 +116,7 @@ async function renderReplyComments(parentId, isLogin) {
                             </div>
                             <div class="col d-flex align-items-center justify-content-between"> 
                                 <div class="row justify-content-between">
-                                    <label class="px-4 col btn btn-outline-danger ${bgColor} ${color}" id="${comment._id}" onclick="handleLikeBtn(${isLogin}, '${id}', 'comment')">
+                                    <label class="px-4 col btn btn-outline-danger ${bgColor} ${color}" id="like_${comment._id}" onclick="handleLikeBtn(${isLogin}, '${id}', 'comment')">
                                         <i class="bi bi-heart"></i>
                                     </label>
                                     <button class="px-4 ms-2 col btn btn-primary" onclick=showReplyCommentInp("${comment.parentId}")>
@@ -162,7 +162,6 @@ async function renderComments(blogId, isLogin) {
             var bgColor = '';
             var color = '';
             if (likedList.includes(user.data._id) && isLogin) {
-                console.log(user.data._id);
                 bgColor = 'redColor';
                 color = 'whiteColor';
             }
@@ -188,10 +187,10 @@ async function renderComments(blogId, isLogin) {
                         </div>
                         <div class="col d-flex align-items-center justify-content-between"> 
                             <div class="row justify-content-between">
-                                <label class="px-4 col btn btn-outline-danger ${bgColor} ${color}" id="${comment._id}" onclick="handleLikeBtn(${isLogin}, '${id}', 'comment')">
+                                <label class="px-4 col btn btn-outline-danger ${bgColor} ${color}" id="like_${comment._id}" onclick="handleLikeBtn(${isLogin}, '${id}', 'comment')">
                                     <i class="bi bi-heart"></i>
                                 </label>
-                                <button class="px-4 ms-2 col btn btn-primary" >
+                                <button class="px-4 ms-2 col btn btn-primary" onclick=showReplyCommentInp("${comment._id}")>
                                     <i class="bi bi-arrow-return-left"></i>
                                 </button>
                             </div>
@@ -214,6 +213,7 @@ async function renderComments(blogId, isLogin) {
 }
 
 function showReplyCommentInp(commentId) {
+    console.log(commentId);
     document.getElementById(commentId).innerHTML = `
         <div class="d-flex justify-content-start card mt-4 col-11 pb-1 mb-4">
             <div class="card-body ">
