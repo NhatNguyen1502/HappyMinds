@@ -169,6 +169,7 @@ async function renderResultAdd(event, formID, elementID) {
   form = document.getElementById(formID);
   id = form.querySelector('.idFood').value;
   grams = document.querySelector(elementID).value;
+  console.log(form, id, grams)
   var formData = new FormData(form);
   var data = [...formData];
   const dataObject = {};

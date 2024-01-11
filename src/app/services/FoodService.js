@@ -39,7 +39,7 @@ class FoodService {
                                     return food
                                 }
                             })
-                            console.log(foods)
+                            // console.log(foods)
                             res.render('food', { foods, isLogin, email, user, userMenu, foodLikedArray });
                         })
                         .catch((userMenuErr) => {
@@ -108,6 +108,7 @@ class FoodService {
                 { $push: { choseFoode: { idFood: idFood, grams: gramFood } } },
                 { new: true })
                 .then((user) => {
+                    console.log(user)
                     const choseFood = user.choseFoode;
                     const idFoodArray = choseFood.map(food => food.idFood);
                     const gramFoodAray = choseFood.map(food => food.grams);
@@ -392,7 +393,6 @@ class FoodService {
                     { $pull: { foodLike: food._id } },
                     { new: true })
                     .then((user) => {
-                        // console.log(user)
                         res.json({ food, isLogin, email });
                     })
                     .catch((err) => {
