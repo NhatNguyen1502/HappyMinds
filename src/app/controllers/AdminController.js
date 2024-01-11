@@ -1,9 +1,6 @@
 import AdminService from '../services/AdminService.js';
 
 class AdminController {
-    index(req, res) {
-        res.render('admin-user', { layout: 'admin.hbs', title: 'ADMIN-USER' });
-    }
     showFoods(req, res) {
         AdminService.showFoods(req, res);
     }

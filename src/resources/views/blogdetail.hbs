@@ -1,8 +1,10 @@
 {{!-- Title Tag SEO --}}
+
 <head>
     <title>https://happyminds.onrender.com/</title>
 </head>
 {{!-- Title Meta description Tag--}}
+
 <head>
     <meta name="description" content="
     {{!-- Content of desciption --}}
@@ -17,12 +19,10 @@
 <link rel="canonical" href="https://happyminds.onrender.com/">
 <div class="container bg-white">
     <div class="d-flex flex-row gap-5 d-flex align-items-center md-5">
-        <h4 class="fs-4 text-primary col-lg-3 col-md-3 mb-0">March 22,
-            2023</h4>
+        <h4 class="fs-4 text-primary col-lg-3 col-md-3 mb-0">{{blog.updatedAt}}</h4>
         <div class=" col-lg-8 col-md-8 d-flex justify-content-end">
             <img class="col-lg-4 col-1 mt-4 my-2" style="width: 48px; height: 45px" src="/img/Image.png" alt>
-            <p class="fs-5 m-0 d-flex align-items-center mt-4 mx-2">Benjamin
-                Gray</p>
+            <p class="fs-5 m-0 d-flex align-items-center mt-4 mx-2">{{blog.author}}</p>
         </div>
     </div>
 
@@ -42,15 +42,16 @@
     <div class="d-flex justify-content-between align-items-around">
         <div></div>
         <div></div>
-        <button class="btn btn-outline-danger d-flex align-items-center" onclick="likeFunction()">
-            <i class="bi bi-heart" id="like"></i>
-            <i class="bi bi-heart-fill" id="liked" style="display: none;"></i>
+        <button class="btn-outline-danger btn d-flex align-items-center" id="like_{{blog._id}}"
+            onclick="handleLikeBtn({{isLogin}}, '{{blog._id }}', 'blog')">
+            <i class="bi bi-heart"></i>
             <p class="m-0 ms-1"><b>Like</b></p>
         </button>
-        <button class="btn btn-outline-secondary d-flex align-items-center ">
+        <button class="btn btn-outline-secondary d-flex align-items-center " id="commentBtn">
             <i class="bi bi-chat-dots"></i>
-            <label class="ms-1 m-0" for="comment"><b>Comment</b></label>
+            <label class="ms-1 m-0" for="commentInp"><b>Comment</b></label>
         </button>
+
         <button class="btn btn-outline-primary d-flex align-items-center" data-bs-toggle="modal"
             data-bs-target="#exampleModal">
             <i class="bi bi-share me-1"></i>
@@ -59,9 +60,8 @@
         <div></div>
         <div></div>
     </div>
+    {{!-- Comment --}}
     <div class="row d-flex justify-content-center pb-4">
-        {{!-- Comment --}}
-
         <div class="card mt-4 col-9 pb-1 mb-4">
             <div class="card-body ">
                 <div class="row align-items-center">
@@ -74,94 +74,38 @@
                         <h6 class="mb-0 p-0">You</h6>
                     </div>
                     <div class="col-10"></div>
-                    <div class="col-auto pe-2" onclick="cancelComment()">
+                    <div class="col-auto pe-2" onclick=cancelComment("commentInp")>
                         <button class="btn btn-outline-danger">
                             <i class="bi bi-x-circle-fill"></i>
                         </button>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-10 pe-2" onclick="cancelComment()">
-                        <input type="text" class="form-control" name="comment" id="comment"
-                            placeholder="Type your comment . . .">
-                    </div>
-                    <label class="col btn btn-outline-secondary" onclick="cancelComment()">
-                        <i class="bi bi-upload"></i>
-                        <input type="file" class="custom-file-input" name="upload" id="fileInput"
-                            style="display: none;">
-                    </label>
-                    <button class="col btn btn-primary ms-2 me-2" onclick="">
-                        <i class="bi bi-send"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        {{!-- Fist comment --}}
-        <div class="card mt-4 col-9 pb-1 mb-4 " style="position: relative;">
-            <div class="card-body ">
-                <div class="row justify-content-start">
-                    <div class="col-auto">
-                        <img class="rounded-circle"
-                            src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
-                            alt="Profile Picture" style="width: 30px; height: 30px;">
-                    </div>
-                    <div class="col p-0">
-                        <h6 class="mb-0 p-0" id="name">Nhật</h6>
-                    </div>
-                </div>
-                <div class="row mt-3">
+                <form id="commentForm" class="row mt-3 commentForm">
                     <div class="col-10 pe-2">
-                        <input type="text" class="form-control" name="" id="commentInput" value="{{comment.content}}"
-                            readonly>
+                        <input type="text" class="form-control" name="content" id="commentInp"
+                            placeholder="Nhập bình luận của bạn . . .">
+                        <input type="hidden" id="hiddenInput" name="blogId" value="{{blog._id}}">
                     </div>
 
-                    <label class="col btn btn-outline-danger" id="iconHeart" onclick="changeHeart()">
-                        <i class="bi bi-heart"></i>
-                    </label>
-                    <button class="col btn btn-primary ms-2 me-2" onclick="replyCmt()">
-                        <i class="bi bi-arrow-return-left"></i>
-                    </button>
-                </div>
-            </div>
-            {{!-- Reply comemt --}}
-            <div class="col-12" id="replyCmt" style="position:relative;display: none;left:40px;">
-                <div class="d-flex justify-content-start card mt-4 col-11 pb-1 mb-4">
-                    <div class="card-body ">
-                        <div class="row justify-content-start">
-                            <div class="col-auto">
-                                <img class="rounded-circle"
-                                    src="https://i.pinimg.com/236x/38/a5/1f/38a51fbad2946fd87525c807d2a078e4.jpg"
-                                    alt="Profile Picture" style="width: 30px; height: 30px;">
-                            </div>
-                            <div class="col p-0">
-                                <h6 class="mb-0 p-0" id="name">You</h6>
-                            </div>
-                            <div class="col-auto pe-2" onclick="cancelComment()">
-                                <button class="btn btn-outline-danger">
-                                    <i class="bi bi-x-circle-fill"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-10 pe-2">
-                                <input type="text" class="form-control" name="reviewComment" id="inpReply"
-                                    placeholder="Type your review comment . . .">
-                            </div>
-
-                            <label class="col btn btn-outline-secondary pe-2">
+                    <div class="col d-flex align-items-center">
+                        <div class="row justify-content-between">
+                            <label class="col px-4 btn btn-outline-secondary">
                                 <i class="bi bi-upload"></i>
-                                <input type="file" class="custom-file-input" name="upload" id="fileInput"
+                                <input type="file" class="custom-file-input" name="imgUrl" id="fileInput"
                                     style="display: none;">
                             </label>
-                            <button class="col btn btn-primary ms-2 me-2">
+                            <button class="col px-4 btn btn-primary ms-2"
+                                onclick=submitComment({{isLogin}},"commentForm")>
                                 <i class="bi bi-send"></i>
                             </button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+    {{!-- commet list --}}
+    <div class="row d-flex justify-content-center pb-4" id="commentList"></div>
     {{!-- Model Share post --}}
     <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -186,53 +130,10 @@
     </div>
 </div>
 
+<script src="../../js/blogDetail.js"></script>
 <script>
-    function likeFunction() {
-        if (document.getElementById('like').style.display == 'none') {
-            document.getElementById('liked').style.display = 'block';
-        } else {
-            document.getElementById('like').style.display = 'block';
-        }
-    }
-    setTimeout(function () {
-        var link = window.location.href;
-        document.getElementById('linkPost').value = link; // Set value of 'linkPost' to the current URL
-    }, 200);
-
-    function sharePost() {
-        document.getElementById('linkPost').value = "Copied!"; // Set value of 'linkPost' to the current URL
-        var linkToCopy = window.location.href; // Link to share with the user
-        var textarea = document.createElement("textarea");
-        textarea.value = linkToCopy;
-        document.body.appendChild(textarea);
-        textarea.select();
-
-        try {
-            navigator.clipboard.writeText(textarea.value);
-        } catch (err) {
-            console.error("Unable to copy", err);
-        }
-        document.body.removeChild(textarea);
-    }
-
-    function replyCmt() {
-        document.getElementById('replyCmt').style.display = 'block';
-    }
-
-    function cancelComment() {
-        document.getElementById('comment').value = '';
-        document.getElementById('inpReply').value = '';
-        document.getElementById('replyCmt').style.display = 'none';
-    }
-
-    function changeHeart() {
-        var iconHeart = document.getElementById('iconHeart');
-        var checkIcon = "<label class='col btn btn-outline-danger' id='iconHeart' onclick='changeHeart()''><i class='bi bi-heart'></i></label>"
-        if (iconHeart.style.display == checkIcon) {
-            iconHeart.innerHTML = "<label class='col btn-outline-danger'><i class='bi bi-heart-fill'></i></label>";
-        } else {
-            iconHeart.innerHTML = "<label class='col btn-outline-danger'><i class='bi bi-heart'></i></label>";
-        }
-
-    }
+    var blogId = {{{ json blog._id }}};
+    var likedList = {{{ json blog.likedList }}};
+    checkUserLiked({{ isLogin }}, likedList, blogId);
+    renderComments(blogId, {{ isLogin }});
 </script>

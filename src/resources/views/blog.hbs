@@ -30,34 +30,14 @@
                 style="background-color: #fd0054; color: white;">New Post</button>
         </div>
     </div>
-    <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 pt-4">
-        {{#each blogs}}
-        <div class="col pb-3">
-            <div class="card">
-                <a href="/blogDetail/{{this.slug}}" class="text-decoration-none text-reset">
-                    <img src="{{this.image}}" class="card-img-top" style="height: 300px;" alt="{{this.image}}">
-                    <div class="card-body pb-0">
-                        <h5 class="card-title">{{this.title}}</h5>
-                        <div class=" col-lg-8 d-flex justify-content-start">
-                            <img class="col-lg-4 col-1 my-2" style="width: 30px; height: 30px" src="/img/Image.png" alt>
-                            <p class="m-0 d-flex align-items-center mx-2" style="font-size:medium;">{{this.author}}</p>
-                        </div>
-                        <p class="content-text-blog">{{this.content}}</p>
-                        <div class="d-flex justify-content-between">
-                            <p class="card-text" style="font-size:14px;">FEB 12, 2020</p>
-                            <p class="card-text ">
-                                <a href="/blog/blogDetail/{{this.slug}}" class="text-danger fw-medium fw-semibold"
-                                    style="text-decoration: none">MORE
-                                    INFO<img class="pb-1" src="/img/goRight.png" alt=""></a>
-                            </p>
-                        </div>
-
-                    </div>
-                </a>
-            </div>
-        </div>
-        {{/each}}
-    </div>
+    <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 g-4 pt-4" id="blogPanigation"></div>
+    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content col-md-10" style="border-radius: 20px 20px 20px 20px;">
+                <div class="modal-header d-flex justify-content-center"
+                    style="background-color:rgba(253, 0, 84, 1); border-radius: 20px 20px 0 0;">
+                    <h5 class="modal-title text-white" id="exampleModalLabel">What's your mind
+                        ?</h5>
 
     {{!-- New post --}}
     <form action="blog/create" method="post">
@@ -103,21 +83,16 @@
         </div>
     </form>
 </div>
-<center>
+<center id="btn_controller">
     <div class="row mb-3">
         <div class="col d-flex justify-content-end pe-0 m-0">
-            <a href="/blog?page={{subtract currentPage 1}}" class="">
-                <button type="button" class="btn btn-danger"><i class="bi bi-caret-left-fill"></i></button>
-            </a>
+            <button type="button" class="btn btn-success" id="currentPage_btn_left"><i class="bi bi-caret-left-fill"></i></button>
         </div>
         <div class="col-1 d-flex justify-content-center">
-            <span
-                class="input-group-text d-flex align-items-center justify-content-center w-100 p-0 fs-5">{{currentPage}}/{{totalPages}}</span>
+            <span class="input-group-text d-flex align-items-center justify-content-center w-100 p-0 fs-5" id="panigation">1/{{totalPages}}</span>
         </div>
         <div class="col d-flex justify-content-between ps-0">
-            <a href="/blog?page={{sum currentPage 1}}" class="">
-                <button class="btn btn-success"><i class="bi bi-caret-right-fill"></i></button>
-            </a>
+            <button class="btn btn-success" id="currentPage_btn_right"><i class="bi bi-caret-right-fill"></i></button>
         </div>
     </div>
 </center>
@@ -165,4 +140,9 @@
           })
           .catch((err) => console.log(err));
     });
+</script>
+<script src="/js/blog.js"></script>
+<script>
+    let allBlogs = {{{ json blogs }}};
+    renderBlogs(allBlogs);
 </script>

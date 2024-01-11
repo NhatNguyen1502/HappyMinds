@@ -5,6 +5,7 @@ import videoRouter from './video.js';
 import foodcaloriesRouter from './foodcalories.js';
 import blogRouter from './blog.js';
 import videoCarouselRouter from './videoCarousel.js';
+import commentRouter from './comment.js';
 
 export function route(app) {
     app.use('/homepage', homepageRouter);
@@ -22,4 +23,6 @@ export function route(app) {
     app.use('/admin', adminRouter);
 
     app.use('/user', userRouter);
+
+    app.use('/comment', commentRouter);
 }

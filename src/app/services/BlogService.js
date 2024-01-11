@@ -1,6 +1,6 @@
 import blog from '../models/Blog.js';
 import Comment from '../models/Comment.js';
-import removeVietnameseTones from '../../public/js/blog.js';
+import { removeVietnameseTones } from '../../public/js/blog.js';
 import { Slug } from '../../public/js/blog.js';
 
 import {
@@ -66,30 +66,30 @@ class BlogService {
             });
     }
 
-    createBlog = async (req, res) => {
-        try {
-            let formData = req.body;
-            let oldSlug = removeVietnameseTones(req.body.title);
-            let newSlug = Slug.generateSlug(oldSlug);
-            let checkSlug = await blog.countDocuments({ slug: newSlug });
-            if (checkSlug > 0) {
-                let i = 1;
-                while (checkSlug > 0) {
-                    oldSlug += "-" + i++;
-                    newSlug = Slug.generateSlug(oldSlug);
-                    checkSlug = await blog.countDocuments({ slug: newSlug });
-                }
-            }
+    // createBlog = async (req, res) => {
+    //     try {
+    //         let formData = req.body;
+    //         let oldSlug = removeVietnameseTones(req.body.title);
+    //         let newSlug = Slug.generateSlug(oldSlug);
+    //         let checkSlug = await blog.countDocuments({ slug: newSlug });
+    //         if (checkSlug > 0) {
+    //             let i = 1;
+    //             while (checkSlug > 0) {
+    //                 oldSlug += "-" + i++;
+    //                 newSlug = Slug.generateSlug(oldSlug);
+    //                 checkSlug = await blog.countDocuments({ slug: newSlug });
+    //             }
+    //         }
 
-            formData.slug = newSlug;
-            console.log(formData.slug);
-            const saveBlog = await blog.create(formData);
-            await saveBlog.save();
-            res.redirect("/blog");
-        } catch (err) {
-            console.log(err);
-            res.status(500).send("Internal Server Error: " + err.message);
-        }
-    };
+    //         formData.slug = newSlug;
+    //         console.log(formData.slug);
+    //         const saveBlog = await blog.create(formData);
+    //         await saveBlog.save();
+    //         res.redirect("/blog");
+    //     } catch (err) {
+    //         console.log(err);
+    //         res.status(500).send("Internal Server Error: " + err.message);
+    //     }
+    // };
 }
 export default new BlogService();

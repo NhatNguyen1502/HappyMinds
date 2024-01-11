@@ -9,6 +9,7 @@ const Blog = new Schema(
         image: { type: String },
         slug: { type: String },
         author: { type: String },
+        likedList: { type: [] },
     },
     {
         timestamps: true,

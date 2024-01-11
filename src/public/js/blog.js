@@ -1,44 +1,94 @@
-function generateSlug(title) {
-    let slug = title.toLowerCase();
-    let newSlug = '';
-    for (let i = 0; i < slug.length; i++) {
-        const char = slug[i];
-        if (/[^a-z0-9]/.test(char)) {
-            newSlug += '-';
+function renderBlogs(blog) {
+    let content = '';
+    blog.forEach(
+        (element) =>
+            (content += `
+        <div class="col pb-3">
+        <div class="card">
+            <a href="blog/blogDetail/${element.slug}">
+                <img src="${element.image}" class="card-img-top" style="height: 300px;" alt="...">
+            </a>
+            <div class="card-body pb-0">
+                <h5 class="card-title">${element.title}</h5>
+                <div class=" col-lg-8 d-flex justify-content-start">
+                    <img class="col-lg-4 col-1 my-2" style="width: 30px; height: 30px" src="/img/Image.png" alt>
+                    <p class="m-0 d-flex align-items-center mx-2" style="font-size:medium;">Benjamin Gray</p>
+                </div>
+                <p class="content-text-blog">${element.content}</p>
+                <div class="d-flex justify-content-between">
+                    <p class="card-text" style="font-size:14px;">FEB 12, 2020</p>
+                    <p class="card-text ">
+                        <a href="/blog/blogDetail/${element.slug}" class="text-danger fw-medium fw-semibold"
+                            style="text-decoration: none">MORE
+                            INFO<img class="pb-1" src="/img/goRight.png" alt=""></a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    `),
+    );
+    document.getElementById('blogPanigation').innerHTML = content;
+}
+
+document
+    .getElementById('currentPage_btn_right')
+    .addEventListener('click', async function () {
+        const currentValue = parseInt(getBeforeSlashValue());
+        let nextPage;
+
+        if (currentValue >= parseInt(getAfterSlashValue())) {
+            addToValueBeforeSlash(parseInt(getAfterSlashValue()));
         } else {
-            newSlug += char;
+            try {
+                nextPage = currentValue + 1;
+                const response = await axios.get(
+                    `blog/showPanigation?page=${nextPage}`,
+                );
+                renderBlogs(response.data.blogs);
+                addToValueBeforeSlash(nextPage);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         }
-    }
-    newSlug = newSlug.replace(/^-+|-+$/g, '');
-    newSlug = newSlug.replace(/-+/g, '-');
-    newSlug = newSlug.replace(/\s+/g, '-');
-    return newSlug;
+    });
+
+document
+    .getElementById('currentPage_btn_left')
+    .addEventListener('click', async function () {
+        const currentValue = parseInt(getBeforeSlashValue());
+        let prevPage;
+
+        if (currentValue <= 1) {
+            addToValueBeforeSlash(1);
+        } else {
+            try {
+                prevPage = currentValue - 1;
+                const response = await axios.get(
+                    `blog/showPanigation?page=${prevPage}`,
+                );
+                renderBlogs(response.data.blogs);
+                addToValueBeforeSlash(prevPage);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+    });
+
+function addToValueBeforeSlash(newValue) {
+    const mySpan = document.getElementById('panigation');
+    const parts = mySpan.innerText.split('/');
+    parts[0] = newValue;
+    mySpan.innerText = parts.join('/');
 }
 
-function removeVietnameseTones(str) {
-    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-    str = str.replace(/đ/g, "d");
-    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-    str = str.replace(/Đ/g, "D");
-    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, "");
-    str = str.replace(/\u02C6|\u0306|\u031B/g, "");
-    str = str.replace(/ + /g, " ");
-    str = str.trim();
-    str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
-    return str;
+function getBeforeSlashValue() {
+    const mySpan = document.getElementById('panigation');
+    return parseInt(mySpan.innerText.split('/')[0]);
 }
 
-export const Slug = {
-    generateSlug
+function getAfterSlashValue() {
+    const mySpan = document.getElementById('panigation');
+    return parseInt(mySpan.innerText.split('/')[1]);
 }
-export default removeVietnameseTones;
