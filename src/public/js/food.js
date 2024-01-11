@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function renderFoodList(food) {
     let content = '';
-    foods.forEach(
+    food.forEach(
         (element) =>
             (content += `
             <div class="rowTbl d-flex justify-content-start p-0 mb-1 text-center">
@@ -280,7 +280,7 @@ document
                 const response = await axios.get(
                     `food/showPanigation?page=${prevPage}`,
                 );
-                renderFoods(response.data.foods);
+                renderFood(response.data.foods);
                 addToValueBeforeSlash(prevPage);
             } catch (error) {
                 console.error('Error fetching data:', error);

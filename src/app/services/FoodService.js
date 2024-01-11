@@ -68,22 +68,22 @@ class FoodService {
         //     .catch((err) => {
         //         res.status(400).json({ err: 'ERROR!' });
         //     });
+        // =============================================================================================
 
-        const itemsPerPage = 5;
 
-        Food.countDocuments().then((count) => {
-            const totalPages = Math.ceil(count / itemsPerPage);
+        // Food.countDocuments().then((count) => {
+        //     const totalPages = Math.ceil(count / itemsPerPage);
 
-            Food.find({})
-                .limit(itemsPerPage)
-                .then((foods) => {
-                    foods = multipleMongooesToOject(foods);
-                    res.render('food', { foods, isLogin, totalPages });
-                })
-                .catch((err) => {
-                    res.status(500).json({ err: 'ERROR!' });
-                });
-        });
+        //     Food.find({})
+        //         .limit(itemsPerPage)
+        //         .then((foods) => {
+        //             foods = multipleMongooesToOject(foods);
+        //             res.render('food', { foods, isLogin, totalPages });
+        //         })
+        //         .catch((err) => {
+        //             res.status(500).json({ err: 'ERROR!' });
+        //         });
+        // });
     }
 
     showPanigation(req, res) {
@@ -313,7 +313,7 @@ class FoodService {
         });
     }
 
-        filterCategory(req, res) {
+    filterCategory(req, res) {
         let isLogin = false;
         let email;
         let category = req.query.category;
