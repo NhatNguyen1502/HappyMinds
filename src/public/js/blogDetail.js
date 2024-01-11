@@ -68,8 +68,8 @@ async function submitComment(isLogin, formId) {
         formData.append('userId', user._id);
         await axios.post('http://localhost:3000/comment/', formData);
         $('#commentInp')[0].value = '';
-        if (formId == 'commentForm') renderComments(`${blogId}`);
-        else renderReplyComments(form.parentId.value);
+        if (formId == 'commentForm') renderComments(`${blogId}`, isLogin);
+        else renderReplyComments(form.parentId.value, isLogin);
     }
 }
 
@@ -86,7 +86,7 @@ async function renderReplyComments(parentId, isLogin) {
             var ownerName =
                 ownerComment.data.name == 'CastError'
                     ? 'Người dùng HappyMinds'
-                    : user.data.name;
+                    : ownerComment.data.name;
             var id = comment._id;
             var likedList = comment.likedList;
             var bgColor = '';
@@ -120,7 +120,7 @@ async function renderReplyComments(parentId, isLogin) {
                                     <label class="px-4 col btn btn-outline-danger ${bgColor} ${color}" id="like_${comment._id}" onclick="handleLikeBtn(${isLogin}, '${id}', 'comment')">
                                         <i class="bi bi-heart"></i>
                                     </label>
-                                    <button class="px-4 ms-2 col btn btn-primary" onclick=showReplyCommentInp("${comment.parentId}")>
+                                    <button class="px-4 ms-2 col btn btn-primary" onclick=showReplyCommentInp(${isLogin},'${parentId}')>
                                         <i class="bi bi-arrow-return-left"></i>
                                     </button>
                                 </div>
@@ -191,7 +191,7 @@ async function renderComments(blogId, isLogin) {
                                 <label class="px-4 col btn btn-outline-danger ${bgColor} ${color}" id="like_${commentId}" onclick="handleLikeBtn(${isLogin}, '${commentId}', 'comment')">
                                     <i class="bi bi-heart"></i>
                                 </label>
-                                <button class="px-4 ms-2 col btn btn-primary" onclick=showReplyCommentInp("${commentId}")>
+                                <button class="px-4 ms-2 col btn btn-primary" onclick="showReplyCommentInp(${isLogin}, '${commentId}')">
                                     <i class="bi bi-arrow-return-left"></i>
                                 </button>
                             </div>
@@ -213,7 +213,7 @@ async function renderComments(blogId, isLogin) {
     }
 }
 
-function showReplyCommentInp(commentId) {
+function showReplyCommentInp(isLogin, commentId) {
     console.log(commentId);
     document.getElementById(commentId).innerHTML = `
         <div class="d-flex justify-content-start card mt-4 col-11 pb-1 mb-4">
@@ -244,7 +244,7 @@ function showReplyCommentInp(commentId) {
                         <input type="file" class="custom-file-input" name="upload" id="fileInput"
                             style="display: none;">
                     </label>
-                    <button class="col btn btn-primary ms-2 me-2" onclick=submitComment({{isLogin}},"replyCommentForm")> 
+                    <button class="col btn btn-primary ms-2 me-2" onclick=submitComment(${isLogin},"replyCommentForm")> 
                         <i class="bi bi-send"></i>
                     </button>
                 </form>
