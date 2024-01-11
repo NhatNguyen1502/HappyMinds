@@ -5,6 +5,7 @@ async function checkUserLiked(isLogin, likedList, id) {
                 'http://localhost:3000/user/getUserByEmail',
             );
             var user = response.data;
+            window.user = user;
             var likeBtn = document.getElementById(`like_${id}`);
             if (likedList.includes(user._id)) {
                 likeBtn.classList.toggle('redColor');
@@ -20,23 +21,24 @@ async function handleLikeBtn(isLogin, id, role) {
     if (!isLogin) {
         $('#login_form').modal('show');
     } else {
-        var user = await axios.get(`http://localhost:3000/user/getUserByEmail`);
         var likeBtn = document.getElementById(`like_${id}`);
         likeBtn.classList.toggle('redColor');
         likeBtn.classList.toggle('whiteColor');
         if (likeBtn.classList.contains('redColor')) {
             try {
                 data = await axios.patch(
-                    `http://localhost:3000/${role}/addLike?${role}Id=${id}&userId=${user.data._id}`,
+                    `http://localhost:3000/${role}/addLike?${role}Id=${id}&userId=${user._id}`,
                 );
+                console.log('Like successful!');
             } catch (err) {
                 console.log(err);
             }
         } else {
             try {
                 data = await axios.patch(
-                    `http://localhost:3000/${role}/removeLike?${role}Id=${id}&userId=${user.data._id}`,
+                    `http://localhost:3000/${role}/removeLike?${role}Id=${id}&userId=${user._id}`,
                 );
+                console.log('Unlike successful!');
             } catch (err) {
                 console.log(err);
             }
@@ -61,10 +63,9 @@ async function submitComment(isLogin, formId) {
     if (!isLogin) {
         $('#login_form').modal('show');
     } else {
-        var user = await axios.get(`http://localhost:3000/user/getUserByEmail`);
         var form = $(`#${formId}`)[0];
         var formData = new FormData(form);
-        formData.append('userId', user.data._id);
+        formData.append('userId', user._id);
         await axios.post('http://localhost:3000/comment/', formData);
         $('#commentInp')[0].value = '';
         if (formId == 'commentForm') renderComments(`${blogId}`);
@@ -79,18 +80,18 @@ async function renderReplyComments(parentId, isLogin) {
         );
         var comments = data.data;
         var promises = comments.map(async (comment) => {
-            var user = await axios.get(
+            var ownerComment = await axios.get(
                 `http://localhost:3000/user/getById?id=${comment.userId}`,
             );
-            var userName =
-                user.data.name == 'CastError'
+            var ownerName =
+                ownerComment.data.name == 'CastError'
                     ? 'Người dùng HappyMinds'
                     : user.data.name;
             var id = comment._id;
             var likedList = comment.likedList;
             var bgColor = '';
             var color = '';
-            if (likedList.includes(user.data._id) && isLogin) {
+            if (likedList.includes(ownerComment.data._id) && isLogin) {
                 bgColor = 'redColor';
                 color = 'whiteColor';
             }
@@ -104,7 +105,7 @@ async function renderReplyComments(parentId, isLogin) {
                                     alt="Profile Picture" style="width: 30px; height: 30px;">
                             </div>
                             <div class="col p-0">
-                                <h6 class="mb-0 p-0" id="name">${userName}</h6>
+                                <h6 class="mb-0 p-0" id="name">${ownerName}</h6>
                             </div>
                         </div>
                         <div class="row mt-3">
@@ -147,21 +148,21 @@ async function renderComments(blogId, isLogin) {
         );
         var comments = data.data;
         var promises = comments.map(async (comment) => {
-            var user = await axios.get(
+            var ownerComment = await axios.get(
                 `http://localhost:3000/user/getById?id=${comment.userId}`,
             );
-            var userName =
-                user.data.name == 'CastError'
+            var ownerName =
+                ownerComment.data.name == 'CastError'
                     ? 'Người dùng HappyMinds'
-                    : user.data.name;
+                    : ownerComment.data.name;
             var responseText = comment.responseTimes
                 ? `Hiển thị thêm ${comment.responseTimes} lượt phản hồi`
                 : '';
-            var id = comment._id;
+            var commentId = comment._id;
             var likedList = comment.likedList;
             var bgColor = '';
             var color = '';
-            if (likedList.includes(user.data._id) && isLogin) {
+            if (isLogin && likedList.includes(user?._id)) {
                 bgColor = 'redColor';
                 color = 'whiteColor';
             }
@@ -175,31 +176,31 @@ async function renderComments(blogId, isLogin) {
                                 alt="Profile Picture" style="width: 30px; height: 30px;">
                         </div>
                         <div class="col p-0">
-                            <h6 class="mb-0 p-0" id="name">${userName}</h6>
+                            <h6 class="mb-0 p-0" id="name">${ownerName}</h6>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-10 pe-2">
                             <div>${comment.content}</div>
-                            <div id="img${comment._id}">
+                            <div id="img${commentId}">
                                 <img class="col-lg-12m col-12 mb-lg-12 rounded-2 " src="${comment.imgUrl}" style="width: 200px">
                             </div>
                         </div>
                         <div class="col d-flex align-items-center justify-content-between"> 
                             <div class="row justify-content-between">
-                                <label class="px-4 col btn btn-outline-danger ${bgColor} ${color}" id="like_${comment._id}" onclick="handleLikeBtn(${isLogin}, '${id}', 'comment')">
+                                <label class="px-4 col btn btn-outline-danger ${bgColor} ${color}" id="like_${commentId}" onclick="handleLikeBtn(${isLogin}, '${commentId}', 'comment')">
                                     <i class="bi bi-heart"></i>
                                 </label>
-                                <button class="px-4 ms-2 col btn btn-primary" onclick=showReplyCommentInp("${comment._id}")>
+                                <button class="px-4 ms-2 col btn btn-primary" onclick=showReplyCommentInp("${commentId}")>
                                     <i class="bi bi-arrow-return-left"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div style="position:relative;left:40px;" id="replyCommentList${comment._id}">
-                    <b onmouseover="this.style.cursor='pointer'" onmouseout="this.style.cursor='default'" onclick="renderReplyComments('${comment._id}', ${isLogin})">${responseText}</b>
-                    <div class="col-12 replyCommentInp" id="${comment._id}" ></div>
+                <div style="position:relative;left:40px;" id="replyCommentList${commentId}">
+                    <b onmouseover="this.style.cursor='pointer'" onmouseout="this.style.cursor='default'" onclick="renderReplyComments('${commentId}', ${isLogin})">${responseText}</b>
+                    <div class="col-12 replyCommentInp" id="${commentId}" ></div>
                 </div>
             </div>
         `;
