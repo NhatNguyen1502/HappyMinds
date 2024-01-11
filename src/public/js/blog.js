@@ -1,61 +1,3 @@
-document.getElementById('inpImg').addEventListener("change", () => uploadImageToCloudinary());
-
-async function uploadImageToCloudinary() {
-    const cloud_name = "duas1juqs";
-    const upload_preset = "pnvimage";
-    const fileInput = document.getElementById('inpImg');
-
-    document.getElementById('uploading_text').innerText = "Uploading ...";
-    document.getElementById('uploadImg').style.display = 'none';
-
-    const file = fileInput.files[0];
-    console.log(file);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", upload_preset);
-
-    const options = {
-        method: "POST",
-        body: formData,
-    };
-
-    try {
-        const res = await fetch(
-            `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
-            options
-        );
-        const data = await res.json();
-        document.getElementById('uploadImg').style.display = 'block';
-        let linkImg = document.getElementById('image');
-        linkImg.src = data.secure_url;
-        console.log(linkImg);
-        uploading_text.innerHTML = `
-        <br />
-        <img style="max-width:300px" src="${data.secure_url}" alt="${data.secure_url}">
-        </center>`;
-    } catch (err) {
-        return console.log(err);
-    }
-}
-
-// var body = {
-//     userName: 'Fred',
-//     userEmail: 'Flintstone@gmail.com'
-// }
-
-// axios({
-//     method: 'post',
-//     url: '/blog',
-//     data: body
-// })
-//     .then(function (response) {
-//         console.log(response);
-//     })
-//     .catch(function (error) {
-//         console.log(error);
-//     });
-
 function generateSlug(title) {
     let slug = title.toLowerCase();
     let newSlug = '';
@@ -96,11 +38,7 @@ function removeVietnameseTones(str) {
     return str;
 }
 
-// export const link = {
-//     uploadImageToCloudinary, linkImg
-// }
-
-// export const Slug = {
-//     generateSlug
-// }
-export { removeVietnameseTones  };
+export const Slug = {
+    generateSlug
+}
+export default removeVietnameseTones;
