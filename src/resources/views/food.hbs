@@ -145,8 +145,7 @@
 
 <script>
   let food = {{{ json foods }}};
-  console.log(food)
-  renderFoods(food);
+  renderFoodList(food);
   let userMenu = {{isLogin}} ? JSON.parse('{{{ json userMenu }}}') : [];  
   if(userMenu != []){
     renderUserMenu(userMenu)

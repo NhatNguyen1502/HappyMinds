@@ -63,9 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
 )
  
 
-function renderFoods(food) {
+function renderFoodList(food) {
     let content = '';
-    food.forEach(
+    foods.forEach(
         (element) =>
             (content += `
             <div class="rowTbl d-flex justify-content-start p-0 mb-1 text-center">
@@ -159,7 +159,7 @@ async function renderResultSearch() {
 
 async function renderResultSort(keyword) {
   await axios.get(`food/sort?keyword=${keyword}`).then((res) => {
-      renderFoods(res.data.foods);
+      renderFoodList(res.data.foods);
       // console.log(res.data.foods)
   });
 }
@@ -180,7 +180,7 @@ async function renderResultAdd(event, formID, elementID) {
   await axios.post(`food/add`, dataObject)
   .then((res) => {
     console.log("ngon rooif ")
-    renderFoods(res.data.foods);
+    renderFoodList(res.data.foods);
     renderUserMenu(res.data.userMenu);
   });
 }
@@ -194,13 +194,13 @@ async function removeFromMenu(idFood) {
 
 async function renderResultFavourite(){
   await axios.get(`food/filterFvr`).then((res) => {
-    renderFoods(res.data.foods);
+    renderFoodList(res.data.foods);
   });
 }
 
 async function renderResultCategory(keyword){
   await axios.get(`food/filterCtgr?category=${keyword}`).then((res) => {
-    renderFoods(res.data.foods);
+    renderFoodList(res.data.foods);
   });
 }
 
@@ -213,7 +213,7 @@ async function renderResultFilter(){
   let ctgrKeyword = document.getElementById('categoryFood').getAttribute('data-keyword');
   console.log(fvrStatus, engStatus, ctgrKeyword)
   await axios.get(`food/ultimateFilter?fvr=${fvrStatus}&eng=${engStatus}&keyword=${ctgrKeyword}`).then((res) => {
-    renderFoods(res.data.foods);
+    renderFoodList(res.data.foods);
   });
 }
 
