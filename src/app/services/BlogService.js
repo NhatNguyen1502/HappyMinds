@@ -1,7 +1,7 @@
-import blog from '../models/Blog.js';
+import Blog from '../models/Blog.js'
 import Comment from '../models/Comment.js';
-import { removeVietnameseTones } from '../../public/js/blog.js';
-import { Slug } from '../../public/js/blog.js';
+import removeVietnameseTones from '../../util/generateSlug.js';
+import { Slug } from '../../util/generateSlug.js';
 
 import {
     multipleMongooesToOject,
@@ -10,86 +10,125 @@ import {
 
 class BlogService {
     index(req, res) {
-        let isLogin = false;
-        if (req.isAuthenticated()) {
-            isLogin = true;
-        }
-
-        let currentPage = parseInt(req.query.page) || 1;
+        let isLogin = req.isAuthenticated();
         const itemsPerPage = 6;
 
-        blog.countDocuments().then((count) => {
+        Blog.countDocuments().then((count) => {
             const totalPages = Math.ceil(count / itemsPerPage);
 
-            if (currentPage <= 0) {
-                currentPage = 1;
-            }
-            else if (currentPage > totalPages) {
-                currentPage = totalPages;
-            }
-
-            blog.find({})
-                .skip((currentPage - 1) * itemsPerPage)
+            Blog.find({})
                 .limit(itemsPerPage)
                 .then((blogs) => {
                     blogs = multipleMongooesToOject(blogs);
-
-                    res.render('blog', { blogs, isLogin, currentPage, totalPages });
+                    res.render('blog', { blogs, isLogin, totalPages });
                 })
                 .catch((err) => {
-                    res.status(400).json({ err: 'ERROR!' });
+                    res.status(500).json({ err: 'ERROR!' });
                 });
         });
     }
 
-    showDetail(req, res) {
-        let isLogin = false;
-        if (req.isAuthenticated()) {
-            isLogin = true;
-        }
-        blog.findOne({ slug: req.params.slug })
-            .then((blog) => {
-                console.log("id = ", blog._id);
-                Comment.findOne({ idBlog: blog._id })
-                    .then(comment => {
-                        console.log("comment = ", comment);
-                        res.render('blogDetail', {
-                            blog: mongooesToOject(blog),
-                            isLogin,
-                            comment: mongooesToOject(comment),
-                        });
-                    })
-            })
-            .catch((err) => {
+    showPanigation(req, res) {
+        const currentPage = parseInt(req.query.page);
+        const itemsPerPage = 6;
 
-                res.status(400).json({ err: 'ERROR!' });
-            });
+        Blog.countDocuments().then((count) => {
+            const totalPages = Math.ceil(count / itemsPerPage);
+
+            Blog.find({})
+                .lean()
+                .skip((currentPage - 1) * itemsPerPage)
+                .limit(itemsPerPage)
+                .then((blogs) => {
+                    res.json({ blogs, totalPages });
+                })
+                .catch((err) => {
+                    res.status(500).json({ err: 'ERROR!' });
+                });
+        });
     }
 
-    // createBlog = async (req, res) => {
-    //     try {
-    //         let formData = req.body;
-    //         let oldSlug = removeVietnameseTones(req.body.title);
-    //         let newSlug = Slug.generateSlug(oldSlug);
-    //         let checkSlug = await blog.countDocuments({ slug: newSlug });
-    //         if (checkSlug > 0) {
-    //             let i = 1;
-    //             while (checkSlug > 0) {
-    //                 oldSlug += "-" + i++;
-    //                 newSlug = Slug.generateSlug(oldSlug);
-    //                 checkSlug = await blog.countDocuments({ slug: newSlug });
-    //             }
-    //         }
+    async showDetail(req, res) {
+        const isLogin = req.isAuthenticated() || false;
+        const blog = await Blog.findOne({ slug: req.params.slug }).lean();
+        res.render('blogDetail', {
+            blog,
+            isLogin,
+        });
+    }
 
-    //         formData.slug = newSlug;
-    //         console.log(formData.slug);
-    //         const saveBlog = await blog.create(formData);
-    //         await saveBlog.save();
-    //         res.redirect("/blog");
-    //     } catch (err) {
-    //         console.log(err);
-    //         res.status(500).send("Internal Server Error: " + err.message);
-    //     }
-    // };
+    async addLike(req, res) {
+        const blogId = req.query.blogId;
+        const userId = req.query.userId;
+        const userExists = await Blog.exists({
+            _id: blogId,
+            likedList: userId,
+        });
+        if (userExists) {
+            return res
+                .status(400)
+                .json({ error: 'User đã tồn tại trong likedList' });
+        } else {
+            try {
+                await Blog.findOneAndUpdate(
+                    { _id: blogId },
+                    { $push: { likedList: userId } },
+                    { new: true },
+                );
+                res.status(200).json('Like successfull!');
+            } catch (error) {
+                res.status(500).json('Like fail!');
+            }
+        }
+    }
+
+    async removeLike(req, res) {
+        const blogId = req.query.blogId;
+        const userId = req.query.userId;
+        try {
+            await Blog.findOneAndUpdate(
+                { _id: blogId },
+                { $pull: { likedList: userId } },
+                { new: true },
+            );
+            res.status(200).json('Unlike successfull! ');
+        } catch (error) {
+            res.status(500).json('Unlike fail!');
+        }
+    }
+
+    createBlog(isLogin) {
+        if (!isLogin) {
+            $('#login_form').modal('show');
+        } else {
+        }
+        createBlogs = async (req, res) => {
+            try {
+                let formData = req.body;
+                console.log(formData);
+                let oldSlug = removeVietnameseTones(req.body.title);
+                let newSlug = Slug.generateSlug(oldSlug);
+                let checkSlug = await Blog.countDocuments({ slug: newSlug });
+
+                if (checkSlug > 0) {
+                    let i = 1;
+                    while (checkSlug > 0) {
+                        oldSlug += "-" + i++;
+                        newSlug = Slug.generateSlug(oldSlug);
+                        checkSlug = await Blog.countDocuments({ slug: newSlug });
+                    }
+                }
+
+                formData.slug = newSlug;
+                console.log(formData.slug);
+                const saveBlog = await Blog.create(formData);
+                await saveBlog.save();
+                res.redirect("/blog");
+            } catch (err) {
+                console.log(err);
+                res.status(500).send("Internal Server Error: " + err.message);
+            }
+        }
+    }
 }
 export default new BlogService();
