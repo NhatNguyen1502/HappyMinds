@@ -27,6 +27,7 @@ class BlogService {
                 });
         });
     }
+    J;
 
     showPanigation(req, res) {
         const currentPage = parseInt(req.query.page);
