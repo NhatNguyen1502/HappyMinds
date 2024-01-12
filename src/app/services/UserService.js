@@ -227,6 +227,8 @@ class UserService {
                 console.log('loi roi');
             });
     }
+
+    
 }
 
 function findBestSubarrays(videos, targetCalories) {

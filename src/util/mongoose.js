@@ -5,5 +5,4 @@ function multipleMongooesToOject(mongooses) {
 function mongooesToOject(mongoose) {
     return mongoose ? mongoose.toObject() : mongoose;
 }
-
 export { multipleMongooesToOject, mongooesToOject };
