@@ -116,7 +116,8 @@ function renderUserMenu(userMenu) {
     </tr>
     `;
     count += 1;
-    totalCalories += item.totalGrams;
+    totalCalories += parseInt(item.totalGrams);
+    console.log(totalCalories)
   });
   document.getElementById('tblMenuUser').innerHTML= contentMenu;
   document.getElementById('menuItem').textContent= count;
@@ -153,7 +154,7 @@ async function sortToggle() {
 async function renderResultSearch() {
     keyword = document.querySelector('#search').value;
     await axios.get(`food/search?keyword=${keyword}`).then((res) => {
-        renderFoods(res.data.foods);
+        renderFoodList(res.data.foods);
     });
 }
 
@@ -223,8 +224,6 @@ async function renderResultFilter(){
 
 async function addToFavourite(idFood) {
   await axios.post(`food/like?id=${idFood}`).then((res) => {
-    // console.log("add");
-    // console.log(res.data.food)
   });
 }
 
@@ -258,7 +257,7 @@ document
                 const response = await axios.get(
                     `food/showPanigation?page=${nextPage}`,
                 );
-                renderFoods(response.data.foods);
+                renderFoodList(response.data.foods);
                 addToValueBeforeSlash(nextPage);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -280,7 +279,7 @@ document
                 const response = await axios.get(
                     `food/showPanigation?page=${prevPage}`,
                 );
-                renderFood(response.data.foods);
+                renderFoodList(response.data.foods);
                 addToValueBeforeSlash(prevPage);
             } catch (error) {
                 console.error('Error fetching data:', error);

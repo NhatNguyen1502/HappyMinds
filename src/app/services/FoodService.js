@@ -6,103 +6,152 @@ class FoodService {
     index(req, res) {
         let isLogin = false;
         let email;
+        let itemsPerPage = 5;
         if (req.isAuthenticated()) {
             isLogin = true;
             email = req.user.email;
         }
-        Food.find({})
-        .lean()
-        .then((foods) => {
-            User.findOne({ email: email }) 
-                .lean()
-                .then((user) => {
-                    const choseFood = user.choseFoode;
-                    const idFoodArray = choseFood.map(food => food.idFood);
-                    const gramFoodAray = choseFood.map(food => food.grams); 
-                    // console.log(choseFood);
-                    const foodLikedArray = user.foodLike;
-                    Food.find({_id: {$in: idFoodArray}})
-                        .lean()
-                        .then((userMenu) => {
-                            userMenu = userMenu.map((item, index) => {
-                                let food = { id: item._id, name: item.name, calo: item.calo, grams: gramFoodAray[index], totalGrams:  gramFoodAray[index]/100*item.calo }
-                                return food;
-                            });
-                            // console.log(foodLikedArray)
-                            let foodLikedArrayString = foodLikedArray.map(String);
-                            foods = foods.map((food) => {
-                                if(foodLikedArrayString.includes(String(food._id))){
-                                    food.isDisable = "false";
-                                    return food
-                                }
-                                else{
-                                    food.isDisable = "true";
-                                    return food
-                                }
-                            })
-                            // console.log(userMenu)
+        Food.countDocuments()
+        .then((count) => {
+            const totalPages = Math.ceil(count / itemsPerPage);
+            Food.find({})
+            .limit(itemsPerPage)
+            .lean()
+            .then((foods) => {
+                User.findOne({ email: email }) 
+                    .lean()
+                    .then((user) => {
+                        const choseFood = user.choseFoode;
+                        const idFoodArray = choseFood.map(food => food.idFood);
+                        const gramFoodAray = choseFood.map(food => food.grams); 
+                        // console.log(choseFood);
+                        const foodLikedArray = user.foodLike;
+                        Food.find({_id: {$in: idFoodArray}})
+                            .lean()
+                            .then((userMenu) => {
+                                userMenu = userMenu.map((item, index) => {
+                                    let food = { id: item._id, name: item.name, calo: item.calo, grams: gramFoodAray[index], totalGrams:  gramFoodAray[index]/100*item.calo }
+                                    return food;
+                                });
+                                // console.log(foodLikedArray)
+                                let foodLikedArrayString = foodLikedArray.map(String);
+                                foods = foods.map((food) => {
+                                    if(foodLikedArrayString.includes(String(food._id))){
+                                        food.isDisable = "false";
+                                        return food
+                                    }
+                                    else{
+                                        food.isDisable = "true";
+                                        return food
+                                    }
+                                })
+                                // console.log(userMenu)
 
-                            res.render('food', { foods, isLogin, email, user, userMenu, foodLikedArray });
-                        })
-                        .catch((userMenuErr) => {
-                            console.log("loi menu");
-                            res.status(400).json({ err: 'ERROR!' });
-                        })
-                })
-                .catch((userErr) => {
-                    console.log("loi user");
-                    res.render('food', { foods, isLogin, email});
-                    
-                });
+                                res.render('food', { foods, isLogin, email, user, userMenu, foodLikedArray, totalPages });
+                            })
+                            .catch((userMenuErr) => {
+                                console.log("loi menu");
+                                res.status(400).json({ err: 'ERROR!' });
+                            })
+                    })
+                    .catch((userErr) => {
+                        res.render('food', { foods, isLogin, email, totalPages });
+                        console.log("loi user");
+                    });
+            })
+            .catch((foodErr) => {
+                res.status(400).json({ err: 'ERROR!' });
+                console.log("loi food");
+            });
         })
         .catch((foodErr) => {
             res.status(400).json({ err: 'ERROR!' });
             console.log("loi food");
         });
-    
-        // Food.find({})
-        //     .then((foods) => {
-        //         foods = multipleMongooesToOject(foods);
-        //         res.render('food', { foods, isLogin, email });
-        //     })
-        //     .catch((err) => {
-        //         res.status(400).json({ err: 'ERROR!' });
-        //     });
-        // =============================================================================================
+        
 
+    }
 
+    showPanigation(req, res) {
+        let currentPage = parseInt(req.query.page);
+        let isLogin = false;
+        let email;
+        let itemsPerPage = 5;
+        if (req.isAuthenticated()) {
+            isLogin = true;
+            email = req.user.email;
+        }
         // Food.countDocuments().then((count) => {
         //     const totalPages = Math.ceil(count / itemsPerPage);
-
         //     Food.find({})
+        //         .lean()
+        //         .skip((currentPage - 1) * itemsPerPage)
         //         .limit(itemsPerPage)
         //         .then((foods) => {
-        //             foods = multipleMongooesToOject(foods);
-        //             res.render('food', { foods, isLogin, totalPages });
+        //             res.json({ foods, totalPages });
         //         })
         //         .catch((err) => {
         //             res.status(500).json({ err: 'ERROR!' });
         //         });
         // });
-    }
 
-    showPanigation(req, res) {
-        let currentPage = parseInt(req.query.page);
-        const itemsPerPage = 5;
-
-        Food.countDocuments().then((count) => {
+        Food.countDocuments()
+        .then((count) => {
+            console.log(count)
             const totalPages = Math.ceil(count / itemsPerPage);
-
             Food.find({})
-                .lean()
-                .skip((currentPage - 1) * itemsPerPage)
-                .limit(itemsPerPage)
-                .then((foods) => {
-                    res.json({ foods, totalPages });
-                })
-                .catch((err) => {
-                    res.status(500).json({ err: 'ERROR!' });
-                });
+            .lean()
+            .skip((currentPage - 1) * itemsPerPage)
+            .limit(itemsPerPage)
+            .then((foods) => {
+                User.findOne({ email: email }) 
+                    .lean()
+                    .then((user) => {
+                        const choseFood = user.choseFoode;
+                        const idFoodArray = choseFood.map(food => food.idFood);
+                        const gramFoodAray = choseFood.map(food => food.grams); 
+                        // console.log(choseFood);
+                        const foodLikedArray = user.foodLike;
+                        Food.find({_id: {$in: idFoodArray}})
+                            .lean()
+                            .then((userMenu) => {
+                                userMenu = userMenu.map((item, index) => {
+                                    let food = { id: item._id, name: item.name, calo: item.calo, grams: gramFoodAray[index], totalGrams:  gramFoodAray[index]/100*item.calo }
+                                    return food;
+                                });
+                                // console.log(foodLikedArray)
+                                let foodLikedArrayString = foodLikedArray.map(String);
+                                foods = foods.map((food) => {
+                                    if(foodLikedArrayString.includes(String(food._id))){
+                                        food.isDisable = "false";
+                                        return food
+                                    }
+                                    else{
+                                        food.isDisable = "true";
+                                        return food
+                                    }
+                                })
+                                res.json({ foods, totalPages });
+                            })
+                            .catch((userMenuErr) => {
+                                console.log("loi menu");
+                                res.status(400).json({ err: 'ERROR!' });
+                            })
+                    })
+                    .catch((userErr) => {
+                        console.log("loi user");
+                        res.json({ foods, totalPages })
+                        
+                    });
+            })
+            .catch((foodErr) => {
+                res.status(400).json({ err: 'ERROR!' });
+                console.log("loi food");
+            });
+        })
+        .catch((foodErr) => {
+            res.status(400).json({ err: 'ERROR!' });
+            console.log("loi food");
         });
     }
 
@@ -121,6 +170,7 @@ class FoodService {
                 { new: true })
                 .then((user) => {
                     console.log(user)
+                    const foodLikedArray = user.foodLike;
                     const choseFood = user.choseFoode;
                     const idFoodArray = choseFood.map(food => food.idFood);
                     const gramFoodAray = choseFood.map(food => food.grams);
@@ -131,7 +181,6 @@ class FoodService {
                                 let food = { id: item._id, name: item.name, calo: item.calo, grams: gramFoodAray[index], totalGrams:  gramFoodAray[index]/100*item.calo }
                                 return food;
                             });
-                            const foodLikedArray = user.foodLike;
                             const foodLikedArrayString = foodLikedArray.map(String);
                             // console.log('Món ăn đã được thêm vào mảng choseFoode.');
                             Food.find({})
@@ -485,11 +534,8 @@ class FoodService {
                     });
             })
             .catch((error) => {
-                console.error(error);
                 res.status(500).json({ error: "Internal server error" });
             });
-    }
-    
-    
+    }  
 }
 export default new FoodService();
