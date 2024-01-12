@@ -8,6 +8,7 @@ const Blog = new Schema(
         content: { type: String },
         image: { type: String },
         slug: { type: String },
+        author: { type: String },
         likedList: { type: [] },
     },
     {

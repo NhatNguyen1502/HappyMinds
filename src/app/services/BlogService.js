@@ -1,5 +1,9 @@
-import Blog from '../models/Blog.js';
+import Blog from '../models/Blog.js'
 import Comment from '../models/Comment.js';
+import { Slug } from '../../util/generateSlug.js';
+import { generateTitle } from '../../util/generateSlug.js';
+import { removeVietnameseTones } from '../../util/generateSlug.js';
+
 import {
     multipleMongooesToOject,
     mongooesToOject,
@@ -8,7 +12,7 @@ import {
 class BlogService {
     index(req, res) {
         let isLogin = req.isAuthenticated();
-        const itemsPerPage = 3;
+        const itemsPerPage = 6;
 
         Blog.countDocuments().then((count) => {
             const totalPages = Math.ceil(count / itemsPerPage);
@@ -28,7 +32,7 @@ class BlogService {
 
     showPanigation(req, res) {
         const currentPage = parseInt(req.query.page);
-        const itemsPerPage = 3;
+        const itemsPerPage = 6;
 
         Blog.countDocuments().then((count) => {
             const totalPages = Math.ceil(count / itemsPerPage);
@@ -94,6 +98,38 @@ class BlogService {
             res.status(500).json('Unlike fail!');
         }
     }
-}
 
+    createBlog = async (req, res, isLogin) => {
+        if (!isLogin) {
+            $('#login_form').modal('show');
+        } else {
+            try {
+                let formData = req.body;
+                formData.title = generateTitle(req.body.title)
+                console.log(formData);
+                let oldSlug = removeVietnameseTones(req.body.title);
+                let newSlug = Slug.generateSlug(oldSlug);
+                let checkSlug = await Blog.countDocuments({ slug: newSlug });
+
+                if (checkSlug > 0) {
+                    let i = 1;
+                    while (checkSlug > 0) {
+                        oldSlug += "-" + i++;
+                        newSlug = Slug.generateSlug(oldSlug);
+                        checkSlug = await Blog.countDocuments({ slug: newSlug });
+                    }
+                }
+
+                formData.slug = newSlug;
+                console.log(formData.slug);
+                const saveBlog = await Blog.create(formData);
+                await saveBlog.save();
+                res.redirect("/blog");
+            } catch (err) {
+                console.log(err);
+                res.status(500).send("Internal Server Error: " + err.message);
+            }
+        }
+    }
+}
 export default new BlogService();

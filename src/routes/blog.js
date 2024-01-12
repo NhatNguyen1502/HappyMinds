@@ -7,6 +7,8 @@ router.get('/showPanigation', BlogController.showPanigation);
 
 router.get('/', BlogController.index);
 
+router.post('/create', BlogController.createBlog);
+
 router.get('/blogDetail/:slug', BlogController.showDetail);
 
 router.patch('/addLike', BlogController.addLike);

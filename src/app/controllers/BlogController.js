@@ -1,5 +1,8 @@
 import BlogService from '../services/BlogService.js';
 class BlogController {
+    
+    createBlog = BlogService.createBlog;
+    
     showPanigation = BlogService.showPanigation;
 
     index = BlogService.index;
