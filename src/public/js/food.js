@@ -13,9 +13,8 @@ function filterBy(param){
     renderResultFilter();
     isDisable = false;
   }
-
 }
-
+console.log("jjghsfhchcasd")
 
 let favrFood = document.getElementById('favouriteFood');
 let isDisableFvr = Boolean(favrFood.getAttribute('isDisable'));
@@ -34,6 +33,7 @@ favrFood.addEventListener('click', () => {
     favrFood.style.color = 'rgba(253, 0, 84, 1)';
     favrFood.setAttribute('data-isDisable', true);
     console.log(favrFood.getAttribute('data-isDisable'));
+    renderResultFilter()
   }
 });
 
@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
       engFood.style.color = 'rgba(253, 0, 84, 1)';
       engFood.setAttribute('data-isDisable', true);
       console.log(engFood.getAttribute('data-isDisable'));
+      renderResultFilter()
     }
   });
 
@@ -170,20 +171,26 @@ async function renderResultAdd(event, formID, elementID) {
   form = document.getElementById(formID);
   id = form.querySelector('.idFood').value;
   grams = document.querySelector(elementID).value;
-  console.log(form, id, grams)
-  var formData = new FormData(form);
-  var data = [...formData];
-  const dataObject = {};
-  data.forEach(([key, value]) => {
-      dataObject[key] = value;
-  });
-  dataObject['grams'] = grams;
-  await axios.post(`food/add`, dataObject)
-  .then((res) => {
-    console.log("ngon rooif ")
-    renderFoodList(res.data.foods);
-    renderUserMenu(res.data.userMenu);
-  });
+  if(grams == ""){
+    alert("Vui lòng nhập số gram !!!")
+  }
+  else {
+    console.log(form, id, grams)
+    var formData = new FormData(form);
+    var data = [...formData];
+    const dataObject = {};
+    data.forEach(([key, value]) => {
+        dataObject[key] = value;
+    });
+    dataObject['grams'] = grams;
+    await axios.post(`food/add`, dataObject)
+    .then((res) => {
+      console.log("ngon rooif ")
+      renderFoodList(res.data.foods);
+      renderUserMenu(res.data.userMenu);
+    });
+  }
+  
 }
 
 async function removeFromMenu(idFood) {
