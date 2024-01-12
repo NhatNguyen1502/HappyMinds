@@ -13,6 +13,9 @@ class VideoController {
     viewcoach_body_parts(req, res) {
         VideoService.viewcoach_body_parts(req, res);
     }
+    viewcoach_Video_durations(req, res) {
+        VideoService.viewcoach_Video_durations(req, res);
+    }
 }
 
 export default new VideoController();

@@ -16,7 +16,7 @@ class UserService {
                     let bmi =
                         user.BMIchange[user.BMIchange.length - 1]?.value || 0;
                     let bmiType;
-                    console.log(bmi + ' bmi');
+                    // console.log(bmi + ' bmi');
                     if (bmi < 18.5) {
                         bmiType = BMIStatus.UNDERWEIGHT;
                     } else if (bmi >= 18.5 && bmi < 25) {
@@ -29,7 +29,19 @@ class UserService {
                     Video.find({ BMItype: bmiType })
                         .lean()
                         .then((videos) => {
-                            let arr = findBestSubarrays(videos, 250);
+                            let arr = categorizeVideosByTime(videos);
+                            const shortVideos = arr[0];
+                            const mediumVideos = arr[1];
+                            const longVideos = arr[2];
+
+                            const shortVideosJson = JSON.stringify(shortVideos);
+                            const longVideosJson =JSON.stringify(longVideos);
+                            const mediumVideosJson =JSON.stringify(mediumVideos);
+
+                            const firstShortVideo = shortVideos.length > 0 ? shortVideos[0] : null;
+                            const firstMediumVideo = mediumVideos.length > 0 ? mediumVideos[0] : null;
+                            const firstLongVideo = longVideos.length > 0 ? longVideos[0] : null;
+
                             Food.find({ _id: { $in: foodsID } }).then(
                                 (foods) => {
                                     foods = multipleMongooesToOject(foods);
@@ -45,7 +57,12 @@ class UserService {
                                         user,
                                         ActivityStatus,
                                         isLogin,
-                                        videos1: arr[0],
+                                        firstShortVideo,
+                                        firstLongVideo,
+                                        firstMediumVideo,
+                                        shortVideosJson,
+                                        longVideosJson,
+                                        mediumVideosJson,
                                     });
                                 },
                             );
@@ -116,9 +133,8 @@ class UserService {
 
         const currentDate = new Date();
 
-        const cDate = `${currentDate.getDate()}/${
-            currentDate.getMonth() + 1
-        }/${currentDate.getFullYear()}`;
+        const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1
+            }/${currentDate.getFullYear()}`;
 
         User.findOne({ email: req.user.email })
             .lean()
@@ -303,6 +319,30 @@ function calculateTotalCaloriesAmount(arr) {
     }
 
     return totalCaloriesAmount;
+}
+
+function categorizeVideosByTime(videos) {
+    const calculateScore = (video) => video.rep * video.duration;
+    const totalScore = videos.reduce((total, video) => total + calculateScore(video), 0);
+    const averageScore = totalScore / videos.length;
+    const plusMeanRange = averageScore + (averageScore / 2);
+    const minusMeanRange = averageScore - (averageScore / 2);
+
+    const shortVideos = [], mediumVideos = [], longVideos = [];
+
+    videos.forEach(video => {
+        const score = calculateScore(video);
+
+        if (score <= minusMeanRange) {
+            shortVideos.push(video);
+        } else if (score >= plusMeanRange) {
+            longVideos.push(video);
+        } else {
+            mediumVideos.push(video);
+        }
+    });
+
+    return [shortVideos, mediumVideos, longVideos];
 }
 
 export default new UserService();
