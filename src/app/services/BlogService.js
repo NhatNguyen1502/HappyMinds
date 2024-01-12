@@ -1,4 +1,5 @@
 import Blog from '../models/Blog.js';
+import Comment from '../models/Comment.js';
 import {
     multipleMongooesToOject,
     mongooesToOject,
@@ -23,6 +24,7 @@ class BlogService {
                 });
         });
     }
+    J;
 
     showPanigation(req, res) {
         const currentPage = parseInt(req.query.page);
