@@ -288,7 +288,10 @@
 
 <script>
     let user = {{{ json user }}}
+    const canvas = document.getElementById('canvas');
+    let chart;
     renderInf();
+    BMIchart(user);
     function renderInf() {
         document.querySelector("#username").textContent = `${user.name}` || '';
         document.querySelector("#bmi").textContent = `${user.BMIchange[user.BMIchange.length - 1]?.value || 0}` || '';
@@ -304,6 +307,7 @@
     }
     function update() {
         event.preventDefault();
+        $('#userForm').modal('hide');
         var form = document.getElementById('updateForm');
         var formData = new FormData(form);
         var data = [...formData];
@@ -323,8 +327,8 @@
     }
 
     //CHART
-    const canvas = document.getElementById('canvas');
-    let chart;
+
+
     function BMIchart(user){
         if (chart) {
             chart.destroy();
@@ -353,5 +357,4 @@
 
         chart = new Chart(canvas, config);
     }
-    BMIchart(user);
 </script>

@@ -241,7 +241,7 @@ function showReplyCommentInp(isLogin, commentId) {
                     </div>
                     <label class="col btn btn-outline-secondary pe-2">
                         <i class="bi bi-upload"></i>
-                        <input type="file" class="custom-file-input" name="upload" id="fileInput"
+                        <input type="file" class="custom-file-input" name="imgUrl" id="fileInput"
                             style="display: none;">
                     </label>
                     <button class="col btn btn-primary ms-2 me-2" onclick=submitComment(${isLogin},"replyCommentForm")> 
