@@ -30,9 +30,11 @@ class UserService {
                         .lean()
                         .then((videos) => {
                             let arr = findBestSubarrays(videos, 250);
-                            Food.find({ _id: { $in: foodsID } }).then(
+                            const idFoods = foodsID.map((food) => food.idFood);
+                            console.log(idFoods);
+                            Food.find({ _id: { $in: idFoods } }).then(
                                 (foods) => {
-                                    foods = multipleMongooesToOject(foods);
+                                    console.log('foods = ', foods);
                                     const totalCalories = foods.reduce(
                                         (total, food) => {
                                             return total + food.calo;
@@ -55,6 +57,72 @@ class UserService {
             console.log('Login fail!!!');
             res.render('user', { isLogin });
         }
+    }
+
+    async index2(req, res) {
+        let isLogin = false;
+        if (req.isAuthenticated()) {
+            isLogin = true;
+            try {
+                const user = await User.findOne({
+                    email: req.user.email,
+                }).lean();
+                console.log('login successful!');
+                res.render('user', isLogin, err);
+            } catch (err) {
+                console.log(err);
+                res.render('user', isLogin, err);
+            }
+        } else {
+            console.log('Login fail!!!');
+            res.render('user', { isLogin });
+        }
+
+        // User.findOne({ email: req.user.email })
+        //     .lean()
+        //     .then((user) => {
+        //         let foodsID = user.choseFoode;
+        //         let bmi =
+        //             user.BMIchange[user.BMIchange.length - 1]?.value || 0;
+        //         let bmiType;
+        //         console.log(bmi + ' bmi');
+        //         if (bmi < 18.5) {
+        //             bmiType = BMIStatus.UNDERWEIGHT;
+        //         } else if (bmi >= 18.5 && bmi < 25) {
+        //             bmiType = BMIStatus.HEALTHY;
+        //         } else if (bmi >= 25 && bmi < 30) {
+        //             bmiType = BMIStatus.OVERWEIGHT;
+        //         } else {
+        //             bmiType = BMIStatus.OBESE;
+        //         }
+        //         Video.find({ BMItype: bmiType })
+        //             .lean()
+        //             .then((videos) => {
+        //                 let arr = findBestSubarrays(videos, 250);
+        //                 const idFoods = foodsID.map(food => food.idFood);
+        //                 console.log(idFoods);
+        //                 Food.find({ _id: { $in: idFoods } }).then(
+        //                     (foods) => {
+        //                         console.log('foods = ', foods);
+        //                         const totalCalories = foods.reduce(
+        //                             (total, food) => {
+        //                                 return total + food.calo;
+        //                             },
+        //                             0,
+        //                         );
+        //                         res.render('user', {
+        //                             totalCalories: totalCalories.toFixed(2),
+        //                             foods,
+        //                             user,
+        //                             ActivityStatus,
+        //                             isLogin,
+        //                             videos1: arr[0],
+        //                         });
+        //                     },
+        //                 );
+        //             });
+        //     }
+        // );
     }
 
     getUser = async (payload) => {
@@ -211,8 +279,6 @@ class UserService {
                 console.log('loi roi');
             });
     }
-
-    
 }
 
 function findBestSubarrays(videos, targetCalories) {
