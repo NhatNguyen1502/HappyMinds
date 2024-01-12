@@ -1,7 +1,8 @@
 import Blog from '../models/Blog.js'
 import Comment from '../models/Comment.js';
-import removeVietnameseTones from '../../util/generateSlug.js';
 import { Slug } from '../../util/generateSlug.js';
+import { generateTitle } from '../../util/generateSlug.js';
+import { removeVietnameseTones } from '../../util/generateSlug.js';
 
 import {
     multipleMongooesToOject,
@@ -98,14 +99,13 @@ class BlogService {
         }
     }
 
-    createBlog(isLogin) {
+    createBlog = async (req, res, isLogin) => {
         if (!isLogin) {
             $('#login_form').modal('show');
         } else {
-        }
-        createBlogs = async (req, res) => {
             try {
                 let formData = req.body;
+                formData.title = generateTitle(req.body.title)
                 console.log(formData);
                 let oldSlug = removeVietnameseTones(req.body.title);
                 let newSlug = Slug.generateSlug(oldSlug);

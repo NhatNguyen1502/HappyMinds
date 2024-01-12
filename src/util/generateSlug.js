@@ -38,7 +38,13 @@ function removeVietnameseTones(str) {
     return str;
 }
 
+function generateTitle(text){
+    text = text.charAt(0).toUpperCase() + text.slice(1);
+    return text;
+}
+
+
 export const Slug = {
     generateSlug
 }
-export default removeVietnameseTones;
+export { removeVietnameseTones, generateTitle };

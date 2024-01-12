@@ -43,20 +43,19 @@
                 </div>
                 <div class="modal-body ">
                     <label for="name"><b>Your Name</b></label>
-                    <input class="form-control" name="name" id="name" style="border-radius:10px">
+                    <input class="form-control" name="author" id="name" style="border-radius:10px" required>
                     <label for="title"><b>Title</b></label>
-                    <input class="form-control" name="title" id="title" style="border-radius:10px">
+                    <input class="form-control" name="title" id="title" style="border-radius:10px" required>
 
                     <label for="content"><b>Content</b></label>
                     <textarea class="col-12 form-control text-start" name="content" id="content" rows="8"
-                        style="border-radius:10px;" placeholder="Type what in your mind ..."></textarea>
+                        style="border-radius:10px;" placeholder="Type what in your mind ..." required></textarea>
                     <div id="uploadImg">
-                        <label class="col-12 btn btn-outline-secondary mt-2">Upload
-                            your image
+                        <label class="col-12 btn btn-outline-secondary mt-2">
+                            Upload your image
                             <i class="bi bi-upload ms-1"></i>
-                            <input type="file" class="custom-file-input"  id="inpImg"
-                                style="display:none;">
-                            <input name="image" id="image" style="display: none;">
+                            <input type="file" class="custom-file-input" id="inpImg" style="display:none;">
+                            <input name="image"  id="image" style="display: none;">
                         </label>
                     </div>
                     <center>
@@ -66,7 +65,7 @@
                 <div class="modal-footer d-flex justify-content-center border" style="border-radius: 0 0 20px 20px;">
                     <button type="button" class="btn btn-secondary" style="width: 200px;" data-bs-dismiss="modal"
                         aria-label="Close">Cancel</button>
-                    <button type="submit" class="btn btn-danger " style="width: 200px;" onclick="createBlogs({{isLogin}})">Post</button>
+                    <button type="submit" value="Submit" class="btn btn-danger " style="width: 200px;" onclick="createBlogs({{isLogin}})">Post</button>
                 </div>
             </div>
         </div>
@@ -100,6 +99,16 @@
 </div>
 </div>
 <script>
+    function validateForm() {
+            var fileInput = document.getElementById('inpImg');
+            if (fileInput.files.length === 0) {
+                alert('Please select a file to upload.');
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
+
+
     const fileInput = document.getElementById('inpImg');
     const uploading_text = document.getElementById("uploading_text");
     const cloud_name = "duas1juqs";
