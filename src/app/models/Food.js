@@ -7,6 +7,7 @@ const Food = new Schema(
         name: { type: String },
         img: { type: String },
         description: { type: String },
+        category: { type: String },
         calo: { type: Number },
         isDisable: { type: String },
     },

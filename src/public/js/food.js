@@ -1,67 +1,60 @@
 let email = document.getElementById('foodList').getAttribute('data-email');
 let isLogin = document.getElementById('foodList').getAttribute('data-isLogin');
 
-function filterBy(param){
-  ctgrFood = document.getElementById('categoryFood');
-  ctgrFood.setAttribute('data-keyword', param);
-  console.log(ctgrFood.getAttribute('data-keyword'));
-  document.getElementById('categorySelection').textContent = param;
-  let isDisable = true;
-  if (isDisable) {
-    ctgrFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
-    ctgrFood.style.color = 'white';
-    renderResultFilter();
-    isDisable = false;
-  }
-
+function filterBy(param) {
+    ctgrFood = document.getElementById('categoryFood');
+    ctgrFood.setAttribute('data-keyword', param);
+    console.log(ctgrFood.getAttribute('data-keyword'));
+    document.getElementById('categorySelection').textContent = param;
+    let isDisable = true;
+    if (isDisable) {
+        ctgrFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
+        ctgrFood.style.color = 'white';
+        renderResultFilter();
+        isDisable = false;
+    }
 }
-
 
 let favrFood = document.getElementById('favouriteFood');
 let isDisableFvr = Boolean(favrFood.getAttribute('isDisable'));
 favrFood.addEventListener('click', () => {
-  isDisableFvr = !isDisableFvr;
-  if (isDisableFvr) {
-    favrFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
-    favrFood.style.color = 'white';
-    let keyword = "favourite";
-    favrFood.setAttribute('data-isDisable', false);
-    console.log(favrFood.getAttribute('data-isDisable'));
-    
-    renderResultFilter()
-  } else {
-    favrFood.style.backgroundColor = 'white';
-    favrFood.style.color = 'rgba(253, 0, 84, 1)';
-    favrFood.setAttribute('data-isDisable', true);
-    console.log(favrFood.getAttribute('data-isDisable'));
-  }
+    isDisableFvr = !isDisableFvr;
+    if (isDisableFvr) {
+        favrFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
+        favrFood.style.color = 'white';
+        let keyword = 'favourite';
+        favrFood.setAttribute('data-isDisable', false);
+        console.log(favrFood.getAttribute('data-isDisable'));
+
+        renderResultFilter();
+    } else {
+        favrFood.style.backgroundColor = 'white';
+        favrFood.style.color = 'rgba(253, 0, 84, 1)';
+        favrFood.setAttribute('data-isDisable', true);
+        console.log(favrFood.getAttribute('data-isDisable'));
+    }
 });
 
-
-document.addEventListener('DOMContentLoaded', () => { 
-
-  let engFood = document.getElementById('caloriesFood');
-  let isDisableEng = Boolean(engFood.getAttribute('isDisable'));
-  engFood.addEventListener('click', () => {
-    isDisableEng = !isDisableEng; 
-    if (isDisableEng) {
-      let sortKey = 'up';
-      engFood.setAttribute('data-isDisable', false);
-      console.log(engFood.getAttribute('data-isDisable'));
-      renderResultFilter()
-      engFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
-      engFood.style.color = 'white';
-    } else {
-      engFood.style.backgroundColor = 'white';
-      engFood.style.color = 'rgba(253, 0, 84, 1)';
-      engFood.setAttribute('data-isDisable', true);
-      console.log(engFood.getAttribute('data-isDisable'));
-    }
-  });
-
-}
-)
- 
+document.addEventListener('DOMContentLoaded', () => {
+    let engFood = document.getElementById('caloriesFood');
+    let isDisableEng = Boolean(engFood.getAttribute('isDisable'));
+    engFood.addEventListener('click', () => {
+        isDisableEng = !isDisableEng;
+        if (isDisableEng) {
+            let sortKey = 'up';
+            engFood.setAttribute('data-isDisable', false);
+            console.log(engFood.getAttribute('data-isDisable'));
+            renderResultFilter();
+            engFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
+            engFood.style.color = 'white';
+        } else {
+            engFood.style.backgroundColor = 'white';
+            engFood.style.color = 'rgba(253, 0, 84, 1)';
+            engFood.setAttribute('data-isDisable', true);
+            console.log(engFood.getAttribute('data-isDisable'));
+        }
+    });
+});
 
 function renderFoodList(food) {
     let content = '';
@@ -101,55 +94,54 @@ function renderFoodList(food) {
 }
 
 function renderUserMenu(userMenu) {
-  let contentMenu ='';
-  let count = 0;
-  let totalCalories = 0;
-  userMenu.forEach( item => {
-    item.totalGrams = item.totalGrams.toFixed(1);
-    contentMenu += `
+    let contentMenu = '';
+    let count = 0;
+    let totalCalories = 0;
+    userMenu.forEach((item) => {
+        item.totalGrams = item.totalGrams.toFixed(1);
+        contentMenu += `
     <tr class="text-center fw-bold justify-content-center">
       <td class="menuRow">${item.name}</td>
       <td class="menuRow">${item.calo}</td>
       <td class="menuRow">${item.grams}</td>
-      <td class="menuRow">${item.totalGrams}</td>
-      <td class="menuRow" style="width: 100px; height: 40px;" onclick="removeFromMenu('${item.id}')"><i class="bi bi-trash3-fill p-1 px-2 rounded-2" style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i></td>
+      <td class="menuRow">${item.totalCalories}</td>
+      <td class="menuRow" style="width: 100px; height: 40px;" onclick="removeFromMenu('${item._id}')"><i class="bi bi-trash3-fill p-1 px-2 rounded-2" style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i></td>
     </tr>
     `;
-    count += 1;
-    totalCalories += parseInt(item.totalGrams);
-    console.log(totalCalories)
-  });
-  document.getElementById('tblMenuUser').innerHTML= contentMenu;
-  document.getElementById('menuItem').textContent= count;
-  document.getElementById('menuCalories').textContent = parseInt(totalCalories) + " calo";
-
+        count += 1;
+        totalCalories += parseInt(item.totalCalories);
+    });
+    document.getElementById('tblMenuUser').innerHTML = contentMenu;
+    document.getElementById('menuItem').textContent = count;
+    document.getElementById('menuCalories').textContent =
+        parseInt(totalCalories) + ' calo';
 }
 
-function toggleHeart(button, idFood ){
-  let iconHeart = button.querySelector('.heart');
-  let isDisableIcon = iconHeart.getAttribute('data-isDisable');
-  if (isDisableIcon == 'true') {
-    addToFavourite(idFood)
-    iconHeart.style.color = 'rgba(253, 0, 84, 1)';
-    iconHeart.setAttribute('data-isDisable',"false");
-    isDisableIcon = false;
-  }else{
-    iconHeart.style.color = 'white';
-    iconHeart.setAttribute('data-isDisable',"true");
-    removeFromFavourite(idFood)
-    isDisableIcon = true;
-  }
+function toggleHeart(button, idFood) {
+    let iconHeart = button.querySelector('.heart');
+    let isDisableIcon = iconHeart.getAttribute('data-isDisable');
+    if (isDisableIcon == 'true') {
+        addToFavourite(idFood);
+        iconHeart.style.color = 'rgba(253, 0, 84, 1)';
+        iconHeart.setAttribute('data-isDisable', 'false');
+        isDisableIcon = false;
+    } else {
+        iconHeart.style.color = 'white';
+        iconHeart.setAttribute('data-isDisable', 'true');
+        removeFromFavourite(idFood);
+        isDisableIcon = true;
+    }
 }
 
 async function sortToggle() {
-  const caloriesFoodElement = document.getElementById('caloriesFood');
-  const currentIsDisable = caloriesFoodElement.getAttribute('data-isDisable') === 'true';
-  const newIsDisable = !currentIsDisable;
-  caloriesFoodElement.setAttribute('data-isDisable', newIsDisable);
+    const caloriesFoodElement = document.getElementById('caloriesFood');
+    const currentIsDisable =
+        caloriesFoodElement.getAttribute('data-isDisable') === 'true';
+    const newIsDisable = !currentIsDisable;
+    caloriesFoodElement.setAttribute('data-isDisable', newIsDisable);
 
-  renderResultFilter();
+    renderResultFilter();
 }
-
 
 async function renderResultSearch() {
     keyword = document.querySelector('#search').value;
@@ -159,88 +151,91 @@ async function renderResultSearch() {
 }
 
 async function renderResultSort(keyword) {
-  await axios.get(`food/sort?keyword=${keyword}`).then((res) => {
-      renderFoodList(res.data.foods);
-      // console.log(res.data.foods)
-  });
+    await axios.get(`food/sort?keyword=${keyword}`).then((res) => {
+        renderFoodList(res.data.foods);
+        // console.log(res.data.foods)
+    });
 }
 
 async function renderResultAdd(event, formID, elementID) {
-  event.preventDefault();
-  form = document.getElementById(formID);
-  id = form.querySelector('.idFood').value;
-  grams = document.querySelector(elementID).value;
-  console.log(form, id, grams)
-  var formData = new FormData(form);
-  var data = [...formData];
-  const dataObject = {};
-  data.forEach(([key, value]) => {
-      dataObject[key] = value;
-  });
-  dataObject['grams'] = grams;
-  await axios.post(`food/add`, dataObject)
-  .then((res) => {
-    console.log("ngon rooif ")
-    renderFoodList(res.data.foods);
-    renderUserMenu(res.data.userMenu);
-  });
+    event.preventDefault();
+    form = document.getElementById(formID);
+    id = form.querySelector('.idFood').value;
+    grams = document.querySelector(elementID).value;
+    console.log(form, id, grams);
+    var formData = new FormData(form);
+    var data = [...formData];
+    const dataObject = {};
+    data.forEach(([key, value]) => {
+        dataObject[key] = value;
+    });
+    dataObject['grams'] = grams;
+    await axios.post(`food/add`, dataObject).then((res) => {
+        console.log('ngon rooif ');
+        renderFoodList(res.data.foods);
+        renderUserMenu(res.data.userMenu);
+    });
 }
 
 async function removeFromMenu(idFood) {
-  await axios.post(`food/remove?id=${idFood}`).then((res) => {
-    console.log("removeFood");
-    renderUserMenu(res.data.userMenu);
-  });
+    await axios.post(`food/remove?id=${idFood}`).then((res) => {
+        console.log('removeFood');
+        renderUserMenu(res.data.userMenu);
+    });
 }
 
-async function renderResultFavourite(){
-  await axios.get(`food/filterFvr`).then((res) => {
-    renderFoodList(res.data.foods);
-  });
+async function renderResultFavourite() {
+    await axios.get(`food/filterFvr`).then((res) => {
+        renderFoodList(res.data.foods);
+    });
 }
 
-async function renderResultCategory(keyword){
-  await axios.get(`food/filterCtgr?category=${keyword}`).then((res) => {
-    renderFoodList(res.data.foods);
-  });
+async function renderResultCategory(keyword) {
+    await axios.get(`food/filterCtgr?category=${keyword}`).then((res) => {
+        renderFoodList(res.data.foods);
+    });
 }
 
 //  |---------------------------------------------------------------------------------------------EDIT SECTION--------------------------------------------------------------------------------------|
 //  |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
-async function renderResultFilter(){
-  let fvrStatus = document.getElementById('favouriteFood').getAttribute('data-isDisable');
-  let engStatus = document.getElementById('caloriesFood').getAttribute('data-isDisable');
-  let ctgrKeyword = document.getElementById('categoryFood').getAttribute('data-keyword');
-  console.log(fvrStatus, engStatus, ctgrKeyword)
-  await axios.get(`food/ultimateFilter?fvr=${fvrStatus}&eng=${engStatus}&keyword=${ctgrKeyword}`).then((res) => {
-    renderFoodList(res.data.foods);
-  });
+async function renderResultFilter() {
+    let fvrStatus = document
+        .getElementById('favouriteFood')
+        .getAttribute('data-isDisable');
+    let engStatus = document
+        .getElementById('caloriesFood')
+        .getAttribute('data-isDisable');
+    let ctgrKeyword = document
+        .getElementById('categoryFood')
+        .getAttribute('data-keyword');
+    console.log(fvrStatus, engStatus, ctgrKeyword);
+    await axios
+        .get(
+            `food/ultimateFilter?fvr=${fvrStatus}&eng=${engStatus}&keyword=${ctgrKeyword}`,
+        )
+        .then((res) => {
+            renderFoodList(res.data.foods);
+        });
 }
 
 // |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 // |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
-
 async function addToFavourite(idFood) {
-  await axios.post(`food/like?id=${idFood}`).then((res) => {
-  });
+    await axios.post(`food/like?id=${idFood}`).then((res) => {});
 }
 
 async function removeFromFavourite(idFood) {
-  await axios.post(`food/unlike?id=${idFood}`).then((res) => {
-    // console.log("remove");
-    // console.log(res.data.food)
-  });
+    await axios.post(`food/unlike?id=${idFood}`).then((res) => {
+        // console.log("remove");
+        // console.log(res.data.food)
+    });
 }
 
-function clearSearch(){
-  document.getElementById('search').value = null;
+function clearSearch() {
+    document.getElementById('search').value = null;
 }
-
-
-
-
 
 //Panigation
 document

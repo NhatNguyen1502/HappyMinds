@@ -1,4 +1,4 @@
-import Blog from '../models/Blog.js'
+import Blog from '../models/Blog.js';
 import Comment from '../models/Comment.js';
 import { Slug } from '../../util/generateSlug.js';
 import { generateTitle } from '../../util/generateSlug.js';
@@ -105,7 +105,7 @@ class BlogService {
         } else {
             try {
                 let formData = req.body;
-                formData.title = generateTitle(req.body.title)
+                formData.title = generateTitle(req.body.title);
                 console.log(formData);
                 let oldSlug = removeVietnameseTones(req.body.title);
                 let newSlug = Slug.generateSlug(oldSlug);
@@ -114,9 +114,11 @@ class BlogService {
                 if (checkSlug > 0) {
                     let i = 1;
                     while (checkSlug > 0) {
-                        oldSlug += "-" + i++;
+                        oldSlug += '-' + i++;
                         newSlug = Slug.generateSlug(oldSlug);
-                        checkSlug = await Blog.countDocuments({ slug: newSlug });
+                        checkSlug = await Blog.countDocuments({
+                            slug: newSlug,
+                        });
                     }
                 }
 
@@ -124,12 +126,12 @@ class BlogService {
                 console.log(formData.slug);
                 const saveBlog = await Blog.create(formData);
                 await saveBlog.save();
-                res.redirect("/blog");
+                res.redirect('/blog');
             } catch (err) {
                 console.log(err);
-                res.status(500).send("Internal Server Error: " + err.message);
+                res.status(500).send('Internal Server Error: ' + err.message);
             }
         }
-    }
+    };
 }
 export default new BlogService();
