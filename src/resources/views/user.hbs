@@ -1,10 +1,12 @@
 {{!-- Link Chart --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 {{!-- Title Tag SEO --}}
+
 <head>
     <title>https://happyminds.onrender.com/</title>
 </head>
 {{!-- Title Meta description Tag--}}
+
 <head>
     <meta name="description" content="
     {{!-- Content of desciption --}}
@@ -56,8 +58,7 @@
                                     alt="profile_picture">
                                 <div class="changeProfilePicture pt-2" id="changePhoto">
                                     <input type="file" id="changeImg" class="d-none">
-                                    <label
-                                        class="buttonModal p-1 px-1 d-flex justify-content-center align-items-center"
+                                    <label class="buttonModal p-1 px-1 d-flex justify-content-center align-items-center"
                                         onclick="document.getElementById('changeImg').click();"
                                         style="width: 30px; height: 30px; border-radius: 50%">
                                         <i class="bi bi-camera-fill fs-6 "></i>
@@ -74,19 +75,19 @@
                         </div>
                         <div class="row mb-2">
                             <div class="changeActivityRatios col-lg-6">
-                                <p class="m-0 py-2 fs-5 fw-bold" >Mức độ hoạt động: </p>
+                                <p class="m-0 py-2 fs-5 fw-bold">Mức độ hoạt động: </p>
                                 <select class="formInput col-lg-12 p-2" name="pal" id="palSelection">
                                     {{#each ActivityStatus}}
-                                        <option value="{{this}}" {{isSelected ../user.pal this}}> {{this}} </option>
+                                    <option value="{{this}}" {{isSelected ../user.pal this}}> {{this}} </option>
                                     {{/each}}
-                                </select>       
+                                </select>
                             </div>
                             <div class="changeSex col-lg-6">
-                                <p class="m-0 py-2 fs-5 fw-bold" >Giới tính: </p>
+                                <p class="m-0 py-2 fs-5 fw-bold">Giới tính: </p>
                                 <select class="formInput col-lg-12 p-2" name="sex" id="sexSelection">
-                                    <option value="Male" {{isSelected user.sex 'Male'}}>Nam</option>
-                                    <option value="Female" {{isSelected user.sex 'Female'}}>Nữ</option>
-                                </select>       
+                                    <option value="Male" {{isSelected user.sex 'Male' }}>Nam</option>
+                                    <option value="Female" {{isSelected user.sex 'Female' }}>Nữ</option>
+                                </select>
                             </div>
                         </div>
                         <div class="changeInfor row">
@@ -165,17 +166,69 @@
         <h4 class="fw-bold p-0">KHOÁ HỌC</h4>
     </div>
     <div class="courses pt-2">
-        <div class="row gap-2">
-            {{#each videos1}}
-            <div class="card col-3 p-2 mx-2 " style="width: 25rem;">
-                <a href="/video/{{this.videoId}}" style="color: black; text-decoration: none;">
-                    <img src="{{this.image}}" class="card-img-top" alt="image">
-                    <div class="card-body">
-                        <p class="card-text">{{this.title}}</p>
+        <div class="row row-cols-1 row-cols-lg-3 g-4" style="margin: 0 150px 0 150px;" id="videoContainer">
+            <form action="/video/viewcoach/shortvideos" method="post">
+                <div class="col mx-lg-auto">
+                    <div class="card position-relative">
+                        <img src="{{firstShortVideo.image}}" class="card-img-top" alt="...">
+                        <span class="bg-danger text-light w-50 text-center rounded-0 position-absolute top-0 end-0 m-0"
+                            style="height:9%;">Short Vidoes</span>
+                        <div class="card-body">
+                            <h5 class="card-title"
+                                style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">
+                                {{firstShortVideo.title}}</h5>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text">FEB 12, 2020</p>
+                                <button class="card-text border-0 bg-white text-danger fw-medium fw-semibold">
+                                    <input type="hidden" name="array" value='{{shortVideosJson}}'>
+                                    MORE INFO
+                                    <img class="pb-1" src="./img/goRight.png" alt="">
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </a>
-            </div>
-            {{/each}}
+                </div>
+            </form>
+            <form action="/video/viewcoach/mediumvideos" method="post">
+                <div class="col mx-lg-auto">
+                    <div class="card position-relative">
+                        <img src="{{firstMediumVideo.image}}" class="card-img-top" alt="...">
+                        <span class="bg-danger text-light w-50 text-center rounded-0 position-absolute top-0 end-0 m-0"
+                            style="height:9%;">Medium Vidoes</span>
+                        <div class="card-body">
+                            <h5 class="card-title">{{firstMediumVideo.title}}</h5>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text">FEB 12, 2020</p>
+                                <button class="card-text border-0 bg-white text-danger fw-medium fw-semibold">
+                                    <input type="hidden" name="array" value='{{mediumVideosJson}}'>
+                                    MORE INFO
+                                    <img class="pb-1" src="./img/goRight.png" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <form action="/video/viewcoach/longvideos" method="post">
+                <div class="col mx-lg-auto">
+                    <div class="card position-relative">
+                        <img src="{{firstLongVideo.image}}" class="card-img-top" alt="...">
+                        <span class="bg-danger text-light w-50 text-center rounded-0 position-absolute top-0 end-0 m-0"
+                            style="height:9%;">Long Vidoes</span>
+                        <div class="card-body">
+                            <h5 class="card-title">{{firstLongVideo.title}}</h5>
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text">FEB 12, 2020</p>
+                                <button class="card-text border-0 bg-white text-danger fw-medium fw-semibold">
+                                    <input type="hidden" name="array" value='{{longVideosJson}}'>
+                                    MORE INFO
+                                    <img class="pb-1" src="./img/goRight.png" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -196,26 +249,14 @@
                 </tr>
                 <tr class="row bg-light p-2 border-bottom border-1 border-dark">
                     <td class="col-lg-2 text-center fw-bold fs-5 p-0">Tên</td>
-                    <td class="col-lg-3 text-center fw-bold fs-5 p-0">Hình ảnh</td>
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Hình ảnh</td>
                     <td class="col-lg-2 text-center fw-bold fs-5 p-0">Calo/100g</td>
                     <td class="col-lg-2 text-center fw-bold fs-5 p-0">Khối lượng</td>
-                    <td class="col-lg-3 text-center fw-bold fs-5 p-0">Phân loại</td>
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Tổng calories</td>
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Phân loại</td>
                 </tr>
             </thead>
-            <tbody>
-                {{#each foods}}
-                <tr class="row bg-light p-2">
-                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">{{this.name}}</td>
-                    <td class="col-lg-3  fs-5 p-0 d-flex align-items-center justify-content-center">
-                        <img src="{{this.img}}" alt="" style="width: 80px; height: 70px;">
-                    </td>
-                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">{{this.calo}}</td>
-                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">200g</td>
-                    <td class="col-lg-3  fs-5 p-0 d-flex align-items-center justify-content-center">{{this.category}}
-                    </td>
-                </tr>
-                {{/each}}
-
+            <tbody id="foodMenu">
             </tbody>
         </table>
     </div>
@@ -243,44 +284,29 @@
                             <td style="width: 100px; height: 40px;">Xoá</td>
                         </tr>
                     </thead>
-                    <tbody>
-                        {{#each foods}}
-                        <tr class="text-center fw-bold justify-content-center">
-                            <td class="menuRow">{{this.name}}</td>
-                            <td class="menuRow">{{this.calo}}</td>
-                            <td class="menuRow">200</td>
-                            <td class="menuRow">{{this.calo}}</td>
-                            <td class="menuRow" style="width: 100px; height: 40px;"><i
-                                    class="bi bi-trash3-fill p-1 px-2 rounded-2"
-                                    style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i>
-                            </td>
-                        </tr>
-                        {{/each}}
+                    <tbody id="modalMenu">
                     </tbody>
                 </table>
                 <div class="line mt-4 my-2" style="height: 2px; background-color: rgb(211, 211, 211);"></div>
                 <div class="totalMenu">
                     <div class="row justify-content-between pb-1">
                         <div class="col-lg-3 fw-semibold" style="font-size: 18px;">Items </div>
-                        <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;">6</div>
+                        <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;"
+                            id="totalItems"></div>
                     </div>
                     <div class="row justify-content-between pb-1">
                         <div class="col-lg-4 fw-semibold" style="font-size: 18px;">Your required calories </div>
-                        <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;">2000 calo
+                        <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;"
+                            id="requiredCalories"> {{user.requiredCaloriesAmount}} calo
                         </div>
                     </div>
                     <div class="row justify-content-between pb-1">
-                        <div class="col-lg-3 fw-semibold" style="font-size: 18px;">Total calories </div>
-                        <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;">2200 calo
+                        <div class="col-lg-3 fw-semibold" style="font-size: 18px;">Total calories today</div>
+                        <div class="col-lg-3 fw-semibold d-flex justify-content-end" style="font-size: 18px;"
+                            id="totalCalories">
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer border-0 pt-1">
-                <button type="button" class="btn border-0 fw-semibold" data-bs-dismiss="modal"
-                    style="background-color:rgba(253, 0, 84, 1); color: white;">CLOSE</button>
-                <button type="button" class="btn border-0 fw-semibold"
-                    style="background-color:rgba(253, 0, 84, 1); color: white;">ADD TO MENU</button>
             </div>
         </div>
     </div>
@@ -288,7 +314,11 @@
 
 <script>
     let user = {{{ json user }}}
+
     renderInf();
+    const canvas = document.getElementById('canvas');
+    let chart;
+    BMIchart(user);
     function renderInf() {
         document.querySelector("#username").textContent = `${user.name}` || '';
         document.querySelector("#bmi").textContent = `${user.BMIchange[user.BMIchange.length - 1]?.value || 0}` || '';
@@ -304,6 +334,7 @@
     }
     function update() {
         event.preventDefault();
+        $('#userForm').modal('hide');
         var form = document.getElementById('updateForm');
         var formData = new FormData(form);
         var data = [...formData];
@@ -323,9 +354,8 @@
     }
 
     //CHART
-    const canvas = document.getElementById('canvas');
-    let chart;
-    function BMIchart(user){
+
+    function BMIchart(user) {
         if (chart) {
             chart.destroy();
         }
@@ -353,5 +383,59 @@
 
         chart = new Chart(canvas, config);
     }
-    BMIchart(user);
+
+    var foods = {{{ json foods }}};
+    renderFoodMenu(foods);
+    function renderFoodMenu(foods) {
+        var modalMenuContent = '';
+        var menuContent = '';
+        var totalCalories = 0;
+        foods.forEach(food => {
+            menuContent += `
+                <tr class="row bg-light p-2">
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${food.name}
+                    </td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">
+                        <img src="${food.img}" alt="" style="width: 80px; height: 70px;">
+                    </td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${food.calo}
+                    </td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${food.grams || 0}</td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${food.totalCalories}
+                    </td>
+                    <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">
+                        ${food.category}
+                    </td>
+                </tr>
+            `;
+
+            modalMenuContent += `
+                <tr class="text-center fw-bold justify-content-center">
+                    <td class="menuRow">${food.name}</td>
+                    <td class="menuRow">${food.calo}</td>
+                    <td class="menuRow">${food.grams}</td>
+                    <td class="menuRow">${food.totalCalories}</td>
+                    <td class="menuRow"><i class="bi bi-trash3-fill p-1 px-2 rounded-2" onclick="removeFromMenu('${food._id}')"
+                        style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i>
+                    </td>
+                </tr>
+            `;
+
+            totalCalories += food.totalCalories;
+        })
+        $('#foodMenu')[0].innerHTML = menuContent;
+        $('#modalMenu')[0].innerHTML = modalMenuContent;
+        $('#totalItems')[0].innerHTML = foods.length;
+        $('#totalCalories')[0].innerHTML = totalCalories + ' calo';
+
+    }
+
+    async function removeFromMenu(idFood) {
+        console.log("removeFood");
+        await axios.post(`food/remove?id=${idFood}`)
+            .then((res) => {
+                renderFoodMenu(res.data.userMenu);
+            }
+            );
+    }
 </script>
