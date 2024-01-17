@@ -7,33 +7,41 @@
         <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Create Blog</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-white">Create Blog</h5>
+                        <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <form method="post" action="/admin/blog">
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="content" class="col-form-label">Content:</label>
-                                <textarea class="form-control" name="content" id="content" cols="30" rows="5"></textarea>
+                                <label for="author" class="col-form-label"><b>Author:</b></label>
+                                <input type="text" class="form-control" id="author" name="author" required></input>
                             </div>
                             <div class="mb-3">
-                                <label for="image" class="col-form-label">Image:</label>
-                                <input type="url" class="form-control" id="image" name="image">
+                                <label for="title" class="col-form-label"><b>Title:</b></label>
+                                <input type="text" class="form-control" id="title" name="title" required></input>
                             </div>
                             <div class="mb-3">
-                                <label for="title" class="col-form-label">Title:</label>
-                                <input type="text" class="form-control" id="title" name="title"></input>
+                                <label for="content" class="col-form-label"><b>Content:</b></label>
+                                <textarea class="form-control" name="content" id="content" cols="30" rows="5"
+                                    required></textarea>
                             </div>
-                            <div class="mb-3">
-                                <label for="slug" class="col-form-label">Slug:</label>
-                                <input type="text" class="form-control" id="slug" name="slug"></input>
+                            <div class="mb-3" id="upImg">
+                                <label class="col-12 btn btn-outline-secondary mt-2">
+                                    <b>Upload image</b>
+                                    <i class="bi bi-upload ms-1"></i>
+                                    <input type="file" class="custom-file-input" id="inpImg" style="display:none;">
+                                    <input name="image" id="image" style="display: none;">
+                                </label>
+                                <center>
+                                    <p id="uploading_text"></p>
+                                </center>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-danger">Create</button>
                         </div>
                     </form>
                 </div>
@@ -42,9 +50,11 @@
     </div>
 </div>
 <div class="Alltable table-blog">
-    <table class="table table-bordered table-striped table-hover align-middle" style="text-align: center;" id="table_admin">
+    <table class="table table-bordered table-striped table-hover align-middle" style="text-align: center;"
+        id="table_admin">
         <thead>
             <tr>
+                <th>Author</th>
                 <th>Content</th>
                 <th>Image</th>
                 <th>Title</th>
@@ -55,8 +65,11 @@
         <tbody>
             {{#each blog}}
             <tr>
-                <th style="width: 40%;"><p id="content_cell">{{this.content}}</p></th>
-                <th style="width: 20%;"><img src="{{this.image}}" alt="" style="width: 70%"></th>
+                <th class="col-1">{{this.author}}</th>
+                <th class="col-3" style="width: 40%;">
+                    <p class="content_cell" id="{{this._id}}">{{this.content}}</p>
+                    <button class="btn btn-primary" onclick="toggleButton('{{this._id}}')">...</button>
+                <th style="width: 20%;"><img src="{{this.image}}" alt="" style="width: 70%; height:80%"></th>
                 <th>{{this.title}}</th>
                 <th>{{this.slug}}</th>
                 <th width="150px">
@@ -101,33 +114,37 @@
     <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Update Blog</h5>
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white">Update Blog</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
                 <form method="post" id="updateForm" action="">
                     <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="content" class="col-form-label">Content:</label>
-                                <textarea class="form-control" name="content" id="updateContent" cols="30" rows="5"></textarea>
+                        <div class="mb-3">
+                            <label for="content" class="col-form-label"><b>Content:</b></label>
+                            <textarea class="form-control" name="content" id="updateContent" cols="30"
+                                rows="5"></textarea>
+                        </div>
+                        <div class="mb-3 ">
+                            <label for="image" class="col-1 col-form-label"><b>Image:</b></label>
+                            <div class="col">
+                                <input type="url" class="col-6 form-control" id="updateImage" name="image"
+                                    style="height: fit-content;">
                             </div>
-                            <div class="mb-3">
-                                <label for="image" class="col-form-label">Image:</label>
-                                <input type="url" class="form-control" id="updateImage" name="image">
-                            </div>
-                            <div class="mb-3">
-                                <label for="title" class="col-form-label">Title:</label>
-                                <input type="text" class="form-control" id="updateTitle" name="title"></input>
-                            </div>
-                            <div class="mb-3">
-                                <label for="slug" class="col-form-label">Slug:</label>
-                                <input type="text" class="form-control" id="updateSlug" name="slug"></input>
-                            </div>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label"><b>Title:</b></label>
+                            <input type="text" class="form-control" id="updateTitle" name="title"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="slug" class="col-form-label"><b>Slug:</b></label>
+                            <input type="text" class="form-control" id="updateSlug" name="slug"></input>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><b>Close</b></button>
+                        <button type="submit" class="btn btn-primary"><b>Update</b></button>
                     </div>
                 </form>
             </div>
@@ -136,8 +153,58 @@
 </div>
 {{!-- DISPLAY DATA & DELETE--}}
 <script>
+    // Show content
+    function toggleButton(id) {
+        var contentCell = document.getElementById(id);
+        if (contentCell.style.display === '-webkit-box') {
+            contentCell.style.display = 'block'; 
+            contentCell.style.webkitLineClamp = 'unset'; 
+            console.log(id)
+        } else {
+            console.log(id)
+            contentCell.style.display = '-webkit-box';
+            contentCell.style.webkitLineClamp = '4';
+            contentCell.style.webkitBoxOrient = 'vertical';
+            contentCell.style.overflow = 'hidden';
+            contentCell.style.textOverflow = 'ellipsis';
+        }
+    }
+
+    // Get url image
+    const fileInput = document.getElementById('inpImg');
+    const inputImage = document.getElementById('inputImage');
+    const cloud_name = "duas1juqs";
+    const upload_preset = "pnvimage";
+    fileInput.addEventListener("change", (e) => {
+        document.getElementById("upImg").style.display = 'none';
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", upload_preset);
+        const options = {
+            method: "POST",
+            body: formData,
+        };
+        return fetch(
+            `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+            options
+        )
+            .then((res) => res.json())
+            .then((data) => {
+
+                uploading_text.innerHTML = `
+            <br />
+            <img style="max-width:300px" src="${data.secure_url}" alt="">
+            `;
+                document.getElementById('image').value = data.secure_url;
+                document.getElementById('updateImage').value = data.secure_url;
+                console.log(data.secure_url);
+                document.getElementById("upImg").style.display = 'block';
+            })
+            .catch((err) => console.log(err));
+    });
+
     function updateForm(id, content, image, title, slug) {
-        console.log("vào function");
         document.getElementById('updateForm').action = '/admin/update-blog/' + id;
         document.getElementById('updateContent').innerHTML = content;
         document.getElementById('updateImage').value = image;
@@ -147,4 +214,5 @@
     function deleteBlog(id) {
         document.getElementById('deleteForm').action = '/admin/delete-blog/' + id;
     }
+
 </script>
