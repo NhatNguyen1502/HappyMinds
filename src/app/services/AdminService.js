@@ -107,8 +107,6 @@ class AdminService {
         const page = parseInt(req.query.page) || 1;
         const perPage = 5;
         Food.find({})
-            // .skip((page - 1) * perPage)
-            // .limit(perPage)
             .then((foods) => {
                 console.log(foods.length);
                 res.render('admin-food', {
@@ -123,7 +121,7 @@ class AdminService {
 	updateFood = async (req, res) => {
 		try {
 			console.log(req.body)
-			const { id, name, description, calo, img } = req.body;
+			const { id, name, description, calo, img, category } = req.body;
 			const updatedFood = await Food.findByIdAndUpdate(
 				req.body.id,
 				{
@@ -131,6 +129,7 @@ class AdminService {
 					description: description,
 					calo: calo,
 					img: img,
+                    category: category,
 				},
 				{ new: true }
 			);

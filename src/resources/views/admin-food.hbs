@@ -32,6 +32,18 @@
 
                             </div>
                             <div class="mb-3">
+                                <label for="categoryCreate" class="col-form-label">Phân loại:</label>
+                                <select class="form-select" id="categoryCreate" name="category">
+                                    <option value="Thịt">Thịt</option>
+                                    <option value="Hải sản">Hải sản</option>
+                                    <option value="Hoa quả">Hoa quả</option>
+                                    <option value="Rau củ">Rau củ</option>
+                                    <option value="Hạt">Hạt</option>
+                                    <option value="Tinh bột">Tinh bột</option>
+                                    <option value="Sữa">Sữa</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="calo" class="col-form-label">Calo:</label>
                                 <input type="number" oninput="clearError(this)" class="form-control" id="caloCreate" name="calo"></input>
                                 <small class="text-danger d-none" id="errorCaloCreate">Vui lòng nhập đúng số calo món ăn!</small>
@@ -83,7 +95,7 @@
                     {{!-- BUTTON UPDATE --}}
                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateModal"
                         data-bs-whatever="@getbootstrap"
-                        onclick="updateForm('{{this._id}}', '{{this.name}}', '{{this.description}}', '{{this.calo}}', '{{this.img}}')">
+                        onclick="updateForm('{{this._id}}', '{{this.name}}', '{{this.description}}', '{{this.calo}}', '{{this.img}}','{{this.category}}')">
                         <span class="icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24px" height="24px"
                                 color="white" viewBox="0 0 35 35" fill="none">
@@ -133,6 +145,18 @@
                             <small class="text-danger d-none" id="errorImg">Vui lòng nhập link hình ảnh của món ăn!</small>
                         </div>
                         <div class="mb-3">
+                            <label for="updateCategory" class="col-form-label">Phân loại:</label>
+                            <select class="form-select" id="updateCategory" name="category">
+                                <option value="Thịt">Thịt</option>
+                                <option value="Hải sản">Hải sản</option>
+                                <option value="Hoa quả">Hoa quả</option>
+                                <option value="Rau củ">Rau củ</option>
+                                <option value="Hạt">Hạt</option>
+                                <option value="Tinh bột">Tinh bột</option>
+                                <option value="Sữa">Sữa</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="calo" class="col-form-label">Calo:</label>
                             <input type="number" oninput="clearError(this)" class="form-control" id="updateCalo" name="calo"></input>
                             <small class="text-danger d-none" id="errorCalo">Vui lòng nhập số calo</small>
@@ -154,8 +178,8 @@
         document.querySelectorAll('.text-danger').forEach( tag => tag.classList.add('d-none'));
         var form = document.getElementById('updateForm');
         var formData = new FormData(form);
-        {{!-- var isAnyFieldEmpty = Array.from(formData.values()).some(value => value.trim() === ''); --}}
         var data = [...formData];
+        alert(data)
         if(data[1][1] == ''){
             document.getElementById('errorName').classList.remove('d-none');
             document.getElementById('updateName').classList.add('error');
@@ -171,7 +195,7 @@
             document.getElementById('updateImg').classList.add('error');
             check = true;
         }
-        if(data[4][1] == '' || isNaN(data[4][1]) || parseInt(data[4][1]) < 0 ){
+        if(data[5][1] == '' || isNaN(data[5][1]) || parseInt(data[5][1]) < 0 ){
             document.getElementById('errorCalo').classList.remove('d-none');
             document.getElementById('updateCalo').classList.add('error');
             check = true;
@@ -202,8 +226,8 @@
         var form = document.getElementById('createForm');
         document.querySelectorAll('.text-danger').forEach( tag => tag.classList.add('d-none'));
         var formData = new FormData(form);
-        var isAnyFieldEmpty = Array.from(formData.values()).some(value => value.trim() === '');
         var data = [...formData];
+        alert(data)
         if(data[0][1] == ''){
             document.getElementById('errorNameCreate').classList.remove('d-none');
             document.getElementById('nameCreate').classList.add('error');
@@ -220,7 +244,7 @@
             document.getElementById('imgCreate').classList.add('error');
             check = true;
         }
-        if(data[3][1] == '' || isNaN(data[3][1]) || parseInt(data[3][1]) < 0 ) {
+        if(data[4][1] == '' || isNaN(data[4][1]) || parseInt(data[4][1]) < 0 ) {
             document.getElementById('errorCaloCreate').classList.remove('d-none');
             document.getElementById('caloCreate').classList.add('error');
             check = true;
@@ -233,12 +257,14 @@
         }
     });
 
-    function updateForm(id, name, description, calo, img) {
+    function updateForm(id, name, description, calo, img, category) {
         document.getElementById('idUpdate').value = id;
         document.getElementById('updateName').value = name;
         document.getElementById('updateDescription').value = description;
         document.getElementById('updateCalo').value = calo;
         document.getElementById('updateImg').value = img;
+        document.getElementById('updateCategory').value = category;
+
     }
     function deleteFood(id) {
         document.getElementById('deleteForm').action = '/admin/delete-food/' + id;
