@@ -120,7 +120,6 @@ class AdminService {
             });
     };
 
-<<<<<<< HEAD
 	updateFood = async (req, res) => {
 		try {
 			console.log(req.body)
@@ -140,7 +139,7 @@ class AdminService {
 			console.log(err);
 		}
 	};
-=======
+
     updateFood = async (req, res) => {
         try {
             const { name, description, calo, img } = req.body;
@@ -159,7 +158,7 @@ class AdminService {
             console.log(err);
         }
     };
->>>>>>> 3170f35c2fbeffc0e402eb8d7ab6a81d6430f486
+
 
     deleteFood = async (req, res) => {
         const id = req.params.id;
