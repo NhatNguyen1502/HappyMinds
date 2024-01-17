@@ -52,8 +52,8 @@ class AdminService {
 		const page = parseInt(req.query.page) || 1;
 		const perPage = 10;
 		Video.find({})
-			.skip((page - 1) * perPage)
-			.limit(perPage)
+			// .skip((page - 1) * perPage)
+			// .limit(perPage)
 			.then((videos) => {
 				res.render("admin-video", {
 					videos: multipleMongooesToOject(videos),
