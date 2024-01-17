@@ -19,7 +19,9 @@ router.post('/update-video/:id', adminController.updateVideo);
 
 router.post('/delete-video/:id', adminController.deleteVideo);
 
-router.post('/update-food/:id', adminController.updateFood);
+// router.post('/update-food/:id', adminController.updateFood);
+router.post('/admin-food', adminController.updateFood);
+
 
 router.post('/delete-food/:id', adminController.deleteFood);
 

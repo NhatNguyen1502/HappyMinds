@@ -111,9 +111,10 @@ class AdminService {
 
 	updateFood = async (req, res) => {
 		try {
-			const { name, description, calo, img } = req.body;
+			console.log(req.body)
+			const { id, name, description, calo, img } = req.body;
 			const updatedFood = await Food.findByIdAndUpdate(
-				req.params.id,
+				req.body.id,
 				{
 					name: name,
 					description: description,

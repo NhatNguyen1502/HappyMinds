@@ -410,3 +410,8 @@ h2 {
   color: #ffffff;
   border-radius: 0.2rem;
   border: none; }
+
+/* ---------------------------------ADMIN FOOD------------------------------------------------- */
+.error {
+  border-color: red;
+  box-shadow: 0 0 5px red; }
