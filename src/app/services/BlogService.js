@@ -106,11 +106,9 @@ class BlogService {
             try {
                 let formData = req.body;
                 formData.title = generateTitle(req.body.title);
-                console.log(formData);
                 let oldSlug = removeVietnameseTones(req.body.title);
                 let newSlug = Slug.generateSlug(oldSlug);
                 let checkSlug = await Blog.countDocuments({ slug: newSlug });
-
                 if (checkSlug > 0) {
                     let i = 1;
                     while (checkSlug > 0) {

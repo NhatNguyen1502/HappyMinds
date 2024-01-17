@@ -35,12 +35,28 @@ class AdminService {
 			.catch((err) => console.log(err));
 	};
 	createBlog = async (req, res) => {
-		const formData = req.body;
+		let formData = req.body;
 		formData.title = generateTitle(req.body.title);
+        console.log(formData.title = generateTitle(req.body.title));
+
 		let oldSlug = removeVietnameseTones(req.body.title);
+        console.log(oldSlug)
 		let newSlug = Slug.generateSlug(oldSlug);
 		console.log(newSlug);
 		formData.slug = newSlug;
+        let checkSlug = await Blog.countDocuments({ slug: newSlug });
+        if (checkSlug > 0) {
+            let i = 1;
+            while (checkSlug > 0) {
+                oldSlug += '-' + i++;
+                newSlug = Slug.generateSlug(oldSlug);
+                checkSlug = await Blog.countDocuments({
+                    slug: newSlug,
+                });
+            }
+        }
+        formData.slug = newSlug;
+        console.log(formData.slug)
 		const saveBlog = await Blog.create(formData);
 		console.log(formData)
 		saveBlog

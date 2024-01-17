@@ -32,12 +32,13 @@
                                     <b>Upload image</b>
                                     <i class="bi bi-upload ms-1"></i>
                                     <input type="file" class="custom-file-input" id="inpImg1" style="display:none;">
+                                    <input src="" name="image" id="saveImg" style="display: none;">
                                 </label>
                             </div>
+                            <center>
+                                <img src="" class="mt-2"  id="thenImage" style="max-width:400px;">
+                            </center>
                         </div>
-                        <center>
-                            <img src="" class="mt-2" name="image" id="thenImage" style="max-width:400px;">
-                        </center>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-danger">Create</button>
@@ -190,6 +191,7 @@
             const url = await uploadImage(fileInput1);
             console.log(url);
             document.getElementById('thenImage').src = url;
+            document.getElementById('saveImg').value = url;
         });
         fileInput2.addEventListener('change', async function () {
             const url = await uploadImage(fileInput2);
