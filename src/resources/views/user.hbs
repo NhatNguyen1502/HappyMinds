@@ -430,12 +430,12 @@
 
     }
 
-    async function removeFromMenu(idFood) {
+    function removeFromMenu(idFood) {
         console.log("removeFood");
-        await axios.post(`food/remove?id=${idFood}`)
+        axios.post(`food/remove?id=${idFood}`)
             .then((res) => {
                 renderFoodMenu(res.data.userMenu);
             }
-            );
+        );
     }
 </script>
