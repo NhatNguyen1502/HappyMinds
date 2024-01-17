@@ -1,5 +1,5 @@
 import Video from "../models/Video.js";
-import User from "../models/User.js";
+import User, { ActivityStatus, BMR } from "../models/User.js";
 import Food from "../models/Food.js";
 import Blog from "../models/Blog.js";
 import { multipleMongooesToOject } from "../../util/mongoose.js";
@@ -14,14 +14,39 @@ class AdminService {
 			.then(() => res.redirect("/admin/admin-video"))
 			.catch((err) => console.log(err));
 	};
+
 	createUser = async (req, res) => {
-		const formData = req.body;
+		const { name, pal, sex, height, weight, age, email, photoUrl } = req.body;
+
+		let requiredCaloriesAmount = 0;
+        if (sex == 'Male') {
+            requiredCaloriesAmount =
+                (10 * weight + 6.25 * height - 5 * age + 5) * BMR[pal];
+        } else {
+            requiredCaloriesAmount =
+                (10 * weight + 6.25 * height - 5 * age - 161) * BMR[pal];
+        }
+
+        const bmi = (weight / (height / 100) ** 2).toFixed(2);
+
+		const currentDate = new Date();
+
+        const cDate = `${currentDate.getDate()}/${
+            currentDate.getMonth() + 1
+        }/${currentDate.getFullYear()}`;
+
+		const BMIchange = [
+			{ date: cDate, value: parseFloat(bmi) },
+		];
+
+		const formData = { name, pal, sex, height, weight, age, email, photoUrl, BMIchange, requiredCaloriesAmount };
 		const saveUser = await User.create(formData);
 		saveUser
 			.save()
 			.then(() => res.redirect("/admin/admin-user"))
 			.catch((err) => console.log(err));
 	};
+
 	createFood = async (req, res) => {
 		const formData = req.body;
 		const saveFood = await Food.create(formData);
@@ -187,11 +212,11 @@ class AdminService {
 
 	showUsers(req, res) {
 		User.find({}).then((users) => {
-			console.log(users.length);
 			res.render("admin-user", {
 				users: multipleMongooesToOject(users),
 				layout: "admin.hbs",
 				title: "ADMIN-USER",
+				ActivityStatus: ActivityStatus,
 			});
 		});
 	}
