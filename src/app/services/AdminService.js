@@ -5,7 +5,7 @@ import Blog from "../models/Blog.js";
 import { generateTitle } from "../../util/generateSlug.js";
 import { removeVietnameseTones } from "../../util/generateSlug.js";
 import { Slug } from "../../util/generateSlug.js";
-
+import Comment from "../models/Comment.js";
 import { multipleMongooesToOject } from "../../util/mongoose.js";
 
 class AdminService {

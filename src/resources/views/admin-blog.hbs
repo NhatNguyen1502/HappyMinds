@@ -31,14 +31,13 @@
                                 <label class="col-12 btn btn-outline-secondary mt-2">
                                     <b>Upload image</b>
                                     <i class="bi bi-upload ms-1"></i>
-                                    <input type="file" class="custom-file-input" id="inpImg" style="display:none;">
-                                    <input name="image" id="image" style="display: none;">
+                                    <input type="file" class="custom-file-input" id="inpImg1" style="display:none;">
                                 </label>
-                                <center>
-                                    <p id="uploading_text"></p>
-                                </center>
                             </div>
                         </div>
+                        <center>
+                            <img src="" class="mt-2" name="image" id="thenImage" style="max-width:400px;">
+                        </center>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-danger">Create</button>
@@ -131,7 +130,8 @@
                                 <input type="url" class="col-6 form-control" id="updateImage" name="image"
                                     style="height: fit-content;">
                             </div>
-
+                            <input type="file" name="getImage" id="inpImg2" class="mt-2" style="width: 85px;">
+                            <img src="" class="mt-2" id="thenImage2" style="max-width:300px;">
                         </div>
                         <div class="mb-3">
                             <label for="title" class="col-form-label"><b>Title:</b></label>
@@ -152,13 +152,15 @@
     </div>
 </div>
 {{!-- DISPLAY DATA & DELETE--}}
+<script src="/js/handleImageFront.js"></script>
+
 <script>
     // Show content
     function toggleButton(id) {
         var contentCell = document.getElementById(id);
         if (contentCell.style.display === '-webkit-box') {
-            contentCell.style.display = 'block'; 
-            contentCell.style.webkitLineClamp = 'unset'; 
+            contentCell.style.display = 'block';
+            contentCell.style.webkitLineClamp = 'unset';
             console.log(id)
         } else {
             console.log(id)
@@ -169,40 +171,6 @@
             contentCell.style.textOverflow = 'ellipsis';
         }
     }
-
-    // Get url image
-    const fileInput = document.getElementById('inpImg');
-    const inputImage = document.getElementById('inputImage');
-    const cloud_name = "duas1juqs";
-    const upload_preset = "pnvimage";
-    fileInput.addEventListener("change", (e) => {
-        document.getElementById("upImg").style.display = 'none';
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", upload_preset);
-        const options = {
-            method: "POST",
-            body: formData,
-        };
-        return fetch(
-            `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
-            options
-        )
-            .then((res) => res.json())
-            .then((data) => {
-
-                uploading_text.innerHTML = `
-            <br />
-            <img style="max-width:300px" src="${data.secure_url}" alt="">
-            `;
-                document.getElementById('image').value = data.secure_url;
-                document.getElementById('updateImage').value = data.secure_url;
-                console.log(data.secure_url);
-                document.getElementById("upImg").style.display = 'block';
-            })
-            .catch((err) => console.log(err));
-    });
 
     function updateForm(id, content, image, title, slug) {
         document.getElementById('updateForm').action = '/admin/update-blog/' + id;
@@ -215,4 +183,20 @@
         document.getElementById('deleteForm').action = '/admin/delete-blog/' + id;
     }
 
+    function generateUrl() {
+        const fileInput1 = document.getElementById('inpImg1');
+        const fileInput2 = document.getElementById('inpImg2');
+        fileInput1.addEventListener('change', async function () {
+            const url = await uploadImage(fileInput1);
+            console.log(url);
+            document.getElementById('thenImage').src = url;
+        });
+        fileInput2.addEventListener('change', async function () {
+            const url = await uploadImage(fileInput2);
+            console.log(url);
+            document.getElementById('updateImage').value = url;
+            document.getElementById('thenImage2').src = url;
+        });
+    }
+    generateUrl();
 </script>
