@@ -90,14 +90,17 @@
                         <div class="row justify-content-between">
                             <label class="col px-4 btn btn-outline-secondary">
                                 <i class="bi bi-upload"></i>
-                                <input type="file" class="custom-file-input" name="imgUrl" id="fileInput"
-                                    style="display: none;">
+                                <input type="file" name="imgUrl" style="display: none;" onchange="displayImage('imageInp')">
                             </label>
                             <button class="col px-4 btn btn-primary ms-2"
                                 onclick=submitComment({{isLogin}},"commentForm")>
                                 <i class="bi bi-send"></i>
                             </button>
                         </div>
+                    </div>
+                    <div class="m-3">
+                        <img id="imageInp" src="" alt="updation Image"
+                            style="max-width: 300px; max-height: 300px; display: none;">
                     </div>
                 </form>
             </div>
