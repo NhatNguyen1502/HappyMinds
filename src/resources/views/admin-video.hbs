@@ -11,27 +11,36 @@
                     <h5 class="modal-title">New Video</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="post" action="/admin/video">
+                <form method="post" action="/admin/video" onsubmit="return validateFormCreate()">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="title" class="col-form-label">Title:</label>
                             <input type="text" class="form-control" id="title" name="title">
+                            <small class="form-text text-danger" id="titleErrorCreate"></small>
                         </div>
                         <div class="mb-3">
                             <label for="caloriesAmount" class="col-form-label">Calories amount:</label>
                             <input type="number" class="form-control" id="caloriesAmount" name="caloriesAmount">
+                            <small class="form-text text-danger" id="caloErrorCreate"></small>
                         </div>
                         <div class="mb-3">
                             <label for="videoId" class="col-form-label">Video ID:</label>
                             <input type="text" class="form-control" id="videoId" name="videoId"></input>
+                            <small class="form-text text-danger" id="videoErrorCreate"></small>
                         </div>
                         <div class="mb-3">
                             <label for="BMItype" class="col-form-label">BMI type:</label>
-                            <input type="text" class="form-control" id="BMItype" name="BMItype"></input>
+                            <select class="form-select" id="BMItype" name="BMItype">
+                                <option value="Healthy">Healthy</option>
+                                <option value="Underweight">Underweight</option>
+                                <option value="Overweight">Overweight</option>
+                                <option value="Obese">Obese</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="duration" class="col-form-label">Duration:</label>
                             <input type="number" class="form-control" id="duration" name="duration"></input>
+                            <small class="form-text text-danger" id="durationErrorCreate"></small>
                         </div>
                         <div class="mb-3">
                             Level:
@@ -103,7 +112,8 @@
 </div>
 
 <div class="Alltable table-videos">
-    <table class="table table-bordered table-striped table-hover align-middle" style="text-align: center;" id="table_admin">
+    <table class="table table-bordered table-striped table-hover align-middle" style="text-align: center;"
+        id="table_admin">
         <thead>
             <tr>
                 <th>Video ID</th>
@@ -169,42 +179,51 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form method="post" id="updateForm" action="">
+                <form method="post" id="updateForm" action="" onsubmit=" return validateFormUpdate()">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="title" class="col-form-label">Title:</label>
+                            <label for="updateTitle" class="col-form-label">Title:</label>
                             <input type="text" class="form-control" id="updateTitle" name="title">
+                            <small class="form-text text-danger" id="titleErrorUpdate"></small>
                         </div>
                         <div class="mb-3">
-                            <label for="caloriesAmount" class="col-form-label">Calories amount:</label>
+                            <label for="updateCaloriesAmount" class="col-form-label">Calories amount:</label>
                             <input type="number" class="form-control" id="updateCaloriesAmount" name="caloriesAmount">
+                            <small class="form-text text-danger" id="caloErrorUpdate"></small>
                         </div>
                         <div class="mb-3">
-                            <label for="videoId" class="col-form-label">Video ID:</label>
+                            <label for="updateVideoId" class="col-form-label">Video ID:</label>
                             <input type="text" class="form-control" id="updateVideoId" name="videoId"></input>
+                            <small class="form-text text-danger" id="videoErrorUpdate"></small>
                         </div>
                         <div class="mb-3">
-                            <label for="BMItype" class="col-form-label">BMI type:</label>
-                            <input type="text" class="form-control" id="updateBMItype" name="BMItype"></input>
+                            <label for="updateBMItype" class="col-form-label">BMI type:</label>
+                            <select class="form-select" id="updateBMItype" name="BMItype">
+                                <option value="Healthy">Healthy</option>
+                                <option value="Underweight">Underweight</option>
+                                <option value="Overweight">Overweight</option>
+                                <option value="Obese">Obese</option>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="duration" class="col-form-label">Duration:</label>
+                            <label for="updateDuration" class="col-form-label">Duration:</label>
                             <input type="number" class="form-control" id="updateDuration" name="duration"></input>
+                            <small class="form-text text-danger" id="durationErrorUpdate"></small>
                         </div>
                         <div class="mb-3">
                             Level:
                             <div class="btn-group" role="group">
                                 <input type="radio" class="btn-check" name="level" id="updateLevel1" value="beginner"
                                     autocomplete="off">
-                                <label class="btn btn-outline-primary" for="level1">Beginner</label>
+                                <label class="btn btn-outline-primary" for="updateLevel1">Beginner</label>
 
                                 <input type="radio" class="btn-check" name="level" id="updateLevel2" value="medium"
                                     autocomplete="off">
-                                <label class="btn btn-outline-primary" for="level2">Medium</label>
+                                <label class="btn btn-outline-primary" for="updateLevel2">Medium</label>
 
                                 <input type="radio" class="btn-check" name="level" id="updateLevel3" value="advance"
                                     autocomplete="off">
-                                <label class="btn btn-outline-primary" for="level3">Advance</label>
+                                <label class="btn btn-outline-primary" for="updateLevel3">Advance</label>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -213,23 +232,23 @@
                             <div class="btn-group" role="group">
                                 <input type="radio" class="btn-check" name="category" id="updateLegs" value="legs"
                                     autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="legs">Legs</label>
+                                <label class="btn btn-outline-primary" for="updateLegs">Legs</label>
 
                                 <input type="radio" class="btn-check" name="category" id="updateAbs" value="abs"
                                     autocomplete="off">
-                                <label class="btn btn-outline-primary" for="abs">Abs</label>
+                                <label class="btn btn-outline-primary" for="updateAbs">Abs</label>
 
                                 <input type="radio" class="btn-check" name="category" id="updateChest" value="chest"
                                     autocomplete="off">
-                                <label class="btn btn-outline-primary" for="chest">Chest</label>
+                                <label class="btn btn-outline-primary" for="updateChest">Chest</label>
 
                                 <input type="radio" class="btn-check" name="category" id="updateArms" value="arms"
                                     autocomplete="off">
-                                <label class="btn btn-outline-primary" for="arms">Arms</label>
+                                <label class="btn btn-outline-primary" for="updateArms">Arms</label>
 
                                 <input type="radio" class="btn-check" name="category" id="updateShoulder"
                                     value="shoulder" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="shoulder">Shoulder</label>
+                                <label class="btn btn-outline-primary" for="updateShoulder">Shoulder</label>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -238,15 +257,15 @@
                             <div class="btn-group" role="group">
                                 <input type="radio" class="btn-check" name="sex" id="updateMale" value="male"
                                     autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="male">Male</label>
+                                <label class="btn btn-outline-primary" for="updateMale">Male</label>
 
                                 <input type="radio" class="btn-check" name="sex" id="updateFemale" value="female"
                                     autocomplete="off">
-                                <label class="btn btn-outline-primary" for="female">Female</label>
+                                <label class="btn btn-outline-primary" for="updateFemale">Female</label>
 
                                 <input type="radio" class="btn-check" name="sex" id="updateSex3" value="both"
                                     autocomplete="off">
-                                <label class="btn btn-outline-primary" for="sex3">Both</label>
+                                <label class="btn btn-outline-primary" for="updateSex3">Both</label>
                             </div>
                         </div>
                     </div>
@@ -260,44 +279,4 @@
     </div>
 </div>
 {{!-- DISPLAY DATA & DELETE--}}
-<script>
-    function updateForm(id, title, videoId, caloriesAmount, level, category, sex, BMItype, duration) {
-        document.getElementById('updateForm').action = '/admin/update-video/' + id;
-        document.getElementById('updateTitle').value = title;
-        document.getElementById('updateVideoId').value = videoId;
-        document.getElementById('updateBMItype').value = BMItype;
-        document.getElementById('updateDuration').value = duration;
-        document.getElementById('updateCaloriesAmount').value = caloriesAmount;
-
-        if (level == 'beginner') {
-            document.getElementById('updateLevel1').checked = true;
-        } else if (level == 'medium') {
-            document.getElementById('updateLevel2').checked = true;
-        } else {
-            document.getElementById('updateLevel3').checked = true;
-        }
-
-        if (category == 'arms') {
-            document.getElementById('updateArms').checked = true;
-        } else if (category == 'legs') {
-            document.getElementById('updateLegs').checked = true;
-        } else if (category == 'shoulder') {
-            document.getElementById('updateShoulder').checked = true;
-        } else if (category == 'abs') {
-            document.getElementById('updateAbs').checked = true;
-        } else {
-            document.getElementById('updateChest').checked = true;
-        }
-
-        if (sex == 'male') {
-            document.getElementById('updateMale').checked = true;
-        } else if (sex == 'female') {
-            document.getElementById('updateFemale').checked = true;
-        } else {
-            document.getElementById('updateSex3').checked = true;
-        }
-    }
-    function deleteVideo(id){
-        document.getElementById('deleteForm').action = '/admin/delete-video/' + id;
-    }
-</script>
+<script src="/js/adminVideo.js"></script>
