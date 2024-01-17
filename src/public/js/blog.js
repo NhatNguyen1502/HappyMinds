@@ -6,19 +6,27 @@ function renderBlogs(blog) {
         <div class="col pb-3">
         <div class="card">
             <a href="blog/blogDetail/${element.slug}">
-                <img src="${element.image}" class="card-img-top" style="height: 300px;" alt="...">
+                <img src="${
+                    element.image
+                }" class="card-img-top" style="height: 300px;" alt="...">
             </a>
             <div class="card-body pb-0">
                 <h5 class="card-title">${element.title}</h5>
                 <div class=" col-lg-8 d-flex justify-content-start">
                     <img class="col-lg-4 col-1 my-2" style="width: 30px; height: 30px" src="/img/Image.png" alt>
-                    <p class="m-0 d-flex align-items-center mx-2" style="font-size:medium;">${element.author}</p>
+                    <p class="m-0 d-flex align-items-center mx-2" style="font-size:medium;">${
+                        element.author
+                    }</p>
                 </div>
                 <p class="content-text-blog">${element.content}</p>
                 <div class="d-flex justify-content-between">
-                    <p class="card-text" style="font-size:14px;">${generateDateTime(element.updatedAt)}</p>
+                    <p class="card-text" style="font-size:14px;">${generateDateTime(
+                        element.updatedAt,
+                    )}</p>
                     <p class="card-text ">
-                        <a href="/blog/blogDetail/${element.slug}" class="text-danger fw-medium fw-semibold"
+                        <a href="/blog/blogDetail/${
+                            element.slug
+                        }" class="text-danger fw-medium fw-semibold"
                             style="text-decoration: none">MORE
                             INFO<img class="pb-1" src="/img/goRight.png" alt=""></a>
                     </p>
@@ -93,9 +101,9 @@ function getAfterSlashValue() {
     return parseInt(mySpan.innerText.split('/')[1]);
 }
 
-function generateDateTime(time){
+function generateDateTime(time) {
     const dateTime = new Date(time);
-    const options = { year: "numeric", month: "long" };
-    const formattedMonthYear = dateTime.toLocaleString("en-US", options);
+    const options = { year: 'numeric', month: 'long' };
+    const formattedMonthYear = dateTime.toLocaleString('en-US', options);
     return formattedMonthYear;
 }

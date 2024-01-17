@@ -4,6 +4,9 @@ let secondRest = 5;
 let timer2;
 let isRestTimerRunning = true;
 var buttonClicked = false;
+let videoIframes = document.querySelectorAll('.video');
+let quanityVideo = videoIframes.length;
+console.log(quanityVideo)
 
 document.addEventListener('DOMContentLoaded', () => {
     let video = document.getElementById('video');
@@ -32,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const secondsDisplay =
                 secondRest < 10 ? `0${secondRest}` : secondRest;
             rest_time.textContent = `00 : ${secondsDisplay}`;
-            if (secondRest === 0) {
+            if (secondRest === 0 ) {
                 clearInterval(timer2);
                 isRestTimerRunning = false;
                 let button = document.getElementById('start');
@@ -41,21 +44,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    const timer1 = setInterval(updateCountup, 1000);
-    timer2 = setInterval(updateCountdown, 1000);
+    let timer1 = setInterval(updateCountup, 1000);
+    let timer2 = setInterval(updateCountdown, 1000);
+    
     setTimeout(enableNextButton, time_enable);
-
+    
     document.getElementById('start').addEventListener('click', () => {
         runTimer();
     });
+    
     document.getElementById('next').addEventListener('click', () => {
+        clearInterval(timer2);
+        pauseAllVideos();
         nextVideo();
         timer2 = setInterval(updateCountdown, 1000);
     });
+    
     document.getElementById('skip').addEventListener('click', () => {
+        clearInterval(timer2);
+        pauseAllVideos();
         skipVideo();
         timer2 = setInterval(updateCountdown, 1000);
     });
+
+
+    function pauseAllVideos() {
+        videoIframes.forEach(iframe => {
+            if (iframe.contentWindow && iframe.contentWindow.postMessage) {
+                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            }
+        });
+    }
 });
 
 function nextVideo() {
@@ -66,26 +85,21 @@ function nextVideo() {
     isRestTimerRunning = true;
     $('#carouselExampleControls').carousel('next');
     index++;
-    if (index == 10) {
+    console.log(index);
+    if (index == quanityVideo) {
         document.getElementById('next').setAttribute('disabled', 'true');
         document.getElementById('skip').setAttribute('disabled', 'true');
-        // document.getElementById('start').textContent = 'FINISH!!!';
+        document.getElementById('start').textContent = 'FINISH!!!';
     } else {
         let newVideo = document.querySelector(`.video[data-index="${index}"]`);
         if (!newVideo) {
             index = 0;
             newVideo = document.querySelector('.carousel-item[data-index="0"]');
         }
-        let calories =
-            parseInt(document.getElementById('calories').innerHTML) +
-            parseInt(newVideo.getAttribute('data-calo'));
+        let calories =parseInt(document.getElementById('calories').innerHTML) + parseInt(newVideo.getAttribute('data-calo'));
         document.getElementById('calories').innerHTML = calories;
-        document.getElementById(
-            'timer',
-        ).textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
-        document.getElementById('rep').textContent = parseInt(
-            newVideo.getAttribute('data-rep'),
-        );
+        document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
+        document.getElementById('rep').textContent = parseInt(newVideo.getAttribute('data-rep'));
         document.getElementById('start').setAttribute('disabled', 'true');
         document.getElementById('next').setAttribute('disabled', 'true');
         time_enable = 5000;
@@ -105,31 +119,31 @@ function skipVideo() {
     isRestTimerRunning = true;
     $('#carouselExampleControls').carousel('next');
     index++;
-    if (index == 10) {
+    console.log(index);
+    if (index == quanityVideo) {
         document.getElementById('next').setAttribute('disabled', 'true');
         document.getElementById('skip').setAttribute('disabled', 'true');
-        // document.getElementById('start').textContent = 'FINISH!!!';
+        document.getElementById('start').textContent = 'FINISH!!!';
     } else {
         let newVideo = document.querySelector(`.video[data-index="${index}"]`);
         if (!newVideo) {
             index = 0;
             newVideo = document.querySelector('.carousel-item[data-index="0"]');
         }
-        document.getElementById(
-            'timer',
-        ).textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
-        document.getElementById('rep').textContent = parseInt(
-            newVideo.getAttribute('data-rep'),
-        );
-        document.getElementById('start').setAttribute('disabled', 'true');
-        document.getElementById('next').setAttribute('disabled', 'true');
-        time_enable = 5000;
-        setTimeout(enableNextButton, time_enable);
-        setTimeout(() => {
-            document.getElementById('start').classList.add('shake');
-        }, time_enable);
+        if (newVideo) {
+            document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
+            document.getElementById('rep').textContent = parseInt(newVideo.getAttribute('data-rep'));
+            document.getElementById('start').setAttribute('disabled', 'true');
+            document.getElementById('next').setAttribute('disabled', 'true');
+            time_enable = 5000;
+            setTimeout(enableNextButton, time_enable);
+            setTimeout(() => {
+                document.getElementById('start').classList.add('shake');
+            }, time_enable);
+        }
     }
 }
+
 
 function enableNextButton() {
     document.getElementById('next').removeAttribute('disabled');
@@ -142,7 +156,6 @@ function runTimer() {
     document.getElementById('start').setAttribute('disabled', 'true');
     let countTimerElement = document.getElementById('timer');
     let seconds = parseInt(countTimerElement.textContent.slice(5, 7));
-    console.log(seconds);
     function updateCountdown() {
         seconds--;
         const secondsDisplay = seconds < 10 ? `0${seconds}` : seconds;
@@ -167,16 +180,12 @@ function runProgressBar() {
     let videoDuration = document.querySelector(`.video[data-index="${index}"]`);
     console.log(videoDuration.getAttribute('data-index'));
     let second = videoDuration.getAttribute('data-duration');
-    console.log(second);
     var totalDuration = second * 1000;
-    console.log(totalDuration);
     var steps = 50;
     var width = 0;
     var intervalDuration = totalDuration / steps;
-    console.log(intervalDuration);
     function frame() {
         if (buttonClicked && width <= 1000) {
-            console.log('ngu');
             width = 0;
             clearInterval(interval);
             buttonClicked = false;

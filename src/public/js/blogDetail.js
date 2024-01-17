@@ -68,6 +68,7 @@ async function submitComment(isLogin, formId) {
         formData.append('userId', user._id);
         await axios.post('http://localhost:3000/comment/', formData);
         $('#commentInp')[0].value = '';
+        $('#imageInp')[0].style.display = 'none';
         if (formId == 'commentForm') renderComments(`${blogId}`, isLogin);
         else renderReplyComments(form.parentId.value, isLogin);
     }
@@ -214,7 +215,6 @@ async function renderComments(blogId, isLogin) {
 }
 
 function showReplyCommentInp(isLogin, commentId) {
-    console.log(commentId);
     document.getElementById(commentId).innerHTML = `
         <div class="d-flex justify-content-start card mt-4 col-11 pb-1 mb-4">
             <div class="card-body ">
@@ -241,17 +241,34 @@ function showReplyCommentInp(isLogin, commentId) {
                     </div>
                     <label class="col btn btn-outline-secondary pe-2">
                         <i class="bi bi-upload"></i>
-                        <input type="file" class="custom-file-input" name="upload" id="fileInput"
-                            style="display: none;">
+                        <input type="file" id="imgInput" name="imgUrl" style="display: none;" onchange="displayImage('replyImage')">
                     </label>
                     <button class="col btn btn-primary ms-2 me-2" onclick=submitComment(${isLogin},"replyCommentForm")> 
                         <i class="bi bi-send"></i>
                     </button>
+                    <div class="mt-3">
+                        <img id="replyImage" src="" alt="updation Image"
+                        style="max-width: 300px; max-height: 300px; display: none;">
+                    </div>
                 </form>
             </div>
         </div>
     `;
     $('#replyCommentInp')[0].focus();
+}
+
+function displayImage(id) {
+    var fileInput = event.target;
+    var previewImage = document.getElementById(id);
+    if (fileInput.files && fileInput.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            previewImage.src = e.target.result;
+            previewImage.style.display = 'block';
+            console.log(previewImage);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    }
 }
 
 setTimeout(function () {
