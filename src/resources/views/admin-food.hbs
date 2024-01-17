@@ -184,6 +184,7 @@
             data.forEach(([key, value]) => {
                 dataObject[key] = value;
             });
+            
             axios.post('/admin/admin-food?id=${id}', dataObject)
             .then(function (response) {
                 user = response.data;

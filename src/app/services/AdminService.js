@@ -140,25 +140,6 @@ class AdminService {
 		}
 	};
 
-    updateFood = async (req, res) => {
-        try {
-            const { name, description, calo, img } = req.body;
-            const updatedFood = await Food.findByIdAndUpdate(
-                req.params.id,
-                {
-                    name: name,
-                    description: description,
-                    calo: calo,
-                    img: img,
-                },
-                { new: true },
-            );
-            res.redirect('/admin/admin-food');
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
 
     deleteFood = async (req, res) => {
         const id = req.params.id;
