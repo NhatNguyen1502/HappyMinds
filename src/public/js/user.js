@@ -17,19 +17,21 @@ function renderInf() {
 }
 function update() {
     event.preventDefault();
-    $('#formUpdateModal').modal('hide');
-    var form = $('#updateForm')[0];
-    var formData = new FormData(form);
-    axios
-        .post('http://localhost:3000/user', formData)
-        .then(function (response) {
-            user = response.data;
-            BMIchart(user);
-            renderInf();
-        })
-        .catch(function (error) {
-            console.error('Error:', error);
-        });
+    if (validateForm()) {
+        $('#formUpdateModal').modal('hide');
+        var form = $('#updateForm')[0];
+        var formData = new FormData(form);
+        axios
+            .post('http://localhost:3000/user', formData)
+            .then(function (response) {
+                user = response.data;
+                BMIchart(user);
+                renderInf();
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    }
 }
 
 function displayImage() {
@@ -149,5 +151,5 @@ function validateForm() {
     var isTitleValid = validateItem('heightError', 'heightInput');
     var isCaloValid = validateItem('weightError', 'weightInput');
     var isVideoValid = validateItem('ageError', 'ageInput');
-    return isTitleValid && isCaloValid && isVideoValid && isDurationValid;
+    return isTitleValid && isCaloValid && isVideoValid;
 }

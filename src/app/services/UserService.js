@@ -207,6 +207,7 @@ class UserService {
                     5 * updateData.age +
                     5) *
                 BMR[updateData.pal];
+        
         } else {
             updateData.requiredCaloriesAmount =
                 (10 * updateData.weight +
