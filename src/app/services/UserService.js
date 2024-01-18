@@ -4,6 +4,7 @@ import Food from '../models/Food.js';
 import { multipleMongooesToOject } from '../../util/mongoose.js';
 
 class UserService {
+
     async index(req, res) {
         let isLogin = false;
         if (req.isAuthenticated()) {
@@ -12,59 +13,62 @@ class UserService {
                 const user = await User.findOne({
                     email: req.user.email,
                 }).lean();
+                if (user.status === 'Active') {
+                    let bmi = user.BMIchange[user.BMIchange.length - 1]?.value || 0;
+                    let bmiType;
+                    if (bmi < 18.5) {
+                        bmiType = BMIStatus.UNDERWEIGHT;
+                    } else if (bmi >= 18.5 && bmi < 25) {
+                        bmiType = BMIStatus.HEALTHY;
+                    } else if (bmi >= 25 && bmi < 30) {
+                        bmiType = BMIStatus.OVERWEIGHT;
+                    } else {
+                        bmiType = BMIStatus.OBESE;
+                    }
 
-                let bmi = user.BMIchange[user.BMIchange.length - 1]?.value || 0;
-                let bmiType;
-                if (bmi < 18.5) {
-                    bmiType = BMIStatus.UNDERWEIGHT;
-                } else if (bmi >= 18.5 && bmi < 25) {
-                    bmiType = BMIStatus.HEALTHY;
-                } else if (bmi >= 25 && bmi < 30) {
-                    bmiType = BMIStatus.OVERWEIGHT;
+                    const videos = await Video.find({ BMItype: bmiType }).lean();
+                    let arr = categorizeVideosByRep(videos);
+                    const shortVideos = arr[0];
+                    const mediumVideos = arr[1];
+                    const longVideos = arr[2];
+
+                    const shortVideosJson = JSON.stringify(shortVideos);
+                    const longVideosJson = JSON.stringify(longVideos);
+                    const mediumVideosJson = JSON.stringify(mediumVideos);
+
+                    const firstShortVideo =
+                        shortVideos.length > 0 ? shortVideos[0] : null;
+                    const firstMediumVideo =
+                        mediumVideos.length > 0 ? mediumVideos[0] : null;
+                    const firstLongVideo =
+                        longVideos.length > 0 ? longVideos[0] : null;
+
+                    const idFoods = user.choseFoode.map((food) => food.idFood);
+                    const foods = await Food.find({ _id: { $in: idFoods } }).lean();
+                    for (let i = 0; i < foods.length; i++) {
+                        foods[i].grams = user.choseFoode[i].grams || 0;
+                        foods[i].totalCalories =
+                            (foods[i].calo * foods[i].grams) / 100;
+                    }
+                    const totalCalories = foods.reduce((total, food) => {
+                        return total + food.calo;
+                    }, 0);
+                    res.render('user', {
+                        totalCalories: totalCalories.toFixed(2),
+                        foods,
+                        user,
+                        ActivityStatus,
+                        isLogin,
+                        firstShortVideo,
+                        firstLongVideo,
+                        firstMediumVideo,
+                        shortVideosJson,
+                        longVideosJson,
+                        mediumVideosJson,
+                    });
                 } else {
-                    bmiType = BMIStatus.OBESE;
+                    res.send("Tài khoản của bạn đã bị khoá");
                 }
-
-                const videos = await Video.find({ BMItype: bmiType }).lean();
-                let arr = categorizeVideosByRep(videos);
-                const shortVideos = arr[0];
-                const mediumVideos = arr[1];
-                const longVideos = arr[2];
-
-                const shortVideosJson = JSON.stringify(shortVideos);
-                const longVideosJson = JSON.stringify(longVideos);
-                const mediumVideosJson = JSON.stringify(mediumVideos);
-
-                const firstShortVideo =
-                    shortVideos.length > 0 ? shortVideos[0] : null;
-                const firstMediumVideo =
-                    mediumVideos.length > 0 ? mediumVideos[0] : null;
-                const firstLongVideo =
-                    longVideos.length > 0 ? longVideos[0] : null;
-
-                const idFoods = user.choseFoode.map((food) => food.idFood);
-                const foods = await Food.find({ _id: { $in: idFoods } }).lean();
-                for (let i = 0; i < foods.length; i++) {
-                    foods[i].grams = user.choseFoode[i].grams || 0;
-                    foods[i].totalCalories =
-                        (foods[i].calo * foods[i].grams) / 100;
-                }
-                const totalCalories = foods.reduce((total, food) => {
-                    return total + food.calo;
-                }, 0);
-                res.render('user', {
-                    totalCalories: totalCalories.toFixed(2),
-                    foods,
-                    user,
-                    ActivityStatus,
-                    isLogin,
-                    firstShortVideo,
-                    firstLongVideo,
-                    firstMediumVideo,
-                    shortVideosJson,
-                    longVideosJson,
-                    mediumVideosJson,
-                });
             } catch (err) {
                 console.log(err);
                 res.send(err);
@@ -77,6 +81,15 @@ class UserService {
             });
         }
     }
+
+    getUser = async (payload) => {
+        try {
+            const user = await User.findOne({ email: payload });
+            return user;
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     getUser = async (payload) => {
         try {
