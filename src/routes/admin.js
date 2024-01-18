@@ -29,4 +29,6 @@ router.post('/delete-blog/:id', adminController.deleteBlog);
 
 router.post('/delete-user/:id', adminController.deleteUser);
 
+router.post('/admin/update-user-status/:id', adminController.updateUserStatus);
+
 export default router;

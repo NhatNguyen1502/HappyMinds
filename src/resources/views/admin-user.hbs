@@ -12,16 +12,17 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <form method="post" action="/admin/user">
+                    <form method="post" action="/admin/user" id="CreateForm">
                     <div class="modal-body">
                         <div class="mb-3 row">
                             <div class="col-6 ps-0">
                                 <label for="name" class="col-form-label">Name:</label>
                                 <input type="text" class="form-control" id="name" name="name" value="" required>
+                                <small class="form-text text-danger" id="NameError"></small>
                             </div>
                             <div class="col-6 pe-0">
                                 <label for="age" class="col-form-label">Age:</label>
-                                <input type="number" class="form-control" id="age" name="age" min="1" max="120" required>
+                                <input type="number" class="form-control" id="age" name="age" min="1" max="100" required>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -80,7 +81,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="photoUrl" class="col-form-label">Avatar:</label>
-                            <input type="file" class="form-control" id="photoUrl" name="photoUrl" required>
+                            <input type="url" class="form-control" id="photoUrl" name="photoUrl" required>
                         </div>
 
                     </div>
@@ -106,6 +107,7 @@
                 <th>Sex</th>
                 <th>Avatar</th>
                 <th>Pal</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -119,20 +121,13 @@
                 <th>{{this.sex}}</th>
                 <th><img src="{{this.photoUrl}}" alt="" style="width: 100px;"></th>
                 <th>{{this.pal}}</th>
+                <th>
+                    <select name="status" id="status" onchange="updateUserStatus('{{this._id}}')">
+                        <option value="Active">Active</option>
+                        <option value="Unactive">Unactive</option>
+                    </select>
+                </th>
                 <th width="150px">
-                    {{!-- BUTTON DELETE --}}
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete"
-                        data-bs-whatever="@getbootstrap" id="deleteButton" onclick="deleteUser('{{this._id}}')">
-                        <span class="icon-wrapper">
-                            <svg class="icon" width="24px" height="24px" color="white" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M6 7V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V7M6 7H5M6 7H8M18 7H19M18 7H16M10 11V16M14 11V16M8 7V5C8 3.89543 8.89543 3 10 3H14C15.1046 3 16 3.89543 16 5V7M8 7H16"
-                                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                </path>
-                            </svg>
-                        </span>
-                    </button>
                     {{!-- BUTTON VIEW --}}
                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewModal"
                         data-bs-whatever="@getbootstrap"
@@ -249,4 +244,5 @@
 <script>
     let ActivityStatus = {{{ json ActivityStatus }}};
 </script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/adminUser.js"></script>

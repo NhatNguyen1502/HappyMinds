@@ -56,6 +56,8 @@ class AdminController {
     deleteUser(req, res) {
         AdminService.deleteUser(req, res);
     }
+
+    updateUserStatus = AdminService.updateUserStatus;
 }
 
 export default new AdminController();

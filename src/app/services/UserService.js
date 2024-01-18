@@ -12,44 +12,48 @@ class UserService {
             User.findOne({ email: req.user.email })
                 .lean()
                 .then((user) => {
-                    let foodsID = user.choseFoode;
-                    let bmi =
-                        user.BMIchange[user.BMIchange.length - 1]?.value || 0;
-                    let bmiType;
-                    console.log(bmi + ' bmi');
-                    if (bmi < 18.5) {
-                        bmiType = BMIStatus.UNDERWEIGHT;
-                    } else if (bmi >= 18.5 && bmi < 25) {
-                        bmiType = BMIStatus.HEALTHY;
-                    } else if (bmi >= 25 && bmi < 30) {
-                        bmiType = BMIStatus.OVERWEIGHT;
+                    if (user.status === 'Active') {
+                        let foodsID = user.choseFoode;
+                        let bmi =
+                            user.BMIchange[user.BMIchange.length - 1]?.value || 0;
+                        let bmiType;
+                        if (bmi < 18.5) {
+                            bmiType = BMIStatus.UNDERWEIGHT;
+                        } else if (bmi >= 18.5 && bmi < 25) {
+                            bmiType = BMIStatus.HEALTHY;
+                        } else if (bmi >= 25 && bmi < 30) {
+                            bmiType = BMIStatus.OVERWEIGHT;
+                        } else {
+                            bmiType = BMIStatus.OBESE;
+                        }
+                        Video.find({ BMItype: bmiType })
+                            .lean()
+                            .then((videos) => {
+                                let arr = findBestSubarrays(videos, 250);
+                                Food.find({ _id: { $in: foodsID } }).then(
+                                    (foods) => {
+                                        foods = multipleMongooesToOject(foods);
+                                        const totalCalories = foods.reduce(
+                                            (total, food) => {
+                                                return total + food.calo;
+                                            },
+                                            0,
+                                        );
+                                        res.render('user', {
+                                            totalCalories: totalCalories.toFixed(2),
+                                            foods,
+                                            user,
+                                            ActivityStatus,
+                                            isLogin,
+                                            videos1: arr[0],
+                                        });
+                                    },
+                                );
+                            });
                     } else {
-                        bmiType = BMIStatus.OBESE;
+                        console.log('Login fail!!!');
+                        res.render('user', { isLogin });
                     }
-                    Video.find({ BMItype: bmiType })
-                        .lean()
-                        .then((videos) => {
-                            let arr = findBestSubarrays(videos, 250);
-                            Food.find({ _id: { $in: foodsID } }).then(
-                                (foods) => {
-                                    foods = multipleMongooesToOject(foods);
-                                    const totalCalories = foods.reduce(
-                                        (total, food) => {
-                                            return total + food.calo;
-                                        },
-                                        0,
-                                    );
-                                    res.render('user', {
-                                        totalCalories: totalCalories.toFixed(2),
-                                        foods,
-                                        user,
-                                        ActivityStatus,
-                                        isLogin,
-                                        videos1: arr[0],
-                                    });
-                                },
-                            );
-                        });
                 });
         } else {
             console.log('Login fail!!!');
@@ -116,9 +120,8 @@ class UserService {
 
         const currentDate = new Date();
 
-        const cDate = `${currentDate.getDate()}/${
-            currentDate.getMonth() + 1
-        }/${currentDate.getFullYear()}`;
+        const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1
+            }/${currentDate.getFullYear()}`;
 
         User.findOne({ email: req.user.email })
             .lean()
@@ -137,8 +140,6 @@ class UserService {
                 };
 
                 if (latestDate != null && latestDate === cDate) {
-                    // Update existing BMI for the same date
-                    console.log('vô if');
                     User.findOneAndUpdate(
                         {
                             email: req.user.email,
@@ -148,7 +149,6 @@ class UserService {
                             $set: {
                                 'BMIchange.$.value': parseFloat(bmi),
                             },
-                            //Spread
                             ...updateData,
                         },
                         {
@@ -157,14 +157,11 @@ class UserService {
                     )
                         .then((updateUser) => res.json(updateUser))
                         .catch((err) => {
-                            console.log(err);
                             res.status(500).json({
                                 error: 'Internal Server Error',
                             });
                         });
                 } else {
-                    // Add new BMI entry
-                    console.log('vô else');
                     User.findOneAndUpdate(
                         {
                             email: req.user.email,
@@ -183,7 +180,6 @@ class UserService {
                     )
                         .then((updateUser) => res.json(updateUser))
                         .catch((err) => {
-                            console.log(err);
                             res.status(500).json({
                                 error: 'Internal Server Error',
                             });
@@ -191,7 +187,6 @@ class UserService {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 res.status(500).json({ error: 'Internal Server Error' });
             });
     }
