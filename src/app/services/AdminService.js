@@ -195,7 +195,23 @@ class AdminService {
 
     updateBlog = async (req, res) => {
         try {
-            const { title, author, image, content } = req.body;
+            const { title, author, image, content} = req.body;
+            let oldSlug = generateTitle(req.body.title);
+            let newSlug = removeVietnameseTones(req.body.title);
+            let slug = Slug.generateSlug(newSlug);
+            let checkSlug = await Blog.countDocuments({ slug: slug });
+            if (checkSlug > 0) {
+                let i = 1;
+                while (checkSlug > 0) {
+                    newSlug += '-' + i++;
+                    slug = Slug.generateSlug(newSlug);
+                    checkSlug = await Blog.countDocuments({
+                        slug: slug,
+                    });
+                }
+            }
+            console.log(slug + "\n")
+            console.log("OKE :",title,author,image,content,slug);
             const updatedBlog = await Blog.findByIdAndUpdate(
                 req.params.id,
                 {
@@ -203,6 +219,7 @@ class AdminService {
                     author: author,
                     image: image,
                     content: content,
+                    slug: slug,
                 },
                 { new: true },
             );
