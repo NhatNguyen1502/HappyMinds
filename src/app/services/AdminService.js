@@ -107,8 +107,6 @@ class AdminService {
         const page = parseInt(req.query.page) || 1;
         const perPage = 5;
         Food.find({})
-            // .skip((page - 1) * perPage)
-            // .limit(perPage)
             .then((foods) => {
                 console.log(foods.length);
                 res.render('admin-food', {
@@ -120,24 +118,26 @@ class AdminService {
             });
     };
 
-    updateFood = async (req, res) => {
-        try {
-            const { name, description, calo, img } = req.body;
-            const updatedFood = await Food.findByIdAndUpdate(
-                req.params.id,
-                {
-                    name: name,
-                    description: description,
-                    calo: calo,
-                    img: img,
-                },
-                { new: true },
-            );
-            res.redirect('/admin/admin-food');
-        } catch (err) {
-            console.log(err);
-        }
-    };
+	updateFood = async (req, res) => {
+		try {
+			const { id, name, description, calo, img, category } = req.body;
+			const updatedFood = await Food.findByIdAndUpdate(
+				req.body.id,
+				{
+					name: name,
+					description: description,
+					calo: calo,
+					img: img,
+                    category: category,
+				},
+				{ new: true }
+			);
+			res.redirect("/admin/admin-food");
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 
     deleteFood = async (req, res) => {
         const id = req.params.id;
