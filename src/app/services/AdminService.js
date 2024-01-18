@@ -1,59 +1,127 @@
-import Video from '../models/Video.js';
-import User from '../models/User.js';
-import Food from '../models/Food.js';
-import Blog from '../models/Blog.js';
-import Comment from '../models/Comment.js';
-import { multipleMongooesToOject } from '../../util/mongoose.js';
-import { response } from 'express';
+import Video from "../models/Video.js";
+import User, { ActivityStatus, BMR } from "../models/User.js";
+import Food from "../models/Food.js";
+import Blog from "../models/Blog.js";
+import { generateTitle } from "../../util/generateSlug.js";
+import { removeVietnameseTones } from "../../util/generateSlug.js";
+import { Slug } from "../../util/generateSlug.js";
+import Comment from "../models/Comment.js";
+import { multipleMongooesToOject } from "../../util/mongoose.js";
 
 class AdminService {
-	createVideo = async (req, res) => {
-		const formData = req.body;
-		formData.image = `https://i.ytimg.com/vi/${req.body.videoId}/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLA3BDVGf8B0taC4h-qjJm4wYxbnsw`;
-		const saveVideo = await Video.create(formData);
-		saveVideo
-			.save()
-			.then(() => res.redirect("/admin/admin-video"))
-			.catch((err) => console.log(err));
-	};
-	createUser = async (req, res) => {
-		const formData = req.body;
-		const saveUser = await User.create(formData);
-		saveUser
-			.save()
-			.then(() => res.redirect("/admin/admin-user"))
-			.catch((err) => console.log(err));
-	};
-	createFood = async (req, res) => {
-		const formData = req.body;
-		const saveFood = await Food.create(formData);
-		saveFood
-			.save()
-			.then(() => res.redirect("/admin/admin-food"))
-			.catch((err) => console.log(err));
-	};
-	createBlog = async (req, res) => {
-		const formData = req.body;
-		const saveBlog = await Blog.create(formData);
-		saveBlog
-			.save()
-			.then(() => res.redirect("/admin/admin-blog"))
-			.catch((err) => console.log(err));
-	};
-	showVideos = async (req, res) => {
-		const page = parseInt(req.query.page) || 1;
-		const perPage = 10;
-		Video.find({})
-			// .skip((page - 1) * perPage)
-			// .limit(perPage)
-			.then((videos) => {
-				res.render("admin-video", {
-					videos: multipleMongooesToOject(videos),
-					layout: "admin.hbs",
-					title: "ADMIN-VIDEO",
-				});
-			});
-	};
+    createVideo = async (req, res) => {
+        const formData = req.body;
+        formData.image = `https://i.ytimg.com/vi/${req.body.videoId}/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLA3BDVGf8B0taC4h-qjJm4wYxbnsw`;
+        const saveVideo = await Video.create(formData);
+        saveVideo
+            .save()
+            .then(() => res.redirect("/admin/admin-video"))
+            .catch((err) => console.log(err));
+    };
+    createUser = async (req, res) => {
+      const createData = {
+        ...(req.file?.path && { photoUrl: req.file.path }),
+        ...req.body,
+      };
+      let requiredCaloriesAmount = 0;
+      if (createData.sex == "Male") {
+        requiredCaloriesAmount =
+          (10 * createData.weight +
+            6.25 * createData.height -
+            5 * createData.age +
+            5) *
+          BMR[createData.pal];
+      } else {
+        requiredCaloriesAmount =
+          (10 * createData.weight +
+            6.25 * createData.height -
+            5 * createData.age -
+            161) *
+          BMR[createData.pal];
+      }
+  
+      const bmi =
+        createData.height === 0
+          ? 0
+          : (createData.weight / (createData.height / 100) ** 2).toFixed(2);
+  
+      const currentDate = new Date();
+  
+      const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1
+        }/${currentDate.getFullYear()}`;
+  
+      const BMIchange = [{ date: cDate, value: parseFloat(bmi) }];
+  
+      const formData = { ...createData, BMIchange, requiredCaloriesAmount };
+      const saveUser = await User.create(formData);
+      saveUser
+        .save()
+        .then(() => res.redirect("/admin/admin-user"))
+        .catch((err) => console.log(err));
+    };
+    updateUserStatus(req, res) {
+      User.updateOne(
+        { _id: req.params.id },
+        { $set: { status: req.params.status } }
+      )
+        .then((result) =>
+          res.json({ success: true, message: "Cập nhật thành công" })
+        )
+        .catch((error) =>
+          res.status(500).json({ success: false, message: "Lỗi cập nhật" })
+        );
+    }
+    createFood = async (req, res) => {
+        const formData = req.body;
+        const saveFood = await Food.create(formData);
+        saveFood
+            .save()
+            .then(() => res.redirect("/admin/admin-food"))
+            .catch((err) => console.log(err));
+    };
+    createBlog = async (req, res) => {
+        let formData = req.body;
+        formData.title = generateTitle(req.body.title);
+        console.log(formData.title = generateTitle(req.body.title));
+
+        let oldSlug = removeVietnameseTones(req.body.title);
+        console.log(oldSlug)
+        let newSlug = Slug.generateSlug(oldSlug);
+        console.log(newSlug);
+        formData.slug = newSlug;
+        let checkSlug = await Blog.countDocuments({ slug: newSlug });
+        if (checkSlug > 0) {
+            let i = 1;
+            while (checkSlug > 0) {
+                oldSlug += '-' + i++;
+                newSlug = Slug.generateSlug(oldSlug);
+                checkSlug = await Blog.countDocuments({
+                    slug: newSlug,
+                });
+            }
+        }
+        formData.slug = newSlug;
+        console.log(formData.slug)
+        const saveBlog = await Blog.create(formData);
+        console.log(formData)
+        saveBlog
+            .save()
+            .then(() => res.redirect("/admin/admin-blog"))
+            .catch((err) => console.log(err));
+    };
+    showVideos = async (req, res) => {
+        const page = parseInt(req.query.page) || 1;
+        const perPage = 10;
+        Video.find({})
+            .then((videos) => {
+                res.render("admin-video", {
+                    videos: multipleMongooesToOject(videos),
+                    layout: "admin.hbs",
+                    title: "ADMIN-VIDEO",
+                });
+            });
+    };
+
 
     updateVideo = async (req, res) => {
         try {
@@ -88,6 +156,7 @@ class AdminService {
         }
     };
 
+
     deleteVideo = async (req, res) => {
         const id = req.params.id;
         try {
@@ -102,13 +171,12 @@ class AdminService {
         }
     };
 
+
     showFoods = async (req, res) => {
         const totalItems = await Food.countDocuments();
         const page = parseInt(req.query.page) || 1;
         const perPage = 5;
         Food.find({})
-            // .skip((page - 1) * perPage)
-            // .limit(perPage)
             .then((foods) => {
                 console.log(foods.length);
                 res.render('admin-food', {
@@ -120,24 +188,27 @@ class AdminService {
             });
     };
 
-    updateFood = async (req, res) => {
-        try {
-            const { name, description, calo, img } = req.body;
-            const updatedFood = await Food.findByIdAndUpdate(
-                req.params.id,
-                {
-                    name: name,
-                    description: description,
-                    calo: calo,
-                    img: img,
-                },
-                { new: true },
-            );
-            res.redirect('/admin/admin-food');
-        } catch (err) {
-            console.log(err);
-        }
-    };
+	updateFood = async (req, res) => {
+		try {
+			const { id, name, description, calo, img, category } = req.body;
+			const updatedFood = await Food.findByIdAndUpdate(
+				req.body.id,
+				{
+					name: name,
+					description: description,
+					calo: calo,
+					img: img,
+                    category: category,
+				},
+				{ new: true }
+			);
+			res.redirect("/admin/admin-food");
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+
 
     deleteFood = async (req, res) => {
         const id = req.params.id;
@@ -153,6 +224,7 @@ class AdminService {
         }
     };
 
+
     showBlog(req, res) {
         Blog.find({}).then((blog) => {
             res.render('admin-blog', {
@@ -163,15 +235,33 @@ class AdminService {
         });
     }
 
+
     updateBlog = async (req, res) => {
         try {
-            const { content, image, title, slug } = req.body;
+            const { title, author, image, content} = req.body;
+            let oldSlug = generateTitle(req.body.title);
+            let newSlug = removeVietnameseTones(req.body.title);
+            let slug = Slug.generateSlug(newSlug);
+            let checkSlug = await Blog.countDocuments({ slug: slug });
+            if (checkSlug > 0) {
+                let i = 1;
+                while (checkSlug > 0) {
+                    newSlug += '-' + i++;
+                    slug = Slug.generateSlug(newSlug);
+                    checkSlug = await Blog.countDocuments({
+                        slug: slug,
+                    });
+                }
+            }
+            console.log(slug + "\n")
+            console.log("OKE :",title,author,image,content,slug);
             const updatedBlog = await Blog.findByIdAndUpdate(
                 req.params.id,
                 {
-                    content: content,
-                    image: image,
                     title: title,
+                    author: author,
+                    image: image,
+                    content: content,
                     slug: slug,
                 },
                 { new: true },
@@ -181,6 +271,7 @@ class AdminService {
             console.log(err);
         }
     };
+
 
     deleteBlog = async (req, res) => {
         const id = req.params.id;
@@ -196,16 +287,18 @@ class AdminService {
         }
     };
 
+
     showUsers(req, res) {
         User.find({}).then((users) => {
-            console.log(users.length);
             res.render('admin-user', {
                 users: multipleMongooesToOject(users),
                 layout: 'admin.hbs',
                 title: 'ADMIN-USER',
+                ActivityStatus: ActivityStatus,
             });
         });
     }
+
 
     showComments(req, res) {
         Comment.find({}).then((comments) => {
@@ -216,6 +309,7 @@ class AdminService {
             });
         });
     }
+
 
     updateComment = async (req, res) => {
         try {
@@ -232,6 +326,7 @@ class AdminService {
         }
     };
 
+
     deleteComment = async (req, res) => {
         const id = req.params.id;
         try {
@@ -242,6 +337,7 @@ class AdminService {
             console.log(err);
         }
     };
+
 
     deleteUser = async (req, res) => {
         const id = req.params.id;

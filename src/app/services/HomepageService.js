@@ -6,7 +6,6 @@ class HomepageService {
     async index(req, res) {
         try {
             const isLogin = req.isAuthenticated();
-
             const videos = await Video.find({});
             const blogsData = await blog.find({});
             const blogs = multipleMongooesToOject(blogsData);

@@ -31,6 +31,8 @@ handlebars.registerHelper({
         value1 === value2 ? options.fn(this) : options.inverse(this),
     isSelected: (currentValue, targetValue) =>
         currentValue === targetValue ? 'selected' : '',
+    isBMI: (bmiChange) => 
+        bmiChange.length > 0 ? bmiChange[bmiChange.length - 1].value : '0',
     json: (context) => JSON.stringify(context),
     sum: (a, b) => a + b,
     subtract: (a, b) => a - b,

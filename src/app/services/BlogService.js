@@ -1,4 +1,4 @@
-import Blog from '../models/Blog.js';
+import Blog from '../models/Blog.js'
 import Comment from '../models/Comment.js';
 import { Slug } from '../../util/generateSlug.js';
 import { generateTitle } from '../../util/generateSlug.js';
@@ -28,7 +28,6 @@ class BlogService {
                 });
         });
     }
-    J;
 
     showPanigation(req, res) {
         const currentPage = parseInt(req.query.page);
@@ -106,11 +105,9 @@ class BlogService {
             try {
                 let formData = req.body;
                 formData.title = generateTitle(req.body.title);
-                console.log(formData);
                 let oldSlug = removeVietnameseTones(req.body.title);
                 let newSlug = Slug.generateSlug(oldSlug);
                 let checkSlug = await Blog.countDocuments({ slug: newSlug });
-
                 if (checkSlug > 0) {
                     let i = 1;
                     while (checkSlug > 0) {

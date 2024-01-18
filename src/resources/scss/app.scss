@@ -472,3 +472,17 @@ h2 {
     border-radius: 0.2rem;
     border: none;
 }
+// Hidden text content > 3 line
+.content_cell {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ---------------------------------ADMIN FOOD------------------------------------------------- */
+.error {
+    border-color: red;
+    box-shadow: 0 0 5px red;
+}
