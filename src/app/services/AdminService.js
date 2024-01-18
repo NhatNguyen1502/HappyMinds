@@ -1,5 +1,5 @@
 import Video from "../models/Video.js";
-import User from "../models/User.js";
+import User, { ActivityStatus, BMR } from "../models/User.js";
 import Food from "../models/Food.js";
 import Blog from "../models/Blog.js";
 import { generateTitle } from "../../util/generateSlug.js";
@@ -19,13 +19,58 @@ class AdminService {
             .catch((err) => console.log(err));
     };
     createUser = async (req, res) => {
-        const formData = req.body;
-        const saveUser = await User.create(formData);
-        saveUser
-            .save()
-            .then(() => res.redirect("/admin/admin-user"))
-            .catch((err) => console.log(err));
+      const createData = {
+        ...(req.file?.path && { photoUrl: req.file.path }),
+        ...req.body,
+      };
+      let requiredCaloriesAmount = 0;
+      if (createData.sex == "Male") {
+        requiredCaloriesAmount =
+          (10 * createData.weight +
+            6.25 * createData.height -
+            5 * createData.age +
+            5) *
+          BMR[createData.pal];
+      } else {
+        requiredCaloriesAmount =
+          (10 * createData.weight +
+            6.25 * createData.height -
+            5 * createData.age -
+            161) *
+          BMR[createData.pal];
+      }
+  
+      const bmi =
+        createData.height === 0
+          ? 0
+          : (createData.weight / (createData.height / 100) ** 2).toFixed(2);
+  
+      const currentDate = new Date();
+  
+      const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1
+        }/${currentDate.getFullYear()}`;
+  
+      const BMIchange = [{ date: cDate, value: parseFloat(bmi) }];
+  
+      const formData = { ...createData, BMIchange, requiredCaloriesAmount };
+      const saveUser = await User.create(formData);
+      saveUser
+        .save()
+        .then(() => res.redirect("/admin/admin-user"))
+        .catch((err) => console.log(err));
     };
+    updateUserStatus(req, res) {
+      User.updateOne(
+        { _id: req.params.id },
+        { $set: { status: req.params.status } }
+      )
+        .then((result) =>
+          res.json({ success: true, message: "Cập nhật thành công" })
+        )
+        .catch((error) =>
+          res.status(500).json({ success: false, message: "Lỗi cập nhật" })
+        );
+    }
     createFood = async (req, res) => {
         const formData = req.body;
         const saveFood = await Food.create(formData);
@@ -68,8 +113,6 @@ class AdminService {
         const page = parseInt(req.query.page) || 1;
         const perPage = 10;
         Video.find({})
-            // .skip((page - 1) * perPage)
-            // .limit(perPage)
             .then((videos) => {
                 res.render("admin-video", {
                     videos: multipleMongooesToOject(videos),
@@ -247,11 +290,11 @@ class AdminService {
 
     showUsers(req, res) {
         User.find({}).then((users) => {
-            console.log(users.length);
             res.render('admin-user', {
                 users: multipleMongooesToOject(users),
                 layout: 'admin.hbs',
                 title: 'ADMIN-USER',
+                ActivityStatus: ActivityStatus,
             });
         });
     }

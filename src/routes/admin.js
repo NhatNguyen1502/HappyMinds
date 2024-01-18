@@ -11,7 +11,7 @@ router.get('/admin-blog', adminController.showBlog);
 router.get('/admin-user', adminController.showUsers);
 router.get('/admin-comment', adminController.showComments);
 router.post('/video', adminController.createVideo);
-router.post('/user', adminController.createUser);
+router.post('/user', fileUploader.single('photoUrl'), adminController.createUser);
 router.post('/food', adminController.createFood);
 router.post('/blog', adminController.createBlog);
 
@@ -39,6 +39,6 @@ router.post(
 
 router.delete('/delete-comment/:id', adminController.deleteComment);
 
-router.post('/delete-user/:id', adminController.deleteUser);
+router.post('/update-user-status/:id/:status', adminController.updateUserStatus);
 
 export default router;
