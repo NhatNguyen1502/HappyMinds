@@ -95,16 +95,19 @@
                                 <p class="m-0 py-2 fs-5 fw-bold">Chiều cao (cm): </p>
                                 <input class="formInput col-lg-12 p-2" type="text" name="height" id="heightInput"
                                     class="" placeholder="Nhập chiều cao ">
+                                <small class="form-text text-danger" id="heightError"></small>
                             </div>
                             <div class="changeWeight col-lg-4">
                                 <p class="m-0 py-2 fs-5 fw-bold">Cân nặng (kg): </p>
                                 <input class="formInput col-lg-12 p-2" type="text" name="weight" id="weightInput"
                                     class="" placeholder="Nhập cân nặng">
+                                <small class="form-text text-danger" id="weightError"></small>
                             </div>
                             <div class="changeAge col-lg-4">
                                 <p class="m-0 py-2 fs-5 fw-bold">Tuổi: </p>
                                 <input class="formInput col-lg-12 p-2" type="text" name="age" id="ageInput" class=""
                                     placeholder="Nhập tuổi">
+                                <small class="form-text text-danger" id="ageError"></small>
                             </div>
                         </div>
                     </div>
@@ -314,7 +317,7 @@
 
 <script src="/js/user.js"></script>
 <script>
-    if(!{{{isLogin}}}) {
+    if(!{{{ isLogin }}}) {
         alert('Vui lòng đăng nhập!');
         location.href = '/';
     }

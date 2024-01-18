@@ -4,6 +4,7 @@ import Food from '../models/Food.js';
 import { multipleMongooesToOject } from '../../util/mongoose.js';
 
 class UserService {
+
     async index(req, res) {
         let isLogin = false;
         if (req.isAuthenticated()) {
@@ -26,7 +27,7 @@ class UserService {
                     }
 
                     const videos = await Video.find({ BMItype: bmiType }).lean();
-                    let arr = categorizeVideosByTime(videos);
+                    let arr = categorizeVideosByRep(videos);
                     const shortVideos = arr[0];
                     const mediumVideos = arr[1];
                     const longVideos = arr[2];
@@ -90,6 +91,15 @@ class UserService {
         }
     };
 
+    getUser = async (payload) => {
+        try {
+            const user = await User.findOne({ email: payload });
+            return user;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     getUserById(req, res) {
         let id = req.query.id;
         User.findOne({ _id: id })
@@ -141,6 +151,7 @@ class UserService {
                     5 * updateData.age +
                     5) *
                 BMR[updateData.pal];
+
         } else {
             updateData.requiredCaloriesAmount =
                 (10 * updateData.weight +
@@ -155,9 +166,8 @@ class UserService {
             (updateData.height / 100) ** 2
         ).toFixed(2);
         const currentDate = new Date();
-        const cDate = `${currentDate.getDate()}/${
-            currentDate.getMonth() + 1
-        }/${currentDate.getFullYear()}`;
+        const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1
+            }/${currentDate.getFullYear()}`;
 
         User.findOne({ email: req.user.email })
             .lean()
@@ -233,125 +243,30 @@ class UserService {
     }
 }
 
-function findBestSubarrays(videos, targetCalories) {
-    let result = [];
-    let seenSubarrays = new Set();
-    let memo = new Map();
+function categorizeVideosByRep(videos) {
+    const repRanges = {
+        short: 10,
+        long: 15,
+    };
 
-    function hashSubarray(subarray) {
-        return subarray.map((video) => video._id.toString()).join(',');
-    }
-
-    function deepCopy(obj) {
-        return JSON.parse(JSON.stringify(obj));
-    }
-
-    function backtrack(
-        startIndex,
-        currentSubarray,
-        currentSum,
-        currentDifference,
-        elementCount,
-    ) {
-        if (elementCount >= 4) {
-            const subarrayHash = hashSubarray(currentSubarray);
-            if (
-                !seenSubarrays.has(subarrayHash) &&
-                currentDifference < targetCalories
-            ) {
-                seenSubarrays.add(subarrayHash);
-                result.push(currentSubarray.map((video) => deepCopy(video)));
-            }
-        }
-
-        if (startIndex >= videos.length) {
-            return;
-        }
-
-        const memoKey = `${startIndex}_${currentSum}_${elementCount}`;
-        if (memo.has(memoKey)) {
-            return;
-        }
-
-        for (let i = startIndex; i < videos.length; i++) {
-            currentSubarray.push(deepCopy(videos[i]));
-            const newSum = currentSum + videos[i].caloriesAmount;
-            const newDifference = Math.abs(newSum - targetCalories);
-
-            backtrack(
-                i + 1,
-                currentSubarray,
-                newSum,
-                newDifference,
-                elementCount + 1,
-            );
-
-            currentSubarray.pop();
-        }
-
-        memo.set(memoKey, true);
-    }
-
-    backtrack(0, [], 0, Number.MAX_SAFE_INTEGER, 0);
-
-    result = result.sort((a, b) => {
-        const sumA = a.reduce((sum, video) => sum + video.caloriesAmount, 0);
-        const sumB = b.reduce((sum, video) => sum + video.caloriesAmount, 0);
-        return (
-            Math.abs(sumA - targetCalories) - Math.abs(sumB - targetCalories)
-        );
-    });
-
-    return result;
-}
-
-function calculateTotalDuration(arr) {
-    let totalDuration = 0;
-
-    for (let i = 0; i < arr.length; i++) {
-        totalDuration += arr[i].duration;
-    }
-
-    return totalDuration;
-}
-
-function calculateTotalCaloriesAmount(arr) {
-    let totalCaloriesAmount = 0;
-
-    for (let i = 0; i < arr.length; i++) {
-        totalCaloriesAmount += arr[i].caloriesAmount;
-    }
-
-    return totalCaloriesAmount;
-}
-
-function categorizeVideosByTime(videos) {
-    const calculateScore = (video) => video.rep * video.duration;
-    const totalScore = videos.reduce(
-        (total, video) => total + calculateScore(video),
-        0,
-    );
-    const averageScore = totalScore / videos.length;
-    const plusMeanRange = averageScore + averageScore / 2;
-    const minusMeanRange = averageScore - averageScore / 2;
-
-    const shortVideos = [],
-        mediumVideos = [],
-        longVideos = [];
+    const shortVideos = [];
+    const mediumVideos = [];
+    const longVideos = [];
 
     videos.forEach((video) => {
-        const score = calculateScore(video);
+        const rep = video.rep;
 
-        if (score <= minusMeanRange) {
+        if (rep <= repRanges.short) {
             shortVideos.push(video);
-        } else if (score >= plusMeanRange) {
-            longVideos.push(video);
-        } else {
+        } else if (rep > repRanges.short && rep < repRanges.long) {
             mediumVideos.push(video);
+        } else {
+            longVideos.push(video);
         }
     });
 
     return [shortVideos, mediumVideos, longVideos];
 }
+
 
 export default new UserService();

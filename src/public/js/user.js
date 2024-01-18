@@ -17,19 +17,21 @@ function renderInf() {
 }
 function update() {
     event.preventDefault();
-    $('#formUpdateModal').modal('hide');
-    var form = $('#updateForm')[0];
-    var formData = new FormData(form);
-    axios
-        .post('http://localhost:3000/user', formData)
-        .then(function (response) {
-            user = response.data;
-            BMIchart(user);
-            renderInf();
-        })
-        .catch(function (error) {
-            console.error('Error:', error);
-        });
+    if (validateForm()) {
+        $('#formUpdateModal').modal('hide');
+        var form = $('#updateForm')[0];
+        var formData = new FormData(form);
+        axios
+            .post('http://localhost:3000/user', formData)
+            .then(function (response) {
+                user = response.data;
+                BMIchart(user);
+                renderInf();
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+    }
 }
 
 function displayImage() {
@@ -82,25 +84,20 @@ function renderFoodMenu(foods) {
     foods.forEach((food) => {
         menuContent += `
             <tr class="row bg-light p-2">
-                <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${
-                    food.name
-                }
+                <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${food.name
+            }
                 </td>
                 <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">
-                    <img src="${
-                        food.img
-                    }" alt="" style="width: 80px; height: 70px;">
+                    <img src="${food.img
+            }" alt="" style="width: 80px; height: 70px;">
                 </td>
-                <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${
-                    food.calo
-                }
+                <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${food.calo
+            }
                 </td>
-                <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${
-                    food.grams || 0
-                }</td>
-                <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${
-                    food.totalCalories
-                }
+                <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${food.grams || 0
+            }</td>
+                <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">${food.totalCalories
+            }
                 </td>
                 <td class="col-lg-2  fs-5 p-0 d-flex align-items-center justify-content-center">
                     ${food.category}
@@ -133,4 +130,26 @@ function removeFromMenu(idFood) {
     axios.post(`food/remove?id=${idFood}`).then((res) => {
         renderFoodMenu(res.data.userMenu);
     });
+}
+
+function validateItem(notificationError, inputId) {
+    var input = document.getElementById(inputId);
+    var error = document.getElementById(notificationError);
+
+    if (!input.value.trim() || isNaN(parseFloat(input.value.trim())) || parseFloat(input.value.trim()) <= 0) {
+        error.textContent = 'Please enter a valid positive number';
+        input.classList.add('is-invalid');
+        return false;
+    } else {
+        error.textContent = '';
+        input.classList.remove('is-invalid');
+        return true;
+    }
+}
+
+function validateForm() {
+    var isTitleValid = validateItem('heightError', 'heightInput');
+    var isCaloValid = validateItem('weightError', 'weightInput');
+    var isVideoValid = validateItem('ageError', 'ageInput');
+    return isTitleValid && isCaloValid && isVideoValid;
 }

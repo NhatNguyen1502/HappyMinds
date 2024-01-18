@@ -6,7 +6,10 @@ function calculateDuration() {
         var durationValue = parseInt(element.getAttribute('data-duration'));
         durations += durationValue;
     });
-    document.getElementById('time_viewcoach').innerText = durations;
+
+    secondsToMinutes(durations);
+
+    return durations;
 }
 
 function calculateCalo() {
@@ -30,6 +33,20 @@ function calculatteLesson() {
     document.getElementById('lesson_viewcoach').innerText = totalLesson;
 }
 
+function secondsToMinutes(seconds) {
+    if (typeof seconds !== 'number' || isNaN(seconds)) {
+        return 'Invalid input';
+    }
+
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    const formattedTime = `${minutes}m ${remainingSeconds}s`;
+    
+    document.getElementById('time_viewcoach').innerText = formattedTime;
+
+    return formattedTime;
+}
 document.addEventListener('DOMContentLoaded', function () {
     calculatteLesson();
     calculateCalo();
