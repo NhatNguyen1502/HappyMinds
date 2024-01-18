@@ -12,28 +12,47 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <form method="post" action="/admin/food">
+                    <form method="post" action="/admin/food" id="createForm">
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="name" class="col-form-label">Name:</label>
-                                <input type="text" class="form-control" id="name" name="name" value="">
+                                <input type="text" oninput="clearError(this)" class="form-control" id="nameCreate" name="name" value="">
+                                <small class="text-danger d-none" id="errorNameCreate">Vui lòng nhập tên món ăn!</small>
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="col-form-label">Description:</label>
-                                <input type="text" class="form-control" id="description" name="description">
+                                <input type="text" oninput="clearError(this)" class="form-control" id="descriptionCreate" name="description">
+                                <small class="text-danger d-none" id="errorDescriptionCreate">Vui lòng nhập mô tả món ăn!</small>
+
                             </div>
                             <div class="mb-3">
                                 <label for="img" class="col-form-label">Image:</label>
-                                <input type="url" class="form-control" id="img" name="img"></input>
+                                <input type="url" oninput="clearError(this)" class="form-control" id="imgCreate" name="img"></input>
+                                <small class="text-danger d-none" id="errorImgCreate">Vui lòng nhập đường dẫn hình ảnh món ăn!</small>
+
+                            </div>
+                            <div class="mb-3">
+                                <label for="categoryCreate" class="col-form-label">Phân loại:</label>
+                                <select class="form-select" id="categoryCreate" name="category">
+                                    <option value="Thịt">Thịt</option>
+                                    <option value="Hải sản">Hải sản</option>
+                                    <option value="Hoa quả">Hoa quả</option>
+                                    <option value="Rau củ">Rau củ</option>
+                                    <option value="Hạt">Hạt</option>
+                                    <option value="Tinh bột">Tinh bột</option>
+                                    <option value="Sữa">Sữa</option>
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label for="calo" class="col-form-label">Calo:</label>
-                                <input type="number" class="form-control" id="calo" name="calo"></input>
+                                <input type="number" oninput="clearError(this)" class="form-control" id="caloCreate" name="calo"></input>
+                                <small class="text-danger d-none" id="errorCaloCreate">Vui lòng nhập đúng số calo món ăn!</small>
+
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button id="createButton" class="btn btn-primary">Create</button>
                         </div>
                     </form>
                 </div>
@@ -48,6 +67,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Image</th>
+                <th>Category</th>
                 <th>Calo</th>
                 <th>Action</th>
             </tr>
@@ -58,6 +78,7 @@
                 <th>{{this.name}}</th>
                 <th>{{this.description}}</th>
                 <th style="width: 20%;"><img src="{{this.img}}" alt="" style="width: 70%"></th>
+                <th style="width: 5%;">{{this.category}}</th>
                 <th>{{this.calo}}</th>
                 <th width="150px">
                     {{!-- BUTTON DELETE --}}
@@ -76,7 +97,7 @@
                     {{!-- BUTTON UPDATE --}}
                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateModal"
                         data-bs-whatever="@getbootstrap"
-                        onclick="updateForm('{{this._id}}', '{{this.name}}', '{{this.description}}', '{{this.calo}}', '{{this.img}}')">
+                        onclick="updateForm('{{this._id}}', '{{this.name}}', '{{this.description}}', '{{this.calo}}', '{{this.img}}','{{this.category}}')">
                         <span class="icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24px" height="24px"
                                 color="white" viewBox="0 0 35 35" fill="none">
@@ -109,26 +130,43 @@
 
                 <form method="post" id="updateForm" action="">
                     <div class="modal-body">
+                        <input type="hidden" class="form-control" id="idUpdate" name="id" value="">
                         <div class="mb-3">
-                            <label for="name" class="col-form-label">Name:</label>
-                            <input type="text" class="form-control" id="updateName" name="name" value="">
+                            <label for="name" class="col-form-label">Tên:</label>
+                            <input type="text" oninput="clearError(this)" class="form-control" id="updateName" name="name" value="">
+                            <small class="text-danger d-none" id="errorName">Vui lòng nhập tên món ăn!</small>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="col-form-label">Description:</label>
-                            <input type="text" class="form-control" id="updateDescription" name="description">
+                            <label for="description" class="col-form-label">Mô tả:</label>
+                            <input type="text" oninput="clearError(this)" class="form-control" id="updateDescription" name="description">
+                            <small class="text-danger d-none" id="errorDescription">Vui lòng nhập miêu tả của món ăn!</small>
                         </div>
                         <div class="mb-3">
-                            <label for="img" class="col-form-label">Image:</label>
-                            <input type="url" class="form-control" id="updateImg" name="img"></input>
+                            <label for="img" class="col-form-label">Hình ảnh:</label>
+                            <input type="url" oninput="clearError(this)" class="form-control" id="updateImg" name="img"></input>
+                            <small class="text-danger d-none" id="errorImg">Vui lòng nhập link hình ảnh của món ăn!</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateCategory" class="col-form-label">Phân loại:</label>
+                            <select class="form-select" id="updateCategory" name="category">
+                                <option value="Thịt">Thịt</option>
+                                <option value="Hải sản">Hải sản</option>
+                                <option value="Hoa quả">Hoa quả</option>
+                                <option value="Rau củ">Rau củ</option>
+                                <option value="Hạt">Hạt</option>
+                                <option value="Tinh bột">Tinh bột</option>
+                                <option value="Sữa">Sữa</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="calo" class="col-form-label">Calo:</label>
-                            <input type="number" class="form-control" id="updateCalo" name="calo"></input>
+                            <input type="number" oninput="clearError(this)" class="form-control" id="updateCalo" name="calo"></input>
+                            <small class="text-danger d-none" id="errorCalo">Vui lòng nhập số calo</small>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button id="updateButton" class="btn btn-primary">Cập nhật</button>
                     </div>
                 </form>
             </div>
@@ -137,12 +175,96 @@
 </div>
 {{!-- DISPLAY DATA & DELETE--}}
 <script>
-    function updateForm(id, name, description, calo, img) {
-        document.getElementById('updateForm').action = '/admin/update-food/' + id;
+    document.getElementById('updateButton').addEventListener('click', function () {
+        var check = false;
+        document.querySelectorAll('.text-danger').forEach( tag => tag.classList.add('d-none'));
+        var form = document.getElementById('updateForm');
+        var formData = new FormData(form);
+        var data = [...formData];
+        if(data[1][1] == ''){
+            document.getElementById('errorName').classList.remove('d-none');
+            document.getElementById('updateName').classList.add('error');
+            check = true;
+        }
+        if(data[2][1] == ''){
+            document.getElementById('errorDescription').classList.remove('d-none');
+            document.getElementById('updateDescription').classList.add('error');
+            check = true;
+        }
+        if(data[3][1] == ''){
+            document.getElementById('errorImg').classList.remove('d-none');
+            document.getElementById('updateImg').classList.add('error');
+            check = true;
+        }
+        if(data[5][1] == '' || isNaN(data[5][1]) || parseInt(data[5][1]) < 0 ){
+            document.getElementById('errorCalo').classList.remove('d-none');
+            document.getElementById('updateCalo').classList.add('error');
+            check = true;
+        }
+        if (check) {
+            event.preventDefault();
+        }
+        else{
+            const dataObject = {};
+            data.forEach(([key, value]) => {
+                dataObject[key] = value;
+            });
+            
+            axios.post('/admin/admin-food?id=${id}', dataObject)
+            .then(function (response) {
+                user = response.data;
+                BMIchart(user);
+                renderInf();
+            })
+            .catch(function (error) {
+                console.error('Error:', error);
+            });
+        }
+    });
+
+    document.getElementById('createButton').addEventListener('click', function () {
+        var check = false;
+        var form = document.getElementById('createForm');
+        document.querySelectorAll('.text-danger').forEach( tag => tag.classList.add('d-none'));
+        var formData = new FormData(form);
+        var data = [...formData];
+        if(data[0][1] == ''){
+            document.getElementById('errorNameCreate').classList.remove('d-none');
+            document.getElementById('nameCreate').classList.add('error');
+            check = true;
+
+        }
+        if(data[1][1] == ''){
+            document.getElementById('errorDescriptionCreate').classList.remove('d-none');
+            document.getElementById('descriptionCreate').classList.add('error');
+            check = true;
+        }
+        if(data[2][1] == ''){
+            document.getElementById('errorImgCreate').classList.remove('d-none');
+            document.getElementById('imgCreate').classList.add('error');
+            check = true;
+        }
+        if(data[4][1] == '' || isNaN(data[4][1]) || parseInt(data[4][1]) < 0 ) {
+            document.getElementById('errorCaloCreate').classList.remove('d-none');
+            document.getElementById('caloCreate').classList.add('error');
+            check = true;
+        }
+        if (check) {
+            event.preventDefault();
+        }
+        else{
+            document.getElementById('createForm').submit();
+        }
+    });
+
+    function updateForm(id, name, description, calo, img, category) {
+        document.getElementById('idUpdate').value = id;
         document.getElementById('updateName').value = name;
         document.getElementById('updateDescription').value = description;
         document.getElementById('updateCalo').value = calo;
         document.getElementById('updateImg').value = img;
+        document.getElementById('updateCategory').value = category;
+
     }
     function deleteFood(id) {
         document.getElementById('deleteForm').action = '/admin/delete-food/' + id;
@@ -154,6 +276,10 @@
 
         // Thay đổi URL và tải lại trang
         window.location.href = newUrl.href;
+    }
+
+    function clearError(inputElement) {
+        inputElement.classList.remove('error');
     }
 
     function renderPaginationButtons(totalPages) {
