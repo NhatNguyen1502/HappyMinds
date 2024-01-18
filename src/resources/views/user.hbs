@@ -94,17 +94,20 @@
                             <div class="changeHeight col-lg-4">
                                 <p class="m-0 py-2 fs-5 fw-bold">Chiều cao (cm): </p>
                                 <input class="formInput col-lg-12 p-2" type="text" name="height" id="heightInput"
-                                    class="" placeholder="Nhập chiều cao ">
+                                    class="" placeholder="Nhập chiều cao " oninput="validateForm()">
+                                <small class="form-text text-danger" id="heightError"></small>
                             </div>
                             <div class="changeWeight col-lg-4">
                                 <p class="m-0 py-2 fs-5 fw-bold">Cân nặng (kg): </p>
                                 <input class="formInput col-lg-12 p-2" type="text" name="weight" id="weightInput"
-                                    class="" placeholder="Nhập cân nặng">
+                                    class="" placeholder="Nhập cân nặng" oninput="validateForm()">
+                                <small class="form-text text-danger" id="weightError"></small>
                             </div>
                             <div class="changeAge col-lg-4">
                                 <p class="m-0 py-2 fs-5 fw-bold">Tuổi: </p>
                                 <input class="formInput col-lg-12 p-2" type="text" name="age" id="ageInput" class=""
-                                    placeholder="Nhập tuổi">
+                                    placeholder="Nhập tuổi" oninput="validateForm()">
+                                <small class="form-text text-danger" id="ageError"></small>
                             </div>
                         </div>
                     </div>
@@ -172,7 +175,7 @@
                     <div class="card position-relative">
                         <img src="{{firstShortVideo.image}}" class="card-img-top" alt="...">
                         <span class="bg-danger text-light w-50 text-center rounded-0 position-absolute top-0 end-0 m-0"
-                            style="height:9%;">Short Vidoes</span>
+                            style="height:9.5%;">Short Vidoes</span>
                         <div class="card-body">
                             <h5 class="card-title"
                                 style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">
@@ -194,7 +197,7 @@
                     <div class="card position-relative">
                         <img src="{{firstMediumVideo.image}}" class="card-img-top" alt="...">
                         <span class="bg-danger text-light w-50 text-center rounded-0 position-absolute top-0 end-0 m-0"
-                            style="height:9%;">Medium Vidoes</span>
+                            style="height:9.5%;">Medium Vidoes</span>
                         <div class="card-body">
                             <h5 class="card-title">{{firstMediumVideo.title}}</h5>
                             <div class="d-flex justify-content-between">
@@ -214,7 +217,7 @@
                     <div class="card position-relative">
                         <img src="{{firstLongVideo.image}}" class="card-img-top" alt="...">
                         <span class="bg-danger text-light w-50 text-center rounded-0 position-absolute top-0 end-0 m-0"
-                            style="height:9%;">Long Vidoes</span>
+                            style="height:9.5%;">Long Vidoes</span>
                         <div class="card-body">
                             <h5 class="card-title">{{firstLongVideo.title}}</h5>
                             <div class="d-flex justify-content-between">
@@ -314,7 +317,7 @@
 
 <script src="/js/user.js"></script>
 <script>
-    if(!{{{isLogin}}}) {
+    if(!{{{ isLogin }}}) {
         alert('Vui lòng đăng nhập!');
         location.href = '/';
     }
