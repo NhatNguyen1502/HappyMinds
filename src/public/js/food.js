@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isDisableEng) {
             let sortKey = 'up';
             engFood.setAttribute('data-isDisable', false);
-            console.log(engFood.getAttribute('data-isDisable'));
             renderResultFilter();
             engFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
             engFood.style.color = 'white';
@@ -51,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
             engFood.style.backgroundColor = 'white';
             engFood.style.color = 'rgba(253, 0, 84, 1)';
             engFood.setAttribute('data-isDisable', true);
-            console.log(engFood.getAttribute('data-isDisable'));
         }
     });
 });
@@ -185,7 +183,6 @@ async function renderResultAdd(event, formID, elementID) {
 
 async function removeFromMenu(idFood) {
     await axios.post(`food/remove?id=${idFood}`).then((res) => {
-        console.log('removeFood');
         renderUserMenu(res.data.userMenu);
     });
 }
@@ -215,7 +212,6 @@ async function renderResultFilter() {
     let ctgrKeyword = document
         .getElementById('categoryFood')
         .getAttribute('data-keyword');
-    console.log(fvrStatus, engStatus, ctgrKeyword);
     await axios
         .get(
             `food/ultimateFilter?fvr=${fvrStatus}&eng=${engStatus}&keyword=${ctgrKeyword}`,
@@ -234,8 +230,6 @@ async function addToFavourite(idFood) {
 
 async function removeFromFavourite(idFood) {
     await axios.post(`food/unlike?id=${idFood}`).then((res) => {
-        // console.log("remove");
-        // console.log(res.data.food)
     });
 }
 
