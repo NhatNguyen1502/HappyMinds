@@ -20,9 +20,7 @@ class AdminController {
         AdminService.createVideo(req, res);
     }
 
-    createUser(req, res) {
-        AdminService.createUser(req, res);
-    }
+    createUser = AdminService.createUser;
 
     createFood(req, res) {
         AdminService.createFood(req, res);
@@ -64,9 +62,7 @@ class AdminController {
         AdminService.updateComment(req, res);
     }
 
-    deleteUser(req, res) {
-        AdminService.deleteUser(req, res);
-    }
+    updateUserStatus = AdminService.updateUserStatus;
 }
 
 export default new AdminController();

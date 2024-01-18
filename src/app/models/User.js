@@ -71,6 +71,11 @@ const User = new Schema(
             },
         ],
         photoUrl: { type: String },
+        status: {
+            type: String,
+            enum: ['Active', 'Unactive'],
+            default: 'Active',
+        }
     },
     {
         timestamps: true,
