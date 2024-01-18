@@ -181,7 +181,6 @@
         var form = document.getElementById('updateForm');
         var formData = new FormData(form);
         var data = [...formData];
-        alert(data)
         if(data[1][1] == ''){
             document.getElementById('errorName').classList.remove('d-none');
             document.getElementById('updateName').classList.add('error');
@@ -229,7 +228,6 @@
         document.querySelectorAll('.text-danger').forEach( tag => tag.classList.add('d-none'));
         var formData = new FormData(form);
         var data = [...formData];
-        alert(data)
         if(data[0][1] == ''){
             document.getElementById('errorNameCreate').classList.remove('d-none');
             document.getElementById('nameCreate').classList.add('error');
