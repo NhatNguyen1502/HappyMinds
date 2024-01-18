@@ -183,6 +183,13 @@ class VideoService {
         const videosReturn = JSON.parse(videoArrayJSON);
         res.render('viewcoach', { videosReturn, type, videoArrayJSON });
     }
+
+    viewcoach_Video_durations(req, res) {
+        const videoArrayJSON = req.body.array;
+        const type = req.params.Videoduration;
+        const videosReturn = JSON.parse(videoArrayJSON);
+        res.render('viewcoach', { videosReturn, type, videoArrayJSON });
+    }
 }
 
 export default new VideoService();

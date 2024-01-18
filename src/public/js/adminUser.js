@@ -17,7 +17,7 @@ function viewModal(
     document.getElementById("viewAge").value = age;
     document.getElementById("viewBMI").value = bmi;
     document.getElementById("viewRequirement").value = requiredCaloriesAmount;
-    document.getElementById("viewPhotoUrl").value = photoUrl;
+    document.getElementById("viewPhotoUrl").src = photoUrl;
 
     if (pal == ActivityStatus.SEDENTARY) {
         document.getElementById("View_Sedentary").checked = true;

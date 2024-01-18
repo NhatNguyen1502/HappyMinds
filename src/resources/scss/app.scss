@@ -1,4 +1,4 @@
-@import 'variables';
+ @import 'variables';
 .level,.more{
     color:$red;
     font-weight: 600;
@@ -387,8 +387,15 @@ h2 {
     padding-left: 5px ;
     border-right: 1px solid rgb(178, 178, 178);
     cursor: pointer;
-
 }
+
+.heart[data-isdisable='false']{
+    color: rgba(253, 0, 84, 1);
+}
+.heart[data-isdisable='true']{
+    color: white;
+}
+
 #add2Menu{
     cursor: pointer;
 }
@@ -396,6 +403,8 @@ h2 {
     width: 200px;
     height: 40px;
 }
+
+
 
 /* ---------------------------------UPGREADE USER UI------------------------------------------------- */
 .profile_picture{
@@ -462,4 +471,18 @@ h2 {
     color: #ffffff;
     border-radius: 0.2rem;
     border: none;
+}
+// Hidden text content > 3 line
+.content_cell {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ---------------------------------ADMIN FOOD------------------------------------------------- */
+.error {
+    border-color: red;
+    box-shadow: 0 0 5px red;
 }

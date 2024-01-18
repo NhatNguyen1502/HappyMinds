@@ -224,7 +224,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="viewPhotoUrl" class="col-form-label">Avatar:</label>
-                        <input type="text" class="form-control" id="viewPhotoUrl" name="viewPhotoUrl" disabled></input>
+                        <img class="border border-dark" id="viewPhotoUrl" style="width: 100%; height: auto; object-fit: contain;" alt="profile_picture">
                     </div>
                     <div class="mb-3 row">
                         <div class="col-6 ps-0">
@@ -245,5 +245,4 @@
 <script>
     let ActivityStatus = {{{ json ActivityStatus }}};
 </script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/adminUser.js"></script>
