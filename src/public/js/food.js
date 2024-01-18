@@ -84,7 +84,6 @@ function renderFoodList(food) {
                 <button class="border-0" style="background-color: white;" onclick="checkLoginFood(${isLogin}); renderResultAdd(event, 'formAdd2Menu${element._id}', '#grams${element._id}');">
                     <i class="bi bi-plus-square-fill fs-4" style="color: rgba(253, 0, 84, 1);"></i>
                 </button>
-            
               </form>
             </div>
            </div>
@@ -98,18 +97,18 @@ function renderUserMenu(userMenu) {
     let count = 0;
     let totalCalories = 0;
     userMenu.forEach((item) => {
-        item.totalGrams = item.totalGrams.toFixed(1);
+        item.totalGrams = parseInt(item.totalGrams);
         contentMenu += `
     <tr class="text-center fw-bold justify-content-center">
       <td class="menuRow">${item.name}</td>
       <td class="menuRow">${item.calo}</td>
       <td class="menuRow">${item.grams}</td>
-      <td class="menuRow">${item.totalCalories}</td>
-      <td class="menuRow" style="width: 100px; height: 40px;" onclick="removeFromMenu('${item._id}')"><i class="bi bi-trash3-fill p-1 px-2 rounded-2" style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i></td>
+      <td class="menuRow">${item.totalGrams}</td>
+      <td class="menuRow" style="width: 100px; height: 40px;" onclick="removeFromMenu('${item.id}')"><i class="bi bi-trash3-fill p-1 px-2 rounded-2" style="background-color: rgba(253, 0, 84, 1); color: white; cursor: pointer;"></i></td>
     </tr>
     `;
         count += 1;
-        totalCalories += parseInt(item.totalCalories);
+        totalCalories += parseInt(item.totalGrams);
     });
     document.getElementById('tblMenuUser').innerHTML = contentMenu;
     document.getElementById('menuItem').textContent = count;
@@ -153,7 +152,6 @@ async function renderResultSearch() {
 async function renderResultSort(keyword) {
     await axios.get(`food/sort?keyword=${keyword}`).then((res) => {
         renderFoodList(res.data.foods);
-        // console.log(res.data.foods)
     });
 }
 
@@ -162,19 +160,27 @@ async function renderResultAdd(event, formID, elementID) {
     form = document.getElementById(formID);
     id = form.querySelector('.idFood').value;
     grams = document.querySelector(elementID).value;
-    console.log(form, id, grams);
-    var formData = new FormData(form);
-    var data = [...formData];
-    const dataObject = {};
-    data.forEach(([key, value]) => {
-        dataObject[key] = value;
-    });
-    dataObject['grams'] = grams;
-    await axios.post(`food/add`, dataObject).then((res) => {
-        console.log('ngon rooif ');
-        renderFoodList(res.data.foods);
-        renderUserMenu(res.data.userMenu);
-    });
+    if(grams === '' || isNaN(grams)) { 
+        document.querySelector(elementID).value = '';
+        document.querySelector(elementID).focus();
+        document.querySelector(elementID).classList.add('error');
+        document.querySelector(elementID).classList.add('border-danger');
+    }
+    else{
+        var formData = new FormData(form);
+        var data = [...formData];
+        const dataObject = {};
+        data.forEach(([key, value]) => {
+            dataObject[key] = value;
+        });
+        dataObject['grams'] = grams;
+        await axios.post(`food/add`, dataObject).then((res) => {
+            renderFoodList(res.data.foods);
+            renderUserMenu(res.data.userMenu);
+    
+        });
+    }
+    
 }
 
 async function removeFromMenu(idFood) {

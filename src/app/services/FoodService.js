@@ -28,7 +28,6 @@ class FoodService {
                                 const gramFoodAray = choseFood.map(
                                     (food) => food.grams,
                                 );
-                                // console.log(choseFood);
                                 const foodLikedArray = user.foodLike;
                                 Food.find({ _id: { $in: idFoodArray } })
                                     .lean()
@@ -48,7 +47,7 @@ class FoodService {
                                                 return food;
                                             },
                                         );
-                                        // console.log(foodLikedArray)
+                                   
                                         let foodLikedArrayString =
                                             foodLikedArray.map(String);
                                         foods = foods.map((food) => {
@@ -64,8 +63,8 @@ class FoodService {
                                                 return food;
                                             }
                                         });
-                                        // console.log(userMenu)
-
+                                     
+                                        console.log(userMenu)
                                         res.render('food', {
                                             foods,
                                             isLogin,
@@ -111,23 +110,8 @@ class FoodService {
             isLogin = true;
             email = req.user.email;
         }
-        // Food.countDocuments().then((count) => {
-        //     const totalPages = Math.ceil(count / itemsPerPage);
-        //     Food.find({})
-        //         .lean()
-        //         .skip((currentPage - 1) * itemsPerPage)
-        //         .limit(itemsPerPage)
-        //         .then((foods) => {
-        //             res.json({ foods, totalPages });
-        //         })
-        //         .catch((err) => {
-        //             res.status(500).json({ err: 'ERROR!' });
-        //         });
-        // });
-
         Food.countDocuments()
             .then((count) => {
-                console.log(count);
                 const totalPages = Math.ceil(count / itemsPerPage);
                 Food.find({})
                     .lean()
@@ -144,7 +128,6 @@ class FoodService {
                                 const gramFoodAray = choseFood.map(
                                     (food) => food.grams,
                                 );
-                                // console.log(choseFood);
                                 const foodLikedArray = user.foodLike;
                                 Food.find({ _id: { $in: idFoodArray } })
                                     .lean()
@@ -164,7 +147,6 @@ class FoodService {
                                                 return food;
                                             },
                                         );
-                                        // console.log(foodLikedArray)
                                         let foodLikedArrayString =
                                             foodLikedArray.map(String);
                                         foods = foods.map((food) => {
@@ -207,18 +189,15 @@ class FoodService {
         const email = req.body.emailUser;
         const idFood = req.body.idFood;
         const gramFood = req.body.grams;
-        console.log(email, idFood, gramFood);
         let isLogin = false;
         if (req.isAuthenticated()) {
             isLogin = true;
-            // console.log(email);
             User.findOneAndUpdate(
                 { email: email },
                 { $push: { choseFoode: { idFood: idFood, grams: gramFood } } },
                 { new: true },
             )
                 .then((user) => {
-                    console.log(user);
                     const foodLikedArray = user.foodLike;
                     const choseFood = user.choseFoode;
                     const idFoodArray = choseFood.map((food) => food.idFood);
@@ -239,7 +218,6 @@ class FoodService {
                             });
                             const foodLikedArrayString =
                                 foodLikedArray.map(String);
-                            // console.log('Món ăn đã được thêm vào mảng choseFoode.');
                             Food.find({})
                                 .lean()
                                 .then((foods) => {
@@ -297,7 +275,6 @@ class FoodService {
             )
                 .lean()
                 .then((user) => {
-                    // console.log(user);
                     const choseFood = user.choseFoode;
                     const idFoodArray = choseFood.map((food) => food.idFood);
                     const gramFoodAray = choseFood.map((food) => food.grams);
@@ -306,13 +283,13 @@ class FoodService {
                         .then((userMenu) => {
                             userMenu = userMenu.map((item, index) => {
                                 let food = {
-                                    _id: item._id,
+                                    id: item._id,
                                     name: item.name,
                                     calo: item.calo,
                                     img: item.img,
                                     category: item.category,
                                     grams: gramFoodAray[index],
-                                    totalCalories:
+                                    totalGrams:
                                         (gramFoodAray[index] / 100) * item.calo,
                                 };
                                 return food;
@@ -369,7 +346,6 @@ class FoodService {
                     .lean()
                     .then((user) => {
                         const foodLikedArray = user.foodLike;
-                        // console.log(foodLikedArray);
                         let foodLikedArrayString = foodLikedArray.map(String);
                         foods = foods.map((food) => {
                             if (
@@ -382,7 +358,6 @@ class FoodService {
                                 return food;
                             }
                         });
-                        // res.render('food', { foods, isLogin, email });
                         res.json({ foods });
                     })
                     .catch((err) => {
@@ -411,7 +386,6 @@ class FoodService {
                         console.log(user);
                         const foodLikedArray = user.foodLike;
                         let foodLikedArrayString = foodLikedArray.map(String);
-                        // console.log(foodLikedArrayString)
                         foods = foods.map((food) => {
                             if (
                                 foodLikedArrayString.includes(String(food._id))
@@ -426,7 +400,6 @@ class FoodService {
                         foods = foods.filter(
                             (food) => food.isDisable === 'false',
                         );
-                        // console.log(foods)
 
                         res.json({ foods });
                     })
@@ -454,10 +427,8 @@ class FoodService {
                 User.findOne({ email: email })
                     .lean()
                     .then((user) => {
-                        // console.log(user);
                         const foodLikedArray = user.foodLike;
                         let foodLikedArrayString = foodLikedArray.map(String);
-                        // console.log(foodLikedArrayString)
                         foods = foods.map((food) => {
                             if (
                                 foodLikedArrayString.includes(String(food._id))
@@ -472,12 +443,10 @@ class FoodService {
                         foods = foods.filter(
                             (food) => food.category === category,
                         );
-                        // console.log(foods)
 
                         res.json({ foods });
                     })
                     .catch((err) => {
-                        console.log('');
                         res.status(400).json({ err: 'ERROR!' });
                     });
             })
@@ -502,7 +471,6 @@ class FoodService {
                         { new: true },
                     )
                         .then((user) => {
-                            // console.log(user)
                             res.json({ food, isLogin, email });
                         })
                         .catch((err) => {
@@ -553,7 +521,6 @@ class FoodService {
         let fvrStatus = req.query.fvr;
         let engStatus = req.query.eng;
         let ctgrKeyword = req.query.keyword;
-        console.log(fvrStatus, engStatus, ctgrKeyword);
 
         let isLogin = false;
         let email;
@@ -561,15 +528,12 @@ class FoodService {
         if (req.isAuthenticated()) {
             isLogin = true;
             email = req.user.email;
-            console.log(email);
         }
 
         User.findOne({ email: email })
             .lean()
             .then((user) => {
-                console.log(user);
                 const foodLikedArray = user.foodLike;
-                console.log(foodLikedArray);
 
                 Food.find({})
                     .lean()
@@ -591,11 +555,9 @@ class FoodService {
                             foods = foods.filter((food) =>
                                 foodLikedArrayString.includes(String(food._id)),
                             );
-                            console.log(foods);
                         }
                         if (engStatus == 'false') {
                             foods = foods.sort((a, b) => a.calo - b.calo);
-                            console.log(foods);
                         } else {
                             foods = foods.sort((a, b) => b.calo - a.calo);
                         }
@@ -603,7 +565,6 @@ class FoodService {
                             foods = foods.filter(
                                 (food) => food.category === ctgrKeyword,
                             );
-                            console.log(foods);
                         }
 
                         res.json({ foods });
