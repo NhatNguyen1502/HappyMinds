@@ -17,9 +17,7 @@ class AdminController {
         AdminService.createVideo(req, res);
     }
 
-    createUser(req, res) {
-        AdminService.createUser(req, res);
-    }
+    createUser = AdminService.createUser;
 
     createFood(req, res) {
         AdminService.createFood(req, res);

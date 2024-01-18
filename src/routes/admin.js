@@ -1,5 +1,6 @@
 import express from 'express';
 import adminController from '../app/controllers/AdminController.js';
+import fileUploader from '../middlerwares/cloudinary.js';
 
 const router = express.Router();
 
@@ -9,7 +10,7 @@ router.get('/admin-video', adminController.showVideos);
 router.get('/admin-blog', adminController.showBlog);
 router.get('/admin-user', adminController.showUsers);
 router.post('/video', adminController.createVideo);
-router.post('/user', adminController.createUser);
+router.post('/user', fileUploader.single('photoUrl'), adminController.createUser);
 router.post('/food', adminController.createFood);
 router.post('/blog', adminController.createBlog);
 
@@ -29,6 +30,6 @@ router.post('/delete-blog/:id', adminController.deleteBlog);
 
 router.post('/delete-user/:id', adminController.deleteUser);
 
-router.post('/admin/update-user-status/:id', adminController.updateUserStatus);
+router.post('/update-user-status/:id/:status', adminController.updateUserStatus);
 
 export default router;

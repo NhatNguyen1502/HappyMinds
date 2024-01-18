@@ -52,7 +52,7 @@ class UserService {
                             });
                     } else {
                         console.log('Login fail!!!');
-                        res.render('user', { isLogin });
+                        res.send("Tài khoản của bạn đã bị khoá")
                     }
                 });
         } else {

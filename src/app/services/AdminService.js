@@ -16,39 +16,40 @@ class AdminService {
   };
 
   createUser = async (req, res) => {
-    const { name, pal, sex, height, weight, age, email, photoUrl } = req.body;
-
+    const createData = {
+      ...(req.file?.path && { photoUrl: req.file.path }),
+      ...req.body,
+    };
     let requiredCaloriesAmount = 0;
-    if (sex == "Male") {
+    if (createData.sex == "Male") {
       requiredCaloriesAmount =
-        (10 * weight + 6.25 * height - 5 * age + 5) * BMR[pal];
+        (10 * createData.weight +
+          6.25 * createData.height -
+          5 * createData.age +
+          5) *
+        BMR[createData.pal];
     } else {
       requiredCaloriesAmount =
-        (10 * weight + 6.25 * height - 5 * age - 161) * BMR[pal];
+        (10 * createData.weight +
+          6.25 * createData.height -
+          5 * createData.age -
+          161) *
+        BMR[createData.pal];
     }
 
-    const bmi = (weight / (height / 100) ** 2).toFixed(2);
+    const bmi =
+      createData.height === 0
+        ? 0
+        : (createData.weight / (createData.height / 100) ** 2).toFixed(2);
 
     const currentDate = new Date();
 
-    const cDate = `${currentDate.getDate()}/${
-      currentDate.getMonth() + 1
-    }/${currentDate.getFullYear()}`;
+    const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1
+      }/${currentDate.getFullYear()}`;
 
     const BMIchange = [{ date: cDate, value: parseFloat(bmi) }];
 
-    const formData = {
-      name,
-      pal,
-      sex,
-      height,
-      weight,
-      age,
-      email,
-      photoUrl,
-      BMIchange,
-      requiredCaloriesAmount,
-    };
+    const formData = { ...createData, BMIchange, requiredCaloriesAmount };
     const saveUser = await User.create(formData);
     saveUser
       .save()
@@ -139,8 +140,6 @@ class AdminService {
     const page = parseInt(req.query.page) || 1;
     const perPage = 5;
     Food.find({})
-      // .skip((page - 1) * perPage)
-      // .limit(perPage)
       .then((foods) => {
         console.log(foods.length);
         res.render("admin-food", {
@@ -256,7 +255,7 @@ class AdminService {
   updateUserStatus(req, res) {
     User.updateOne(
       { _id: req.params.id },
-      { $set: { status: req.body.status } }
+      { $set: { status: req.params.status } }
     )
       .then((result) =>
         res.json({ success: true, message: "Cập nhật thành công" })
