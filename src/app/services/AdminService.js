@@ -196,14 +196,14 @@ class AdminService {
 
     updateBlog = async (req, res) => {
         try {
-            const { content, image, title, slug } = req.body;
+            const { title, author, image, content } = req.body;
             const updatedBlog = await Blog.findByIdAndUpdate(
                 req.params.id,
                 {
-                    content: content,
-                    image: image,
                     title: title,
-                    slug: slug,
+                    author: author,
+                    image: image,
+                    content: content,
                 },
                 { new: true },
             );

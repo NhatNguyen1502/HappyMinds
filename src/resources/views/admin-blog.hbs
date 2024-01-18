@@ -58,7 +58,6 @@
                 <th>Content</th>
                 <th>Image</th>
                 <th>Title</th>
-                <th>Slug</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -71,7 +70,6 @@
                     <button class="btn btn-primary" onclick="toggleButton('{{this._id}}')">...</button>
                 <th style="width: 20%;"><img src="{{this.image}}" alt="" style="width: 70%; height:80%"></th>
                 <th>{{this.title}}</th>
-                <th>{{this.slug}}</th>
                 <th width="150px">
                     {{!-- BUTTON DELETE --}}
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete"
@@ -89,7 +87,7 @@
                     {{!-- BUTTON UPDATE --}}
                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateModal"
                         data-bs-whatever="@getbootstrap"
-                        onclick="updateForm('{{this._id}}', `{{this.content}}`, '{{this.image}}', '{{this.title}}', '{{this.slug}}')">
+                        onclick="updateForm('{{this._id}}', `{{this.content}}`, '{{this.image}}', '{{this.title}}', '{{this.author}}')">
                         <span class="icon-wrapper">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24px" height="24px"
                                 color="white" viewBox="0 0 35 35" fill="none">
@@ -121,9 +119,12 @@
                 <form method="post" id="updateForm" action="">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="content" class="col-form-label"><b>Content:</b></label>
-                            <textarea class="form-control" name="content" id="updateContent" cols="30"
-                                rows="5"></textarea>
+                            <label for="title" class="col-form-label"><b>Title:</b></label>
+                            <input type="text" class="form-control" id="updateTitle" name="title"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="author" class="col-form-label"><b>Author:</b></label>
+                            <input type="text" class="form-control" id="updateAuthor" name="author"></input>
                         </div>
                         <div class="mb-3 ">
                             <label for="image" class="col-1 col-form-label"><b>Image:</b></label>
@@ -133,14 +134,12 @@
                             </div>
                             <input type="file" name="getImage" id="inpImg2" class="mt-2" style="width: 85px;">
                             <img src="" class="mt-2" id="thenImage2" style="max-width:300px;">
+                            <img src="" id="viewImg" class="mt-2" alt="" style="max-width:300px;">
                         </div>
                         <div class="mb-3">
-                            <label for="title" class="col-form-label"><b>Title:</b></label>
-                            <input type="text" class="form-control" id="updateTitle" name="title"></input>
-                        </div>
-                        <div class="mb-3">
-                            <label for="slug" class="col-form-label"><b>Slug:</b></label>
-                            <input type="text" class="form-control" id="updateSlug" name="slug"></input>
+                            <label for="content" class="col-form-label"><b>Content:</b></label>
+                            <textarea class="form-control" name="content" id="updateContent" cols="30"
+                                rows="5"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -173,12 +172,13 @@
         }
     }
 
-    function updateForm(id, content, image, title, slug) {
+    function updateForm(id, content, image, title, author) {
         document.getElementById('updateForm').action = '/admin/update-blog/' + id;
         document.getElementById('updateContent').innerHTML = content;
         document.getElementById('updateImage').value = image;
         document.getElementById('updateTitle').value = title;
-        document.getElementById('updateSlug').value = slug;
+        document.getElementById('updateAuthor').value = author;
+        document.getElementById('viewImg').src = image;
     }
     function deleteBlog(id) {
         document.getElementById('deleteForm').action = '/admin/delete-blog/' + id;
@@ -195,6 +195,7 @@
         });
         fileInput2.addEventListener('change', async function () {
             const url = await uploadImage(fileInput2);
+            document.getElementById('viewImg').style.display = 'none';
             console.log(url);
             document.getElementById('updateImage').value = url;
             document.getElementById('thenImage2').src = url;
