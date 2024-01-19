@@ -1,9 +1,7 @@
 async function checkUserLiked(isLogin, likedList, id) {
     if (isLogin) {
         try {
-            var response = await axios.get(
-                'http://localhost:3000/user/getUserByEmail',
-            );
+            var response = await axios.get('user/getUserByEmail');
             var user = response.data;
             $('#userAvt')[0].src = user.photoUrl;
             window.user = user;
@@ -28,7 +26,7 @@ async function handleLikeBtn(isLogin, id, role) {
         if (likeBtn.classList.contains('redColor')) {
             try {
                 data = await axios.patch(
-                    `http://localhost:3000/${role}/addLike?${role}Id=${id}&userId=${user._id}`,
+                    `${role}/addLike?${role}Id=${id}&userId=${user._id}`,
                 );
                 console.log('Like successful!');
             } catch (err) {
@@ -37,7 +35,7 @@ async function handleLikeBtn(isLogin, id, role) {
         } else {
             try {
                 data = await axios.patch(
-                    `http://localhost:3000/${role}/removeLike?${role}Id=${id}&userId=${user._id}`,
+                    `${role}/removeLike?${role}Id=${id}&userId=${user._id}`,
                 );
                 console.log('Unlike successful!');
             } catch (err) {
@@ -67,7 +65,7 @@ async function submitComment(isLogin, formId) {
         var form = $(`#${formId}`)[0];
         var formData = new FormData(form);
         formData.append('userId', user._id);
-        await axios.post('http://localhost:3000/comment/', formData);
+        await axios.post('comment/', formData);
         $('#commentInp')[0].value = '';
         $('#imageInp')[0].style.display = 'none';
         if (formId == 'commentForm') renderComments(`${blogId}`, isLogin);
@@ -78,12 +76,12 @@ async function submitComment(isLogin, formId) {
 async function renderReplyComments(parentId, isLogin) {
     try {
         var data = await axios.get(
-            `http://localhost:3000/comment/getReplyComments?parentId=${parentId}`,
+            `comment/getReplyComments?parentId=${parentId}`,
         );
         var comments = data.data;
         var promises = comments.map(async (comment) => {
             var ownerComment = await axios.get(
-                `http://localhost:3000/user/getById?id=${comment.userId}`,
+                `user/getById?id=${comment.userId}`,
             );
             var ownerName =
                 ownerComment.data.name == 'CastError'
@@ -149,13 +147,11 @@ async function renderReplyComments(parentId, isLogin) {
 
 async function renderComments(blogId, isLogin) {
     try {
-        var data = await axios.get(
-            `http://localhost:3000/comment/getBlogComments?blogId=${blogId}`,
-        );
+        var data = await axios.get(`comment/getBlogComments?blogId=${blogId}`);
         var comments = data.data;
         var promises = comments.map(async (comment) => {
             var ownerComment = await axios.get(
-                `http://localhost:3000/user/getById?id=${comment.userId}`,
+                `user/getById?id=${comment.userId}`,
             );
             var ownerName =
                 ownerComment.data.name == 'CastError'

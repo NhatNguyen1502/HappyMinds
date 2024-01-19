@@ -58,10 +58,7 @@ function renderComments(comments) {
 async function handleUpdateForm() {
     event.preventDefault();
     var formData = new FormData(event.target.form);
-    var data = await axios.post(
-        'http://localhost:3000/admin/update-comment',
-        formData,
-    );
+    var data = await axios.post('admin/update-comment', formData);
     $('#updateModal').modal('hide');
     renderComments(data.data);
 }
