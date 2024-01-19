@@ -38,7 +38,7 @@
         </div>
         <div class="col-lg-3 col-12 p-0 m-1 mx-0 gap-3 d-flex justify-content-lg-center justify-content-center">
             <button class=" button_header signInBtn my-3 border-0 py-2 px-3 mt-3" data-bs-toggle="modal"
-                data-bs-target="#login_form" id="loginBtn" onclick=checkLogin()>Log in</button>
+                id="loginBtn" onclick=checkLogin()>Log in</button>
         </div>
         <div class="modal fade" id="login_form" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -81,7 +81,7 @@
     function checkLogin() {
         if (document.querySelector("#loginBtn").innerHTML == "Log out") {
             window.location.href = '/logout';
-        }
+        } else $('#login_form').modal('show');
     }
 
     function checkLoginFood(isLogin){
