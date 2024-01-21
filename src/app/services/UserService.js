@@ -4,7 +4,6 @@ import Food from '../models/Food.js';
 import { multipleMongooesToOject } from '../../util/mongoose.js';
 
 class UserService {
-
     async index(req, res) {
         let isLogin = false;
         if (req.isAuthenticated()) {
@@ -14,7 +13,8 @@ class UserService {
                     email: req.user.email,
                 }).lean();
                 if (user.status === 'Active') {
-                    let bmi = user.BMIchange[user.BMIchange.length - 1]?.value || 0;
+                    let bmi =
+                        user.BMIchange[user.BMIchange.length - 1]?.value || 0;
                     let bmiType;
                     if (bmi < 18.5) {
                         bmiType = BMIStatus.UNDERWEIGHT;
@@ -26,7 +26,9 @@ class UserService {
                         bmiType = BMIStatus.OBESE;
                     }
 
-                    const videos = await Video.find({ BMItype: bmiType }).lean();
+                    const videos = await Video.find({
+                        BMItype: bmiType,
+                    }).lean();
                     let arr = categorizeVideosByRep(videos);
                     const shortVideos = arr[0];
                     const mediumVideos = arr[1];
@@ -44,7 +46,9 @@ class UserService {
                         longVideos.length > 0 ? longVideos[0] : null;
 
                     const idFoods = user.choseFoode.map((food) => food.idFood);
-                    const foods = await Food.find({ _id: { $in: idFoods } }).lean();
+                    const foods = await Food.find({
+                        _id: { $in: idFoods },
+                    }).lean();
                     for (let i = 0; i < foods.length; i++) {
                         foods[i].grams = user.choseFoode[i].grams || 0;
                         foods[i].totalCalories =
@@ -67,7 +71,7 @@ class UserService {
                         mediumVideosJson,
                     });
                 } else {
-                    res.send("Tài khoản của bạn đã bị khoá");
+                    res.send('Tài khoản của bạn đã bị khoá');
                 }
             } catch (err) {
                 console.log(err);
@@ -151,7 +155,6 @@ class UserService {
                     5 * updateData.age +
                     5) *
                 BMR[updateData.pal];
-
         } else {
             updateData.requiredCaloriesAmount =
                 (10 * updateData.weight +
@@ -166,8 +169,9 @@ class UserService {
             (updateData.height / 100) ** 2
         ).toFixed(2);
         const currentDate = new Date();
-        const cDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1
-            }/${currentDate.getFullYear()}`;
+        const cDate = `${currentDate.getDate()}/${
+            currentDate.getMonth() + 1
+        }/${currentDate.getFullYear()}`;
 
         User.findOne({ email: req.user.email })
             .lean()
@@ -186,9 +190,7 @@ class UserService {
                             },
                             ...updateData,
                         },
-                        {
-                            new: true,
-                        },
+                        { new: true },
                     )
                         .then((updateUser) => res.json(updateUser))
                         .catch((err) => {
@@ -198,9 +200,7 @@ class UserService {
                         });
                 } else {
                     User.findOneAndUpdate(
-                        {
-                            email: req.user.email,
-                        },
+                        { email: req.user.email },
                         {
                             ...updateData,
                             $push: {
@@ -209,9 +209,7 @@ class UserService {
                                 ],
                             },
                         },
-                        {
-                            new: true,
-                        },
+                        { new: true },
                     )
                         .then((updateUser) => res.json(updateUser))
                         .catch((err) => {
@@ -267,6 +265,5 @@ function categorizeVideosByRep(videos) {
 
     return [shortVideos, mediumVideos, longVideos];
 }
-
 
 export default new UserService();
