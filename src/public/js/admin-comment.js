@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         var id = deleteForm.getAttribute('data-id');
         $('#confirmDelete').modal('hide');
-        var comments = await axios.delete(`../delete-comment/${id}`);
+        var comments = await axios.delete(`/delete-comment/${id}`);
         renderComments(comments.data);
     });
 });
