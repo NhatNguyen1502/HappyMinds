@@ -1,7 +1,7 @@
 async function checkUserLiked(isLogin, likedList, id) {
     if (isLogin) {
         try {
-            var response = await axios.get('./user/getUserByEmail');
+            var response = await axios.get('../user/getUserByEmail');
             var user = response.data;
             $('#userAvt')[0].src = user.photoUrl;
             window.user = user;
@@ -148,12 +148,12 @@ async function renderReplyComments(parentId, isLogin) {
 async function renderComments(blogId, isLogin) {
     try {
         var data = await axios.get(
-            `./comment/getBlogComments?blogId=${blogId}`,
+            `../comment/getBlogComments?blogId=${blogId}`,
         );
         var comments = data.data;
         var promises = comments.map(async (comment) => {
             var ownerComment = await axios.get(
-                `user/getById?id=${comment.userId}`,
+                `../user/getById?id=${comment.userId}`,
             );
             var ownerName =
                 ownerComment.data.name == 'CastError'
