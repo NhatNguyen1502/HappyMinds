@@ -142,13 +142,13 @@ async function sortToggle() {
 
 async function renderResultSearch() {
     keyword = document.querySelector('#search').value;
-    await axios.get(`food/search?keyword=${keyword}`).then((res) => {
+    await axios.get(`../food/search?keyword=${keyword}`).then((res) => {
         renderFoodList(res.data.foods);
     });
 }
 
 async function renderResultSort(keyword) {
-    await axios.get(`food/sort?keyword=${keyword}`).then((res) => {
+    await axios.get(`../food/sort?keyword=${keyword}`).then((res) => {
         renderFoodList(res.data.foods);
     });
 }
@@ -158,13 +158,12 @@ async function renderResultAdd(event, formID, elementID) {
     form = document.getElementById(formID);
     id = form.querySelector('.idFood').value;
     grams = document.querySelector(elementID).value;
-    if(grams === '' || isNaN(grams)) { 
+    if (grams === '' || isNaN(grams)) {
         document.querySelector(elementID).value = '';
         document.querySelector(elementID).focus();
         document.querySelector(elementID).classList.add('error');
         document.querySelector(elementID).classList.add('border-danger');
-    }
-    else{
+    } else {
         var formData = new FormData(form);
         var data = [...formData];
         const dataObject = {};
@@ -172,29 +171,27 @@ async function renderResultAdd(event, formID, elementID) {
             dataObject[key] = value;
         });
         dataObject['grams'] = grams;
-        await axios.post(`food/add`, dataObject).then((res) => {
+        await axios.post(`../food/add`, dataObject).then((res) => {
             renderFoodList(res.data.foods);
             renderUserMenu(res.data.userMenu);
-    
         });
     }
-    
 }
 
 async function removeFromMenu(idFood) {
-    await axios.post(`food/remove?id=${idFood}`).then((res) => {
+    await axios.post(`../food/remove?id=${idFood}`).then((res) => {
         renderUserMenu(res.data.userMenu);
     });
 }
 
 async function renderResultFavourite() {
-    await axios.get(`food/filterFvr`).then((res) => {
+    await axios.get(`../food/filterFvr`).then((res) => {
         renderFoodList(res.data.foods);
     });
 }
 
 async function renderResultCategory(keyword) {
-    await axios.get(`food/filterCtgr?category=${keyword}`).then((res) => {
+    await axios.get(`../food/filterCtgr?category=${keyword}`).then((res) => {
         renderFoodList(res.data.foods);
     });
 }
@@ -225,12 +222,11 @@ async function renderResultFilter() {
 // |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 
 async function addToFavourite(idFood) {
-    await axios.post(`food/like?id=${idFood}`).then((res) => {});
+    await axios.post(`../food/like?id=${idFood}`).then((res) => {});
 }
 
 async function removeFromFavourite(idFood) {
-    await axios.post(`food/unlike?id=${idFood}`).then((res) => {
-    });
+    await axios.post(`../food/unlike?id=${idFood}`).then((res) => {});
 }
 
 function clearSearch() {
@@ -250,7 +246,7 @@ document
             try {
                 nextPage = currentValue + 1;
                 const response = await axios.get(
-                    `food/showPanigation?page=${nextPage}`,
+                    `../food/showPanigation?page=${nextPage}`,
                 );
                 renderFoodList(response.data.foods);
                 addToValueBeforeSlash(nextPage);
@@ -272,7 +268,7 @@ document
             try {
                 prevPage = currentValue - 1;
                 const response = await axios.get(
-                    `food/showPanigation?page=${prevPage}`,
+                    `../food/showPanigation?page=${prevPage}`,
                 );
                 renderFoodList(response.data.foods);
                 addToValueBeforeSlash(prevPage);

@@ -52,7 +52,7 @@ document
             try {
                 nextPage = currentValue + 1;
                 const response = await axios.get(
-                    `blog/showPanigation?page=${nextPage}`,
+                    `../blog/showPanigation?page=${nextPage}`,
                 );
                 renderBlogs(response.data.blogs);
                 addToValueBeforeSlash(nextPage);
@@ -74,7 +74,7 @@ document
             try {
                 prevPage = currentValue - 1;
                 const response = await axios.get(
-                    `blog/showPanigation?page=${prevPage}`,
+                    `../blog/showPanigation?page=${prevPage}`,
                 );
                 renderBlogs(response.data.blogs);
                 addToValueBeforeSlash(prevPage);

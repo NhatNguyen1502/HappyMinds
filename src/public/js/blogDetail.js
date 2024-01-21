@@ -26,7 +26,7 @@ async function handleLikeBtn(isLogin, id, role) {
         if (likeBtn.classList.contains('redColor')) {
             try {
                 data = await axios.patch(
-                    `${role}/addLike?${role}Id=${id}&userId=${user._id}`,
+                    `../${role}/addLike?${role}Id=${id}&userId=${user._id}`,
                 );
                 console.log('Like successful!');
             } catch (err) {
@@ -35,7 +35,7 @@ async function handleLikeBtn(isLogin, id, role) {
         } else {
             try {
                 data = await axios.patch(
-                    `${role}/removeLike?${role}Id=${id}&userId=${user._id}`,
+                    `../${role}/removeLike?${role}Id=${id}&userId=${user._id}`,
                 );
                 console.log('Unlike successful!');
             } catch (err) {
@@ -65,7 +65,7 @@ async function submitComment(isLogin, formId) {
         var form = $(`#${formId}`)[0];
         var formData = new FormData(form);
         formData.append('userId', user._id);
-        await axios.post('comment/', formData);
+        await axios.post('../comment/', formData);
         $('#commentInp')[0].value = '';
         $('#imageInp')[0].style.display = 'none';
         if (formId == 'commentForm') renderComments(`${blogId}`, isLogin);
@@ -76,12 +76,12 @@ async function submitComment(isLogin, formId) {
 async function renderReplyComments(parentId, isLogin) {
     try {
         var data = await axios.get(
-            `comment/getReplyComments?parentId=${parentId}`,
+            `../comment/getReplyComments?parentId=${parentId}`,
         );
         var comments = data.data;
         var promises = comments.map(async (comment) => {
             var ownerComment = await axios.get(
-                `user/getById?id=${comment.userId}`,
+                `../user/getById?id=${comment.userId}`,
             );
             var ownerName =
                 ownerComment.data.name == 'CastError'

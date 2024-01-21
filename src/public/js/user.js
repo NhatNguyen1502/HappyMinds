@@ -132,7 +132,7 @@ function renderFoodMenu(foods) {
 
 function removeFromMenu(idFood) {
     console.log('removeFood');
-    axios.post(`food/remove?id=${idFood}`).then((res) => {
+    axios.post(`../food/remove?id=${idFood}`).then((res) => {
         renderFoodMenu(res.data.userMenu);
     });
 }
