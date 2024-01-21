@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         var id = deleteForm.getAttribute('data-id');
         $('#confirmDelete').modal('hide');
-        var comments = await axios.delete(`/delete-comment/${id}`);
+        var comments = await axios.delete(`admin/delete-comment/${id}`);
         renderComments(comments.data);
     });
 });
@@ -58,7 +58,7 @@ function renderComments(comments) {
 async function handleUpdateForm() {
     event.preventDefault();
     var formData = new FormData(event.target.form);
-    var data = await axios.post('../update-comment', formData);
+    var data = await axios.post('admin/update-comment', formData);
     $('#updateModal').modal('hide');
     renderComments(data.data);
 }
