@@ -5,7 +5,7 @@ function renderBlogs(blog) {
             (content += `
         <div class="col pb-3">
         <div class="card">
-            <a href="blog/blogDetail?slug=${element.slug}">
+            <a href="blog/blogdetail?slug=${element.slug}">
                 <img src="${
                     element.image
                 }" class="card-img-top" style="height: 300px;" alt="...">
@@ -24,7 +24,7 @@ function renderBlogs(blog) {
                         element.updatedAt,
                     )}</p>
                     <p class="card-text ">
-                        <a href="/blog/blogDetail?slug=${
+                        <a href="/blog/blogdetail?slug=${
                             element.slug
                         }" class="text-danger fw-medium fw-semibold"
                             style="text-decoration: none">MORE

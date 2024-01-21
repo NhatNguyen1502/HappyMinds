@@ -181,14 +181,14 @@ class VideoService {
         const videoArrayJSON = req.body.array;
         const type = req.query.type;
         const videosReturn = JSON.parse(videoArrayJSON);
-        res.render('viewcoach', { videosReturn, type, videoArrayJSON });
+        res.render('viewCoach', { videosReturn, type, videoArrayJSON });
     }
 
     viewcoach_Video_durations(req, res) {
         const videoArrayJSON = req.body.array;
         const type = req.params.Videoduration;
         const videosReturn = JSON.parse(videoArrayJSON);
-        res.render('viewcoach', { videosReturn, type, videoArrayJSON });
+        res.render('viewCoach', { videosReturn, type, videoArrayJSON });
     }
 }
 

@@ -52,7 +52,7 @@ class BlogService {
     async showDetail(req, res) {
         const isLogin = req.isAuthenticated() || false;
         const blog = await Blog.findOne({ slug: req.query.slug }).lean();
-        res.render('blogDetail', {
+        res.render('blogdetail', {
             blog,
             isLogin,
         });
