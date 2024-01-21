@@ -5,7 +5,7 @@ function renderBlogs(blog) {
             (content += `
         <div class="col pb-3">
         <div class="card">
-            <a href="blog/blogDetail/${element.slug}">
+            <a href="blog/blogDetail?slug=${element.slug}">
                 <img src="${
                     element.image
                 }" class="card-img-top" style="height: 300px;" alt="...">
