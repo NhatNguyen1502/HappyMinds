@@ -478,3 +478,10 @@ h2 {
 #white-background {
   background-color: #ffffff !important;
   padding: 20px !important; }
+
+.cofounder {
+  transition: transform 0.3s ease;
+  will-change: transform; }
+
+.cofounder:hover {
+  transform: scale(1.04); }

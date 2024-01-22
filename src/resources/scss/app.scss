@@ -567,7 +567,7 @@
      position: absolute;
      top: 25% !important;
      left: 22% !important;
-     }
+ }
 
  .spanHome {
      position: absolute;
@@ -602,10 +602,20 @@
      width: 1320px;
  }
 
- #bannerPnv{
-    background-color: rgba(0, 0, 0, 0.5);
+ #bannerPnv {
+     background-color: rgba(0, 0, 0, 0.5);
  }
+
  #white-background {
-     background-color: #ffffff!important;
-     padding: 20px!important;
+     background-color: #ffffff !important;
+     padding: 20px !important;
+ }
+
+ .cofounder {
+     transition: transform 0.3s ease;
+     will-change: transform;
+ }
+
+ .cofounder:hover {
+     transform: scale(1.04);
  }
