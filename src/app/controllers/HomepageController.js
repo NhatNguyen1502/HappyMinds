@@ -8,6 +8,10 @@ class HomepageController {
     showVideos(req, res) {
         homepageService.showVideos(req, res);
     }
+
+    aboutUs(req, res) {
+        homepageService.aboutUs(req, res);
+    }
 }
 
 export default new HomepageController();

@@ -6,7 +6,7 @@ let isRestTimerRunning = true;
 var buttonClicked = false;
 let videoIframes = document.querySelectorAll('.video');
 let quanityVideo = videoIframes.length;
-console.log(quanityVideo)
+console.log(quanityVideo);
 
 document.addEventListener('DOMContentLoaded', () => {
     let video = document.getElementById('video');
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const secondsDisplay =
                 secondRest < 10 ? `0${secondRest}` : secondRest;
             rest_time.textContent = `00 : ${secondsDisplay}`;
-            if (secondRest === 0 ) {
+            if (secondRest === 0) {
                 clearInterval(timer2);
                 isRestTimerRunning = false;
                 let button = document.getElementById('start');
@@ -46,32 +46,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     let timer1 = setInterval(updateCountup, 1000);
     let timer2 = setInterval(updateCountdown, 1000);
-    
+
     setTimeout(enableNextButton, time_enable);
-    
+
     document.getElementById('start').addEventListener('click', () => {
         runTimer();
     });
-    
+
     document.getElementById('next').addEventListener('click', () => {
-        clearInterval(timer2);
-        pauseAllVideos();
-        nextVideo();
-        timer2 = setInterval(updateCountdown, 1000);
-    });
-    
-    document.getElementById('skip').addEventListener('click', () => {
-        clearInterval(timer2);
-        pauseAllVideos();
-        skipVideo();
-        timer2 = setInterval(updateCountdown, 1000);
+        if (index == quanityVideo) {
+            window.location.href = '../video';
+        } else {
+            clearInterval(timer2);
+            nextVideo();
+            timer2 = setInterval(updateCountdown, 1000);
+        }
     });
 
+    document.getElementById('skip').addEventListener('click', () => {
+        if (index == 0) {
+            console.log('true');
+        } else {
+            console.log(index);
+            clearInterval(timer2);
+            skipVideo();
+            timer2 = setInterval(updateCountdown, 1000);
+        }
+    });
 
     function pauseAllVideos() {
-        videoIframes.forEach(iframe => {
+        videoIframes.forEach((iframe) => {
             if (iframe.contentWindow && iframe.contentWindow.postMessage) {
-                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                iframe.contentWindow.postMessage(
+                    '{"event":"command","func":"pauseVideo","args":""}',
+                    '*',
+                );
             }
         });
     }
@@ -87,7 +96,7 @@ function nextVideo() {
     index++;
     console.log(index);
     if (index == quanityVideo) {
-        document.getElementById('next').setAttribute('disabled', 'true');
+        // document.getElementById('next').setAttribute('disabled', 'true');
         document.getElementById('skip').setAttribute('disabled', 'true');
         document.getElementById('start').textContent = 'FINISH!!!';
     } else {
@@ -96,10 +105,16 @@ function nextVideo() {
             index = 0;
             newVideo = document.querySelector('.carousel-item[data-index="0"]');
         }
-        let calories =parseInt(document.getElementById('calories').innerHTML) + parseInt(newVideo.getAttribute('data-calo'));
+        let calories =
+            parseInt(document.getElementById('calories').innerHTML) +
+            parseInt(newVideo.getAttribute('data-calo'));
         document.getElementById('calories').innerHTML = calories;
-        document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
-        document.getElementById('rep').textContent = parseInt(newVideo.getAttribute('data-rep'));
+        document.getElementById(
+            'timer',
+        ).textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
+        document.getElementById('rep').textContent = parseInt(
+            newVideo.getAttribute('data-rep'),
+        );
         document.getElementById('start').setAttribute('disabled', 'true');
         document.getElementById('next').setAttribute('disabled', 'true');
         time_enable = 5000;
@@ -117,33 +132,29 @@ function skipVideo() {
     document.getElementById('rest').textContent = `00 : 0${secondRest}`;
     document.getElementById('start').classList.remove('shake');
     isRestTimerRunning = true;
-    $('#carouselExampleControls').carousel('next');
-    index++;
-    console.log(index);
-    if (index == quanityVideo) {
+    $('#carouselExampleControls').carousel('prev');
+    index--;
+    let newVideo = document.querySelector(`.video[data-index="${index}"]`);
+    if (!newVideo) {
+        index = 0;
+        newVideo = document.querySelector('.carousel-item[data-index="0"]');
+    }
+    if (newVideo) {
+        document.getElementById(
+            'timer',
+        ).textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
+        document.getElementById('rep').textContent = parseInt(
+            newVideo.getAttribute('data-rep'),
+        );
+        document.getElementById('start').setAttribute('disabled', 'true');
         document.getElementById('next').setAttribute('disabled', 'true');
-        document.getElementById('skip').setAttribute('disabled', 'true');
-        document.getElementById('start').textContent = 'FINISH!!!';
-    } else {
-        let newVideo = document.querySelector(`.video[data-index="${index}"]`);
-        if (!newVideo) {
-            index = 0;
-            newVideo = document.querySelector('.carousel-item[data-index="0"]');
-        }
-        if (newVideo) {
-            document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
-            document.getElementById('rep').textContent = parseInt(newVideo.getAttribute('data-rep'));
-            document.getElementById('start').setAttribute('disabled', 'true');
-            document.getElementById('next').setAttribute('disabled', 'true');
-            time_enable = 5000;
-            setTimeout(enableNextButton, time_enable);
-            setTimeout(() => {
-                document.getElementById('start').classList.add('shake');
-            }, time_enable);
-        }
+        time_enable = 5000;
+        setTimeout(enableNextButton, time_enable);
+        setTimeout(() => {
+            document.getElementById('start').classList.add('shake');
+        }, time_enable);
     }
 }
-
 
 function enableNextButton() {
     document.getElementById('next').removeAttribute('disabled');

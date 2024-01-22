@@ -47,7 +47,7 @@ class FoodService {
                                                 return food;
                                             },
                                         );
-                                   
+
                                         let foodLikedArrayString =
                                             foodLikedArray.map(String);
                                         foods = foods.map((food) => {
@@ -63,8 +63,8 @@ class FoodService {
                                                 return food;
                                             }
                                         });
-                                     
-                                        console.log(userMenu)
+
+                                        console.log(userMenu);
                                         res.render('food', {
                                             foods,
                                             isLogin,
@@ -486,7 +486,7 @@ class FoodService {
         }
     }
 
-    removeFromFavourite(req, res) {
+    deleteFood = async (req, res) => {
         let isLogin = false;
         let email;
         if (req.isAuthenticated()) {
@@ -515,31 +515,26 @@ class FoodService {
             console.log('Login fail!!!');
             res.redirect('/food');
         }
-    }
+    };
 
-    ultimateFilter(req, res) {
+    ultimateFilter = async (req, res) => {
         let fvrStatus = req.query.fvr;
         let engStatus = req.query.eng;
         let ctgrKeyword = req.query.keyword;
-
         let isLogin = false;
         let email;
-
         if (req.isAuthenticated()) {
             isLogin = true;
             email = req.user.email;
         }
-
         User.findOne({ email: email })
             .lean()
             .then((user) => {
                 const foodLikedArray = user.foodLike;
-
                 Food.find({})
                     .lean()
                     .then((foods) => {
                         let foodLikedArrayString = foodLikedArray.map(String);
-
                         foods = foods.map((food) => {
                             if (
                                 foodLikedArrayString.includes(String(food._id))
@@ -556,17 +551,18 @@ class FoodService {
                                 foodLikedArrayString.includes(String(food._id)),
                             );
                         }
+
                         if (engStatus == 'false') {
                             foods = foods.sort((a, b) => a.calo - b.calo);
                         } else {
                             foods = foods.sort((a, b) => b.calo - a.calo);
                         }
+
                         if (ctgrKeyword != 'none') {
                             foods = foods.filter(
                                 (food) => food.category === ctgrKeyword,
                             );
                         }
-
                         res.json({ foods });
                     })
                     .catch((error) => {
@@ -579,6 +575,6 @@ class FoodService {
             .catch((error) => {
                 res.status(500).json({ error: 'Internal server error' });
             });
-    }
+    };
 }
 export default new FoodService();

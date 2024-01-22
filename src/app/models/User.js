@@ -55,9 +55,7 @@ const User = new Schema(
             type: Number,
             default: 0,
         },
-        foodLike: [
-            { type: String }
-        ],
+        foodLike: [{ type: String }],
         BMIchange: [
             {
                 date: { type: String },
@@ -73,9 +71,9 @@ const User = new Schema(
         photoUrl: { type: String },
         status: {
             type: String,
-            enum: ['Active', 'Unactive'],
+            enum: ['Active', 'Inactive'],
             default: 'Active',
-        }
+        },
     },
     {
         timestamps: true,

@@ -35,6 +35,11 @@ class HomepageService {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     }
+
+    aboutUs(req, res) {
+        const isLogin = req.isAuthenticated();
+        res.render('aboutUs', { isLogin });
+    }
 }
 
 export default new HomepageService();

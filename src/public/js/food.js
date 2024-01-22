@@ -2,36 +2,44 @@ let email = document.getElementById('foodList').getAttribute('data-email');
 let isLogin = document.getElementById('foodList').getAttribute('data-isLogin');
 
 function filterBy(param) {
-    ctgrFood = document.getElementById('categoryFood');
-    ctgrFood.setAttribute('data-keyword', param);
-    console.log(ctgrFood.getAttribute('data-keyword'));
-    document.getElementById('categorySelection').textContent = param;
-    let isDisable = true;
-    if (isDisable) {
-        ctgrFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
-        ctgrFood.style.color = 'white';
-        renderResultFilter();
-        isDisable = false;
+    if (isLogin === 'true') {
+        ctgrFood = document.getElementById('categoryFood');
+        ctgrFood.setAttribute('data-keyword', param);
+        console.log(ctgrFood.getAttribute('data-keyword'));
+        document.getElementById('categorySelection').textContent = param;
+        let isDisable = true;
+        if (isDisable) {
+            ctgrFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
+            ctgrFood.style.color = 'white';
+            renderResultFilter();
+            isDisable = false;
+        }
+    } else {
+        alert('Please login to access this feature !');
     }
 }
 
 let favrFood = document.getElementById('favouriteFood');
 let isDisableFvr = Boolean(favrFood.getAttribute('isDisable'));
 favrFood.addEventListener('click', () => {
-    isDisableFvr = !isDisableFvr;
-    if (isDisableFvr) {
-        favrFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
-        favrFood.style.color = 'white';
-        let keyword = 'favourite';
-        favrFood.setAttribute('data-isDisable', false);
-        console.log(favrFood.getAttribute('data-isDisable'));
+    if (isLogin === 'true') {
+        isDisableFvr = !isDisableFvr;
+        if (isDisableFvr) {
+            favrFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
+            favrFood.style.color = 'white';
+            let keyword = 'favourite';
+            favrFood.setAttribute('data-isDisable', false);
+            console.log(favrFood.getAttribute('data-isDisable'));
 
-        renderResultFilter();
+            renderResultFilter();
+        } else {
+            favrFood.style.backgroundColor = 'white';
+            favrFood.style.color = 'rgba(253, 0, 84, 1)';
+            favrFood.setAttribute('data-isDisable', true);
+            console.log(favrFood.getAttribute('data-isDisable'));
+        }
     } else {
-        favrFood.style.backgroundColor = 'white';
-        favrFood.style.color = 'rgba(253, 0, 84, 1)';
-        favrFood.setAttribute('data-isDisable', true);
-        console.log(favrFood.getAttribute('data-isDisable'));
+        alert('Please login to access this feature!');
     }
 });
 
@@ -39,17 +47,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let engFood = document.getElementById('caloriesFood');
     let isDisableEng = Boolean(engFood.getAttribute('isDisable'));
     engFood.addEventListener('click', () => {
-        isDisableEng = !isDisableEng;
-        if (isDisableEng) {
-            let sortKey = 'up';
-            engFood.setAttribute('data-isDisable', false);
-            renderResultFilter();
-            engFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
-            engFood.style.color = 'white';
+        if (isLogin === 'true') {
+            isDisableEng = !isDisableEng;
+            if (isDisableEng) {
+                let sortKey = 'up';
+                engFood.setAttribute('data-isDisable', false);
+                renderResultFilter();
+                engFood.style.backgroundColor = 'rgba(253, 0, 84, 1)';
+                engFood.style.color = 'white';
+            } else {
+                engFood.style.backgroundColor = 'white';
+                engFood.style.color = 'rgba(253, 0, 84, 1)';
+                engFood.setAttribute('data-isDisable', true);
+            }
         } else {
-            engFood.style.backgroundColor = 'white';
-            engFood.style.color = 'rgba(253, 0, 84, 1)';
-            engFood.setAttribute('data-isDisable', true);
+            alert('Please login to access this feature!');
         }
     });
 });
@@ -73,7 +85,7 @@ function renderFoodList(food) {
               <div class="cellTbl d-flex align-items-center justify-content-center">${element.calo}</div>
               <div class="cellTbl d-flex align-items-center justify-content-center">${element.category}</div>
               <div class="cellTbl d-flex align-items-center justify-content-start ps-3 ipWeight">
-                <input class="rounded-3 p-1 ps-2 me-1" placeholder="Nhập số" type="text" id="grams${element._id}" style="width: 100px; border: none; outline: none; background-color:  #e7e7e7; "> <span>gam</span> 
+                <input class="rounded-3 p-1 ps-2 me-1" placeholder="Enter number" type="text" id="grams${element._id}" style="width: 110px; border: none; outline: none; background-color:  #e7e7e7; "> <span>gam</span> 
               </div>
             <div class="cellTbl lastCell d-flex align-items-center justify-content-center">
               <form action="" method="post" id="formAdd2Menu${element._id}">
@@ -117,27 +129,35 @@ function renderUserMenu(userMenu) {
 function toggleHeart(button, idFood) {
     let iconHeart = button.querySelector('.heart');
     let isDisableIcon = iconHeart.getAttribute('data-isDisable');
-    if (isDisableIcon == 'true') {
-        addToFavourite(idFood);
-        iconHeart.style.color = 'rgba(253, 0, 84, 1)';
-        iconHeart.setAttribute('data-isDisable', 'false');
-        isDisableIcon = false;
+    if (isLogin === 'true') {
+        if (isDisableIcon == 'true') {
+            addToFavourite(idFood);
+            iconHeart.style.color = 'rgba(253, 0, 84, 1)';
+            iconHeart.setAttribute('data-isDisable', 'false');
+            isDisableIcon = false;
+        } else {
+            iconHeart.style.color = 'white';
+            iconHeart.setAttribute('data-isDisable', 'true');
+            removeFromFavourite(idFood);
+            isDisableIcon = true;
+        }
     } else {
-        iconHeart.style.color = 'white';
-        iconHeart.setAttribute('data-isDisable', 'true');
-        removeFromFavourite(idFood);
-        isDisableIcon = true;
+        alert('Please login to access this feature');
     }
 }
 
 async function sortToggle() {
-    const caloriesFoodElement = document.getElementById('caloriesFood');
-    const currentIsDisable =
-        caloriesFoodElement.getAttribute('data-isDisable') === 'true';
-    const newIsDisable = !currentIsDisable;
-    caloriesFoodElement.setAttribute('data-isDisable', newIsDisable);
+    if (isLogin === 'true') {
+        const caloriesFoodElement = document.getElementById('caloriesFood');
+        const currentIsDisable =
+            caloriesFoodElement.getAttribute('data-isDisable') === 'true';
+        const newIsDisable = !currentIsDisable;
+        caloriesFoodElement.setAttribute('data-isDisable', newIsDisable);
 
-    renderResultFilter();
+        renderResultFilter();
+    } else {
+        alert('Please login to access this feature !');
+    }
 }
 
 async function renderResultSearch() {
@@ -155,26 +175,30 @@ async function renderResultSort(keyword) {
 
 async function renderResultAdd(event, formID, elementID) {
     event.preventDefault();
-    form = document.getElementById(formID);
-    id = form.querySelector('.idFood').value;
-    grams = document.querySelector(elementID).value;
-    if (grams === '' || isNaN(grams)) {
-        document.querySelector(elementID).value = '';
-        document.querySelector(elementID).focus();
-        document.querySelector(elementID).classList.add('error');
-        document.querySelector(elementID).classList.add('border-danger');
+    if (isLogin === 'true') {
+        form = document.getElementById(formID);
+        id = form.querySelector('.idFood').value;
+        grams = document.querySelector(elementID).value;
+        if (grams === '' || isNaN(grams)) {
+            document.querySelector(elementID).value = '';
+            document.querySelector(elementID).focus();
+            document.querySelector(elementID).classList.add('error');
+            document.querySelector(elementID).classList.add('border-danger');
+        } else {
+            var formData = new FormData(form);
+            var data = [...formData];
+            const dataObject = {};
+            data.forEach(([key, value]) => {
+                dataObject[key] = value;
+            });
+            dataObject['grams'] = grams;
+            await axios.post(`food/add`, dataObject).then((res) => {
+                renderFoodList(res.data.foods);
+                renderUserMenu(res.data.userMenu);
+            });
+        }
     } else {
-        var formData = new FormData(form);
-        var data = [...formData];
-        const dataObject = {};
-        data.forEach(([key, value]) => {
-            dataObject[key] = value;
-        });
-        dataObject['grams'] = grams;
-        await axios.post(`../food/add`, dataObject).then((res) => {
-            renderFoodList(res.data.foods);
-            renderUserMenu(res.data.userMenu);
-        });
+        alert('Please login to access this feature!');
     }
 }
 
