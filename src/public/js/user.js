@@ -6,7 +6,7 @@ function renderInf() {
     $('#weight')[0].textContent = user.weight;
     $('#age')[0].textContent = user.age;
 
-    $('#calo')[0].textContent = user.requiredCaloriesAmount;
+    $('#calo')[0].textContent = parseInt(user.requiredCaloriesAmount);
     $('#nameInput')[0].value = user.name;
     $('#heightInput')[0].value = user.height;
     $('#weightInput')[0].value = user.weight;
@@ -14,6 +14,8 @@ function renderInf() {
 
     $('#avatar')[0].src = user.photoUrl;
     $('#avtInForm')[0].src = user.photoUrl;
+
+    $('#requiredCalories')[0].innerHTML = parseInt(user.requiredCaloriesAmount);
 }
 function update() {
     event.preventDefault();
@@ -52,7 +54,6 @@ function BMIchart(user) {
     if (chart) {
         chart.destroy();
     }
-    // Trích xuất mảng date và value từ mảng BMIchange
     const bmiDates = user.BMIchange.map((entry) => entry.date);
     const bmiValues = user.BMIchange.map((entry) => entry.value);
 
