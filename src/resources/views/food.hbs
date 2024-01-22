@@ -19,7 +19,7 @@
 <div class="container-fluid">
 
   <div class="d-flex flex-column gap-2 justify-content-center align-items-center">
-    <h2 class="col-lg-12 d-flex justify-content-center py-4 pb-2">Suggested <span class="text-danger d-flex" style="white-space: pre;"> Calorie </span> Content of Each Dish</h2>
+    <h2 class="col-lg-12 d-flex justify-content-center py-4 pb-2">Suggested <span class="text-danger d-flex" style="white-space: pre;"> Calories </span> Content of Each Dish</h2>
     <div class="searchBar col-lg-12 d-flex flex-row mb-2 rounded-4" style="height: 50px; width: 610px; background-color: white;">
       <div class="searchIcon d-flex justify-content-center align-items-center ">
         <button class="searchBtn ps-3 pe-4">
@@ -38,18 +38,18 @@
     <div class=" filterBar d-flex flex-row mb-3 rounded-4 justify-content-between align-items-center" style="height: 50px; width: 610px">
       <div class=" filterBar border-0 bg-light px-0 py-1 rounded-4 d-flex justify-content-between align-items-center"  style="height: 50px; width: 500px"> 
         <p class="ps-3 m-0 d-flex align-items-center fw-semibold">Lọc</p>
-        <div class="foodBtn" id="favouriteFood" data-isDisable="true" style="cursor: pointer;">Yêu thích</div>
-        <div class="foodBtn" id="caloriesFood" data-isDisable="true" style="cursor: pointer;">Năng lượng</div>
-        <div class="foodBtn d-flex justify-content-between" data-keyword="none" id="categoryFood" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer; width: 130px;"><span class="text-center" style="display: block-inline; width: 110px;" id="categorySelection">Phân loại </span> <i class="bi bi-caret-down-fill ps-1 fs-6"></i> <br>
+        <div class="foodBtn" id="favouriteFood" data-isDisable="true" style="cursor: pointer;">Favourite</div>
+        <div class="foodBtn" id="caloriesFood" data-isDisable="true" style="cursor: pointer;">Calories</div>
+        <div class="foodBtn d-flex justify-content-between" data-keyword="none" id="categoryFood" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer; width: 130px;"><span class="text-center" style="display: block-inline; width: 110px;" id="categorySelection">Category </span> <i class="bi bi-caret-down-fill ps-1 fs-6"></i> <br>
           <div class="dropdown-menu m-0 py-0 " style="border: 2px solid rgba(253, 0, 84, 1);" aria-labelledby="categorySelection">
-            <div class=""><a class="p-1 " onclick="filterBy('none')" >--Phân loại--</a></div>
-            <div class=""><a class="p-1 " onclick="filterBy('Thịt')" >Thịt</a></div>
-            <div class=""><a class="p-1 " onclick="filterBy('Hải sản')" >Hải sản</a></div>
-            <div class=""><a class="p-1 " onclick="filterBy('Hoa quả')" >Hoa quả</a></div>
-            <div class=""><a class="p-1 " onclick="filterBy('Rau củ')" >Rau củ</a></div>
-            <div class=""><a class="p-1 " onclick="filterBy('Hạt')" >Hạt</a></div>
-            <div class=""><a class="p-1 " onclick="filterBy('Tinh bột')" >Tinh bột</a></div>
-            <div class=""><a class="p-1 " onclick="filterBy('Sữa')" >Sữa</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('none')" >--Category--</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Meat')" >Meat</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Seafood')" >Seafood</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Fruit')" >Fruit</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Vegetable')" >Vegetable</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Seeds/Nuts')" >Seeds/Nuts</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Starch')" >Starch</a></div>
+            <div class=""><a class="p-1 " onclick="filterBy('Milk')" >Milk</a></div>
           </div>
         </div>    
         <div class="foodBtn sortBtn pe-3 bg-light" style="cursor: pointer;" id="sortBtn" onclick="sortToggle()">
@@ -73,11 +73,11 @@
               <table class=" border border-2 ">
                 <thead>
                   <tr class="text-center fw-bold justify-content-center " style="background-color:rgb(216, 214, 214);">
-                    <td style="width: 200px; height: 40px;">Tên</td>
+                    <td style="width: 200px; height: 40px;">Name</td>
                     <td style="width: 150px; height: 40px;">Calo/100g(calo)</td>
-                    <td style="width: 150px; height: 40px;">Khối lượng(g)</td>
-                    <td style="width: 150px; height: 40px;">Tổng calo</td>
-                    <td style="width: 100px; height: 40px;">Xoá</td>
+                    <td style="width: 150px; height: 40px;">Amount(g)</td>
+                    <td style="width: 150px; height: 40px;">Total calo</td>
+                    <td style="width: 100px; height: 40px;">Remove</td>
                   </tr>
                 </thead>
                 <tbody id="tblMenuUser">
@@ -112,12 +112,12 @@
 
   <div class="table d-flex flex-column align-items-center justify-content-center">
     <div class="thead d-flex justify-content-start p-0 mb-2">
-      <div class="cellHead d-flex align-items-center justify-content-center">Tên</div>
-      <div class="cellHead d-flex align-items-center justify-content-center">Hình ảnh</div>
+      <div class="cellHead d-flex align-items-center justify-content-center">Name</div>
+      <div class="cellHead d-flex align-items-center justify-content-center">Image</div>
       <div class="cellHead d-flex align-items-center justify-content-center">Calo/100g</div>
-      <div class="cellHead d-flex align-items-center justify-content-center">Phân loại</div>
-      <div class="cellHead d-flex align-items-center justify-content-center ipWeight">Trọng lượng</div>
-      <div class="cellHead lastCell d-flex align-items-center justify-content-center">Thêm</div>
+      <div class="cellHead d-flex align-items-center justify-content-center">Category</div>
+      <div class="cellHead d-flex align-items-center justify-content-center ipWeight">Amount</div>
+      <div class="cellHead lastCell d-flex align-items-center justify-content-center">Add</div>
     </div>
     <div id="foodList" data-email="{{email}}" data-isLogin="{{isLogin}}"></div>
   </div>
