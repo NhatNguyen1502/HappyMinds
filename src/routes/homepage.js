@@ -1,6 +1,7 @@
 import express from 'express';
 import homepageController from '../app/controllers/HomepageController.js';
 import passport from 'passport';
+import HomepageController from '../app/controllers/HomepageController.js';
 
 const router = express.Router();
 
@@ -31,9 +32,12 @@ router.get('/logout', function (req, res) {
     req.logout(function (err) {
         if (err) {
             return next(err);
+            
         }
         res.redirect('/');
     });
 });
+
+router.get('/aboutUs', HomepageController.aboutUs)
 
 export default router;

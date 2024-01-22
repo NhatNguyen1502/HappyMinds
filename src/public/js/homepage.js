@@ -47,3 +47,30 @@ function calculateAndShowBMI() {
     document.getElementById('bmi').value = bmi;
     document.getElementById('weight_status').value = weight_status;
 }
+
+// Scroll to top to caculate BMI
+function caculateBmi() {
+    const currentUrl = window.location.href;
+    console.log(currentUrl)
+    if (currentUrl === 'https://happyminds.onrender.com/'){
+        window.scrollTo({
+            top: 200,
+            behavior: "smooth"
+        });
+    }else window.location.href = '/';
+};
+
+function sendEmail() {
+    var to = 'happymindspnv@gmail.com';
+    var subject = '';
+    var body = '';
+    to = encodeURIComponent(to);
+    subject = encodeURIComponent(subject);
+    body = encodeURIComponent(body);
+    var mailtoLink = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+    window.location.href = mailtoLink;
+}
+
+function directed(){
+    window.location.href = 'https://www.passerellesnumeriques.org/vi/'
+}
