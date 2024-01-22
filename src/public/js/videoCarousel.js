@@ -59,21 +59,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else{
             clearInterval(timer2);
-            pauseAllVideos();
             nextVideo();
             timer2 = setInterval(updateCountdown, 1000);
         }
     });
     
     document.getElementById('skip').addEventListener('click', () => {
-        if (index == quanityVideo) {
+        if (index == 0) {
             console.log("true")
-            window.location.href = 'http://localhost:3000/video';
         }
         else{
             console.log(index)
             clearInterval(timer2);
-            pauseAllVideos();
             skipVideo();
             timer2 = setInterval(updateCountdown, 1000);
         }
@@ -129,30 +126,25 @@ function skipVideo() {
     document.getElementById('rest').textContent = `00 : 0${secondRest}`;
     document.getElementById('start').classList.remove('shake');
     isRestTimerRunning = true;
-    $('#carouselExampleControls').carousel('next');
-    index++;
-    if (index == quanityVideo) {
-        document.getElementById('next').setAttribute('disabled', 'true');
-        document.getElementById('skip').setAttribute('disabled', 'true');
-        document.getElementById('start').textContent = 'FINISH!!!';
-    } else {
-        let newVideo = document.querySelector(`.video[data-index="${index}"]`);
-        if (!newVideo) {
-            index = 0;
-            newVideo = document.querySelector('.carousel-item[data-index="0"]');
-        }
-        if (newVideo) {
-            document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
-            document.getElementById('rep').textContent = parseInt(newVideo.getAttribute('data-rep'));
-            document.getElementById('start').setAttribute('disabled', 'true');
-            document.getElementById('next').setAttribute('disabled', 'true');
-            time_enable = 5000;
-            setTimeout(enableNextButton, time_enable);
-            setTimeout(() => {
-                document.getElementById('start').classList.add('shake');
-            }, time_enable);
-        }
+    $('#carouselExampleControls').carousel('prev');
+    index--;
+    let newVideo = document.querySelector(`.video[data-index="${index}"]`);
+    if (!newVideo) {
+        index = 0;
+        newVideo = document.querySelector('.carousel-item[data-index="0"]');
     }
+    if (newVideo) {
+        document.getElementById('timer').textContent = `00 : ${newVideo.getAttribute('data-duration')}`;
+        document.getElementById('rep').textContent = parseInt(newVideo.getAttribute('data-rep'));
+        document.getElementById('start').setAttribute('disabled', 'true');
+        document.getElementById('next').setAttribute('disabled', 'true');
+        time_enable = 5000;
+        setTimeout(enableNextButton, time_enable);
+        setTimeout(() => {
+            document.getElementById('start').classList.add('shake');
+        }, time_enable);
+    }
+    
 }
 
 
