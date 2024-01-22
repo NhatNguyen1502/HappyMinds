@@ -69,13 +69,13 @@
                             <div class="blank col-lg-3"></div>
                         </div>
                         <div class="changeName mb-2">
-                            <p class="m-0 py-2 fs-5 fw-bold">Họ và tên: </p>
+                            <p class="m-0 py-2 fs-5 fw-bold">Fullname: </p>
                             <input class="formInput col-lg-12 p-2" type="text" name="name" id="nameInput" class=""
                                 placeholder="">
                         </div>
                         <div class="row mb-2">
                             <div class="changeActivityRatios col-lg-6">
-                                <p class="m-0 py-2 fs-5 fw-bold">Mức độ hoạt động: </p>
+                                <p class="m-0 py-2 fs-5 fw-bold">Activity Ratios: </p>
                                 <select class="formInput col-lg-12 p-2" name="pal" id="palSelection">
                                     {{#each ActivityStatus}}
                                     <option value="{{this}}" {{isSelected ../user.pal this}}> {{this}} </option>
@@ -83,28 +83,28 @@
                                 </select>
                             </div>
                             <div class="changeSex col-lg-6">
-                                <p class="m-0 py-2 fs-5 fw-bold">Giới tính: </p>
+                                <p class="m-0 py-2 fs-5 fw-bold">Sex: </p>
                                 <select class="formInput col-lg-12 p-2" name="sex" id="sexSelection">
-                                    <option value="Male" {{isSelected user.sex 'Male' }}>Nam</option>
-                                    <option value="Female" {{isSelected user.sex 'Female' }}>Nữ</option>
+                                    <option value="Male" {{isSelected user.sex 'Male' }}>Male</option>
+                                    <option value="Female" {{isSelected user.sex 'Female' }}>Female</option>
                                 </select>
                             </div>
                         </div>
                         <div class="changeInfor row">
                             <div class="changeHeight col-lg-4">
-                                <p class="m-0 py-2 fs-5 fw-bold">Chiều cao (cm): </p>
+                                <p class="m-0 py-2 fs-5 fw-bold">Height (cm): </p>
                                 <input class="formInput col-lg-12 p-2" type="text" name="height" id="heightInput"
                                     class="" placeholder="Nhập chiều cao ">
                                 <small class="form-text text-danger" id="heightError"></small>
                             </div>
                             <div class="changeWeight col-lg-4">
-                                <p class="m-0 py-2 fs-5 fw-bold">Cân nặng (kg): </p>
+                                <p class="m-0 py-2 fs-5 fw-bold">Weight (kg): </p>
                                 <input class="formInput col-lg-12 p-2" type="text" name="weight" id="weightInput"
                                     class="" placeholder="Nhập cân nặng">
                                 <small class="form-text text-danger" id="weightError"></small>
                             </div>
                             <div class="changeAge col-lg-4">
-                                <p class="m-0 py-2 fs-5 fw-bold">Tuổi: </p>
+                                <p class="m-0 py-2 fs-5 fw-bold">Age: </p>
                                 <input class="formInput col-lg-12 p-2" type="text" name="age" id="ageInput" class=""
                                     placeholder="Nhập tuổi">
                                 <small class="form-text text-danger" id="ageError"></small>
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                     <div class="modal-footer border-0 d-flex justify-content-center">
-                        <button type="submit" class="buttonModal" onclick=update()>Lưu thông tin</button>
+                        <button type="submit" class="buttonModal" onclick=update()>Save changes</button>
                     </div>
                 </form>
             </div>
@@ -158,7 +158,7 @@
 </div>
 <div class="chartBMI m-5">
     <div class="heading_user p-0">
-        <h4 class="fw-bold p-0">BIỂU ĐỒ BMI</h4>
+        <h4 class="fw-bold p-0">BMI CHART</h4>
     </div>
     <div class="chart">
         <canvas id="canvas" style="background-color: white; max-height: 90vh"></canvas>
@@ -166,7 +166,7 @@
 </div>
 <div class="courseBMI m-5">
     <div class="heading_user p-0">
-        <h4 class="fw-bold p-0">KHOÁ HỌC</h4>
+        <h4 class="fw-bold p-0">COURSES</h4>
     </div>
     <div class="courses pt-2">
         <div class="row row-cols-1 row-cols-lg-3 g-4" style="margin: 0 150px 0 150px;" id="videoContainer">
@@ -237,13 +237,13 @@
 </div>
 <div class="menu m-5">
     <div class="heading_user p-0">
-        <h4 class="fw-bold p-0">THỰC ĐƠN</h4>
+        <h4 class="fw-bold p-0">MENU</h4>
     </div>
     <div class="menu_table row">
         <table class="row">
             <thead>
                 <tr class="row rounded-top" style="background-color: rgba(253, 0, 84, 1) ; ">
-                    <td class="fw-bold col-lg-11 d-flex align-items-center " style="color: white; ">HÔM NAY</td>
+                    <td class="fw-bold col-lg-11 d-flex align-items-center " style="color: white; ">TODAY</td>
                     <td class="fw-bold col-lg-1 d-flex justify-content-end  align-items-center p-2">
                         <button class="border-0 editMenu" data-bs-toggle="modal" data-bs-target="#menuModal">
                             <i class="bi bi-pencil-square fs-3  pt-0" id="editUser" style="color: white;"></i>
@@ -251,12 +251,12 @@
                     </td>
                 </tr>
                 <tr class="row bg-light p-2 border-bottom border-1 border-dark">
-                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Tên</td>
-                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Hình ảnh</td>
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Name</td>
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Image</td>
                     <td class="col-lg-2 text-center fw-bold fs-5 p-0">Calo/100g</td>
-                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Khối lượng</td>
-                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Tổng calories</td>
-                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Phân loại</td>
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Amount</td>
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Total calories</td>
+                    <td class="col-lg-2 text-center fw-bold fs-5 p-0">Category</td>
                 </tr>
             </thead>
             <tbody id="foodMenu">
@@ -280,11 +280,11 @@
                     <thead>
                         <tr class="text-center fw-bold justify-content-center "
                             style="background-color:rgb(216, 214, 214);">
-                            <td style="width: 200px; height: 40px;">Tên</td>
+                             <td style="width: 200px; height: 40px;">Name</td>
                             <td style="width: 150px; height: 40px;">Calo/100g(calo)</td>
-                            <td style="width: 150px; height: 40px;">Khối lượng(g)</td>
-                            <td style="width: 150px; height: 40px;">Tổng calo</td>
-                            <td style="width: 100px; height: 40px;">Xoá</td>
+                            <td style="width: 150px; height: 40px;">Amount(g)</td>
+                            <td style="width: 150px; height: 40px;">Total calo</td>
+                            <td style="width: 100px; height: 40px;">Remove</td>
                         </tr>
                     </thead>
                     <tbody id="modalMenu">
