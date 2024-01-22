@@ -17,36 +17,36 @@
                             <div class="mb-3">
                                 <label for="name" class="col-form-label">Name:</label>
                                 <input type="text" oninput="clearError(this)" class="form-control" id="nameCreate" name="name" value="">
-                                <small class="text-danger d-none" id="errorNameCreate">Vui lòng nhập tên món ăn!</small>
+                                <small class="text-danger d-none" id="errorNameCreate">Please enter food name !</small>
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="col-form-label">Description:</label>
                                 <input type="text" oninput="clearError(this)" class="form-control" id="descriptionCreate" name="description">
-                                <small class="text-danger d-none" id="errorDescriptionCreate">Vui lòng nhập mô tả món ăn!</small>
+                                <small class="text-danger d-none" id="errorDescriptionCreate">Please enter food description !</small>
 
                             </div>
                             <div class="mb-3">
                                 <label for="img" class="col-form-label">Image:</label>
                                 <input type="url" oninput="clearError(this)" class="form-control" id="imgCreate" name="img"></input>
-                                <small class="text-danger d-none" id="errorImgCreate">Vui lòng nhập đường dẫn hình ảnh món ăn!</small>
+                                <small class="text-danger d-none" id="errorImgCreate">Please enter food image link !</small>
 
                             </div>
                             <div class="mb-3">
-                                <label for="categoryCreate" class="col-form-label">Phân loại:</label>
+                                <label for="categoryCreate" class="col-form-label">Category:</label>
                                 <select class="form-select" id="categoryCreate" name="category">
-                                    <option value="Thịt">Thịt</option>
-                                    <option value="Hải sản">Hải sản</option>
-                                    <option value="Hoa quả">Hoa quả</option>
-                                    <option value="Rau củ">Rau củ</option>
-                                    <option value="Hạt">Hạt</option>
-                                    <option value="Tinh bột">Tinh bột</option>
-                                    <option value="Sữa">Sữa</option>
+                                    <option value="Meat">Meat</option>
+                                    <option value="Seafood">Seafood</option>
+                                    <option value="Fruit">Fruit</option>
+                                    <option value="Vegetable">Vegetable</option>
+                                    <option value="Seeds/Nuts">Seeds/Nuts</option>
+                                    <option value="Strach">Starch</option>
+                                    <option value="Milk">Milk</option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label for="calo" class="col-form-label">Calo:</label>
                                 <input type="number" oninput="clearError(this)" class="form-control" id="caloCreate" name="calo"></input>
-                                <small class="text-danger d-none" id="errorCaloCreate">Vui lòng nhập đúng số calo món ăn!</small>
+                                <small class="text-danger d-none" id="errorCaloCreate">Please enter the number of calories !</small>
 
                             </div>
                         </div>
@@ -132,41 +132,41 @@
                     <div class="modal-body">
                         <input type="hidden" class="form-control" id="idUpdate" name="id" value="">
                         <div class="mb-3">
-                            <label for="name" class="col-form-label">Tên:</label>
+                            <label for="name" class="col-form-label">Name:</label>
                             <input type="text" oninput="clearError(this)" class="form-control" id="updateName" name="name" value="">
-                            <small class="text-danger d-none" id="errorName">Vui lòng nhập tên món ăn!</small>
+                            <small class="text-danger d-none" id="errorName">Please enter food name !</small>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="col-form-label">Mô tả:</label>
+                            <label for="description" class="col-form-label">Description:</label>
                             <input type="text" oninput="clearError(this)" class="form-control" id="updateDescription" name="description">
-                            <small class="text-danger d-none" id="errorDescription">Vui lòng nhập miêu tả của món ăn!</small>
+                            <small class="text-danger d-none" id="errorDescription">Please enter food description !</small>
                         </div>
                         <div class="mb-3">
-                            <label for="img" class="col-form-label">Hình ảnh:</label>
+                            <label for="img" class="col-form-label">Image:</label>
                             <input type="url" oninput="clearError(this)" class="form-control" id="updateImg" name="img"></input>
-                            <small class="text-danger d-none" id="errorImg">Vui lòng nhập link hình ảnh của món ăn!</small>
+                            <small class="text-danger d-none" id="errorImg">Please enter food image link !</small>
                         </div>
                         <div class="mb-3">
-                            <label for="updateCategory" class="col-form-label">Phân loại:</label>
+                            <label for="updateCategory" class="col-form-label">Category:</label>
                             <select class="form-select" id="updateCategory" name="category">
-                                <option value="Thịt">Thịt</option>
-                                <option value="Hải sản">Hải sản</option>
-                                <option value="Hoa quả">Hoa quả</option>
-                                <option value="Rau củ">Rau củ</option>
-                                <option value="Hạt">Hạt</option>
-                                <option value="Tinh bột">Tinh bột</option>
-                                <option value="Sữa">Sữa</option>
+                                <option value="Meat">Meat</option>
+                                <option value="Seafood">Seafood</option>
+                                <option value="Fruit">Fruit</option>
+                                <option value="Vegetable">Vegetable</option>
+                                <option value="Seeds/Nuts">Seeds/Nuts</option>
+                                <option value="Strach">Starch</option>
+                                <option value="Milk">Milk</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="calo" class="col-form-label">Calo:</label>
                             <input type="number" oninput="clearError(this)" class="form-control" id="updateCalo" name="calo"></input>
-                            <small class="text-danger d-none" id="errorCalo">Vui lòng nhập số calo</small>
+                            <small class="text-danger d-none" id="errorCalo">Please enter calories</small>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button id="updateButton" class="btn btn-primary">Cập nhật</button>
+                        <button id="updateButton" class="btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>
