@@ -110,6 +110,23 @@ class AdminService {
             .catch((err) => console.log(err));
     };
     showVideos = async (req, res) => {
+        const allowedEmails = [
+            'huyen.hothi25@student.passerellesnumeriques.org',
+            'nhat.nguyen25@student.passerellesnumeriques.org',
+            'nhat.nguyenvan25@student.passerellesnumeriques.org',
+            'phat.tran25@student.passerellesnumeriques.org',
+            'quyen.nguyen25@student.passerellesnumeriques.org',
+        ];
+        let isAdmin = false;
+        if (
+            req.user &&
+            req.user.email &&
+            allowedEmails.includes(req.user.email)
+        )
+            isAdmin = true;
+        if (!isAdmin) {
+            return res.send('Your are not an admin!');
+        }
         const page = parseInt(req.query.page) || 1;
         const perPage = 10;
         Video.find({})
@@ -173,6 +190,23 @@ class AdminService {
 
 
     showFoods = async (req, res) => {
+        const allowedEmails = [
+            'huyen.hothi25@student.passerellesnumeriques.org',
+            'nhat.nguyen25@student.passerellesnumeriques.org',
+            'nhat.nguyenvan25@student.passerellesnumeriques.org',
+            'phat.tran25@student.passerellesnumeriques.org',
+            'quyen.nguyen25@student.passerellesnumeriques.org',
+        ];
+        let isAdmin = false;
+        if (
+            req.user &&
+            req.user.email &&
+            allowedEmails.includes(req.user.email)
+        )
+            isAdmin = true;
+        if (!isAdmin) {
+            return res.send('Your are not an admin!');
+        }
         const totalItems = await Food.countDocuments();
         const page = parseInt(req.query.page) || 1;
         const perPage = 5;
@@ -226,6 +260,23 @@ class AdminService {
 
 
     showBlog(req, res) {
+        const allowedEmails = [
+            'huyen.hothi25@student.passerellesnumeriques.org',
+            'nhat.nguyen25@student.passerellesnumeriques.org',
+            'nhat.nguyenvan25@student.passerellesnumeriques.org',
+            'phat.tran25@student.passerellesnumeriques.org',
+            'quyen.nguyen25@student.passerellesnumeriques.org',
+        ];
+        let isAdmin = false;
+        if (
+            req.user &&
+            req.user.email &&
+            allowedEmails.includes(req.user.email)
+        )
+            isAdmin = true;
+        if (!isAdmin) {
+            return res.send('Your are not an admin!');
+        }
         Blog.find({}).then((blog) => {
             res.render('admin-blog', {
                 blog: multipleMongooesToOject(blog),
@@ -289,6 +340,23 @@ class AdminService {
 
 
     showUsers(req, res) {
+        const allowedEmails = [
+            'huyen.hothi25@student.passerellesnumeriques.org',
+            'nhat.nguyen25@student.passerellesnumeriques.org',
+            'nhat.nguyenvan25@student.passerellesnumeriques.org',
+            'phat.tran25@student.passerellesnumeriques.org',
+            'quyen.nguyen25@student.passerellesnumeriques.org',
+        ];
+        let isAdmin = false;
+        if (
+            req.user &&
+            req.user.email &&
+            allowedEmails.includes(req.user.email)
+        )
+            isAdmin = true;
+        if (!isAdmin) {
+            return res.send('Your are not an admin!');
+        }
         User.find({}).then((users) => {
             res.render('admin-user', {
                 users: multipleMongooesToOject(users),
@@ -301,6 +369,23 @@ class AdminService {
 
 
     showComments(req, res) {
+        const allowedEmails = [
+            'huyen.hothi25@student.passerellesnumeriques.org',
+            'nhat.nguyen25@student.passerellesnumeriques.org',
+            'nhat.nguyenvan25@student.passerellesnumeriques.org',
+            'phat.tran25@student.passerellesnumeriques.org',
+            'quyen.nguyen25@student.passerellesnumeriques.org',
+        ];
+        let isAdmin = false;
+        if (
+            req.user &&
+            req.user.email &&
+            allowedEmails.includes(req.user.email)
+        )
+            isAdmin = true;
+        if (!isAdmin) {
+            return res.send('Your are not an admin!');
+        }
         Comment.find({}).then((comments) => {
             res.render('admin-comment', {
                 comments: multipleMongooesToOject(comments),

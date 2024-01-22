@@ -486,7 +486,7 @@ class FoodService {
         }
     }
 
-    removeFromFavourite(req, res) {
+    deleteFood = async (req, res) => {
         let isLogin = false;
         let email;
         if (req.isAuthenticated()) {
@@ -517,56 +517,42 @@ class FoodService {
         }
     }
 
-    ultimateFilter(req, res) {
+    ultimateFilter = async(req, res) => {
         let fvrStatus = req.query.fvr;
         let engStatus = req.query.eng;
         let ctgrKeyword = req.query.keyword;
-
         let isLogin = false;
         let email;
-
         if (req.isAuthenticated()) {
             isLogin = true;
             email = req.user.email;
         }
-
         User.findOne({ email: email })
             .lean()
             .then((user) => {
                 const foodLikedArray = user.foodLike;
-
                 Food.find({})
                     .lean()
                     .then((foods) => {
                         let foodLikedArrayString = foodLikedArray.map(String);
-
                         foods = foods.map((food) => {
-                            if (
-                                foodLikedArrayString.includes(String(food._id))
-                            ) {
+                            if (foodLikedArrayString.includes(String(food._id))) {
                                 food.isDisable = 'false';
                                 return food;
                             } else {
                                 food.isDisable = 'true';
                                 return food;
-                            }
-                        });
+                            }});
                         if (fvrStatus == 'false') {
-                            foods = foods.filter((food) =>
-                                foodLikedArrayString.includes(String(food._id)),
-                            );
-                        }
-                        if (engStatus == 'false') {
-                            foods = foods.sort((a, b) => a.calo - b.calo);
-                        } else {
-                            foods = foods.sort((a, b) => b.calo - a.calo);
-                        }
-                        if (ctgrKeyword != 'none') {
-                            foods = foods.filter(
-                                (food) => food.category === ctgrKeyword,
-                            );
+                            foods = foods.filter((food) => foodLikedArrayString.includes(String(food._id)));
                         }
 
+                        if (engStatus == 'false') { foods = foods.sort((a, b) => a.calo - b.calo); } 
+                        else { foods = foods.sort((a, b) => b.calo - a.calo); }
+
+                        if (ctgrKeyword != 'none') {
+                            foods = foods.filter( (food) => food.category === ctgrKeyword )
+                        }
                         res.json({ foods });
                     })
                     .catch((error) => {
