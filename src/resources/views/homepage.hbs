@@ -119,7 +119,7 @@
         {{#each containsTheFirstFourVideos}}
         <div class="col mx-lg-auto">
             <div class="card position-relative">
-                <a href="/video/viewcoach/{{this.BMItype}}" style="color: black; text-decoration: none;">
+                <a href="/video/viewCoach/{{this.BMItype}}" style="color: black; text-decoration: none;">
                     <img src="{{this.image}}" class="card-img-top" alt="...">
                     <span type="button" class="btn btn-danger position-absolute top-0 end-0 m-0 rounded-0 px-3 d-inline-block w-50" style="padding-bottom:2.7%;">{{this.BMItype}}</span>
                     <div class="card-body">
@@ -156,7 +156,7 @@
 
             {{#each blogs}}
             <div class="carousel-item" style="display: flex; margin-right: 0;">
-                <a href="blog/blogdetail/{{this.slug}}" style="color: black; text-decoration: none;">
+                <a href="blog/blogdetail?slug={{this.slug}}" style="color: black; text-decoration: none;">
                     <div class="card-slider">
                         <div class="image-wrapper mb-2 p-2">
                             <img class="image-slider" src="{{this.image}}" alt="...">
