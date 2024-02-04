@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         else{
-            alert('Vui lòng đăng nhập để thực hiện tính năng!')
+            alert('Please login to access this feature!')
         }
     });
 });

@@ -17,7 +17,7 @@
         <div class="col-lg-3 col-12 m-1 my-3 px-1 d-flex justify-content-lg-end justify-content-center">
             <a href="/homepage"><img class="logo_hpm mw-90 mh-90 " src="http://localhost:3000/img/logo.png" alt=""></a>
         </div>
-        <div class="col-lg-5 col-12 align-items-center ">
+        <div class="col-lg-6 col-12 align-items-center ">
             <ul class="navbar py-3 p-0 mx-2 my-0 m-lg-0 d-flex " style="list-style-type: none;">
                 <li class="nav-item p-2">
                     <a href="/" class='nav-link'>HOME</a>
@@ -34,11 +34,14 @@
                 <li class="nav-item p-2">
                     <a href="/user" class='nav-link' onclick=navUserpage({{isLogin}})>USER</a>
                 </li>
+                <li class="nav-item p-2">
+                    <a href="/aboutUs" class='nav-link'>ABOUT US</a>
+                </li>
             </ul>
         </div>
-        <div class="col-lg-3 col-12 p-0 m-1 mx-0 gap-3 d-flex justify-content-lg-center justify-content-center">
+        <div class="col-lg-2 col-12 p-0 m-1 mx-0 gap-3 d-flex justify-content-lg-center justify-content-center">
             <button class=" button_header signInBtn my-3 border-0 py-2 px-3 mt-3" data-bs-toggle="modal"
-                data-bs-target="#login_form" id="loginBtn" onclick=checkLogin()>Log in</button>
+                id="loginBtn" onclick=checkLogin()>Log in</button>
         </div>
         <div class="modal fade" id="login_form" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -81,7 +84,7 @@
     function checkLogin() {
         if (document.querySelector("#loginBtn").innerHTML == "Log out") {
             window.location.href = '/logout';
-        }
+        } else $('#login_form').modal('show');
     }
 
     function checkLoginFood(isLogin){
