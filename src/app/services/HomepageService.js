@@ -22,7 +22,7 @@ class HomepageService {
                 const videosOfType = await Video.find({ BMItype: type }).limit(
                     1,
                 );
-                containsTheFirstFourVideos.push(videosOfType[0].toObject());
+                containsTheFirstFourVideos.push(videosOfType[0]?.toObject());
             }
 
             res.render('homepage', {
@@ -36,9 +36,9 @@ class HomepageService {
         }
     }
 
-    aboutUs(req, res){
+    aboutUs(req, res) {
         const isLogin = req.isAuthenticated();
-        res.render('aboutUs',{isLogin})
+        res.render('aboutUs', { isLogin });
     }
 }
 
