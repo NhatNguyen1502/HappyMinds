@@ -31,7 +31,7 @@ handlebars.registerHelper({
         value1 === value2 ? options.fn(this) : options.inverse(this),
     isSelected: (currentValue, targetValue) =>
         currentValue === targetValue ? 'selected' : '',
-    isBMI: (bmiChange) => 
+    isBMI: (bmiChange) =>
         bmiChange.length > 0 ? bmiChange[bmiChange.length - 1].value : '0',
     json: (context) => JSON.stringify(context),
     sum: (a, b) => a + b,
@@ -75,5 +75,5 @@ route(app);
 connect();
 
 app.listen(port, () => {
-    console.log(`App listening on port http://localhost:${port}`);
+    console.log(`App listening on port :${port}`);
 });

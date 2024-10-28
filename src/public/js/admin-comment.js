@@ -59,7 +59,7 @@ async function handleUpdateForm() {
     event.preventDefault();
     var formData = new FormData(event.target.form);
     var data = await axios.post(
-        'http://localhost:3000/admin/update-comment',
+        `${process.env.BASE_URL}/admin/update-comment`,
         formData,
     );
     $('#updateModal').modal('hide');
