@@ -76,4 +76,5 @@ connect();
 
 app.listen(port, () => {
     console.log(`App listening on port :${port}`);
+    console.log('Views directory:', path.join(__dirname, 'resources', 'views'));
 });
