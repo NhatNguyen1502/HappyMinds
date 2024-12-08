@@ -27,15 +27,17 @@ Before you begin, make sure you have the following tools installed on your syste
 ## 🛠️ Getting Started
 
 ### 1. Clone the Repository
+```
 git clone https://github.com/NhatNguyen1502/HappyMinds.git
 cd HappyMinds-project
+```
 
 ### 2. Install Dependencies
-npm install
+```npm install```
 
 ### 3. Configure Environment Variables
 Create a .env file in the root directory and add the following:
-
+```
 CLOUDINARY_KEY=<Your Cloudinary API Key>
 CLOUDINARY_NAME=<Your Cloudinary Cloud Name>
 CLOUDINARY_SECRET=<Your Cloudinary API Secret>
@@ -43,15 +45,13 @@ GOOGLE_CLIENT_ID=<Your Google OAuth Client ID>
 GOOGLE_CLIENT_SECRET=<Your Google OAuth Client Secret>
 MONGO_URL=<Your MongoDB Connection String>
 PORT=<Application Port, default is 3000>
-BASE_URL=http://localhost:3000
+BASE_URL=<default is http://localhost:3000>
 GOOGLE_CALLBACK_URL=<Google OAuth Callback URL>
+```
 
 ### 4. Start the Application
-For Development:
-npm run start
 
-For Production:
-npm start
+```npm start```
 
 By default, the app will run at: http://localhost:3000.
 
@@ -60,8 +60,14 @@ Experience the live application: [HappyMinds](https://happyminds.onrender.com)
 
 🧰 Built With
 Node.js: Server-side JavaScript runtime.
+
 Express: Web framework for building APIs.
+
 MongoDB: NoSQL database for scalable data storage.
+
 Cloudinary: Image storage and optimization.
+
 Google OAuth: Secure authentication system.
+
 Handlebars (HBS): Dynamic HTML rendering.
+
