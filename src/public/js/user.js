@@ -24,7 +24,7 @@ function update() {
         var form = $('#updateForm')[0];
         var formData = new FormData(form);
         axios
-            .post(`${process.env.BASE_URL}/user`, formData)
+            .post(`https://happyminds.onrender.com/user`, formData)
             .then(function (response) {
                 user = response.data;
                 BMIchart(user);

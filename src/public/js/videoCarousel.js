@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('next').addEventListener('click', () => {
         if (index == quanityVideo) {
-            window.location.href = `${process.env.BASE_URL}/video`;
+            window.location.href = `https://happyminds.onrender.com/video`;
         } else {
             clearInterval(timer2);
             nextVideo();

@@ -59,7 +59,7 @@ async function handleUpdateForm() {
     event.preventDefault();
     var formData = new FormData(event.target.form);
     var data = await axios.post(
-        `${process.env.BASE_URL}/admin/update-comment`,
+        `https://happyminds.onrender.com/admin/update-comment`,
         formData,
     );
     $('#updateModal').modal('hide');
