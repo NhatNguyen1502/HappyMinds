@@ -1,4 +1,4 @@
-import Blog from '../models/Blog.js'
+import Blog from '../models/Blog.js';
 import Comment from '../models/Comment.js';
 import { Slug } from '../../util/generateSlug.js';
 import { generateTitle } from '../../util/generateSlug.js';
@@ -52,7 +52,7 @@ class BlogService {
     async showDetail(req, res) {
         const isLogin = req.isAuthenticated() || false;
         const blog = await Blog.findOne({ slug: req.params.slug }).lean();
-        res.render('blogDetail', {
+        res.render('blogdetail', {
             blog,
             isLogin,
         });
