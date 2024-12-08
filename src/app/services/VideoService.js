@@ -165,7 +165,7 @@ class VideoService {
                 }
                 let videosReturn = multipleMongooesToOject(videos);
                 let videoArrayJSON = JSON.stringify(videos);
-                res.render('viewcoach', {
+                res.render('viewCoach', {
                     videoArrayJSON,
                     videosReturn,
                     isLogin,
